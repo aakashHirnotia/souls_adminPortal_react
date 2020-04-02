@@ -25,13 +25,12 @@ users.post('/register', (req, res) => {
     mobile: req.body.mobile
   }
   
-  request.post('http://localhost:8000/api/users', userData, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+  request.post('http://localhost:8000/team/add-member', userData, function (error, response, body) {
+    if (!error && response.status == 201) {
       console.log(body)
+      res.status(response.status).send(response.data)
     }
   })
-
-
 
   console.log("Register request received in node")
   console.log("Name: "+userData.first_name)
@@ -40,19 +39,19 @@ users.post('/register', (req, res) => {
 
 users.post('/login', (req, res) => {
   const userData = {
-    // first_name: req.body.first_name,
-    // last_name: req.body.last_name,
     email: req.body.email,
     password: req.body.password
-    // created: today
   }
 
   axios
-  .post('http://localhost:8000/api/users',userData)
+  .post('http://localhost:8000/team/login',userData)
   .then(response => {
+    console.log(response)
+    if(response.status === 200) {
+      
+    }
     console.log('Logged In')
   }).catch(e=> console.log(e))
-
   console.log("LOGIN request received")
 })
 
