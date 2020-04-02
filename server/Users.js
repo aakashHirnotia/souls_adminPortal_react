@@ -28,7 +28,7 @@ users.post('/register', (req, res) => {
   request.post('http://localhost:8000/team/add-member', userData, function (error, response, body) {
     if (!error && response.status == 201) {
       console.log(body)
-      res.status(response.status).send(response.data)
+      res.status(response.status).send(response)
     }
   })
 
@@ -43,15 +43,22 @@ users.post('/login', (req, res) => {
     password: req.body.password
   }
 
+
+  request.post('http://localhost:8000/team/login', userData, function (error, response, body) {
+    if(error) res.status(500).send(error)
+    else res.status(response.status).send(response)
+
+
+  })
+
   axios
   .post('http://localhost:8000/team/login',userData)
   .then(response => {
-    console.log(response)
-    if(response.status === 200) {
-      
-    }
-    console.log('Logged In')
-  }).catch(e=> console.log(e))
+    console.log(response.data)
+      res.status(200).send(response)
+    // console.log('Logged In')
+  })
+  .catch(e=> res.status(500).send(e))
   console.log("LOGIN request received")
 })
 

@@ -53,16 +53,22 @@ export const update = updatedUser=>{
 }
 
 export const login = user => {
-  return axios
-    .post('http://localhost:5000/users/login', {
+  axios
+    .post('http://localhost:8000/team/login', {
       email: user.email,
       password: user.password
     })
     .then(response => {
-      localStorage.setItem('usertoken', response.data)
-      return response.data
+      console.log(response)
+      if(response.status == 200) {
+       localStorage.setItem('usertoken', response.data.token)
+      window.location.href = '/dashboard'
+      }
+      // undefined, response.data
     })
     .catch(err => {
       console.log(err)
+      // window.location.href = '/dashboard'
+      // return err, undefined
     })
 }

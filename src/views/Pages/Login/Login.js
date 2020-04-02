@@ -25,13 +25,9 @@ onSubmit(e){
   const user = {
   email:this.state.email,
   password:this.state.password
-}
-
-login(user).then(res=>{
-  if(res){
-    this.props.history.push('/dashboard')
   }
-})
+
+  login(user)
 
 }
 
