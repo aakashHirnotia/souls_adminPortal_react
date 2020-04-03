@@ -60,7 +60,7 @@ export const login = user => {
     })
     .then(response => {
       console.log(response)
-      if(response.status == 200) {
+      if(response.status === 200) {
        localStorage.setItem('usertoken', response.data.token)
       window.location.href = '/dashboard'
       }
