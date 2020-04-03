@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import Pages from './../Pagination/Pages'
-import TeamData from './TeamData'
-import {search} from './UserFunctions'
+import Pagination from "react-js-pagination";
+import {TeamDatas, setTeamData} from './TeamData'
+import {search, teamList} from './UserFunctions'
 
 // import {teamList} from './UserFunctions'
 
@@ -11,13 +11,22 @@ function TeamRow(props) {
     const team = props.team
     const teamLink = `/team/view-member/${team.id}`
   
-    const getBadge = (status) => {
-      return status === 'Active' ? 'success' :
-        status === 'Inactive' ? 'secondary' :
+    const getIcon = (status) => {
+      return status === 'Active' ? 'fa fa-check' :
+        status === 'Inactive' ? 'fa fa-close' :
           //status === 'Pending' ? 'warning' :
-            status === 'Deleted' ? 'danger' :
+            status === 'Deleted' ? 'fa fa-trash' :
               'primary'
     }
+
+    const getColor = (status) => {
+      return status === 'Active' ? {color:"green"} :
+        status === 'Inactive' ? {color:"blue"} :
+          //status === 'Pending' ? 'warning' :
+            status === 'Deleted' ? {color:"red"} :
+              {color:"black"}
+    }
+    
   
     return (
       <tr key={team.id.toString()}>
@@ -30,7 +39,8 @@ function TeamRow(props) {
         <td style={{width: "12%"}}>{team.Joining_Date}</td>
         <td>{team.role}</td>
         <td style={{width: "20%"}}>{team.address}</td>
-        <td><Badge color={getBadge(team.status)}>{team.status}</Badge></td>
+        <td className={getIcon(team.status)} style={getColor(team.status)}></td>
+        {/* <td><Badge color={getBadge(team.status)}>{team.status}</Badge></td> */}
       </tr>
     )
   }
@@ -41,10 +51,14 @@ class ViewTeam extends Component {
   // }
 
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
+        activePage: 1,
+        itemsCountPerPage:10,
+
         data:[],
+
         id:'',
         first_name : '',
         last_name : '',
@@ -87,20 +101,31 @@ onSubmit(e){
     search(searchUser)
 }
 
+async handlePageChange(pageNumber) {
+  console.log(`pageNumber is ${pageNumber}`);
+  this.setState({activePage: pageNumber});
+  console.log(`active page is ${this.state.activePage}`);
 
-  // async componentDidMount() {
-  //   // console.log(Date.now())
-  //   const dataRecieved = await teamList()
-  //   // console.log(Date.now())
-  //   // console.log("HERE: ")
-  //   // console.log(dataRecieved)
-  //   this.setState({data: dataRecieved})
-  // }
+  const dataPageRecieved = await teamList(pageNumber, this.state.itemsCountPerPage)
+  setTeamData(dataPageRecieved)
+  this.setState({data: dataPageRecieved})
+}
+
+
+  async componentDidMount() {
+    // console.log(Date.now())
+    const dataRecieved = await teamList(this.state.activePage, this.state.itemsCountPerPage)
+    setTeamData(dataRecieved)
+    // console.log(Date.now())
+    // console.log("HERE: ")
+    // console.log(dataRecieved)
+    this.setState({data: dataRecieved})
+  }
 
     render() {
       // console.log('DAta: ')
       // console.log(this.state.data.forEach(o=>console.log(o)))
-        const teamList = TeamData.filter((team) => team.id < 10)
+        const teamList = TeamDatas.filter((team) => team.id < 10)
     
         return (
           <div className="animated fadeIn">
@@ -162,7 +187,12 @@ onSubmit(e){
                               <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="address" value={this.state.address} onChange={this.onChange} />
                             </td>
                             <td scope="col">
-                              <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} />
+                              {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
+                              <select  type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} >
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Deleted">Deleted</option>
+                              </select> 
                             </td>
                             <td scope="col">
                             <button
@@ -178,13 +208,27 @@ onSubmit(e){
                           </tr>
                         
                       
-                        {/* {this.state.data && this.state.data.map((team, index) => */}
-                        {teamList.map((team, index) => 
-                          <TeamRow key={index} team={team}/>
+                        {this.state.data ? 
+                        (<React.Fragment>
+                            {this.state.data && this.state.data.map((team, index) => 
+                          // {teamList.map((team, index) => 
+                            <TeamRow key={index} team={team}/>
+                          )}</React.Fragment>
+                          ) : ( <React.Fragment>
+                            {teamList.map((team, index) => 
+                            <TeamRow key={index} team={team}/>
+                          )}</React.Fragment>
                         )}
                       </tbody>
                     </Table>
-                    <Pages />
+                    <Pagination className="pagination"
+                      hideDisabled
+                      activePage={this.state.activePage}
+                      itemsCountPerPage={this.itemsCountPerPage}
+                      totalItemsCount={450}             // check 
+                      pageRangeDisplayed={5}
+                      onChange={this.handlePageChange.bind(this)}
+                    />
                   </CardBody>
                 </Card>
               </Col>

@@ -11,26 +11,23 @@ users.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
-
-
-
 users.post('/register', (req, res) => {  
   const today = new Date()
-  const searchUser = {
-    firstname: req.body.first_name,
-    lastname: req.body.last_name ,
+  const userData = {
+    firstname: req.body.first_name || 'AShish',
+    lastname: req.body.last_name ||'kumar',
     // gender: req.body.gender,
-    email: req.body.email ,
-    password: req.body.password ,
+    email: req.body.email || 'sds@af.af',
+    password: req.body.password || '123456789',
     joining: req.body.joining,
-    address: req.body.address ,
-    status: req.body.status,
-    mobileno: req.body.mobile ,
-    role: req.body.role
+    address: req.body.address || 'asdgfhgjk',
+    status: req.body.status || 'inactive',
+    mobileno: req.body.mobile || '1234567789',
+    role: req.body.role || 'admin'
   }
 
   axios
-  .post('http://localhost:8000/team/add-member',searchUser)
+  .post('http://localhost:8000/team/add-member',userData)
   .then(response => {
     console.log(response.status)
       res.status(response.status).send(response.data)
@@ -42,28 +39,28 @@ users.post('/register', (req, res) => {
   }
     )
   console.log("Register request received in node")
-  console.log("Name: "+searchUser.first_name)
+  console.log("Name: "+userData.first_name)
 }
 )
 
-users.post('/search', (req, res) => {  
-  // const today = new Date()
-  const searchUser = {
-    id:req.body.id,
-    firstname: req.body.first_name ,
-    lastname: req.body.last_name ,
+
+users.post('/update-member', (req, res) => {  
+  const today = new Date()
+  const userData = {
+    firstname: req.body.first_name || 'Ashish',
+    lastname: req.body.last_name ||'kumar',
     // gender: req.body.gender,
-    email: req.body.email ,
-    // password: req.body.password || '123456789',
+    email: req.body.email || 'sds@af.af',
+    password: req.body.password || '123456789',
     joining: req.body.joining,
-    address: req.body.address ,
-    status: req.body.status ,
-    mobile: req.body.mobile ,
-    role: req.body.role
+    address: req.body.address || 'asdgfhgjk',
+    status: req.body.status || 'inactive',
+    mobileno: req.body.mobile || '1234567789',
+    role: req.body.role || 'admin'
   }
 
   axios
-  .post('http://localhost:8000/users/search',searchUser)
+  .post('http://localhost:8000/team/update-team-member',userData)
   .then(response => {
     console.log(response.status)
       res.status(response.status).send(response.data)
@@ -73,11 +70,15 @@ users.post('/search', (req, res) => {
       console.log(e)
     res.status(500).send(e)
   }
-  )
-  console.log("Search request received in node")
-  console.log("Name: "+searchUser.firstname)
+    )
+  console.log("Register request received in node")
+  console.log("Name: "+userData.first_name)
 }
 )
+
+
+
+
 
 
 users.post('/login', (req, res) => {
@@ -88,6 +89,21 @@ users.post('/login', (req, res) => {
 
   axios
   .post('http://localhost:8000/team/login',userData)
+  .then(response => {
+      res.status(response.status).send(response.data)
+  })
+  .catch(e=> res.status(500).send("Error: "+e))
+})
+
+users.post('/password', (req, res) => {
+  const userData = {
+    email: req.body.email,
+    password: req.body.password
+  }
+  console.log('Password change request Received!')
+
+  axios
+  .post('http://localhost:8000/team/password',userData)
   .then(response => {
       res.status(response.status).send(response.data)
   })
@@ -120,9 +136,10 @@ users.get('/view-member', (req, res) => {
 
 
 
-users.get('/team-list', (req, res) => {
+users.get(`/team-list`, (req, res) => {
+  console.log("pagination request received in node " + req.query.page + " and countsPerPage is "+req.query.limit);
   axios
-  .get('http://localhost:8000/team/list', {
+  .get(`http://localhost:8000/team/list?page=${req.query.page}&limit=${req.query.limit}`, {
     headers: {
       'Authorization': `Bearer ${req.headers.token}`
     }
@@ -160,8 +177,6 @@ users.post('/update', (req, res) => {
       console.log(body)
     }
   })
-
-
 
   console.log("Update request received in node")
   console.log("Name: "+userData.first_name)

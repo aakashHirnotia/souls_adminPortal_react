@@ -135,10 +135,10 @@ export const login = user => {
 
 
 
-export const teamList = async () => {
+export const teamList = async (activePage, itemCountPerPage) => {
   let data 
   await axios
-    .get('http://localhost:5000/users/team-list', {
+    .get(`http://localhost:5000/users/team-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
         token: localStorage.getItem('token')
       }

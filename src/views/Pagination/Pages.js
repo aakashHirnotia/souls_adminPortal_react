@@ -9,7 +9,7 @@ class Pages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 10
+      activePage: 1
     };
   }
  
@@ -21,8 +21,8 @@ class Pages extends Component {
   render() {
     return (
       <div>
-        <Pagination
-            hideDisabled
+        <Pagination className="pagination"
+          hideDisabled
           activePage={this.state.activePage}
           itemsCountPerPage={10}
           totalItemsCount={450}             // check 
