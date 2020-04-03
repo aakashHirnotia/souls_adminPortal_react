@@ -11,9 +11,6 @@ users.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
-
-
-
 users.post('/register', (req, res) => {  
   const today = new Date()
   const userData = {
@@ -45,6 +42,43 @@ users.post('/register', (req, res) => {
   console.log("Name: "+userData.first_name)
 }
 )
+
+
+users.post('/update-member', (req, res) => {  
+  const today = new Date()
+  const userData = {
+    firstname: req.body.first_name || 'Ashish',
+    lastname: req.body.last_name ||'kumar',
+    // gender: req.body.gender,
+    email: req.body.email || 'sds@af.af',
+    password: req.body.password || '123456789',
+    joining: req.body.joining,
+    address: req.body.address || 'asdgfhgjk',
+    status: req.body.status || 'inactive',
+    mobileno: req.body.mobile || '1234567789',
+    role: req.body.role || 'admin'
+  }
+
+  axios
+  .post('http://localhost:8000/team/update-team-member',userData, {
+    'Authorization': `Bearer ${req.headers.token}`
+  })
+  .then(response => {
+    console.log(response.status)
+      res.status(response.status).send(response.data)
+  })  
+  .catch(e=> {
+    console.log("ERROR")
+      console.log(e)
+    res.status(500).send(e)
+  }
+    )
+  console.log("Register request received in node")
+  console.log("Name: "+userData.first_name)
+}
+)
+
+
 
 
 
@@ -144,8 +178,6 @@ users.post('/update', (req, res) => {
       console.log(body)
     }
   })
-
-
 
   console.log("Update request received in node")
   console.log("Name: "+userData.first_name)

@@ -21,6 +21,32 @@ export const register = newUser=>{
 }
 
 
+export const updateMember = user=>{
+  console.log("axios worked")
+  // console.log(url)
+  return axios.post('http://localhost:5000/users/update-member',{
+        first_name: user.firstname,
+        last_name: user.lastname,
+        gender: user.gender || 'M',
+        email: user.email,
+        joining: user.Joining_Date,
+        address: user.address,
+        status: user.status,
+        role: user.role,
+        mobile: user.mobile  
+      },{
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      } ).then(response=>{
+          if(response.status===200)
+            console.log('Updated')
+          // console.log(response)
+      }).catch(e=>{
+        window.alert('Error: '+ e)
+      })
+}
+
 
 export const fetchUserDetails = (token)=>{
   return axios.get('http://localhost:5000/users/profile',{
@@ -31,6 +57,7 @@ export const fetchUserDetails = (token)=>{
           console.log('Fetching data')
       })
 }
+
 
 
 export const fetchTeamDetails = (token)=>{
