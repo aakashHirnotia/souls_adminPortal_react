@@ -11,31 +11,43 @@ users.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
+
+
+
 users.post('/register', (req, res) => {  
   const today = new Date()
   const userData = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    gender: req.body.gender,
-    email: req.body.email,
-    password: req.body.password,
+    firstname: req.body.first_name || 'AShish',
+    lastname: req.body.last_name ||'kumar',
+    // gender: req.body.gender,
+    email: req.body.email || 'sds@af.af',
+    password: req.body.password || '123456789',
     joining: req.body.joining,
-    address: req.body.address,
-    status: req.body.status,
-    mobile: req.body.mobile
+    address: req.body.address || 'asdgfhgjk',
+    status: req.body.status || 'inactive',
+    mobileno: req.body.mobile || '1234567789',
+    role: req.body.role || 'admin'
   }
-  
-  request.post('http://localhost:8000/team/add-member', userData, function (error, response, body) {
-    if (!error && response.status == 201) {
-      console.log(body)
-      res.status(response.status).send(response)
-    }
-  })
 
+  axios
+  .post('http://localhost:8000/team/add-member',userData)
+  .then(response => {
+    console.log(response.status)
+      res.status(response.status).send(response.data)
+  })  
+  .catch(e=> {
+    console.log("ERROR")
+      console.log(e)
+    res.status(500).send(e)
+  }
+    )
   console.log("Register request received in node")
   console.log("Name: "+userData.first_name)
+}
+)
 
-})
+
+
 
 users.post('/login', (req, res) => {
   const userData = {
@@ -43,29 +55,60 @@ users.post('/login', (req, res) => {
     password: req.body.password
   }
 
-
-  request.post('http://localhost:8000/team/login', userData, function (error, response, body) {
-    if(error) res.status(500).send(error)
-    else res.status(response.status).send(response)
-
-
-  })
-
   axios
   .post('http://localhost:8000/team/login',userData)
   .then(response => {
-    console.log(response.data)
-      res.status(200).send(response)
-    // console.log('Logged In')
+      res.status(response.status).send(response.data)
   })
-  .catch(e=> res.status(500).send(e))
-  console.log("LOGIN request received")
+  .catch(e=> res.status(500).send("Error: "+e))
 })
+
+
+
+
+users.get('/view-member', (req, res) => {
+  const userData = {
+    email: req.body.email,
+    password: req.body.password
+  }
+  // console.log(req.headers.token)
+
+  axios
+  .get('http://localhost:8000/team/view-member', {
+    headers: {
+      'Authorization': `Bearer ${req.headers.token}`
+    }
+  })
+  .then(response => {
+    console.log(response.status)
+      res.status(response.status).send(response.data)
+  })
+  .catch(e=> res.status(500).send("Error: "+e))
+
+})
+
+
+
+users.get('/team-list', (req, res) => {
+  axios
+  .get('http://localhost:8000/team/list', {
+    headers: {
+      'Authorization': `Bearer ${req.headers.token}`
+    }
+  })
+  .then(response => {
+      res.status(response.status).send(response.data)
+  })
+  .catch(e=> res.status(500).send("Error: "+e))
+})
+
+
+
+
 
 users.get('/profile', (req, res) => {
 
 })
-
 
 users.post('/update', (req, res) => {  
   // const today = new Date()

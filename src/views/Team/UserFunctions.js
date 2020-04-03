@@ -16,8 +16,10 @@ export const register = newUser=>{
         mobile: newUser.mobile  
       }).then(response=>{
           console.log('Registerd')
-      })
+          // console.log(response)
+      }).catch(e=>console.log(e))
 }
+
 
 
 export const fetchUserDetails = (token)=>{
@@ -27,6 +29,30 @@ export const fetchUserDetails = (token)=>{
         }        
   }).then(response=>{
           console.log('Fetching data')
+      })
+}
+
+
+export const fetchTeamDetails = (token)=>{
+  return axios.get('http://localhost:5000/users/view-member',{
+        headers: {
+          token: token
+        }        
+  }).then(response=>{
+      console.log(response.status)
+      if(response.status==200){ 
+          console.log("Entered")
+           }
+      else {
+          localStorage.removeItem('token')
+          window.location.href='/login'
+      }
+      })
+      .catch(e=>{
+        console.log("Error" + e)
+        window.location.href='/logout'
+        // res.status(500).send(e)
+        // console.log("error")
       })
 }
 
@@ -54,21 +80,61 @@ export const update = updatedUser=>{
 
 export const login = user => {
   axios
-    .post('http://localhost:8000/team/login', {
+    .post('http://localhost:5000/users/login', {
       email: user.email,
       password: user.password
     })
     .then(response => {
-      console.log(response)
       if(response.status == 200) {
-       localStorage.setItem('usertoken', response.data.token)
-      window.location.href = '/dashboard'
+        localStorage.setItem('token', response.data.token)
+        window.location.href = '/dashboard'
       }
-      // undefined, response.data
     })
     .catch(err => {
-      console.log(err)
-      // window.location.href = '/dashboard'
-      // return err, undefined
+      window.alert("Error: "+err)
     })
 }
+
+
+// export const logout = user => {
+//   axios
+//     .post('http://localhost:5000/users/logout', {
+//       email: user.email,
+//       password: user.password
+//     })
+//     .then(response => {
+//       if(response.status == 200) {
+//         localStorage.setItem('token', response.data.token)
+//         window.location.href = '/dashboard'
+//       }
+//     })
+//     .catch(err => {
+//       window.alert("Error: "+err)
+//     })
+// }
+
+
+
+export const teamList = async () => {
+  let data 
+  await axios
+    .get('http://localhost:5000/users/team-list', {
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+    .then(response => {
+      if(response.status == 200) {
+        // console.log(typeof(response.data))
+        data = [...response.data]
+        // console.log(data)
+        // console.log(response.data)
+        // return response.data
+      }
+    })
+    .catch(err => {
+      window.alert("Error: "+err)
+
+    })
+    return data
+  }
