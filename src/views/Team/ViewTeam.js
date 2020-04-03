@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-
+import Pages from './../Pagination/Pages'
 import TeamData from './TeamData'
 
 function TeamRow(props) {
@@ -19,7 +19,6 @@ function TeamRow(props) {
     return (
       <tr key={team.id.toString()}>
         <th>{team.id}</th>
-        {/* <th scope="row"><Link to={teamLink}>{team.id}</Link></th> */}
         <td style={{width: "10%"}}><Link to={teamLink}>{team.firstname}</Link></td>
         <td style={{width: "10%"}}>{team.lastname}</td>
         <td>{team.email}</td>
@@ -70,12 +69,46 @@ class ViewTeam extends Component {
                           <th scope="col">status</th>
                         </tr>
                       </thead>
+                        <tr>
+                          
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                          <td scope="col">
+                            <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}}/>
+                          </td>
+                        </tr>
                       <tbody>
                         {teamList.map((team, index) =>
                           <TeamRow key={index} team={team}/>
                         )}
                       </tbody>
                     </Table>
+                    <Pages />
                   </CardBody>
                 </Card>
               </Col>
