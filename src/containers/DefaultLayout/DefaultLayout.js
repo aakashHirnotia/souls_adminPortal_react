@@ -20,6 +20,7 @@ import {
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import {fetchTeamDetails } from '../../views/Team/UserFunctions';
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -29,9 +30,15 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
+  componentDidMount() {
+    if(localStorage.getItem('token'))
+      fetchTeamDetails(localStorage.getItem('token'))
+    else window.location.href = '/login'
+  }
+
   signOut(e) {
     e.preventDefault()
-    localStorage.removeItem('usertoken')
+    localStorage.removeItem('token')
     this.props.history.push('/login')
   }
 

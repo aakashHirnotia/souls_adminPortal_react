@@ -4,6 +4,8 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 
 import TeamData from './TeamData'
 
+import {teamList} from './UserFunctions'
+
 function TeamRow(props) {
     const team = props.team
     const teamLink = `/team/view-member/${team.id}`
@@ -17,15 +19,15 @@ function TeamRow(props) {
     }
   
     return (
-      <tr key={team.id.toString()}>
-        <th>{team.id}</th>
+      <tr key={team.teamid.toString()}>
+        <th>{team.teamid}</th>
         {/* <th scope="row"><Link to={teamLink}>{team.id}</Link></th> */}
         <td style={{width: "10%"}}><Link to={teamLink}>{team.firstname}</Link></td>
         <td style={{width: "10%"}}>{team.lastname}</td>
         <td>{team.email}</td>
-        <td>{team.mobile}</td>
-        <td>{team.registered}</td>
-        <td style={{width: "12%"}}>{team.joining}</td>
+        <td>{team.mobileno}</td>
+        {/* <td>{team.registered}</td> */}
+        <td style={{width: "12%"}}>{team.Joining_Date}</td>
         <td>{team.role}</td>
         <td style={{width: "20%"}}>{team.address}</td>
         <td><Badge color={getBadge(team.status)}>{team.status}</Badge></td>
@@ -34,8 +36,22 @@ function TeamRow(props) {
   }
 
 class ViewTeam extends Component {
-    render() {
+  state = {
+    data:[]
+  }
 
+  async componentDidMount() {
+    // console.log(Date.now())
+    const dataRecieved = await teamList()
+    // console.log(Date.now())
+    // console.log("HERE: ")
+    // console.log(dataRecieved)
+    this.setState({data: dataRecieved})
+  }
+
+    render() {
+      console.log('DAta: ')
+      console.log(this.state.data.forEach(o=>console.log(o)))
         const teamList = TeamData.filter((team) => team.id < 10)
     
         return (
@@ -63,7 +79,7 @@ class ViewTeam extends Component {
                           <th scope="col">last name</th>
                           <th scope="col">email</th>
                           <th scope="col">mobile</th>
-                          <th scope="col">registered</th>
+                          {/* <th scope="col">registered</th> */}
                           <th scope="col">joining date</th>
                           <th scope="col">role</th>
                           <th scope="col">address</th>
@@ -71,7 +87,7 @@ class ViewTeam extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {teamList.map((team, index) =>
+                        {this.state.data && this.state.data.map((team, index) =>
                           <TeamRow key={index} team={team}/>
                         )}
                       </tbody>
