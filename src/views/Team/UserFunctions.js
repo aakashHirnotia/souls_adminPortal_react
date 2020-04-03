@@ -21,6 +21,26 @@ export const register = newUser=>{
 }
 
 
+export const search = searchUser=>{
+  // console.log("axios worked")
+  console.log("search reuested sending to node")
+  return axios.post('http://localhost:5000/users/search',{
+        id:searchUser.id,
+        first_name: searchUser.first_name,
+        last_name: searchUser.last_name,
+        // gender: searchUser.gender,
+        email: searchUser.email,
+        // password: searchUser.password,
+        joining: searchUser.joining,
+        address: searchUser.address,
+        status: searchUser.status,
+        role: searchUser.role,
+        mobile: searchUser.mobile  
+      }).then(response=>{
+          console.log('search')
+          // console.log(response)
+      }).catch(e=>console.log(e))
+}
 
 export const fetchUserDetails = (token)=>{
   return axios.get('http://localhost:5000/users/profile',{
@@ -40,7 +60,7 @@ export const fetchTeamDetails = (token)=>{
         }        
   }).then(response=>{
       console.log(response.status)
-      if(response.status==200){ 
+      if(response.status===200){ 
           console.log("Entered")
            }
       else {
@@ -85,7 +105,7 @@ export const login = user => {
       password: user.password
     })
     .then(response => {
-      if(response.status == 200) {
+      if(response.status === 200) {
         localStorage.setItem('token', response.data.token)
         window.location.href = '/dashboard'
       }
@@ -103,7 +123,7 @@ export const login = user => {
 //       password: user.password
 //     })
 //     .then(response => {
-//       if(response.status == 200) {
+//       if(response.status === 200) {
 //         localStorage.setItem('token', response.data.token)
 //         window.location.href = '/dashboard'
 //       }
@@ -124,7 +144,7 @@ export const teamList = async () => {
       }
     })
     .then(response => {
-      if(response.status == 200) {
+      if(response.status === 200) {
         // console.log(typeof(response.data))
         data = [...response.data]
         // console.log(data)

@@ -16,21 +16,21 @@ process.env.SECRET_KEY = 'secret'
 
 users.post('/register', (req, res) => {  
   const today = new Date()
-  const userData = {
-    firstname: req.body.first_name || 'AShish',
-    lastname: req.body.last_name ||'kumar',
+  const searchUser = {
+    firstname: req.body.first_name,
+    lastname: req.body.last_name ,
     // gender: req.body.gender,
-    email: req.body.email || 'sds@af.af',
-    password: req.body.password || '123456789',
+    email: req.body.email ,
+    password: req.body.password ,
     joining: req.body.joining,
-    address: req.body.address || 'asdgfhgjk',
-    status: req.body.status || 'inactive',
-    mobileno: req.body.mobile || '1234567789',
-    role: req.body.role || 'admin'
+    address: req.body.address ,
+    status: req.body.status,
+    mobileno: req.body.mobile ,
+    role: req.body.role
   }
 
   axios
-  .post('http://localhost:8000/team/add-member',userData)
+  .post('http://localhost:8000/team/add-member',searchUser)
   .then(response => {
     console.log(response.status)
       res.status(response.status).send(response.data)
@@ -42,11 +42,42 @@ users.post('/register', (req, res) => {
   }
     )
   console.log("Register request received in node")
-  console.log("Name: "+userData.first_name)
+  console.log("Name: "+searchUser.first_name)
 }
 )
 
+users.post('/search', (req, res) => {  
+  // const today = new Date()
+  const searchUser = {
+    id:req.body.id,
+    firstname: req.body.first_name ,
+    lastname: req.body.last_name ,
+    // gender: req.body.gender,
+    email: req.body.email ,
+    // password: req.body.password || '123456789',
+    joining: req.body.joining,
+    address: req.body.address ,
+    status: req.body.status ,
+    mobile: req.body.mobile ,
+    role: req.body.role
+  }
 
+  axios
+  .post('http://localhost:8000/users/search',searchUser)
+  .then(response => {
+    console.log(response.status)
+      res.status(response.status).send(response.data)
+  })  
+  .catch(e=> {
+    console.log("ERROR")
+      console.log(e)
+    res.status(500).send(e)
+  }
+  )
+  console.log("Search request received in node")
+  console.log("Name: "+searchUser.firstname)
+}
+)
 
 
 users.post('/login', (req, res) => {
