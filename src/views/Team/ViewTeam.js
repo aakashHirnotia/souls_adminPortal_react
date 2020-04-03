@@ -6,61 +6,79 @@ import TeamData from './TeamData'
 
 import {teamList} from './UserFunctions'
 
-function TeamRow(props) {
-    const team = props.team
-    const teamLink = `/team/view-member/${team.id}`
-    var popUpShow = false;
 
-    const getBadge = (status) => {
+class TeamRow extends Component{
+    state = {
+      showModal: false,
+      team: this.props.team,
+    }
+
+    getBadge = (status) => {
       return status === 'Active' ? 'success' :
         status === 'Inactive' ? 'secondary' :
             status === 'Deleted' ? 'danger' :
               'primary'
-    }
-    const popUpClose = () => {
-      popUpShow= false;
-    }
-  
-    return (
-      <tr key={team.teamid.toString()}>
-        <th>{team.teamid}</th>
-        {/* <th scope="row"><Link to={teamLink}>{team.id}</Link></th> */}
-        <td style={{width: "10%"}}>{team.firstname}</td>
-        <td style={{width: "10%"}}>{team.lastname}</td>
-        <td>{team.email}</td>
-        <td>{team.mobileno}</td>
-        {/* <td>{team.registered}</td> */}
-        <td style={{width: "12%"}}>{team.Joining_Date}</td>
-        <td>{team.role}</td>
-        <td style={{width: "20%"}}>{team.address}</td>
-        <td><Badge color={getBadge(team.status)}>{team.status}</Badge></td>
-        <td>
-          <Link to={teamLink}><i className="fa fa-eye"></i></Link>
-          <Link style={{padding:"10px"}} onClick={this.popUpClose}><i className="fa fa-key"></i></Link> <br />
-          <Link style={{paddingLeft:"14px"}} to={teamLink}><i className="fa fa-pencil"></i></Link>
-        </td>
+      }
 
+
+      displayModal = () => {
+        this.setState({showModal: true})
+      }
+
+      closeModal = () => {
+        this.setState({showModal: false})
+      }
+    render() {
+    return (
+      <tr key={this.state.team.teamid}>
+        <th>{this.state.team.teamid}</th>
+        <td style={{width: "10%"}}>{this.state.team.firstname}</td>
+        <td style={{width: "10%"}}>{this.state.team.lastname}</td>
+        <td>{this.state.team.email}</td>
+        <td>{this.state.team.mobileno}</td>
+        {/* <td>{this.state.team.registered}</td> */}
+        <td style={{width: "12%"}}>{this.state.team.Joining_Date}</td>
+        <td>{this.state.team.role}</td>
+        <td style={{width: "20%"}}>{this.state.team.address}</td>
+        <td><Badge color={this.getBadge(this.state.team.status)}>{this.state.team.status}</Badge></td>
+        <td>
+          <Link to={`/team/view-member/${this.props.team.id}`}><i className="fa fa-eye"></i></Link>
+          <Link style={{padding:"10px"}} onClick={this.displayModal}><i className="fa fa-key"></i></Link> <br />
+          <Link style={{paddingLeft:"14px"}} to={`/team/edit-member/${this.props.team.id}`}><i className="fa fa-pencil"></i></Link>
+        </td>
+        <PasswordPopUp email={this.state.team.email} show={this.state.showModal} handleClose={this.closeModal}/>
       </tr>
     )
   }
 
+  }
+
+
+
+
+
+
+
+
 class ViewTeam extends Component {
   state = {
-    data:[]
+    data:[],
+    showModal: false
   }
 
-  async componentDidMount() {
-    // console.log(Date.now())
-    const dataRecieved = await teamList()
-    // console.log(Date.now())
-    // console.log("HERE: ")
-    // console.log(dataRecieved)
-    this.setState({data: dataRecieved})
-  }
+  // async componentDidMount() {
+  //   // console.log(Date.now())
+  //   const dataRecieved = await teamList()
+  //   // console.log(Date.now())
+  //   // console.log("HERE: ")
+  //   // console.log(dataRecieved)
+  //   this.setState({data: dataRecieved})
+  // }
+
 
     render() {
-      console.log('DAta: ')
-      console.log(this.state.data.forEach(o=>console.log(o)))
+      // console.log('DAta: ')
+      // console.log(this.state.data.forEach(o=>console.log(o)))
         const teamList = TeamData.filter((team) => team.id < 10)
     
         return (
@@ -97,7 +115,8 @@ class ViewTeam extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        {this.state.data && this.state.data.map((team, index) =>
+                        {/* {this.state.data && this.state.data.map((team, index) => */}
+                        {teamList.map((team, index)=>
                           <TeamRow key={index} team={team}/>
                         )}
                       </tbody>

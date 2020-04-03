@@ -46,6 +46,7 @@ const ViewProfile = React.lazy(() => import('./views/Profile/View'));
 // const UpdateProfile = React.lazy(() => import('./views/Profile/Update'));
 const ViewTeam = React.lazy(() => import('./views/Team/ViewTeam'));
 const TeamMember = React.lazy(() => import('./views/Team/TeamMember'));
+const TeamEditMember = React.lazy(() => import('./views/Team/TeamEditMember'));
 const User = React.lazy(() => import('./views/Users/User'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -100,6 +101,7 @@ const routes = [
   { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
+  { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: TeamEditMember },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
 

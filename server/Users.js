@@ -63,6 +63,21 @@ users.post('/login', (req, res) => {
   .catch(e=> res.status(500).send("Error: "+e))
 })
 
+users.post('/password', (req, res) => {
+  const userData = {
+    email: req.body.email,
+    password: req.body.password
+  }
+  console.log('Password change request Received!')
+
+  axios
+  .post('http://localhost:8000/team/password',userData)
+  .then(response => {
+      res.status(response.status).send(response.data)
+  })
+  .catch(e=> res.status(500).send("Error: "+e))
+})
+
 
 
 

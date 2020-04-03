@@ -40,7 +40,7 @@ export const fetchTeamDetails = (token)=>{
         }        
   }).then(response=>{
       console.log(response.status)
-      if(response.status==200){ 
+      if(response.status===200){ 
           console.log("Entered")
            }
       else {
@@ -95,6 +95,25 @@ export const login = user => {
     })
 }
 
+export const updatePassword = async user => {
+  await axios
+    .post('http://localhost:5000/users/password', {
+      email: user.email,
+      password: user.password
+    })
+    .then(response => {
+      if(response.status === 200) {
+        return true
+      }
+      else return false
+    })
+    .catch(err => {
+      window.alert("Error: "+err)
+    })
+}
+
+
+
 
 // export const logout = user => {
 //   axios
@@ -124,7 +143,7 @@ export const teamList = async () => {
       }
     })
     .then(response => {
-      if(response.status == 200) {
+      if(response.status === 200) {
         // console.log(typeof(response.data))
         data = [...response.data]
         // console.log(data)
@@ -134,7 +153,6 @@ export const teamList = async () => {
     })
     .catch(err => {
       window.alert("Error: "+err)
-
     })
     return data
   }

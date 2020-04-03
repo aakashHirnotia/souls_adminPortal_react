@@ -30,11 +30,11 @@ class DefaultLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
 
-  componentDidMount() {
-    if(localStorage.getItem('token'))
-      fetchTeamDetails(localStorage.getItem('token'))
-    else window.location.href = '/login'
-  }
+  // componentDidMount() {
+  //   if(localStorage.getItem('token'))
+  //     fetchTeamDetails(localStorage.getItem('token'))
+  //   else window.location.href = '/login'
+  // }
 
   signOut(e) {
     e.preventDefault()
