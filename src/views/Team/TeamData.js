@@ -10,7 +10,7 @@ export const TeamDatas = [
 
 export let TeamData=[]
 
-export const setTeamData = (data) => {
+export const SetTeamData = (data) => {
   TeamData=data;
 }
 

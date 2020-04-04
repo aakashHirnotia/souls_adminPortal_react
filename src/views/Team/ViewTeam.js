@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import PasswordPopUp from './PasswordPopUp.js'
-import {TeamData, TeamDatas, setTeamData} from './TeamData'
+import {TeamData, TeamDatas, SetTeamData} from './TeamData'
 import Pagination from 'react-js-pagination'
 import {teamList, search} from './UserFunctions'
 
@@ -23,7 +23,6 @@ class TeamRow extends Component{
       displayModal = () => {
         this.setState({showModal: true})
       }
-\
       closeModal = () => {
         this.setState({showModal: false})
       }
@@ -110,7 +109,7 @@ async handlePageChange(pageNumber) {
   console.log(`active page is ${this.state.activePage}`);
 
   const dataPageRecieved = await teamList(pageNumber, this.state.itemsCountPerPage)
-  setTeamData(dataPageRecieved)
+  SetTeamData(dataPageRecieved)
   this.setState({data: dataPageRecieved})
 }
 
@@ -118,7 +117,7 @@ async handlePageChange(pageNumber) {
   async componentDidMount() {
     // console.log(Date.now())
     const dataRecieved = await teamList(this.state.activePage, this.state.itemsCountPerPage)
-    setTeamData(dataRecieved)
+    SetTeamData(dataRecieved)
     // console.log(Date.now())
     // console.log("HERE: ")
     // console.log(dataRecieved)
