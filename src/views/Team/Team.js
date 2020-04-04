@@ -63,13 +63,13 @@ class Team extends Component {
       first_nameError = "First Name can't sbe empty";
     }
     if (!this.state.last_name) {
-      last_nameError = "can't be empty";
+      last_nameError = "Last Name can't be empty";
     }
     if (!this.state.password) {
-      passwordError = "can't be empty";
+      passwordError = "Password can't be empty";
     }
     if (!this.state.mobile) {
-      mobileError = "can't be empty";
+      mobileError = "Mobile No can't be empty";
     }
     if (!this.state.email || !this.state.email.includes("@")) {
       emailError = "invalid email";
@@ -78,16 +78,16 @@ class Team extends Component {
     //   joiningError = "can't be empty";
     // }
     if (!this.state.address) {
-      addressError = "can't be empty";
+      addressError = "Address can't be empty";
     }
     if (!this.state.gender) {
-      genderError = "choose gender";
+      genderError = "Choose Gender";
     }
     if (!this.state.role) {
-      roleError = "choose role";
+      roleError = "Choose Role";
     }
     if (!this.state.status) {
-      statusError = "choose status";
+      statusError = "Choose Status";
     }
 
     if (

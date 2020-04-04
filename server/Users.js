@@ -10,8 +10,8 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.1"
-  // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
+const baseURL = "http://10.42.0.69";
+// process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
 users.post("/register", (req, res) => {
   const today = new Date();
@@ -86,7 +86,16 @@ users.post("/login", (req, res) => {
     .then(response => {
       res.status(response.status).send(response.data);
     })
-    .catch(e => res.status(500).send("Error: " + e));
+    .catch(e => {
+      // console.log(e.response);
+      switch (e.response.status) {
+        case 401:
+          return res.status(401).send(e.response.data);
+        default:
+          return res.status(401).send(e.response.data);
+      }
+      res.status(500).send("Error: " + e);
+    });
 });
 
 users.post("/password", (req, res) => {

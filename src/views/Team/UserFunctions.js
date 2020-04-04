@@ -142,21 +142,37 @@ export const update = updatedUser => {
     });
 };
 
-export const login = user => {
-  axios
+export const login = async user => {
+  let message = "";
+  await axios
     .post(`${baseURL}:5000/users/login`, {
       email: user.email,
       password: user.password
     })
     .then(response => {
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        window.location.href = "/dashboard";
+      switch (response.status) {
+        case 200: {
+          localStorage.setItem("token", response.data.token);
+          window.location.href = "/dashboard";
+          message = "";
+          return;
+        }
+        case 401: {
+          message = "Bad Credentials!";
+          return;
+        }
       }
     })
-    .catch(err => {
-      window.alert("Error: " + err);
+    .catch(e => {
+      switch (e.response.status) {
+        case 401:
+          message = e.response.data.message;
+          return;
+        default:
+          return e.response.statusText;
+      }
     });
+  return message;
 };
 
 export const updatePassword = async user => {
