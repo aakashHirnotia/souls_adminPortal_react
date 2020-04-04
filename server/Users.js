@@ -92,7 +92,9 @@ users.post('/login', (req, res) => {
   .then(response => {
       res.status(response.status).send(response.data)
   })
-  .catch(e=> res.status(500).send("Error: "+e))
+  .catch(e=> {
+    console.log(e) 
+    res.status(500).send("Error: "+e)})
 })
 
 users.post('/password', (req, res) => {

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import PasswordPopUp from './PasswordPopUp.js'
-import TeamData from './TeamData'
+import {TeamData, TeamDatas, setTeamData} from './TeamData'
 
-import {teamList} from './UserFunctions'
+import {teamList, search} from './UserFunctions'
 
 
 class TeamRow extends Component{
@@ -140,7 +140,7 @@ async handlePageChange(pageNumber) {
     render() {
       // console.log('DAta: ')
       // console.log(this.state.data.forEach(o=>console.log(o)))
-        const teamList = TeamData.filter((team) => team.id < 10)
+        const teamList = (TeamData.length()!==0? TeamData:TeamDatas).filter((team) => team.id < 10)
     
         return (
           <div className="animated fadeIn">
