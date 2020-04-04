@@ -30,19 +30,31 @@ export const register = (newUser) => {
 export const search = (searchUser) => {
   // console.log("axios worked")
   console.log("search reuested sending to node");
+  // let searchLink  = "";
+  // for(const property in searchUser){
+  //   if(searchUser[property]!== "") searchLink+=("property="+searchUser[property]+"&")
+  // }
+  let query="";
+
+  const Name = {
+    first_name: "FirstName",
+    last_name: "LasrName",
+    email: "Email",
+    joining: "Joining_Date",
+    status: "Status",
+    mobile: "MobileNo"
+  }
+
+  Object.keys(searchUser).forEach(o=> {
+    if(searchUser[o]!=="")
+      query+=`${Name[o]}=${searchUser[o]}&`
+  })
+  // query=query.replace(query.length-1, '')
   return axios
-    .post("http://localhost:5000/users/search", {
-      id: searchUser.id,
-      first_name: searchUser.first_name,
-      last_name: searchUser.last_name,
-      // gender: searchUser.gender,
-      email: searchUser.email,
-      // password: searchUser.password,
-      joining: searchUser.joining,
-      address: searchUser.address,
-      status: searchUser.status,
-      role: searchUser.role,
-      mobile: searchUser.mobile,
+    .post(`http://localhost:5000/users/search?filter=${query}`,{
+      headers: {
+        token: localStorage.getItem("token")
+      }
     })
     .then((response) => {
       console.log("search");
@@ -50,22 +62,21 @@ export const search = (searchUser) => {
     })
     .catch((e) => console.log(e));
 };
-export const updateMember = (user) => {
-  console.log("axios worked");
+
+export const updateMember = updatedUser => {
+  console.log("axios updated User worked");
   // console.log(url)
   return axios
     .post(
       `${baseURL}:5000/users/update-member`,
       {
-        first_name: user.firstname,
-        last_name: user.lastname,
-        gender: user.gender || "M",
-        email: user.email,
-        joining: user.Joining_Date,
-        address: user.address,
-        status: user.status,
-        role: user.role,
-        mobile: user.mobile,
+        first_name: updatedUser.first_name,
+        last_name: updatedUser.last_name,
+        gender: updatedUser.gender || "M",
+        address: updatedUser.address,
+        status: updatedUser.status,
+        role: updatedUser.role,
+        mobile: updatedUser.mobile
       },
       {
         headers: {
@@ -208,10 +219,10 @@ export const updatePassword = async (user) => {
 //     })
 // }
 
-export const teamList = async () => {
+export const teamList = async (activePage, itemCountPerPage) => {
   let data;
   await axios
-    .get(`${baseURL}:5000/users/team-list`, {
+    .get(`${baseURL}:5000/users/team-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
         token: localStorage.getItem("token"),
       },

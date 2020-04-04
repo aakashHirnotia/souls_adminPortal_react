@@ -48,10 +48,7 @@ users.post("/update-member", (req, res) => {
   const userData = {
     firstname: req.body.first_name || "Ashish",
     lastname: req.body.last_name || "kumar",
-    // gender: req.body.gender,
-    email: req.body.email || "sds@af.af",
-    password: req.body.password || "123456789",
-    joining: req.body.joining,
+    gender: req.body.gender,
     address: req.body.address || "asdgfhgjk",
     status: req.body.status || "inactive",
     mobileno: req.body.mobile || "1234567789",
@@ -71,8 +68,8 @@ users.post("/update-member", (req, res) => {
       console.log(e);
       res.status(500).send(e);
     });
-  console.log("Register request received in node");
-  console.log("Name: " + userData.first_name);
+  console.log("Upadate memeber request received in node");
+  console.log("Name: " + userData.firstname);
 });
 
 users.post("/login", (req, res) => {
@@ -88,6 +85,7 @@ users.post("/login", (req, res) => {
     })
     .catch(e => {
       // console.log(e.response);
+      if(!e.response) return console.log(e)
       switch (e.response.status) {
         case 401:
           return res.status(401).send(e.response.data);
@@ -106,7 +104,7 @@ users.post("/password", (req, res) => {
   console.log("Password change request Received!");
 
   axios
-    .post(`${baseURL}:8000/team/password`, userData)
+    .post(`${baseURL}:8000/team/update-member/password`, userData)
     .then(response => {
       res.status(response.status).send(response.data);
     })
@@ -134,8 +132,9 @@ users.get("/view-member", (req, res) => {
 });
 
 users.get("/team-list", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/team/list`, {
+    .get(`${baseURL}:8000/team/list?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -145,6 +144,28 @@ users.get("/team-list", (req, res) => {
     })
     .catch(e => res.status(500).send("Error: " + e));
 });
+
+users.get("/search", (req, res) => {
+  // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/team/list?${req.query.filter}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
+
+
+
+
 
 users.get("/profile", (req, res) => {});
 
@@ -162,7 +183,7 @@ users.post("/update", (req, res) => {
     mobile: req.body.mobile
   };
 
-  request.post(`${baseURL}:8000/api/users`, userData, function(
+  request.post(`${baseURL}:8000/api/users/update-profile`, userData, function(
     error,
     response,
     body
@@ -172,7 +193,7 @@ users.post("/update", (req, res) => {
     }
   });
 
-  console.log("Update request received in node");
+  console.log("Update Profile request received in node");
   console.log("Name: " + userData.first_name);
 });
 

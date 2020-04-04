@@ -12,15 +12,23 @@ class TeamRow extends Component {
     team: this.props.team
   };
 
-  getBadge = status => {
-    return status === "Active"
-      ? "success"
-      : status === "Inactive"
-      ? "secondary"
-      : status === "Deleted"
-      ? "danger"
-      : "primary";
-  };
+  componentWillReceiveProps(nextProps) {
+    this.setState({team: this.props.team})
+  }
+
+  getIcon = (status) => {
+    return  (status === 'Active' || status === 'active') ? 'fa fa-check' :
+            (status === 'Inactive' || status === 'inactive') ? 'fa fa-close' :
+            (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
+            'primary'
+  }
+
+  getColor = (status) => {
+    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
+            (status === 'Inactive' || status === 'inactive') ? {color:"blue"} :
+            (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
+            {color:"black"}
+  }
 
   displayModal = () => {
     this.setState({ showModal: true });
@@ -38,13 +46,9 @@ class TeamRow extends Component {
         <td>{this.state.team.mobileno}</td>
         {/* <td>{this.state.team.registered}</td> */}
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
-        <td>{this.state.team.role}</td>
-        <td style={{ width: "20%" }}>{this.state.team.address}</td>
-        <td>
-          <Badge color={this.getBadge(this.state.team.status)}>
-            {this.state.team.status}
-          </Badge>
-        </td>
+        {/* <td>{this.state.team.role}</td> */}
+        {/* <td style={{ width: "20%" }}>{this.state.team.address}</td> */}
+        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
         <td>
           <Link to={`/team/view-member/${this.props.team.teamid}`}>
             <i className="fa fa-eye"></i>
@@ -86,9 +90,9 @@ class ViewTeam extends Component {
       email: "",
       // password : '',
       joining: "",
-      address: "",
+      // address: "",
       status: "",
-      role: "",
+      // role: "",
       mobile: "",
       errors: {}
     };
@@ -111,9 +115,9 @@ class ViewTeam extends Component {
       email: this.state.email,
       // password: this.state.password,
       joining: this.state.joining,
-      address: this.state.address,
+      // address: this.state.address,
       status: this.state.status,
-      role: this.state.role,
+      // role: this.state.role,
       mobile: this.state.mobile
     };
 
@@ -130,6 +134,7 @@ class ViewTeam extends Component {
       this.state.itemsCountPerPage
     );
     SetTeamData(dataPageRecieved);
+    console.log(dataPageRecieved)
     this.setState({ data: dataPageRecieved });
   }
 
@@ -143,7 +148,8 @@ class ViewTeam extends Component {
     // console.log(Date.now())
     // console.log("HERE: ")
     // console.log(dataRecieved)
-    this.setState({ data: dataRecieved });
+    const newData = dataRecieved
+    this.setState({ data: newData });
   }
 
   render() {
@@ -175,15 +181,17 @@ class ViewTeam extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">first name</th>
-                      <th scope="col">last name</th>
-                      <th scope="col">email</th>
-                      <th scope="col">mobile</th>
-                      <th scope="col">joining date</th>
-                      <th scope="col">role</th>
-                      <th scope="col">address</th>
-                      <th scope="col">status</th>
+                      <th style= {{width: "5%"}}scope="col">ID</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Mobile</th>
+                      <th scope="col">Joining Date</th>
+                      {/* <th scope="col">role</th> */}
+                      {/* <th scope="col">address</th>/ */}
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -267,7 +275,7 @@ class ViewTeam extends Component {
                           onChange={this.onChange}
                         />
                       </td>
-                      <td scope="col">
+                      {/* <td scope="col">
                         <input
                           type="search"
                           class="form-control mr-sm-2"
@@ -292,7 +300,7 @@ class ViewTeam extends Component {
                           value={this.state.address}
                           onChange={this.onChange}
                         />
-                      </td>
+                      </td> */}
                       <td scope="col">
                         {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
                         <select
@@ -334,7 +342,7 @@ class ViewTeam extends Component {
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                        {teamList.map((team, index) => (
+                        {this.state.data.length!=0 && this.state.data.map((team, index) => (
                           <TeamRow key={index} team={team} />
                         ))}
                       </React.Fragment>

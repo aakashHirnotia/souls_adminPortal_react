@@ -101,7 +101,7 @@ const routes = [
   { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
-  { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: TeamEditMember },
+  { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: Team },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
 

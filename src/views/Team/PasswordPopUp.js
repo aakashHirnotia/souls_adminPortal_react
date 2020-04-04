@@ -19,12 +19,14 @@ export default class PasswordPopUp extends Component{
 
     onSubmit=async (e)=>{
         e.preventDefault()
-        let changed = await updatePassword({email: this.state.email,
+        let changed = await updatePassword({
+            email: this.state.email,
             password: this.state.password,
         })
         if(changed) {
             this.setState({status: true})
         }
+        
         // register(newUser).then(res => {
         //     this.props.history.push(`/profile`)
         // })
