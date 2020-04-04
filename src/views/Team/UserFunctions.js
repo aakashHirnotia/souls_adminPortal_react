@@ -5,7 +5,7 @@ const baseURL = "http://localhost";
 
 // process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
-export const register = newUser => {
+export const register = (newUser) => {
   console.log("axios worked");
   return axios
     .post(`${baseURL}:5000/users/register`, {
@@ -18,16 +18,16 @@ export const register = newUser => {
       address: newUser.address,
       status: newUser.status,
       role: newUser.role,
-      mobile: newUser.mobile
+      mobile: newUser.mobile,
     })
-    .then(response => {
+    .then((response) => {
       console.log("Registerd");
       // console.log(response)
     })
-    .catch(e => console.log(e));
+    .catch((e) => console.log(e));
 };
 
-export const search = searchUser => {
+export const search = (searchUser) => {
   // console.log("axios worked")
   console.log("search reuested sending to node");
   return axios
@@ -42,15 +42,15 @@ export const search = searchUser => {
       address: searchUser.address,
       status: searchUser.status,
       role: searchUser.role,
-      mobile: searchUser.mobile
+      mobile: searchUser.mobile,
     })
-    .then(response => {
+    .then((response) => {
       console.log("search");
       // console.log(response)
     })
-    .catch(e => console.log(e));
+    .catch((e) => console.log(e));
 };
-export const updateMember = user => {
+export const updateMember = (user) => {
   console.log("axios worked");
   // console.log(url)
   return axios
@@ -65,43 +65,43 @@ export const updateMember = user => {
         address: user.address,
         status: user.status,
         role: user.role,
-        mobile: user.mobile
+        mobile: user.mobile,
       },
       {
         headers: {
-          token: localStorage.getItem("token")
-        }
+          token: localStorage.getItem("token"),
+        },
       }
     )
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) console.log("Updated");
       // console.log(response)
     })
-    .catch(e => {
+    .catch((e) => {
       window.alert("Error: " + e);
     });
 };
 
-export const fetchUserDetails = token => {
+export const fetchUserDetails = (token) => {
   return axios
     .get(`${baseURL}:5000/users/profile`, {
       headers: {
-        token: token
-      }
+        token: token,
+      },
     })
-    .then(response => {
+    .then((response) => {
       console.log("Fetching data");
     });
 };
 
-export const fetchTeamDetails = token => {
+export const fetchTeamDetails = (token) => {
   return axios
     .get(`${baseURL}:5000/users/view-member`, {
       headers: {
-        token: token
-      }
+        token: token,
+      },
     })
-    .then(response => {
+    .then((response) => {
       console.log(response.status);
       if (response.status === 200) {
         console.log("Entered");
@@ -110,15 +110,15 @@ export const fetchTeamDetails = token => {
         window.location.href = "/login";
       }
     })
-    .catch(e => {
+    .catch((e) => {
       console.log("Error" + e);
-      window.location.href = "/logout";
+      window.location.href = "/login";
       // res.status(500).send(e)
       // console.log("error")
     });
 };
 
-export const update = updatedUser => {
+export const update = (updatedUser) => {
   return axios
     .post(`${baseURL}:5000/users/update`, {
       first_name: updatedUser.first_name,
@@ -130,26 +130,26 @@ export const update = updatedUser => {
       address: updatedUser.address,
       status: updatedUser.status,
       role: updatedUser.role,
-      mobile: updatedUser.mobile
+      mobile: updatedUser.mobile,
     })
-    .then(response => {
+    .then((response) => {
       localStorage.removeItem("usertoken");
       localStorage.setItem("usertoken", response.data);
       return response.data;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
-export const login = async user => {
+export const login = async (user) => {
   let message = "";
   await axios
     .post(`${baseURL}:5000/users/login`, {
       email: user.email,
-      password: user.password
+      password: user.password,
     })
-    .then(response => {
+    .then((response) => {
       switch (response.status) {
         case 200: {
           localStorage.setItem("token", response.data.token);
@@ -163,7 +163,7 @@ export const login = async user => {
         }
       }
     })
-    .catch(e => {
+    .catch((e) => {
       switch (e.response.status) {
         case 401:
           message = e.response.data.message;
@@ -175,18 +175,18 @@ export const login = async user => {
   return message;
 };
 
-export const updatePassword = async user => {
+export const updatePassword = async (user) => {
   await axios
     .post(`${baseURL}:5000/users/password`, {
       email: user.email,
-      password: user.password
+      password: user.password,
     })
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         return true;
       } else return false;
     })
-    .catch(err => {
+    .catch((err) => {
       window.alert("Error: " + err);
     });
 };
@@ -213,10 +213,10 @@ export const teamList = async () => {
   await axios
     .get(`${baseURL}:5000/users/team-list`, {
       headers: {
-        token: localStorage.getItem("token")
-      }
+        token: localStorage.getItem("token"),
+      },
     })
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         // console.log(typeof(response.data))
         data = [...response.data];
@@ -225,7 +225,7 @@ export const teamList = async () => {
         // return response.data
       }
     })
-    .catch(err => {
+    .catch((err) => {
       window.alert("Error: " + err);
     });
   return data;
