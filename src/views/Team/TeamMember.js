@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-import TeamData from './TeamData'
+import {TeamDatas} from './TeamData'
 
 class TeamMember extends Component {
 
   render() {
 
-    const team = TeamData.find( team => team.id.toString() === this.props.match.params.id)
+    const team = TeamDatas.find( team => team.id.toString() === this.props.match.params.id)
 
     const teamDetails = team ? Object.entries(team) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
 
