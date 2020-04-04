@@ -10,8 +10,8 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL =
-  process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
+const baseURL = "http://10.42.0.1"
+  // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
 users.post("/register", (req, res) => {
   const today = new Date();

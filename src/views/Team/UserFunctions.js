@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL =
-  process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
+const baseURL = "http://10.42.0.1"
+  // process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
 export const register = newUser => {
   console.log("axios worked");
