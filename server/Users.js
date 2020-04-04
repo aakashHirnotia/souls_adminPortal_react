@@ -60,7 +60,9 @@ users.post('/update-member', (req, res) => {
   }
 
   axios
-  .post('http://localhost:8000/team/update-team-member',userData)
+  .post('http://localhost:8000/team/update-team-member',userData, {
+    'Authorization': `Bearer ${req.headers.token}`
+  })
   .then(response => {
     console.log(response.status)
       res.status(response.status).send(response.data)

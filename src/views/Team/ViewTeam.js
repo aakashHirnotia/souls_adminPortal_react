@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import PasswordPopUp from './PasswordPopUp.js'
-import {TeamData, TeamDatas, setTeamData} from './TeamData'
+import {TeamData, TeamDatas, SetTeamData} from './TeamData'
 
 import {teamList, search} from './UserFunctions'
 
@@ -19,7 +19,6 @@ class TeamRow extends Component{
             status === 'Deleted' ? 'danger' :
               'primary'
       }
-
 
       displayModal = () => {
         this.setState({showModal: true})
@@ -42,9 +41,9 @@ class TeamRow extends Component{
         <td style={{width: "20%"}}>{this.state.team.address}</td>
         <td><Badge color={this.getBadge(this.state.team.status)}>{this.state.team.status}</Badge></td>
         <td>
-          <Link to={`/team/view-member/${this.props.team.id}`}><i className="fa fa-eye"></i></Link>
+          <Link to={`/team/view-member/${this.props.team.teamid}`}><i className="fa fa-eye"></i></Link>
           <Link style={{padding:"10px"}} onClick={this.displayModal}><i className="fa fa-key"></i></Link> <br />
-          <Link style={{paddingLeft:"14px"}} to={`/team/edit-member/${this.props.team.id}`}><i className="fa fa-pencil"></i></Link>
+          <Link style={{paddingLeft:"14px"}} to={`/team/edit-member/${this.props.team.teamid}`}><i className="fa fa-pencil"></i></Link>
         </td>
         <PasswordPopUp email={this.state.team.email} show={this.state.showModal} handleClose={this.closeModal}/>
       </tr>
@@ -54,18 +53,7 @@ class TeamRow extends Component{
   }
 
 
-
-
-
-
-
-
 class ViewTeam extends Component {
-  // state = {
-  //   data:[]
-  // }
-
-
   constructor(props){
     super(props)
     this.state = {
@@ -141,6 +129,7 @@ async handlePageChange(pageNumber) {
       // console.log('DAta: ')
       // console.log(this.state.data.forEach(o=>console.log(o)))
         const teamList = (TeamData.length()!==0? TeamData:TeamDatas).filter((team) => team.id < 10)
+      console.log(this.state.data.forEach(o=>console.log(o)))
     
         return (
           <div className="animated fadeIn">
