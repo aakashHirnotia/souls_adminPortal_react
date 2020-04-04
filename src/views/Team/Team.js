@@ -74,9 +74,9 @@ class Team extends Component {
     if (!this.state.email || !this.state.email.includes("@")) {
       emailError = "invalid email";
     }
-    // if(!this.state.joining){
-    //   joiningError = "can't be empty";
-    // }
+    if (!this.state.joining) {
+      joiningError = "can't be empty";
+    }
     if (!this.state.address) {
       addressError = "Address can't be empty";
     }
@@ -137,7 +137,7 @@ class Team extends Component {
       };
 
       register(newUser).then(res => {
-        this.props.history.push(`/profile`);
+        this.props.history.push(`/team/list`);
       });
       this.setState(intialState);
     }
