@@ -59,8 +59,6 @@ class Team extends Component {
         last_name: team.lastname,
         gender: team.gender,
         email: team.email,
-        // password: team.password,
-        // joining: team.Joinig_Date,
         address: team.address,
         status: team.status,
         role: team.role,
@@ -173,8 +171,8 @@ class Team extends Component {
     else{
       if (isValid) {
         const newUser = {
-          first_name: this.state.firstname,
-          last_name: this.state.lastname,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
           gender: this.state.gender,
           email: this.state.email,
           password: this.state.password,

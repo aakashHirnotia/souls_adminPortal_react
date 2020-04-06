@@ -14,7 +14,7 @@ export default class PasswordPopUp extends Component{
     }
 
     onChange=(e)=>{
-        this.setState({ [e.target.password] : e.target.value })
+        this.setState({ password : e.target.value })
     }
 
     onSubmit=async (e)=>{

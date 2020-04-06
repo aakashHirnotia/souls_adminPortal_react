@@ -46,8 +46,6 @@ class TeamRow extends Component {
         <td>{this.state.team.mobileno}</td>
         {/* <td>{this.state.team.registered}</td> */}
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
-        {/* <td>{this.state.team.role}</td> */}
-        {/* <td style={{ width: "20%" }}>{this.state.team.address}</td> */}
         <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
         <td>
           <Link to={`/team/view-member/${this.props.team.teamid}`}>
@@ -90,9 +88,7 @@ class ViewTeam extends Component {
       email: "",
       // password : '',
       joining: "",
-      // address: "",
       status: "",
-      // role: "",
       mobile: "",
       errors: {}
     };
@@ -111,13 +107,9 @@ class ViewTeam extends Component {
       id: this.state.id,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      // gender: this.state.gender,
       email: this.state.email,
-      // password: this.state.password,
       joining: this.state.joining,
-      // address: this.state.address,
       status: this.state.status,
-      // role: this.state.role,
       mobile: this.state.mobile
     };
 
@@ -187,8 +179,6 @@ class ViewTeam extends Component {
                       <th scope="col">Email</th>
                       <th scope="col">Mobile</th>
                       <th scope="col">Joining Date</th>
-                      {/* <th scope="col">role</th> */}
-                      {/* <th scope="col">address</th>/ */}
                       <th scope="col">Status</th>
                       <th scope="col">Actions</th>
 
@@ -275,32 +265,6 @@ class ViewTeam extends Component {
                           onChange={this.onChange}
                         />
                       </td>
-                      {/* <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="role"
-                          value={this.state.role}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="address"
-                          value={this.state.address}
-                          onChange={this.onChange}
-                        />
-                      </td> */}
                       <td scope="col">
                         {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
                         <select

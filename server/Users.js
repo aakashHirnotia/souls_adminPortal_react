@@ -10,7 +10,8 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.69";
+// const baseURL = "http://10.42.0.69";
+const baseURL = "http://localhost"
 // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
 users.post("/register", (req, res) => {
@@ -96,7 +97,7 @@ users.post("/login", (req, res) => {
     });
 });
 
-users.post("/password", (req, res) => {
+users.put("/password", (req, res) => {
   const userData = {
     email: req.body.email,
     password: req.body.password
@@ -104,7 +105,7 @@ users.post("/password", (req, res) => {
   console.log("Password change request Received!");
 
   axios
-    .post(`${baseURL}:8000/team/update-member/password`, userData)
+    .put(`${baseURL}:8000/team/update-member/password`, userData)
     .then(response => {
       res.status(response.status).send(response.data);
     })

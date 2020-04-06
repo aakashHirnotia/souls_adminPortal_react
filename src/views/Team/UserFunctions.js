@@ -188,7 +188,7 @@ export const login = async (user) => {
 
 export const updatePassword = async (user) => {
   await axios
-    .post(`${baseURL}:5000/users/password`, {
+    .put(`${baseURL}:5000/users/password`, {
       email: user.email,
       password: user.password,
     })
