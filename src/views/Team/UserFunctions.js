@@ -27,40 +27,21 @@ export const register = (newUser) => {
     .catch((e) => console.log(e));
 };
 
-export const search = (searchUser) => {
-  // console.log("axios worked")
-  console.log("search reuested sending to node");
-  // let searchLink  = "";
-  // for(const property in searchUser){
-  //   if(searchUser[property]!== "") searchLink+=("property="+searchUser[property]+"&")
-  // }
-  // let query="";
-
-  // const Name = {
-  //   first_name: "FirstName",
-  //   last_name: "LasrName",
-  //   email: "Email",
-  //   joining: "Joining_Date",
-  //   status: "Status",
-  //   mobile: "MobileNo"
-  // }
-
-  // Object.keys(searchUser).forEach(o=> {
-  //   if(searchUser[o]!=="")
-  //     query+=`${Name[o]}=${searchUser[o]}&`
-  // })
-  // query=query.replace(query.length-1, '')
-  return axios
-    .post(`http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,{
+export const search = async (searchUser) => {
+  let data = []
+  await axios.
+    get(`http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,{
       headers: {
         token: localStorage.getItem("token")
       }
     })
     .then((response) => {
-      console.log("search");
+      data = [...response.data];
       // console.log(response)
     })
     .catch((e) => console.log(e));
+  
+  return data
 };
 
 export const updateMember = updatedUser => {
@@ -162,6 +143,7 @@ export const login = async (user) => {
       password: user.password,
     })
     .then((response) => {
+      console.log(response)
       switch (response.status) {
         case 200: {
           localStorage.setItem("token", response.data.token);

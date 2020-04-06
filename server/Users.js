@@ -86,10 +86,12 @@ users.post("/login", (req, res) => {
   axios
     .post(`${baseURL}:8000/team/login`, userData)
     .then(response => {
+      console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch(e => {
-      // console.log(e.response);
+      console.log("ERROR")
+      console.log(e);
       if(!e.response) return console.log(e)
       switch (e.response.status) {
         case 401:
@@ -163,7 +165,7 @@ users.get("/search", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/team/list?id=${req.query.id}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&email=${req.query.email}&joining=${req.query.joining}&status=${req.query.status}&role=${req.query.role}&mobileno=${req.query.mobileno}`, {
+    .get(`${baseURL}:8000/team/list?teamid=${req.query.id}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&email=${req.query.email}&joining=${req.query.joining}&status=${req.query.status}&role=${req.query.role}&mobileno=${req.query.mobileno}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }

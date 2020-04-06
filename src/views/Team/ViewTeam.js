@@ -46,13 +46,7 @@ class TeamRow extends Component {
         <td>{this.state.team.mobileno}</td>
         {/* <td>{this.state.team.registered}</td> */}
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
-<<<<<<< HEAD
         <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
-=======
-        {/* <td>{this.state.team.role}</td> */}
-        {/* <td style={{ width: "20%" }}>{this.state.team.address}</td> */}
-        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)} ></td>
->>>>>>> ee0cd002d8bdabf913397afdec2d95bcedf5193b
         <td>
           <Link to={`/team/view-member/${this.props.team.teamid}`}>
             <i className="fa fa-eye"></i>
@@ -100,67 +94,59 @@ class ViewTeam extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
 
-  onSubmit(e) {
-    e.preventDefault();
-    const searchUser = {
-      id: this.state.id,
-<<<<<<< HEAD
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-=======
-      firstname: this.state.first_name,
-      lastname: this.state.last_name,
-      // gender: this.state.gender,
->>>>>>> ee0cd002d8bdabf913397afdec2d95bcedf5193b
-      email: this.state.email,
-      joining: this.state.joining,
-      status: this.state.status,
-<<<<<<< HEAD
-      mobile: this.state.mobile
-=======
-      role: this.state.role,
-      mobileno: this.state.mobile
->>>>>>> ee0cd002d8bdabf913397afdec2d95bcedf5193b
-    };
-
-    search(searchUser);
-  }
-
-  async handlePageChange(pageNumber) {
-    console.log(`pageNumber is ${pageNumber}`);
-    this.setState({ activePage: pageNumber });
-    console.log(`active page is ${this.state.activePage}`);
-
-    const dataPageRecieved = await teamList(
-      pageNumber,
-      this.state.itemsCountPerPage
-    );
-    SetTeamData(dataPageRecieved);
-    console.log(dataPageRecieved)
-    this.setState({ data: dataPageRecieved });
-  }
 
   async componentDidMount() {
-    // console.log(Date.now())
     const dataRecieved = await teamList(
       this.state.activePage,
       this.state.itemsCountPerPage
     );
     SetTeamData(dataRecieved);
-    // console.log(Date.now())
-    // console.log("HERE: ")
-    // console.log(dataRecieved)
     const newData = dataRecieved
     this.setState({ data: newData });
   }
 
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit= async (e)=> {
+    e.preventDefault();
+    const searchUser = {
+      id: this.state.id,
+      firstname: this.state.first_name,
+      lastname: this.state.last_name,
+      // gender: this.state.gender,
+      email: this.state.email,
+      joining: this.state.joining,
+      status: this.state.status,
+      role: this.state.role,
+      mobileno: this.state.mobile
+    };
+
+    const dataRecieved = await search(searchUser);
+    SetTeamData(dataRecieved);
+    const newData = dataRecieved
+    this.setState({ data: newData });
+  }
+
+  handlePageChange = async (pageNumber) => {
+    console.log(`pageNumber is ${pageNumber}`);
+    // this.setState({ activePage: pageNumber });
+    console.log(`active page is ${this.state.activePage}`);
+
+    const dataRecieved = await teamList(
+      pageNumber,
+      this.state.itemsCountPerPage
+    );
+    SetTeamData(dataRecieved);
+    // console.log(dataPageRecieved)
+    const newData = dataRecieved
+    this.setState({ data: newData, activePage: pageNumber });
+  }
   render() {
     // console.log('DAta: ')
     // console.log(this.state.data.forEach(o=>console.log(o)))
@@ -190,15 +176,6 @@ class ViewTeam extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-<<<<<<< HEAD
-                      <th style= {{width: "5%"}}scope="col">ID</th>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Mobile</th>
-                      <th scope="col">Joining Date</th>
-                      <th scope="col">Status</th>
-=======
                       <th style= {{width: "5%"}} scope="col">ID</th>
                       <th style= {{width: "8%"}} scope="col">First Name</th>
                       <th style= {{width: "8%"}} scope="col">Last Name</th>
@@ -208,7 +185,6 @@ class ViewTeam extends Component {
                       {/* <th scope="col">role</th> */}
                       {/* <th scope="col">address</th>/ */}
                       <th style= {{width: "5%"}} scope="col">Status</th>
->>>>>>> ee0cd002d8bdabf913397afdec2d95bcedf5193b
                       <th scope="col">Actions</th>
 
                     </tr>
@@ -349,7 +325,7 @@ class ViewTeam extends Component {
                   itemsCountPerPage={this.itemsCountPerPage}
                   totalItemsCount={450} // check
                   pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
+                  onChange={this.handlePageChange}
                 />
               </CardBody>
             </Card>
