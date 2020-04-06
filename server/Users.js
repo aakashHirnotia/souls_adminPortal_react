@@ -47,22 +47,26 @@ users.post("/register", (req, res) => {
 users.post("/update-member", (req, res) => {
   const today = new Date();
   const userData = {
-    firstname: req.body.first_name || "Ashish",
-    lastname: req.body.last_name || "kumar",
+    firstname: req.body.first_name,
+    lastname: req.body.last_name,
     gender: req.body.gender,
-    address: req.body.address || "asdgfhgjk",
-    status: req.body.status || "inactive",
-    mobileno: req.body.mobile || "1234567789",
-    role: req.body.role || "admin"
+    email: req.body.email,
+    address: req.body.address,
+    status: req.body.status,
+    mobileno: req.body.mobile,
+    role: req.body.role 
   };
 
   axios
-    .post(`${baseURL}:8000/team/update-team-member`, userData, {
-      Authorization: `Bearer ${req.headers.token}`
+    .put(`${baseURL}:8000/team/update-team-member`, userData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
     })
     .then(response => {
       console.log(response.status);
       res.status(response.status).send(response.data);
+      console.log(response)
     })
     .catch(e => {
       console.log("ERROR");
@@ -78,7 +82,7 @@ users.post("/login", (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-
+  console.log("xxcvjk")
   axios
     .post(`${baseURL}:8000/team/login`, userData)
     .then(response => {
@@ -105,11 +109,20 @@ users.put("/password", (req, res) => {
   console.log("Password change request Received!");
 
   axios
-    .put(`${baseURL}:8000/team/update-member/password`, userData)
+    .put(`${baseURL}:8000/team/update-member/password`, userData,{
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    }
+    )
     .then(response => {
+      console.log(response)
       res.status(response.status).send(response.data);
     })
-    .catch(e => res.status(500).send("Error: " + e));
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)
+    });
 });
 
 users.get("/view-member", (req, res) => {
@@ -150,7 +163,7 @@ users.get("/search", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/team/list?${req.query.filter}`, {
+    .get(`${baseURL}:8000/team/list?id=${req.query.id}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&email=${req.query.email}&joining=${req.query.joining}&status=${req.query.status}&role=${req.query.role}&mobileno=${req.query.mobileno}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -198,4 +211,37 @@ users.post("/update", (req, res) => {
   console.log("Name: " + userData.first_name);
 });
 
+
+//Customer-List
+users.get("/customer-list", (req, res) => {
+  axios
+    .get(`${baseURL}:8000/customer/list`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => res.status(500).send("Error: " + e));
+});
+
+//PendingOder-List
+users.get("/pendingorder-list", (req, res) => {
+  axios
+    .get(`${baseURL}:8000/pendingorder/list`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => res.status(500).send("Error: " + e));
+});
+
+
 module.exports = users;
+
+
+

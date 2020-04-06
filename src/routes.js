@@ -32,7 +32,7 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
 // // const Badges = React.lazy(() => import('./views/Notifications/Badges'));
 // // const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
- const Customers = React.lazy(() => import('./views/Tables/Customers'));
+ const Customers = React.lazy(() => import('./views/Tables/ViewCustomer'));
  const PendingOrders = React.lazy(() => import('./views/Tables/PendingOrders'));
  const Partners = React.lazy(() => import('./views/Tables/Partners'));
  const Transactions = React.lazy(() => import('./views/Tables/Transactions'));

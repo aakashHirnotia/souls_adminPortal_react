@@ -1,9 +1,29 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-
+import {BrowserRouter} from 'react-router-dom'
 import { TeamData, TeamDatas } from "./TeamData";
 
+const Label = {
+  teamid: "Team ID",
+  firstname: "First Name",
+  lastname: "Last Name",
+  firstname: "First Name",
+  email: "Email Address",
+  firstname: "First Name",
+  address: "Address",
+  mobileno: "Mobile No.",  
+  status: "Status",
+  Joining_Date: "Joining Date"
+  
+}
+
 class TeamMember extends Component {
+  componentWillMount() {
+    if(TeamData.length==0) {
+      window.location.href='/team/list'
+    }
+  }
+
   render() {
     const team = (TeamData.length !== 0 ? TeamData : TeamDatas).find(
       team => team.teamid.toString() === this.props.match.params.id
@@ -26,8 +46,8 @@ class TeamMember extends Component {
             <Card>
               <CardHeader>
                 <strong>
-                  <i className="icon-info pr-1"></i>Team id:{" "}
-                  {this.props.match.params.id}
+                  <i className="icon-info pr-1"></i>Team Member:{" "}
+                  {team.firstname+" "+team.lastname}
                 </strong>
               </CardHeader>
               <CardBody>
@@ -36,7 +56,7 @@ class TeamMember extends Component {
                     {teamDetails.map(([key, value]) => {
                       return (
                         <tr key={key}>
-                          <td>{`${key}:`}</td>
+                          <td>{`${Label[key]}:`}</td>
                           <td>
                             <strong>{value}</strong>
                           </td>
