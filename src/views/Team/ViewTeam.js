@@ -17,15 +17,15 @@ class TeamRow extends Component {
   }
 
   getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-close' :
+    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
+            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
             (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
             'primary'
   }
 
   getColor = (status) => {
     return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"blue"} :
+            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
             (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
             {color:"black"}
   }
@@ -48,7 +48,7 @@ class TeamRow extends Component {
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
         {/* <td>{this.state.team.role}</td> */}
         {/* <td style={{ width: "20%" }}>{this.state.team.address}</td> */}
-        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
+        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)} ></td>
         <td>
           <Link to={`/team/view-member/${this.props.team.teamid}`}>
             <i className="fa fa-eye"></i>
@@ -109,16 +109,16 @@ class ViewTeam extends Component {
     e.preventDefault();
     const searchUser = {
       id: this.state.id,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      firstname: this.state.first_name,
+      lastname: this.state.last_name,
       // gender: this.state.gender,
       email: this.state.email,
       // password: this.state.password,
       joining: this.state.joining,
       // address: this.state.address,
       status: this.state.status,
-      // role: this.state.role,
-      mobile: this.state.mobile
+      role: this.state.role,
+      mobileno: this.state.mobile
     };
 
     search(searchUser);
@@ -181,15 +181,15 @@ class ViewTeam extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th style= {{width: "5%"}}scope="col">ID</th>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Mobile</th>
-                      <th scope="col">Joining Date</th>
+                      <th style= {{width: "5%"}} scope="col">ID</th>
+                      <th style= {{width: "8%"}} scope="col">First Name</th>
+                      <th style= {{width: "8%"}} scope="col">Last Name</th>
+                      <th style= {{width: "18%"}} scope="col">Email</th>
+                      <th style= {{width: "15%"}} scope="col">Mobile</th>
+                      <th style= {{width: "25%"}} scope="col">Joining Date</th>
                       {/* <th scope="col">role</th> */}
                       {/* <th scope="col">address</th>/ */}
-                      <th scope="col">Status</th>
+                      <th style= {{width: "5%"}} scope="col">Status</th>
                       <th scope="col">Actions</th>
 
                     </tr>

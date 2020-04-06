@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// const baseURL = "http://10.42.0.1";
+// const baseURL = "http://10.42.0.69";
 const baseURL = "http://localhost";
 
 // process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
@@ -34,24 +34,24 @@ export const search = (searchUser) => {
   // for(const property in searchUser){
   //   if(searchUser[property]!== "") searchLink+=("property="+searchUser[property]+"&")
   // }
-  let query="";
+  // let query="";
 
-  const Name = {
-    first_name: "FirstName",
-    last_name: "LasrName",
-    email: "Email",
-    joining: "Joining_Date",
-    status: "Status",
-    mobile: "MobileNo"
-  }
+  // const Name = {
+  //   first_name: "FirstName",
+  //   last_name: "LasrName",
+  //   email: "Email",
+  //   joining: "Joining_Date",
+  //   status: "Status",
+  //   mobile: "MobileNo"
+  // }
 
-  Object.keys(searchUser).forEach(o=> {
-    if(searchUser[o]!=="")
-      query+=`${Name[o]}=${searchUser[o]}&`
-  })
+  // Object.keys(searchUser).forEach(o=> {
+  //   if(searchUser[o]!=="")
+  //     query+=`${Name[o]}=${searchUser[o]}&`
+  // })
   // query=query.replace(query.length-1, '')
   return axios
-    .post(`http://localhost:5000/users/search?filter=${query}`,{
+    .post(`http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -74,6 +74,7 @@ export const updateMember = updatedUser => {
         last_name: updatedUser.last_name,
         gender: updatedUser.gender || "M",
         address: updatedUser.address,
+        email: updatedUser.email,
         status: updatedUser.status,
         role: updatedUser.role,
         mobile: updatedUser.mobile
@@ -169,37 +170,48 @@ export const login = async (user) => {
           return;
         }
         case 401: {
-          message = "Bad Credentials!";
+          message = "Invalid User!";
           return;
         }
       }
     })
     .catch((e) => {
+      if (e.response) {
       switch (e.response.status) {
         case 401:
           message = e.response.data.message;
           return;
         default:
-          return e.response.statusText;
+          return e.response.status;
       }
-    });
+    }
+    else {
+      window.alert(e)
+    }}
+    );
   return message;
 };
 
 export const updatePassword = async (user) => {
+  let changed = false;
   await axios
     .post(`${baseURL}:5000/users/password`, {
       email: user.email,
       password: user.password,
-    })
+    },{
+      headers: {
+        token: localStorage.getItem("token"),
+      }}
+    )
     .then((response) => {
-      if (response.status === 200) {
-        return true;
-      } else return false;
+      if (response.status == 200) {
+        changed= true;
+      } else changed= false;
     })
     .catch((err) => {
       window.alert("Error: " + err);
     });
+    return changed
 };
 
 // export const logout = user => {

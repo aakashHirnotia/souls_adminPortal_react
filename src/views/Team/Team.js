@@ -74,7 +74,7 @@ class Team extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  validate = () => {
+  validate1 = () => {
     let first_nameError = "";
     let last_nameError = "";
     let passwordError = "";
@@ -143,21 +143,75 @@ class Team extends Component {
     return true;
   };
 
+  validate2 = () => {
+    let first_nameError = "";
+    let last_nameError = "";
+    let mobileError = "";
+    let addressError = "";
+    let genderError = "";
+    let roleError = "";
+    let statusError = "";
+    if (!this.state.first_name) {
+      first_nameError = "First Name can't sbe empty";
+    }
+    if (!this.state.last_name) {
+      last_nameError = "Last Name can't be empty";
+    }
+    if (!this.state.mobile) {
+      mobileError = "Mobile No can't be empty";
+    }
+    if (!this.state.address) {
+      addressError = "Address can't be empty";
+    }
+    if (!this.state.gender) {
+      genderError = "Choose Gender";
+    }
+    if (!this.state.role) {
+      roleError = "Choose Role";
+    }
+    if (!this.state.status) {
+      statusError = "Choose Status";
+    }
+
+    if (
+      first_nameError ||
+      last_nameError ||
+      mobileError ||
+      addressError ||
+      roleError ||
+      statusError ||
+      genderError
+    ) {
+      this.setState({
+        first_nameError,
+        last_nameError,
+        mobileError,
+        addressError,
+        genderError,
+        statusError,
+        roleError
+      });
+      return false;
+    }
+    return true;
+  };
+
+
   onSubmit(e) {
     e.preventDefault();
     console.log("Submit fucntion called - ")
-    const isValid = this.validate();
 
     console.log("Submit fucntion called - 2 " + this.state.isEditable)
     if(this.state.isEditable){
+      const isValid = this.validate2();
       console.log("isValid = "+isValid)
-      // if (isValid) {
-        
+      if (isValid) {
         const updatedUser = {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
           gender: this.state.gender,
           address: this.state.address,
+          email: this.state.email,
           status: this.state.status,
           role: this.state.role,
           mobile: this.state.mobile
@@ -167,14 +221,15 @@ class Team extends Component {
         });
         this.setState(intialState);
         
-      // }
+      }
 
     }
     else{
+      const isValid = this.validate1();
       if (isValid) {
         const newUser = {
-          first_name: this.state.firstname,
-          last_name: this.state.lastname,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
           gender: this.state.gender,
           email: this.state.email,
           password: this.state.password,
@@ -393,7 +448,7 @@ class Team extends Component {
         <div>
           <Card>
             <CardHeader>
-              <strong>Edit Member</strong>
+              <strong>Edit Member: </strong>
               {/* <small> Form</small> */}
             </CardHeader>
             <CardBody>
@@ -555,6 +610,7 @@ class Team extends Component {
         </div>)}
       </div>
     );
+    
   }
 }
 

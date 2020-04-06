@@ -11,18 +11,23 @@ export default class PasswordPopUp extends Component{
             email: this.props.email,
             status: false
         }
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange=(e)=>{
-        this.setState({ [e.target.password] : e.target.value })
+        this.setState({ password: e.target.value })
     }
 
     onSubmit=async (e)=>{
         e.preventDefault()
-        let changed = await updatePassword({
+        const user = {
             email: this.state.email,
-            password: this.state.password,
-        })
+            password: this.state.password
+        };
+        console.log("changing password");
+        let changed =await updatePassword(user);
+        console.log(changed)
         if(changed) {
             this.setState({status: true})
         }
@@ -35,11 +40,27 @@ export default class PasswordPopUp extends Component{
     render(){
         return(
             <div>
+                {this.state.status ?
                 <Modal show={this.props.show} onHide={this.props.handleClose}>
                     <Modal.Header closeButton>
                     <Modal.Title>Change Password</Modal.Title>
                     </Modal.Header>
-        {this.state.status && <p>Password Changed!</p>}
+                    <Modal.Body>
+                        <label htmlFor="password" style={{color:"green"}}>Password changed successfully  !!!</label>
+                        <br></br>
+                        <input type="password" id="password" placeholder="password" name="password" style={{padding: "8px"}} value="" onChange={this.onChange} disabled={true}/>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={this.props.handleClose}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+                :
+                <Modal show={this.props.show} onHide={this.props.handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Change Password</Modal.Title>
+                    </Modal.Header>
                     <Modal.Body>
                         <label htmlFor="password">Enter New Password</label>
                         <br></br>
@@ -54,6 +75,7 @@ export default class PasswordPopUp extends Component{
                     </Button>
                     </Modal.Footer>
                 </Modal>
+                }
             </div>
 
         );
