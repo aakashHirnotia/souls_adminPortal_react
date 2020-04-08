@@ -1,6 +1,5 @@
 import React from 'react';
 // import TeamMember from './views/Team/TeamMember';
-
 // const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 // const Cards = React.lazy(() => import('./views/Base/Cards'));
 // const Carousels = React.lazy(() => import('./views/Base/Carousels'));
@@ -33,9 +32,9 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
 // // const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
  const Customers = React.lazy(() => import('./views/Tables/ViewCustomer'));
- const PendingOrders = React.lazy(() => import('./views/Tables/PendingOrders'));
+ const PendingOrders = React.lazy(() => import('./views/Tables/ViewPendingOrder'));
  const Partners = React.lazy(() => import('./views/Tables/Partners'));
- const Transactions = React.lazy(() => import('./views/Tables/Transactions'));
+ const Transaction = React.lazy(() => import('./views/Tables/ViewTransaction'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
  const Role = React.lazy(() => import('./views/Admin/Role'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
@@ -57,7 +56,7 @@ const routes = [
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
    { path: '/tables/partners', name: 'Partners', component: Partners },
-   { path: '/tables/transactions', name: 'Transactions', component: Transactions},
+   { path: '/tables/transaction', name: 'Transaction', component: Transaction},
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
    { path: '/admin/role', name: 'Role', component: Role},
    { path: '/admin/teamHasRole', name: 'TeamHasRole', component: TeamHasRole},

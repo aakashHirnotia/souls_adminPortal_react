@@ -44,7 +44,6 @@ class TeamRow extends Component {
         <td style={{ width: "10%" }}>{this.state.team.lastname}</td>
         <td>{this.state.team.email}</td>
         <td>{this.state.team.mobileno}</td>
-        {/* <td>{this.state.team.registered}</td> */}
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
         <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
         <td>
@@ -84,9 +83,7 @@ class ViewTeam extends Component {
       id: "",
       first_name: "",
       last_name: "",
-      // gender : '',
       email: "",
-      // password : '',
       joining: "",
       status: "",
       mobile: "",
@@ -119,7 +116,6 @@ class ViewTeam extends Component {
       id: this.state.id,
       firstname: this.state.first_name,
       lastname: this.state.last_name,
-      // gender: this.state.gender,
       email: this.state.email,
       joining: this.state.joining,
       status: this.state.status,
@@ -182,8 +178,6 @@ class ViewTeam extends Component {
                       <th style= {{width: "18%"}} scope="col">Email</th>
                       <th style= {{width: "15%"}} scope="col">Mobile</th>
                       <th style= {{width: "25%"}} scope="col">Joining Date</th>
-                      {/* <th scope="col">role</th> */}
-                      {/* <th scope="col">address</th>/ */}
                       <th style= {{width: "5%"}} scope="col">Status</th>
                       <th scope="col">Actions</th>
 
