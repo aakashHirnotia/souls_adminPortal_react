@@ -1,21 +1,32 @@
-// //CustomerData
-// export let customerData=[]
+//CustomerData
+export let customerData=[]
 
-// export const SetcustomerData = (data) => {
-//   customerData=data;
-// }
+export const SetCustomerData = (data) => {
+  customerData=data;
+}
 
-// export const getCustomerData=(data) => {
-//   return customerData;
-// }
+export const getCustomerData=(data) => {
+  return customerData;
+}
 
-// //PandingOrderdata
-// export let PandingOrderData=[]
+//PendingOrderdata
+export let PendingOrderData=[]
 
-// export const SetPandingOrderData = (data) => {
-//   PandingOrderData=data;
-// }
+export const SetPendingOrderData = (data) => {
+  PendingOrderData=data;
+}
 
-// export const getPandingOrderData=(data) => {
-//   return PandingOrderData;
-// }
+export const getPendingOrderData=(data) => {
+  return PendingOrderData;
+}
+
+//Transaction data
+export let TransactionData=[]
+
+export const SetTransactionData = (data) => {
+  TransactionData=data;
+}
+
+export const getTransactionData=(data) => {
+  return TransactionData;
+}

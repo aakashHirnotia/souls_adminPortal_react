@@ -62,7 +62,7 @@ class Login extends Component {
                       {this.state.status && (
                         <p
                           style={
-                            this.state.status == "Logging in..."
+                            this.state.status === "Logging in..."
                               ? { color: "blue" }
                               : { color: "red" }
                           }
