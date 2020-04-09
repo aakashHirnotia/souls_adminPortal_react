@@ -61,7 +61,7 @@ class Team extends Component {
         email: team.email,
         address: team.address,
         status: team.status,
-        role: team.role,
+        // role: team.role,
         mobile: team.mobileno
       })
     }
@@ -147,7 +147,7 @@ class Team extends Component {
     let mobileError = "";
     let addressError = "";
     let genderError = "";
-    let roleError = "";
+    // let roleError = "";
     let statusError = "";
     if (!this.state.first_name) {
       first_nameError = "First Name can't sbe empty";
@@ -164,9 +164,9 @@ class Team extends Component {
     if (!this.state.gender) {
       genderError = "Choose Gender";
     }
-    if (!this.state.role) {
-      roleError = "Choose Role";
-    }
+    // if (!this.state.role) {
+    //   roleError = "Choose Role";
+    // }
     if (!this.state.status) {
       statusError = "Choose Status";
     }
@@ -176,7 +176,7 @@ class Team extends Component {
       last_nameError ||
       mobileError ||
       addressError ||
-      roleError ||
+      // roleError ||
       statusError ||
       genderError
     ) {
@@ -187,7 +187,7 @@ class Team extends Component {
         addressError,
         genderError,
         statusError,
-        roleError
+        // roleError
       });
       return false;
     }
@@ -211,7 +211,7 @@ class Team extends Component {
           address: this.state.address,
           email: this.state.email,
           status: this.state.status,
-          role: this.state.role,
+          // role: this.state.role,
           mobile: this.state.mobile
         };
         updateMember(updatedUser).then(res => {
@@ -518,7 +518,7 @@ class Team extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="email">Email</Label>
                       <Input
@@ -553,7 +553,7 @@ class Team extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  {/* <Col xs="2">
                     <FormGroup>
                       <Label htmlFor="role">Role</Label>
                       <select
@@ -570,7 +570,7 @@ class Team extends Component {
                         {this.state.roleError}
                       </div>
                     </FormGroup>
-                  </Col>
+                  </Col> */}
                   <Col xs="2">
                     <FormGroup>
                       <Label htmlFor="gender">Gender</Label>

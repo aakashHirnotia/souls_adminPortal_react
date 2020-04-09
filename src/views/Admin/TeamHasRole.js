@@ -1,60 +1,282 @@
-import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
-import { Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
+import { TeamHasRoleData, TeamHasRoleDatas, SetTeamHasRoleData } from "./TeamHasRoleData";
+import Pagination from "react-js-pagination";
+import UpdateRolePopUp from "./UpdateRolePopUp.js";
+import { teamHasRoleList, searchTeamHasRole } from "./AdminFunctions";
 
-import TeamHasRoleData from './TeamHasRoleData'
+class TeamHasRoleRow extends Component {
+  state = {
+    showModal: false,
+    teamHasRole: this.props.teamHasRole
+  };
 
-function TeamHasRoleRow(props) {
-    const teamHasRole = props.teamHasRole
-  
-    return (
-      <tr key={teamHasRole.id.toString()}>
-        <th>{teamHasRole.id}</th>
-        <td>{teamHasRole.TeamID}</td>
-        <td>{teamHasRole.Status}</td>
-        <td>{teamHasRole.CreatedTime}</td>
-        <td>{teamHasRole.UpdatedTime}</td>
-      </tr>
-    )
+  componentWillReceiveProps(nextProps) {
+    this.setState({teamHasRole: this.props.teamHasRole})
   }
 
-class TeamHasRole extends Component {
-    render() {
+  getIcon = (status) => {
+    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
+            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
+            (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
+            'primary'
+  }
 
-        const teamHasRoleList = TeamHasRoleData.filter((teamHasRole) => teamHasRole.id < 10)
-    
-        return (
-          <div className="animated fadeIn">
-            <Row>
-              <Col xl={12} style={{padding:"5"}}>
-                <Card>
-                  <CardHeader>
-                    <i className="fa fa-align-justify"></i> Team Has Role <small className="text-muted">Members</small>
-                  </CardHeader>
-                  <CardBody>
-                    <Table responsive hover>
-                      <thead>
-                        <tr>
-                          <th scope="col">S.No.</th>
-                          <th scope="col">Team ID</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Created Time</th>
-                          <th scope="col">Updated Time</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {teamHasRoleList.map((teamHasRole, index) =>
-                          <TeamHasRoleRow key={index} teamHasRole={teamHasRole}/>
-                        )}
-                      </tbody>
-                    </Table>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        )
-      }
-    }
- 
+  getColor = (status) => {
+    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
+            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
+            (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
+            {color:"black"}
+  }
+
+  getTitle = (status) => {
+    return  (status === 'Active' || status === 'active')  ? "active" :
+            (status === 'Inactive' || status === 'inactive') ? "inactive" :
+            (status === 'Deleted' || status === 'deleted')  ? "deleted" :
+            "not defined"
+  }
+
+  displayModal = () => {
+    this.setState({ showModal: true });
+  };
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
+  render() {
+    return (
+      <tr key={this.state.teamHasRole.team_has_role_id}>
+        <th>{this.state.teamHasRole.teamid}</th>
+        <td>{this.state.teamHasRole.team_has_role_id}</td>
+        <td>{this.state.teamHasRole.CreatedAt}</td>
+        <td>{this.state.teamHasRole.UpdatedAt}</td>
+        <td className={this.getIcon(this.state.teamHasRole.status)} style={this.getColor(this.state.teamHasRole.status)} data-toggle="tooltip" title={this.getTitle(this.state.teamHasRole.status)}></td>
+        <td>
+          <Link style={{ paddingLeft: "14px" }} onClick={this.displayModal}>
+            <i className="fa fa-pencil" data-toggle="tooltip" title="Update Role"></i>
+          </Link>
+        </td>
+        <UpdateRolePopUp
+          teamid={this.state.teamHasRole.teamid}
+          show={this.state.showModal}
+          handleClose={this.closeModal}
+        />
+      </tr>
+    );
+  }
+}
+
+class TeamHasRole extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePage: 1,
+      itemsCountPerPage: 10,
+
+      data: [],
+
+      teamid: "",
+      team_has_role_id: "",
+      status: "",
+      CreatedAt: "",
+      UpdatedAt: "",
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+
+
+  async componentDidMount() {
+    const dataRecieved = await teamHasRoleList(
+      this.state.activePage,
+      this.state.itemsCountPerPage
+    );
+    SetTeamHasRoleData(dataRecieved);
+    const newData = dataRecieved
+    this.setState({ data: newData });
+  }
+
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit= async (e)=> {
+    e.preventDefault();
+    const searchUser = {
+      status: this.state.status
+    };
+
+    const dataRecieved = await searchTeamHasRole(searchUser);
+    SetTeamHasRoleData(dataRecieved);
+    const newData = dataRecieved
+    this.setState({ data: newData });
+  }
+
+  handlePageChange = async (pageNumber) => {
+    console.log(`pageNumber is ${pageNumber}`);
+    // this.setState({ activePage: pageNumber });
+    console.log(`active page is ${this.state.activePage}`);
+
+    const dataRecieved = await teamHasRoleList(
+      pageNumber,
+      this.state.itemsCountPerPage
+    );
+    SetTeamHasRoleData(dataRecieved);
+    // console.log(dataPageRecieved)
+    const newData = dataRecieved
+    console.log("newdata = " + newData.length)
+    this.setState({ data: newData, activePage: pageNumber });
+  }
+  render() {
+    // console.log('DAta: ')
+    // console.log(this.state.data.forEach(o=>console.log(o)))
+    // const teamList = (TeamHasRoleData.length !== 0 ? TeamHasRoleData : TeamHasRoleDatas).filter(
+    //   team => team.id < 10
+    // );
+    // console.log(this.state.data.forEach(o => console.log(o)));
+
+    return (
+      <div className="animated fadeIn">
+        <Row>
+          <Col xl={12} style={{ padding: "0" }}>
+            <Card>
+              <CardHeader>
+                <i className="fa fa-align-justify"></i> Team Has Role{" "}
+              </CardHeader>
+              <CardBody>
+                <Table responsive hover>
+                  <thead>
+                    <tr>
+                      <th style={{width: "10%"}} scope="col">Team ID</th>
+                      <th style={{width: "10%"}} scope="col">Team Has Role ID</th>
+                      <th scope="col">Created At</th>
+                      <th scope="col">Updated At</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {/* <form onSubmit={this.onSubmit}> */}
+                      <td scope="col">
+                        <input
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="teamid"
+                          value={this.state.teamid}
+                          onChange={this.onChange}
+                        />
+                      </td>
+                      <td scope="col">
+                        <input
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="team_has_role_id"
+                          value={this.state.team_has_role_id}
+                          onChange={this.onChange}
+                        />
+                      </td>
+                      <td scope="col">
+                        <input
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="CreatedAt"
+                          value={this.state.CreatedAt}
+                          onChange={this.onChange}
+                        />
+                      </td>
+                      <td scope="col">
+                        <input
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="UpdatedAt"
+                          value={this.state.UpdatedAt}
+                          onChange={this.onChange}
+                        />
+                      </td>
+                      <td scope="col">
+                        {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
+                        <select
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="status"
+                          value={this.state.status}
+                          onChange={this.onChange}
+                        >
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                          <option value="Deleted">Deleted</option>
+                        </select>
+                      </td>
+                      <td scope="col">
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-outline-primary"
+                          style={{ justifyContent: "center" }}
+                          onClick={this.onSubmit}
+                        >
+                          search!
+                        </button>
+                      </td>
+                    </tr>
+
+                    {this.state.data ? (
+                      <React.Fragment>
+                        {this.state.data &&
+                          this.state.data.map((teamHasRole, index) => (
+                            // {teamList.map((team, index) =>
+                            <TeamHasRoleRow key={index} teamHasRole={teamHasRole} />
+                          ))}
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        {this.state.data.length!=0 && this.state.data.map((teamHasRole, index) => (
+                          <TeamHasRoleRow key={index} teamHasRole={teamHasRole} />
+                        ))}
+                      </React.Fragment>
+                    )}
+                  </tbody>
+                </Table>
+                <Pagination
+                  className="pagination"
+                  hideDisabled
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={this.itemsCountPerPage}
+                  totalItemsCount={450} // check
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+}
+
 export default TeamHasRole;

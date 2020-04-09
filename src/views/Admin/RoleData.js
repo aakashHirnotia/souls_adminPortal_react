@@ -4,5 +4,4 @@ const RoleData = [
     {RoleID: '3',Role:'Customer Service',RoleStatus:'active'}
   ]
   
-  export default RoleData
-  
+export default RoleData
