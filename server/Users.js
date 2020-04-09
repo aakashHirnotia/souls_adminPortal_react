@@ -196,7 +196,13 @@ users.get("/customer-list", (req, res) => {
     })
     .catch(e =>{
       console.log(e)
-    res.status(500).send("users.get("/pendingorder-list", (req, res) => {
+    res.status(500).send(e)})
+})
+      
+      
+      
+  
+      users.get("/pendingorder-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
     .get(`${baseURL}:8000/customers/booking/list?page=${req.query.page}&limit=${5}`, {
