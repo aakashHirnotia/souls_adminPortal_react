@@ -10,8 +10,8 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-// const baseURL = "http://10.42.0.69";
-const baseURL = "http://localhost"
+const baseURL = "http://10.42.0.69";
+// const baseURL = "http://localhost"
 // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
 users.post("/register", (req, res) => {
@@ -127,6 +127,30 @@ users.put("/password", (req, res) => {
     });
 });
 
+users.put("/updateTeamRole", (req, res) => {
+  const userData = {
+    teamid: req.body.teamid,
+    role: req.body.role
+  };
+  console.log("Role change request Received!");
+
+  axios
+    .put(`${baseURL}:8000/team/update-member/role`, userData,{
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    }
+    )
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)
+    });
+});
+
 users.get("/view-member", (req, res) => {
   const userData = {
     email: req.body.email,
@@ -156,9 +180,15 @@ users.get("/team-list", (req, res) => {
       }
     })
     .then(response => {
+      console.log(response)
+
       res.status(response.status).send(response.data);
     })
-    .catch(e => res.status(500).send("Error: " + e));
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)}
+      
+      );
 });
 
 users.get("/search", (req, res) => {
@@ -171,6 +201,7 @@ users.get("/search", (req, res) => {
       }
     })
     .then(response => {
+      console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch(e =>{
@@ -179,9 +210,24 @@ users.get("/search", (req, res) => {
     } )
 });
 
-
-
-
+users.get("/searchTeamHasRole", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/team/has-role/view?status=${req.query.status}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
 
 users.get("/profile", (req, res) => {});
 
@@ -213,34 +259,26 @@ users.post("/update", (req, res) => {
   console.log("Name: " + userData.first_name);
 });
 
-
-//Customer-List
-users.get("/customer-list", (req, res) => {
+users.get("/team-has-role-list", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/customer/list`, {
+    .get(`${baseURL}:8000/team/has-role/view?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
+      console.log(" dfdfvfsd" +response)
+
       res.status(response.status).send(response.data);
     })
-    .catch(e => res.status(500).send("Error: " + e));
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)}
+      
+      );
 });
 
-//PendingOder-List
-users.get("/pendingorder-list", (req, res) => {
-  axios
-    .get(`${baseURL}:8000/pendingorder/list`, {
-      headers: {
-        Authorization: `Bearer ${req.headers.token}`
-      }
-    })
-    .then(response => {
-      res.status(response.status).send(response.data);
-    })
-    .catch(e => res.status(500).send("Error: " + e));
-});
 
 
 module.exports = users;

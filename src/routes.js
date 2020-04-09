@@ -37,7 +37,7 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
  const Partners = React.lazy(() => import('./views/Tables/Partners'));
  const Transactions = React.lazy(() => import('./views/Tables/Transactions'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
- const Role = React.lazy(() => import('./views/Admin/Role'));
+ const ViewRole = React.lazy(() => import('./views/Admin/ViewRole'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
 // const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
@@ -59,7 +59,7 @@ const routes = [
    { path: '/tables/partners', name: 'Partners', component: Partners },
    { path: '/tables/transactions', name: 'Transactions', component: Transactions},
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
-   { path: '/admin/role', name: 'Role', component: Role},
+   { path: '/admin/role', name: 'ViewRole', component: ViewRole},
    { path: '/admin/teamHasRole', name: 'TeamHasRole', component: TeamHasRole},
   // { path: '/base', exact: true, name: 'Base', component: Cards },
   // { path: '/base/cards', name: 'Cards', component: Cards },

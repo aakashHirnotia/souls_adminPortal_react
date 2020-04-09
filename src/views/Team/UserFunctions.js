@@ -226,7 +226,7 @@ export const teamList = async (activePage, itemCountPerPage) => {
         // console.log(typeof(response.data))
         data = [...response.data];
         // console.log(data)
-        // console.log(response.data)
+        // console.log(response.headers)
         // return response.data
       }
     })
