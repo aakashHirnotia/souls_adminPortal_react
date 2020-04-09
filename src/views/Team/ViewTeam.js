@@ -292,7 +292,6 @@ class ViewTeam extends Component {
                           search!
                         </button>
                       </td>
-                      {/* </form> */}
                     </tr>
 
                     {this.state.data ? (

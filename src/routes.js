@@ -45,7 +45,10 @@ const ViewProfile = React.lazy(() => import('./views/Profile/View'));
 // const UpdateProfile = React.lazy(() => import('./views/Profile/Update'));
 const ViewTeam = React.lazy(() => import('./views/Team/ViewTeam'));
 const TeamMember = React.lazy(() => import('./views/Team/TeamMember'));
-const TeamEditMember = React.lazy(() => import('./views/Team/TeamEditMember'));
+const CustomerMember = React.lazy(() => import('./views/Tables/CustomerMember'));
+const PendingOrderMember = React.lazy(() => import('./views/Tables/PendingOrderMember'));
+const TransactionMember = React.lazy(() => import('./views/Tables/TransactionMember'));
+// const TeamEditMember = React.lazy(() => import('./views/Team/TeamEditMember'));
 const User = React.lazy(() => import('./views/Users/User'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -100,6 +103,9 @@ const routes = [
   { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
+  { path: '/customer/view-member/:id', exact: true,  name: 'CustomerMember', component: CustomerMember },
+  { path: '/pendingorder/view-member/:id', exact: true,  name: 'PendingOrderMember', component: PendingOrderMember },
+  { path: '/transaction/view-member/:id', exact: true,  name: 'TransactionMember', component: TransactionMember },
   { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: Team },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];

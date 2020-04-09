@@ -7,10 +7,9 @@ const Label = {
   teamid: "Team ID",
   firstname: "First Name",
   lastname: "Last Name",
-  firstname: "First Name",
   email: "Email Address",
-  firstname: "First Name",
   address: "Address",
+  // role: "Role",
   mobileno: "Mobile No.",  
   status: "Status",
   Joining_Date: "Joining Date"

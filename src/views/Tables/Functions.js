@@ -17,6 +17,7 @@ export const customerList = async (activePage, itemCountPerPage) => {
     .then((response) => {
       if (response.status === 200) {
         data = [...response.data];
+        // console.log(data)
       }
     })
     .catch((err) => {
@@ -69,7 +70,7 @@ export const TransactionList = async (activePage, itemCountPerPage) => {
 export const searchCust = async (searchCustomer) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/customer-search?id=${searchCustomer.id}&soulsID=${searchCustomer.soulsID}&name=${searchCustomer.name}&mobileno=${searchCustomer.mobileno}&gender=${searchCustomer.gender}&email=${searchCustomer.email}&address=${searchCustomer.address}&pincode=${searchCustomer.pincode}&createtime=${searchCustomer.createtime}&registrationsource=${searchCustomer.registrationsource}&lastaccesstime=${searchCustomer.lastaccesstime}&status=${searchCustomer.status}`,{
+    get(`http://localhost:5000/users/customer-search?customer_id=${searchCustomer.customer_id}&customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&mobileno=${searchCustomer.mobileno}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&address=${searchCustomer.address}&pincode=${searchCustomer.pincode}&createtime=${searchCustomer.createtime}&registrationsource=${searchCustomer.registrationsource}&lastaccesstime=${searchCustomer.lastaccesstime}&status=${searchCustomer.status}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -86,7 +87,7 @@ export const searchCust = async (searchCustomer) => {
 export const searchPendingOrder = async (searchPending) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/pandingorder-search?Order_ID=${searchPending.Order_ID}&customer_ID=${searchPending.customer_ID}&souls_ID=${searchPending.souls_ID}&customer_name=${searchPending.customer_name}&no_of_therapists_required=${searchPending.no_of_therapists_required}&therapist_gender=${searchPending.therapist_gender}&massage_for=${searchPending.massage_for}&slot_time=${searchPending.slot_time}&slot_date=${searchPending.slot_date}&massage_duration=${searchPending.massage_duration}&address=${searchPending.address}&pincode=${searchPending.pincode}&mobile_no=${searchPending.mobile_no}&latitude=${searchPending.latitude}&longitude=${searchPending.longitude}&create_at=${searchPending.create_at}&is_order_confermed=${searchPending.is_order_confermed}&transaction_ID=${searchPending.transaction_ID}&total_order_amount=${searchPending.total_order_amount}`,{
+    get(`http://localhost:5000/users/pandingorder-search?order_id=${searchPending.order_id}&customer_id=${searchPending.customer_id}&customer_souls_id=${searchPending.customer_souls_id}&customer_name=${searchPending.customer_name}&number_of_therapist=${searchPending.number_of_therapist}&therapist_gender=${searchPending.therapist_gender}&massage_for=${searchPending.massage_for}&Slot_Time=${searchPending.Slot_Time}&Slot_Date=${searchPending.Slot_Date}&massage_duration=${searchPending.massage_duration}&address=${searchPending.address}&pincode=${searchPending.pincode}&latitude=${searchPending.latitude}&longitude=${searchPending.longitude}&CreatedAt=${searchPending.CreatedAt}&is_order_confirmed=${searchPending.is_order_confirmed}&merchant_transaction_id=${searchPending.merchant_transaction_id}&total_order_amount=${searchPending.total_order_amount}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -103,7 +104,7 @@ export const searchPendingOrder = async (searchPending) => {
 export const searchTransaction = async (searchTrans) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/transaction-search?Order_ID=${searchTrans.Order_ID}&customer_ID=${searchTrans.customer_ID}&souls_ID=${searchTrans.souls_ID}&customer_name=${searchTrans.customer_name}&no_of_therapists_required=${searchTrans.no_of_therapists_required}&therapist_gender=${searchTrans.therapist_gender}&massage_for=${searchTrans.massage_for}&slot_time=${searchTrans.slot_time}&slot_date=${searchTrans.slot_date}&massage_duration=${searchTrans.massage_duration}&address=${searchTrans.address}&pincode=${searchTrans.pincode}&latitude=${searchTrans.latitude}&longitude=${searchTrans.longitude}&create_at=${searchTrans.create_at}&merchant_transaction_ID=${searchTrans.merchant_transaction_ID}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_ID=${searchTrans.payment_gateway_ID}&total_order_amount=${searchTrans.total_order_amount}`,{
+    get(`http://localhost:5000/users/transaction-search?order_id=${searchTrans.order_id}&customer_id=${searchTrans.customer_id}&customer_souls_id=${searchTrans.customer_souls_id}&customer_name=${searchTrans.customer_name}&number_of_therapist=${searchTrans.number_of_therapist}&therapist_gender=${searchTrans.therapist_gender}&massage_for=${searchTrans.massage_for}&Slot_Time=${searchTrans.Slot_Time}&Slot_Date=${searchTrans.Slot_Date}&massage_duration=${searchTrans.massage_duration}&customer_address=${searchTrans.customer_address}&pincode=${searchTrans.pincode}&latitude=${searchTrans.latitude}&longitude=${searchTrans.longitude}&CreatedAt=${searchTrans.CreatedAt}&merchant_transaction_id=${searchTrans.merchant_transaction_id}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_id=${searchTrans.payment_gateway_id}&total_order_amount=${searchTrans.total_order_amount}`,{
       headers: {
         token: localStorage.getItem("token")
       }

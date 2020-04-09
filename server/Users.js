@@ -2,27 +2,27 @@ const express = require("express");
 const users = express.Router();
 const cors = require("cors");
 const axios = require("axios");
-// const jwt = require('jsonwebtoken')
-// const bcrypt = require('bcrypt')
-const request = require("request");
+  // const jwt = require('jsonwebtoken')
+  // const bcrypt = require('bcrypt')
+  const request = require("request");
 
-// const User = require('../models/User')
-users.use(cors());
+  // const User = require('../models/User')
+  users.use(cors());
 
-process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.1";
-// const baseURL = "http://localhost"
-// process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
+  process.env.SECRET_KEY = "secret";
+  const baseURL = "http://10.42.0.69";
+  // const baseURL = "http://localhost"
+  // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
-//Team Registration
-users.post("/register", (req, res) => {
-  const today = new Date();
+  //Team Registration
+  users.post("/register", (req, res) => {
+    const today = new Date();
   const userData = {
     firstname: req.body.first_name || "AShish",
     lastname: req.body.last_name || "kumar",
     email: req.body.email || "sds@af.af",
     password: req.body.password || "123456789",
-    joining: req.body.joining,
+    joining: req.body.joining,  
     address: req.body.address || "asdgfhgjk",
     status: req.body.status || "inactive",
     mobileno: req.body.mobile || "1234567789",
@@ -144,6 +144,7 @@ users.get("/view-member", (req, res) => {
     .then(response => {
       console.log(response.status);
       res.status(response.status).send(response.data);
+      console.log(response.data)
     })
     .catch(e => res.status(500).send("Error: " + e));
 });
@@ -167,22 +168,25 @@ users.get("/team-list", (req, res) => {
 users.get("/customer-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/customer/list?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
+      console.log(response)
       res.status(response.status).send(response.data);
     })
-    .catch(e => res.status(500).send("Error: " + e));
-});
+    .catch(e =>{
+      console.log(e)
+    res.status(500).send("Error: " + e);
+})});
 
 //PendingOrder List
 users.get("/pendingorder-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/pendingorder/list?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/customers/booking/list?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -197,12 +201,13 @@ users.get("/pendingorder-list", (req, res) => {
 users.get("/transaction-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/transaction/list?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/customers/transaction/list?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
+      console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch(e => res.status(500).send("Error: " + e));
@@ -228,9 +233,10 @@ users.get("/search", (req, res) => {
 
 //customer search
 users.get("/customer-search", (req, res) => {
-  console.log("request Recieved for filter in node") 
+  console.log("request Recieved for filter in node (customer search)") 
+  // console.log("status = " + req.query.status);
   axios
-    .get(`${baseURL}:8000/customer/list?id=${req.query.id}&soulsID=${req.query.soulsID}&name=${req.query.name}&mobileno=${req.query.mobileno}&gender=${req.query.gender}&email=${req.query.email}&address=${req.query.address}&pincode=${req.query.pincode}&createtime=${req.query.createtime}&registrationsource=${req.query.registrationsource}&lastaccesstime=${req.query.lastaccesstime}&status=${req.query.status}`, {
+    .get(`${baseURL}:8000/customers/list?customer_id=${req.query.customer_id}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&mobileno=${req.query.mobileno}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&address=${req.query.address}&pincode=${req.query.pincode}&createtime=${req.query.createtime}&registrationsource=${req.query.registrationsource}&lastaccesstime=${req.query.lastaccesstime}&status=${req.query.status}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -248,7 +254,7 @@ users.get("/customer-search", (req, res) => {
 users.get("/pendingorder-search", (req, res) => {
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/pendingorder/list?Order_ID=${req.query.Order_ID}&customer_ID=${req.query.customer_ID}&souls_ID=${req.query.souls_ID}&customer_name=${req.query.customer_name}&no_of_therapists_required=${req.query.no_of_therapists_required}&therapist_gender=${req.query.therapist_gender}&massage_for=${req.query.massage_for}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&address=${req.query.address}&pincode=${req.query.pincode}&mobile_no=${req.query.mobile_no}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&create_at=${req.query.create_at}&is_order_confermed=${req.query.is_order_confermed}&transaction_ID=${req.query.transaction_ID}&total_order_amount=${req.query.total_order_amount}`, {
+    .get(`${baseURL}:8000/customers/booking/list?order_id=${req.query.order_id}&customer_id=${req.query.customer_id}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&number_of_therapist=${req.query.number_of_therapist}&therapist_gender=${req.query.therapist_gender}&massage_for=${req.query.massage_for}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&massage_duration=${req.query.massage_duration}&address=${req.query.address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&CreatedAt=${req.query.CreatedAt}&is_order_confirmed=${req.query.is_order_confirmed}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -266,7 +272,7 @@ users.get("/pendingorder-search", (req, res) => {
 users.get("/transaction-search", (req, res) => {
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/transaction/list?Order_ID=${req.query.Order_ID}&customer_ID=${req.query.customer_ID}&souls_ID=${req.query.souls_ID}&customer_name=${req.query.customer_name}&no_of_therapists_required=${req.query.no_of_therapists_required}&therapist_gender=${req.query.therapist_gender}&massage_for=${req.query.massage_for}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&address=${req.query.address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&create_at=${req.query.create_at}&merchant_transaction_ID=${req.query.merchant_transaction_ID}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_ID=${req.query.payment_gateway_ID}&total_order_amount=${req.query.total_order_amount}`, {
+    .get(`${baseURL}:8000/customers/transaction/list?order_id=${req.query.order_id}&customer_id=${req.query.customer_id}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&number_of_therapist=${req.query.number_of_therapist}&therapist_gender=${req.query.therapist_gender}&massage_for=${req.query.massage_for}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&massage_duration=${req.query.massage_duration}&customer_address=${req.query.customer_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&CreatedAt=${req.query.CreatedAt}&merchant_transaction_id=${req.query.merchant_transaction_id}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}&total_order_amount=${req.query.total_order_amount}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }

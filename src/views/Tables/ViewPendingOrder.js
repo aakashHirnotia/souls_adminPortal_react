@@ -1,53 +1,55 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { PendingOrderData, SetPendingOrderData } from "./Datas";
 import Pagination from "react-js-pagination";
 import { PendingOrderList, searchPendingOrder } from "./Functions";
 
 class PendingOrderRow extends Component {
     state = {
-      showModal: false,
       PendingOrder: this.props.PendingOrder
     };
+    componentWillReceiveProps(nextProps) {
+      this.setState({PendingOrder: this.props.PendingOrder})
+    }
 
-    displayModal = () => {
-      this.setState({ showModal: true });
-    };
-    closeModal = () => {
-      this.setState({ showModal: false });
-    };
+    getIcon = (is_order_confirmed) => {
+      return  (is_order_confirmed === true) ? 'fa fa-check-square fa-lg' :
+              (is_order_confirmed === false) ? 'fa fa-window-close-o fa-lg' :
+              'primary'
+    }
+  
+    getColor = (is_order_confirmed) => {
+      return  (is_order_confirmed === true )  ? {color:"green"} :
+              (is_order_confirmed === false ) ? {color:"red"} :
+              {color:"black"}
+    }
+
     render() {
       return (
-        <tr key={this.state.PendingOrder.Order_ID}>
-          <th>{this.state.PendingOrder.Order_ID}</th>
-          <th>{this.state.PendingOrder.customer_ID}</th>
-          <td style={{ width: "20%" }}>{this.state.PendingOrder.souls_ID}</td>
+        <tr key={this.state.PendingOrder.order_id}>
+          <th>{this.state.PendingOrder.order_id}</th>
+          <th>{this.state.PendingOrder.customer_id}</th>
+          <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_name}</td>
-          <td style={{ width: "20%" }}>{this.state.PendingOrder.no_of_therapists_required}</td>
+          <td style={{ width: "20%" }}>{this.state.PendingOrder.number_of_therapist}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.therapist_gender}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.massage_for}</td>
-          <td style={{ width: "20%" }}>{this.state.PendingOrder.slot_time}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.slot_date}</td>
+          <td style={{ width: "20%" }}>{this.state.PendingOrder.Slot_Time}</td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.Slot_Date}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.massage_duration}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.address}</td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.customer_address}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.mobile_no}</td>
+          {/* <td style={{ width: "10%" }}>{this.state.PendingOrder.mobile_no}</td> */}
           <td style={{ width: "10%" }}>{this.state.PendingOrder.latitude}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.longitude}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.create_at}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.is_order_confermed}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.transaction_ID}</td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.CreatedAt}</td>
+          <td className={this.getIcon(this.state.PendingOrder.is_order_confirmed)} style={this.getColor(this.state.PendingOrder.is_order_confirmed)}></td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.merchant_transaction_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.total_order_amount}</td>
           <td>
-            <Link to={`/PendingOrder/view-member/${this.props.PendingOrder.Order_ID}`}>
+            <Link to={`/pendingorder/view-member/${this.props.PendingOrder.order_id}`}>
               <i className="fa fa-eye"></i>
-            </Link>
-            <Link
-              style={{ paddingLeft: "10px" }}
-              to={`/pendingorder/edit-member/${this.props.PendingOrder.Order_ID}`}
-            >
-              <i className="fa fa-pencil"></i>
             </Link>
           </td>
         </tr>
@@ -75,7 +77,7 @@ class PendingOrderRow extends Component {
         massage_duration:"",
         address:"",
         pincode:"",
-        mobile_no:"",
+        // mobile_no:"",
         latitude: "",
         longitude: "",
         create_at: "",
@@ -85,14 +87,23 @@ class PendingOrderRow extends Component {
         errors: {}
       };
       this.onChange = this.onChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    async componentDidMount() {
+      const dataRecieved = await PendingOrderList(
+        this.state.activePage,
+        this.state.itemsCountPerPage
+      );
+      SetPendingOrderData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData });
     }
   
     onChange(e) {
       this.setState({ [e.target.name]: e.target.value });
     }
   
-    onSubmit(e) {
+    onSubmit = async(e)=> {
       e.preventDefault();
       const searchPanding = {
         Order_ID: this.state.Order_ID,
@@ -107,7 +118,7 @@ class PendingOrderRow extends Component {
         massage_duration: this.state.massage_duration,
         address: this.state.address,
         pincode: this.state.pincode,
-        mobile_no: this.state.mobile_no,
+        // mobile_no: this.state.mobile_no,
         latitude: this.state.latitude,
         longitude: this.state.longitude,
         create_at: this.state.create_at,
@@ -115,32 +126,26 @@ class PendingOrderRow extends Component {
         transaction_ID: this.state.transaction_ID,
         total_order_amount: this.state.total_order_amount,
     };
-  
-      searchPendingOrder(searchPanding);
+      const dataRecieved = await searchPendingOrder(searchPanding);
+      SetPendingOrderData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData });
     }
   
-    async handlePageChange(pageNumber) {
+    handlePageChange = async (pageNumber) =>{
       console.log(`pageNumber is ${pageNumber}`);
       this.setState({ activePage: pageNumber });
       console.log(`active page is ${this.state.activePage}`);
   
-      const dataPageRecieved = await PendingOrderList(
+      const dataRecieved = await PendingOrderList(
         pageNumber,
         this.state.itemsCountPerPage
       );
-      SetPendingOrderData(dataPageRecieved);
-      this.setState({ data: dataPageRecieved });
+      SetPendingOrderData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData, activePage: pageNumber });
     }
   
-    async componentDidMount() {
-      // console.log(Date.now())
-      const dataRecieved = await PendingOrderList(
-        this.state.activePage,
-        this.state.itemsCountPerPage
-      );
-      SetPendingOrderData(dataRecieved);
-      this.setState({ data: dataRecieved });
-    }
   
     render() {
       // console.log('DAta: ')
@@ -156,8 +161,7 @@ class PendingOrderRow extends Component {
             <Col xl={12} style={{ padding: "0" }}>
               <Card>
                 <CardHeader>
-                  <i className="fa fa-align-justify"></i> PendingOrder{" "}
-                  <small className="text-muted">Members</small>
+                  <i className="fa fa-align-justify"></i> Pending Order Table{" "}
                 </CardHeader>
                 <CardBody>
                   <Table responsive hover>
@@ -175,7 +179,7 @@ class PendingOrderRow extends Component {
                         <th scope="col">Massage Duration</th>
                         <th scope="col">Address</th>
                         <th scope="col">Pincode</th>
-                        <th scope="col">Mobile No</th>
+                        {/* <th scope="col">Mobile No</th> */}
                         <th scope="col">Latitude</th>
                         <th scope="col">Longitude</th>
                         <th scope="col">Create Time</th>
@@ -351,19 +355,6 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="mobile_no"
-                            value={this.state.mobile_no}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <select
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
                             name="latitude"
                             value={this.state.latitude}
                             onChange={this.onChange}
@@ -450,15 +441,15 @@ class PendingOrderRow extends Component {
                       {this.state.data ? (
                         <React.Fragment>
                           {this.state.data &&
-                            this.state.data.map((Pendingorder, index) => (
-                              // {PendingorderList.map((Pendingorder, index) =>
-                              <PendingOrderRow key={index} Pendingorder={Pendingorder} />
+                            this.state.data.map((PendingOrder, index) => (
+                              // {PendingorderList.map((PendingOrder, index) =>
+                              <PendingOrderRow key={index} PendingOrder={PendingOrder} />
                             ))}
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          {PendingOrderList.map((Pendingorder, index) => (
-                            <PendingOrderRow key={index} Pendingorder={Pendingorder} />
+                          {this.state.data.length!=0 && this.state.data.map((PendingOrder, index) => (
+                            <PendingOrderRow key={index} PendingOrder={PendingOrder} />
                           ))}
                         </React.Fragment>
                       )}
@@ -471,7 +462,7 @@ class PendingOrderRow extends Component {
                     itemsCountPerPage={this.itemsCountPerPage}
                     totalItemsCount={450} // check
                     pageRangeDisplayed={5}
-                    onChange={this.handlePageChange.bind(this)}
+                    onChange={this.handlePageChange}
                   />
                 </CardBody>
               </Card>
