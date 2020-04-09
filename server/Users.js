@@ -9,10 +9,10 @@ const axios = require("axios");
   // const User = require('../models/User')
   users.use(cors());
 
-process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.69";
-// const baseURL = "http://localhost"
-// process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
+  process.env.SECRET_KEY = "secret";
+  const baseURL = "http://10.42.0.69";
+  // const baseURL = "http://localhost"
+  // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
   //Team Registration
   users.post("/register", (req, res) => {
@@ -129,30 +129,6 @@ users.put("/password", (req, res) => {
     });
 });
 
-users.put("/updateTeamRole", (req, res) => {
-  const userData = {
-    teamid: req.body.teamid,
-    role: req.body.role
-  };
-  console.log("Role change request Received!");
-
-  axios
-    .put(`${baseURL}:8000/team/update-member/role`, userData,{
-      headers: {
-        Authorization: `Bearer ${req.headers.token}`
-      }
-    }
-    )
-    .then(response => {
-      console.log(response)
-      res.status(response.status).send(response.data);
-    })
-    .catch(e => {
-      console.log(e)
-      res.status(500).send("Error: " + e)
-    });
-});
-
 users.get("/view-member", (req, res) => {
   const userData = {
     email: req.body.email,
@@ -183,15 +159,9 @@ users.get("/team-list", (req, res) => {
       }
     })
     .then(response => {
-      console.log(response)
-
       res.status(response.status).send(response.data);
     })
-    .catch(e => {
-      console.log(e)
-      res.status(500).send("Error: " + e)}
-      
-      );
+    .catch(e => res.status(500).send("Error: " + e));
 });
 
 //Customer List
@@ -253,7 +223,6 @@ users.get("/search", (req, res) => {
       }
     })
     .then(response => {
-      console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch(e =>{
@@ -304,20 +273,11 @@ users.get("/transaction-search", (req, res) => {
   console.log("request Recieved for filter in node") 
   axios
     .get(`${baseURL}:8000/customers/transaction/list?order_id=${req.query.order_id}&customer_id=${req.query.customer_id}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&number_of_therapist=${req.query.number_of_therapist}&therapist_gender=${req.query.therapist_gender}&massage_for=${req.query.massage_for}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&massage_duration=${req.query.massage_duration}&customer_address=${req.query.customer_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&CreatedAt=${req.query.CreatedAt}&merchant_transaction_id=${req.query.merchant_transaction_id}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}&total_order_amount=${req.query.total_order_amount}`, {
-users.get("/searchTeamHasRole", (req, res) => {
-  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
-  console.log("request Recieved for filter in node") 
-  axios
-    .get(`${baseURL}:8000/team/has-role/view?status=${req.query.status}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
-<<<<<<< HEAD
-=======
-      console.log(response)
->>>>>>> a18c4b6eaaaba4e207ddc66a6d5a568db1ed2a7e
       res.status(response.status).send(response.data);
     })
     .catch(e =>{
@@ -325,10 +285,7 @@ users.get("/searchTeamHasRole", (req, res) => {
       res.status(500).send("Error: " + e);
     } )
 });
-<<<<<<< HEAD
 
-=======
->>>>>>> a18c4b6eaaaba4e207ddc66a6d5a568db1ed2a7e
 
 users.get("/profile", (req, res) => {});
 
@@ -360,8 +317,49 @@ users.post("/update", (req, res) => {
   console.log("Name: " + userData.first_name);
 });
 
-<<<<<<< HEAD
-=======
+users.put("/updateTeamRole", (req, res) => {
+  const userData = {
+    teamid: req.body.teamid,
+    role: req.body.role
+  };
+  console.log("Role change request Received!");
+
+  axios
+    .put(`${baseURL}:8000/team/update-member/role`, userData,{
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    }
+    )
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)
+    });
+})
+
+users.get("/searchTeamHasRole", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/team/has-role/view?status=${req.query.status}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
+
 users.get("/team-has-role-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
@@ -381,8 +379,5 @@ users.get("/team-has-role-list", (req, res) => {
       
       );
 });
->>>>>>> a18c4b6eaaaba4e207ddc66a6d5a568db1ed2a7e
-
-
 
 module.exports = users;
