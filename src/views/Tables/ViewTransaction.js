@@ -19,36 +19,36 @@ class TransactionRow extends Component {
     };
     render() {
       return (
-        <tr key={this.state.Transaction.Order_ID}>
-          <th>{this.state.Transaction.Order_ID}</th>
-          <th>{this.state.Transaction.customer_ID}</th>
-          <td style={{ width: "20%" }}>{this.state.Transaction.souls_ID}</td>
+        <tr key={this.state.Transaction.order_id}>
+          <th>{this.state.Transaction.order_id}</th>
+          <th>{this.state.Transaction.customer_id}</th>
+          <td style={{ width: "20%" }}>{this.state.Transaction.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.customer_name}</td>
-          <td style={{ width: "20%" }}>{this.state.Transaction.no_of_therapists_required}</td>
+          <td style={{ width: "20%" }}>{this.state.Transaction.number_of_therapist}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.therapist_gender}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.massage_for}</td>
-          <td style={{ width: "20%" }}>{this.state.Transaction.slot_time}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.slot_date}</td>
+          <td style={{ width: "20%" }}>{this.state.Transaction.Slot_Time}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.Slot_Date}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.massage_duration}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.address}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.customer_address}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.pincode}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.latitude}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.longitude}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.create_at}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.merchant_transaction_ID}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.CreatedAt}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.merchant_transaction_id}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.payment_gateway_mode}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.transaction_mode}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.bank_type}</td>
-          <td style={{ width: "20%" }}>{this.state.Transaction.payment_gateway_ID}</td>
+          <td style={{ width: "20%" }}>{this.state.Transaction.payment_gateway_id}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.total_order_amount}</td>
 
           <td>
-            <Link to={`/transaction/view-member/${this.props.Transaction.Order_ID}`}>
+            <Link to={`/transaction/view-member/${this.props.Transaction.order_id}`}>
               <i className="fa fa-eye"></i>
             </Link>
             <Link
               style={{ paddingLeft: "10px" }}
-              to={`/transaction/edit-member/${this.props.Transaction.Order_ID}`}
+              to={`/transaction/edit-member/${this.props.Transaction.order_id}`}
             >
               <i className="fa fa-pencil"></i>
             </Link>
@@ -91,14 +91,25 @@ class TransactionRow extends Component {
         errors: {}
       };
       this.onChange = this.onChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+      // this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    async componentDidMount() {
+      const dataRecieved = await TransactionList(
+        this.state.activePage,
+        this.state.itemsCountPerPage
+      );
+      SetTransactionData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData });
     }
   
     onChange(e) {
       this.setState({ [e.target.name]: e.target.value });
     }
-  
-    onSubmit(e) {
+
+
+    onSubmit = async(e)=> {
       e.preventDefault();
       const searchTrans = {
         Order_ID: this.state.Order_ID,
@@ -124,29 +135,24 @@ class TransactionRow extends Component {
         total_order_amount: this.state.total_order_amount,
     };
   
-      searchTransaction(searchTrans);
+      const dataRecieved = await searchTransaction(searchTrans);
+      SetTransactionData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData })
     }
   
-    async handlePageChange(pageNumber) {
+    handlePageChange = async (pageNumber)=> {
       console.log(`pageNumber is ${pageNumber}`);
-      this.setState({ activePage: pageNumber });
+      // this.setState({ activePage: pageNumber });
       console.log(`active page is ${this.state.activePage}`);
   
-      const dataPageRecieved = await TransactionList(
+      const dataRecieved = await TransactionList(
         pageNumber,
         this.state.itemsCountPerPage
       );
-      SetTransactionData(dataPageRecieved);
-      this.setState({ data: dataPageRecieved });
-    }
-  
-    async componentDidMount() {
-      const dataRecieved = await TransactionList(
-        this.state.activePage,
-        this.state.itemsCountPerPage
-      );
       SetTransactionData(dataRecieved);
-      this.setState({ data: dataRecieved });
+      const newData = dataRecieved
+      this.setState({ data: newData, activePage: pageNumber });
     }
   
     render() {

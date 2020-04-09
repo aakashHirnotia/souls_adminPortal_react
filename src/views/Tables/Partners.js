@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
-class Partners extends Component {
-    //state = {  }
-    render() { 
-        return ( <div> Partners tables</div> );
-    }
-}
+// class Partners extends Component {
+//     //state = {  }
+//     render() { 
+//         return ( <div> Partners tables</div> );
+//     }
+// }
  
-export default Partners;
+// export default Partners;
+
+

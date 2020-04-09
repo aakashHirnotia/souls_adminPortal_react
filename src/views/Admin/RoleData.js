@@ -1,9 +1,7 @@
 const RoleData = [
-    {id: 1, RoleID: 'Souls123',Role:'Intern', RoleStatus:'active'},
-    {id: 2, RoleID: 'Souls123',Role:'Intern',RoleStatus:'active'},
-    {id: 3, RoleID: 'Souls123',Role:'Intern',RoleStatus:'active'},
-    {id: 4, RoleID: 'Souls123',Role:'Intern',RoleStatus:'active'}
+    {RoleID: '1',Role:'Admin', RoleStatus:'active'},
+    {RoleID: '2',Role:'Accountant',RoleStatus:'active'},
+    {RoleID: '3',Role:'Customer Service',RoleStatus:'active'}
   ]
   
-  export default RoleData
-  
+export default RoleData

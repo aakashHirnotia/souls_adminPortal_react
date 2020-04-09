@@ -4,30 +4,30 @@ import {BrowserRouter} from 'react-router-dom'
 import { customerData} from "./Datas";
 
 const Label = {
-    id: "ID",
-    soulsID: "Souls ID",
-    name: "Name",
-    mobileno: "Mobile No",
-    gender: "Gender",
-    email: "Email",
-    address: "Address",
+    customer_id: "Customer ID",
+    customer_souls_id: "Souls ID",
+    customer_name: "Name",
+    customer_mobile_no: "Mobile No",
+    customer_gender: "Gender",
+    customer_email: "Email",
+    customer_address: "Address",
     pincode: "Pincode",
-    createtime: "Create Time",
-    registrationsource: "Registration Source",
-    lastaccesstime: "Last Access Time",
+    CreatedAt: "Create Time",
+    registered_source: "Registration Source",
+    Last_Access_Time: "Last Access Time",
     status: "Status",
 }
 
 class CustomerMember extends Component {
   componentWillMount() {
     if(customerData.length==0) {
-      window.location.href='/customer/list'
+      window.location.href='/customers/list'
     }
   }
 
   render() {
     const customer = customerData.find(
-      customer => customer.id.toString() === this.props.match.params.id
+      customer => customer.customer_id.toString() === this.props.match.params.id
     );
     const customerDetails = customer
       ? Object.entries(customer)
@@ -48,7 +48,7 @@ class CustomerMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Customer Member:{" "}
-                  {customer.name}
+                  {customer.customer_name}
                 </strong>
               </CardHeader>
               <CardBody>

@@ -1,49 +1,55 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
+import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { customerData, SetCustomerData } from "./Datas";
 import Pagination from "react-js-pagination";
 import { customerList, searchCust } from "./Functions";
+
 
 class CustomerRow extends Component {
   state = {
     customer: this.props.customer
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({customer: this.props.customer})
+  }
+
   getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
+    return  (status === true) ? 'fa fa-check-square fa-lg' :
+            (status === false) ? 'fa fa-window-close-o fa-lg' :
             'primary'
   }
 
   getColor = (status) => {
-    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
+    return  (status === true )  ? {color:"green"} :
+            (status === false ) ? {color:"red"} :
             {color:"black"}
   }
 
     render() {
+      // console.log(this.props.customer)
       return (
-        <tr key={this.state.customer.customerid}>
-          <th>{this.state.customer.customerid}</th>
-          <th>{this.state.customer.customersouldid}</th>
-          <td style={{ width: "20%" }}>{this.state.customer.name}</td>
-          <td style={{ width: "20%" }}>{this.state.customer.mobileno}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.gender}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.email}</td>
-          <td style={{ width: "20%" }}>{this.state.customer.address}</td>
+        <tr key={this.state.customer.customer_id}>
+          <th>{this.state.customer.customer_id}</th>
+          <th>{this.state.customer.customer_souls_id}</th>
+          <td style={{ width: "20%" }}>{this.state.customer.customer_name}</td>
+          <td style={{ width: "20%" }}>{this.state.customer.customer_mobile_no}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.customer_gender}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.customer_email}</td>
+          <td style={{ width: "20%" }}>{this.state.customer.customer_address}</td>
           <td style={{ width: "10%" }}>{this.state.customer.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.createtime}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.registrationsource}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.lastaccesstime}</td>
-          <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)}></td>
+          <td style={{ width: "10%" }}>{this.state.customer.CreatedAt}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.registered_source}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.Last_Access_Time}</td>
+          <td className={this.getIcon(this.state.customer.status)} style={this.getColor(this.state.customer.status)}></td>
           <td>
-            <Link to={`/customer/view-member/${this.props.customer.customerid}`}>
+            <Link to={`/customer/view-member/${this.props.customer.customer_id}`}>
               <i className="fa fa-eye"></i>
             </Link>
             <Link
               style={{ paddingLeft: "10px" }}
-              to={`/customer/edit-member/${this.props.customer.customerid}`}
+              to={`/customer/edit-member/${this.props.customer.customer_id}`}
             >
               <i className="fa fa-pencil"></i>
             </Link>
@@ -62,21 +68,21 @@ class CustomerRow extends Component {
   
         data: [],
         id: "",
-        soulsID:"",
-        name: "",
-        mobileno: "",
-        gender: "",
-        email: "",
-        address: "",
+        customer_souls_id:"",
+        customer_name: "",
+        customer_mobile_no: "",
+        customer_gender: "",
+        customer_email: "",
+        customer_address: "",
         pincode: "",
-        createtime: "",
-        registrationsource: "",
-        lastaccesstime: "",
-        status: "",
+        CreatedAt: "",
+        registrated_source: "",
+        Last_Access_Time: "",
+        status: false,
         errors: {}
       };
       this.onChange = this.onChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+      // this.onSubmit = this.onSubmit.bind(this);
     }
     
     async componentDidMount() {
@@ -93,55 +99,50 @@ class CustomerRow extends Component {
       this.setState({ [e.target.name]: e.target.value });
     }
   
-    onSubmit(e) {
+    onSubmit= async (e) =>{
       e.preventDefault();
       const searchCustomer = {
         id: this.state.id,
-        soulsID: this.state.soulsID,
-        name: this.state.name,
-        mobileno: this.state.mobileno,
-        gender: this.state.gender,
-        email: this.state.email,
-        address: this.state.address,
+        customer_souls_id: this.state.customer_souls_id,
+        customer_name: this.state.customer_name,
+        customer_mobile_no: this.state.customer_mobile_no,
+        customer_gender: this.state.customer_gender,
+        customer_email: this.state.customer_email,
+        customer_address: this.state.customer_address,
         pincode: this.state.pincode,
-        createtime: this.state.createtime,
-        registrationsource: this.state.registrationsource,
-        lastaccesstime: this.state.lastaccesstime,
+        CreatedAt: this.state.CreatedAt,
+        registered_source: this.state.registered_source,
+        Last_Access_Time: this.state.Last_Access_Time,
         status: this.state.status
       };
   
-      searchCust(searchCustomer);
+      const dataRecieved = await searchCust(searchCustomer);
+      SetCustomerData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData });
     }
   
-    async handlePageChange(pageNumber) {
+    handlePageChange = async (pageNumber)=> {
       console.log(`pageNumber is ${pageNumber}`);
-      this.setState({ activePage: pageNumber });
+      // this.setState({ activePage: pageNumber });
       console.log(`active page is ${this.state.activePage}`);
   
-      const dataPageRecieved = await customerList(
+      const dataRecieved = await customerList(
         pageNumber,
         this.state.itemsCountPerPage
       );
-      SetCustomerData(dataPageRecieved);
-      this.setState({ data: dataPageRecieved });
+      SetCustomerData(dataRecieved);
+      const newData = dataRecieved
+      this.setState({ data: newData, activePage: pageNumber });
     }
   
-    async componentDidMount() {
-      const dataRecieved = await customerList(
-        this.state.activePage,
-        this.state.itemsCountPerPage
-      );
-      SetCustomerData(dataRecieved);
-      this.setState({ data: dataRecieved });
-    }
   
     render() {
-      // console.log('DAta: ')
       // console.log(this.state.data.forEach(o=>console.log(o)))
       const customerList = customerData.filter(
         customer => customer.id < 10
       );
-      console.log(this.state.data.forEach(o => console.log(o)));
+      // console.log(this.state.data.forEach(o => console.log(o)));
   
       return (
         <div className="animated fadeIn">
@@ -157,7 +158,7 @@ class CustomerRow extends Component {
                       <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Souls ID</th>
-                        <th scope="col">Name</th>
+                        <th style= {{width: "15%"}} scope="col">Name</th>
                         <th scope="col">Mobile No</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Email</th>
@@ -193,8 +194,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="soulsID"
-                            value={this.state.soulsID}
+                            name="customer_souls_id"
+                            value={this.state.customer_souls_id}
                             onChange={this.onChange}
                           />
                         </td>
@@ -206,8 +207,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="name"
-                            value={this.state.name}
+                            name="customer_name"
+                            value={this.state.customer_name}
                             onChange={this.onChange}
                           />
                         </td>
@@ -219,8 +220,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="mobileno"
-                            value={this.state.mobileno}
+                            name="customer_mobile_no"
+                            value={this.state.customer_mobile_no}
                             onChange={this.onChange}
                           />
                         </td><td scope="col">
@@ -231,8 +232,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="gender"
-                            value={this.state.gender}
+                            name="customer_gender"
+                            value={this.state.customer_gender}
                             onChange={this.onChange}
                           />
                         </td>
@@ -244,8 +245,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="email"
-                            value={this.state.email}
+                            name="customer_email"
+                            value={this.state.customer_email}
                             onChange={this.onChange}
                           />
                         </td>
@@ -257,8 +258,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="address"
-                            value={this.state.address}
+                            name="customer_address"
+                            value={this.state.customer_address}
                             onChange={this.onChange}
                           />
                         </td>
@@ -283,8 +284,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="createtime"
-                            value={this.state.createtime}
+                            name="CreatedAt"
+                            value={this.state.CreatedAt}
                             onChange={this.onChange}
                           />
                         </td>
@@ -296,8 +297,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="registrationsource"
-                            value={this.state.registrationsource}
+                            name="registereted_source"
+                            value={this.state.registered_source}
                             onChange={this.onChange}
                           />
                         </td><td scope="col">
@@ -308,8 +309,8 @@ class CustomerRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="lastaccesstime"
-                            value={this.state.lastaccesstime}
+                            name="Last_Access_Time"
+                            value={this.state.Last_Access_Time}
                             onChange={this.onChange}
                           />
                         </td>
@@ -323,10 +324,11 @@ class CustomerRow extends Component {
                             style={{ height: "30px" }}
                             name="status"
                             value={this.state.status}
-                            onChange={this.onChange}
+                            onChange={(e) => this.setState({status: !this.state.status.value})}
                           >
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
+                           
+                            <option value={true} >Active</option>
+                            <option value={false}>Inactive</option>
                           </select>
                         </td>
                         <td scope="col">
@@ -346,15 +348,15 @@ class CustomerRow extends Component {
                           {this.state.data &&
                             this.state.data.map((customer, index) => (
                               // {customerList.map((customer, index) =>
-                              <customerRow key={index} customer={customer} />
+                              <CustomerRow key={index} customer={customer} />
                             ))}
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          {customerList.map((customer, index) => (
-                            <customerRow key={index} customer={customer} />
-                          ))}
-                        </React.Fragment>
+                        {this.state.data.length!=0 && this.state.data.map((customer, index) => (
+                          <CustomerRow key={index} customer={customer} />
+                        ))}
+                      </React.Fragment>
                       )}
                     </tbody>
                   </Table>
@@ -365,7 +367,7 @@ class CustomerRow extends Component {
                     itemsCountPerPage={this.itemsCountPerPage}
                     totalItemsCount={450} // check
                     pageRangeDisplayed={5}
-                    onChange={this.handlePageChange.bind(this)}
+                    onChange={this.handlePageChange}
                   />
                 </CardBody>
               </Card>
