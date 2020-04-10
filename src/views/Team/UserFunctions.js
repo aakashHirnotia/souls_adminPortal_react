@@ -75,7 +75,7 @@ export const updateMember = updatedUser => {
     });
 };
 
-export const fetchUserDetails = (token) => {
+export const fetchUserDetails = (token, cb) => {
   return axios
     .get(`${baseURL}:5000/users/profile`, {
       headers: {
@@ -83,7 +83,10 @@ export const fetchUserDetails = (token) => {
       },
     })
     .then((response) => {
+      console.log("respomse data is ----")
+      console.log(response.data)
       console.log("Fetching data");
+      cb(response.data, undefined);
     });
 };
 
@@ -95,7 +98,7 @@ export const fetchTeamDetails = (token) => {
       },
     })
     .then((response) => {
-      console.log(response.status);
+      console.log(response.data);
       if (response.status === 200) {
         console.log("Entered");
       } else {

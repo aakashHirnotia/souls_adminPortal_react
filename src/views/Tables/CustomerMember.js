@@ -58,8 +58,14 @@ class CustomerMember extends Component {
                       return (
                         <tr key={key}>
                           <td>{`${Label[key]}:`}</td>
+                          {/* {console.log(Label[key])} */}
                           <td>
-                            <strong>{value}</strong>
+                            <strong>
+                              {(value === true) ? "True" :
+                              (value === false) ? "False" :
+                               value}
+                            </strong>
+                          {/* {console.log("value is "+value)} */}
                           </td>
                         </tr>
                       );

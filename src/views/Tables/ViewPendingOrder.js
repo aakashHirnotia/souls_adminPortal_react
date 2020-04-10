@@ -27,22 +27,13 @@ class PendingOrderRow extends Component {
 
     render() {
       return (
-        <tr key={this.state.PendingOrder.order_id}>
-          <th>{this.state.PendingOrder.order_id}</th>
-          <th>{this.state.PendingOrder.customer_id}</th>
+        <tr key={this.state.PendingOrder.customer_souls_id}>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_name}</td>
-          <td style={{ width: "20%" }}>{this.state.PendingOrder.number_of_therapist}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.therapist_gender}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.massage_for}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.Slot_Time}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.Slot_Date}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.massage_duration}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.customer_address}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.pincode}</td>
-          {/* <td style={{ width: "10%" }}>{this.state.PendingOrder.mobile_no}</td> */}
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.latitude}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.longitude}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.CreatedAt}</td>
           <td className={this.getIcon(this.state.PendingOrder.is_order_confirmed)} style={this.getColor(this.state.PendingOrder.is_order_confirmed)}></td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.merchant_transaction_id}</td>
@@ -65,21 +56,13 @@ class PendingOrderRow extends Component {
         itemsCountPerPage: 10,
   
         data: [],
-        Order_ID: "",
-        customer_ID:"",
+        count: 0,
         souls_ID:"",
         customer_name:"",
-        no_of_therapists_required:"",
-        therapist_gender:"",
-        massage_for:"",
         slot_time:"",
         slot_date:"",
         massage_duration:"",
-        address:"",
         pincode:"",
-        // mobile_no:"",
-        latitude: "",
-        longitude: "",
         create_at: "",
         is_order_confermed: "",
         transaction_ID: "",
@@ -94,9 +77,9 @@ class PendingOrderRow extends Component {
         this.state.activePage,
         this.state.itemsCountPerPage
       );
-      SetPendingOrderData(dataRecieved);
-      const newData = dataRecieved
-      this.setState({ data: newData });
+      SetPendingOrderData(dataRecieved.data);
+      const newData = dataRecieved.data
+      this.setState({ data: newData, count: dataRecieved.count});
     }
   
     onChange(e) {
@@ -106,21 +89,12 @@ class PendingOrderRow extends Component {
     onSubmit = async(e)=> {
       e.preventDefault();
       const searchPanding = {
-        Order_ID: this.state.Order_ID,
-        customer_ID: this.state.customer_ID,
         souls_ID: this.state.souls_ID,
         customer_name:this.state.customer_name,
-        no_of_therapists_required: this.state.no_of_therapists_required,
-        therapist_gender: this.state.therapist_gender,
-        massage_for: this.state.massage_for,
         slot_time: this.state.slot_time,
         slot_date: this.state.slot_date,
         massage_duration: this.state.massage_duration,
-        address: this.state.address,
         pincode: this.state.pincode,
-        // mobile_no: this.state.mobile_no,
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
         create_at: this.state.create_at,
         is_order_confermed: this.state.is_order_confermed,
         transaction_ID: this.state.transaction_ID,
@@ -141,9 +115,9 @@ class PendingOrderRow extends Component {
         pageNumber,
         this.state.itemsCountPerPage
       );
-      SetPendingOrderData(dataRecieved);
-      const newData = dataRecieved
-      this.setState({ data: newData, activePage: pageNumber });
+      SetPendingOrderData(dataRecieved.data);
+      const newData = dataRecieved.data
+      this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
     }
   
   
@@ -167,56 +141,21 @@ class PendingOrderRow extends Component {
                   <Table responsive hover>
                     <thead>
                       <tr>
-                        <th scope="col">Order ID</th>
-                        <th scope="col">Customer ID</th>
-                        <th scope="col">Souls ID</th>
-                        <th scope="col">Customer Name</th>
-                        <th scope="col">No of Therapists Required</th>
-                        <th scope="col">Therapists Gender</th>
-                        <th scope="col">Massage For</th>
+                        <th scope="col">SOULS ID</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Slot Time</th>
                         <th scope="col">Slot Date</th>
                         <th scope="col">Massage Duration</th>
-                        <th scope="col">Address</th>
                         <th scope="col">Pincode</th>
-                        {/* <th scope="col">Mobile No</th> */}
-                        <th scope="col">Latitude</th>
-                        <th scope="col">Longitude</th>
                         <th scope="col">Create Time</th>
-                        <th scope="col">Is Order Confermed</th>
-                        <th scope="col">Transaction ID</th>
-                        <th scope="col">Total Order Amount</th>
+                        <th scope="col">Is Order Confirmed</th>
+                        <th scope="col">Merchant TXN ID</th>
+                        <th scope="col">Amount</th>
                         <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="Order_ID"
-                            value={this.state.Order_ID}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="customer_ID"
-                            value={this.state.customer_ID}
-                            onChange={this.onChange}
-                          />
-                        </td>
                         <td scope="col">
                           <input
                             type="search"
@@ -240,45 +179,6 @@ class PendingOrderRow extends Component {
                             style={{ height: "30px" }}
                             name="Customer_name"
                             value={this.state.customer_name}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="o_of_therapists_required"
-                            value={this.state.no_of_therapists_required}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="therapist_gender"
-                            value={this.state.therapist_gender}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="massage_for"
-                            value={this.state.massage_for}
                             onChange={this.onChange}
                           />
                         </td>
@@ -329,47 +229,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="address"
-                            value={this.state.address}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <input
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
                             name="pincode"
                             value={this.state.pincode}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <select
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="latitude"
-                            value={this.state.latitude}
-                            onChange={this.onChange}
-                          />
-                        </td>
-                        <td scope="col">
-                          <select
-                            type="search"
-                            class="form-control mr-sm-2"
-                            id=""
-                            placeholder=""
-                            aria-label="Search for..."
-                            style={{ height: "30px" }}
-                            name="longitude"
-                            value={this.state.longitude}
                             onChange={this.onChange}
                           />
                         </td>
@@ -387,7 +248,7 @@ class PendingOrderRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                        <select
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -396,8 +257,12 @@ class PendingOrderRow extends Component {
                             style={{ height: "30px" }}
                             name="is_order_confermed"
                             value={this.state.is_order_confermed}
-                            onChange={this.onChange}
-                          />
+                            onChange={(e) => this.setState({is_order_confermed: !this.state.is_order_confermed.value})}
+                          >
+                           
+                            <option value={true} >true</option>
+                            <option value={false}>false</option>
+                          </select>
                         </td>
                         <td scope="col">
                           <select
@@ -459,9 +324,9 @@ class PendingOrderRow extends Component {
                     className="pagination"
                     hideDisabled
                     activePage={this.state.activePage}
-                    itemsCountPerPage={this.itemsCountPerPage}
-                    totalItemsCount={450} // check
-                    pageRangeDisplayed={5}
+                    itemsCountPerPage={10}
+                    totalItemsCount={this.state.count} 
+                    pageRangeDisplayed={10}
                     onChange={this.handlePageChange}
                   />
                 </CardBody>

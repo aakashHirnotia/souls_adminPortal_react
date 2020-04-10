@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 // import jwt_decode from 'jwt-decode'
 import {fetchUserDetails} from './../Team/UserFunctions'
 import {update} from './../Team/UserFunctions'
+import {getProfileData} from './../Tables/Datas'
 
 class ViewProfile extends Component {
   constructor() {
     super()
     this.state = {
+      data:[],
       first_name:'',
       last_name: '',
       gender: '',
       email: '',
-      password: '',
+      // password: '',
       joining: '',
       address: '',
       status: '',
@@ -44,7 +46,7 @@ class ViewProfile extends Component {
       last_name: this.state.last_name,
       gender: this.state.gender,
       email: this.state.email,
-      password: this.state.password,
+      // password: this.state.password,
       joining: this.state.joining,
       address: this.state.address,
       status: this.state.status,
@@ -59,26 +61,30 @@ class ViewProfile extends Component {
   }
 
   componentDidMount() {
-    const token = localStorage.usertoken
+    // const token = localStorage.usertoken
+    const token = localStorage.getItem('token')
     // const decoded = jwt_decode(token)
+    console.log("token = "+token)
     fetchUserDetails(token, this.fetchedUser)
-
   }
 
-  fetchedUser (res, err) {
+  fetchedUser = (res, err) => {
+    console.log("Component did mount me fetchUser")
     if(err) { this.props.history.push(`/login`) }
     else {
+      console.log("res.teamid = ")
+      console.log(res);
       this.setState({
-        first_name: res.first_name,
-        last_name: res.last_name,
-        gender: res.gender,
+        first_name: res.firstname,
+        last_name: res.lastname,
+        // gender: res.gender,
         email: res.email,
-        password: res.password,
-        joining: res.joining,
+        // password: res.password,
+        joining: res.Joining_Date,
         address: res.address,
         status: res.status,
         role: res.role,
-        mobile: res.mobile
+        mobile: res.mobileno
       })
     }
   }
@@ -104,18 +110,18 @@ class ViewProfile extends Component {
                       <td>Last Name:</td>
                       <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} defaultValue={this.state.last_name}/>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <td>Gender:</td>
                       <td>{this.state.gender}</td>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <td>Email:</td>
                       <td>{this.state.email}</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                       <td>Password:</td>
                       <input type="password" name="password" value={this.state.password} onChange={this.onChange} defaultValue={this.state.password}/>
-                    </tr>
+                    </tr> */}
                     <tr>
                       <td>Joining:</td>
                       <td>{this.state.joining}</td>
@@ -175,18 +181,18 @@ class ViewProfile extends Component {
                 <td>Last Name:</td>
                 <td>{this.state.last_name}</td>
               </tr>}
-              <tr>
+              {/* <tr>
                 <td>Gender:</td>
                 <td>{this.state.gender}</td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>Email:</td>
                 <td>{this.state.email}</td>
               </tr>
-              <tr>
+              {/* <tr>
                 <td>Password:</td>
                 <td>{this.state.password}</td>
-              </tr>
+              </tr> */}
               <tr>
                 <td>Joining:</td>
                 <td>{this.state.joining}</td>

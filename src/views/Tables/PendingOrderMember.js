@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-// import {BrowserRouter} from 'react-router-dom'
 import { PendingOrderData } from "./Datas";
 
 const Label = {
@@ -16,7 +15,6 @@ const Label = {
     massage_duration:"Massage Duration",
     customer_address:"Address",
     pincode:"Pincode",
-    // mobile_no:"Mobile No",
     latitude: "Latitude",
     longitude: "Longitude",
     CreatedAt: "Create Time",
@@ -66,7 +64,11 @@ class PendingOrderMember extends Component {
                         <tr key={key}>
                           <td>{`${Label[key]}:`}</td>
                           <td>
-                            <strong>{value}</strong>
+                            <strong>                              
+                              {(value === true) ? "True" :
+                              (value === false) ? "False" :
+                               value}
+                              </strong>
                           </td>
                         </tr>
                       );
