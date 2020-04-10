@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = "http://localhost";
 
 export const teamHasRoleList = async (activePage, itemCountPerPage) => {
-    let data;
+    let data,count;
     await axios
       .get(`${baseURL}:5000/users/team-has-role-list?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
@@ -13,8 +13,8 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          // console.log(typeof(response.data))
-          data = [...response.data];
+          data = Object.keys(response.data.data).map(o=>response.data.data[o])
+          count = response.data.count
           // console.log(data)
           // console.log(response.headers)
           // return response.data
@@ -23,7 +23,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
       .catch((err) => {
         window.alert("Error: " + err);
       });
-    return data;
+    return {data, count};
   };
 
   export const searchTeamHasRole = async (searchUser) => {

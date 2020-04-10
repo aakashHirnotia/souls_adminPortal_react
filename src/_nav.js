@@ -32,7 +32,7 @@ export default {
     },
     {
       name: 'Partners',
-      url: '/tables/partners',
+      url: '/tables/ViewPartners',
       icon: 'icon-people',
     },
     {

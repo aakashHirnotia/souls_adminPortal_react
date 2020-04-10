@@ -217,7 +217,8 @@ export const updatePassword = async (user) => {
 // }
 
 export const teamList = async (activePage, itemCountPerPage) => {
-  let data;
+  let data, count;
+  // let totalcount;
   await axios
     .get(`${baseURL}:5000/users/team-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
@@ -227,14 +228,19 @@ export const teamList = async (activePage, itemCountPerPage) => {
     .then((response) => {
       if (response.status === 200) {
         // console.log(typeof(response.data))
-        data = [...response.data];
+        
+        // totalcount = [response.headers.total-count]
         // console.log(data)
-        // console.log(response.headers)
+        console.log(response)
+        data = Object.keys(response.data.data).map(o=>response.data.data[o])
+        count = response.data.count
+        console.log("count: "+ count)
+        // console.log("headers in resonse is "+response.headers(["total-count"]));
         // return response.data
       }
     })
     .catch((err) => {
       window.alert("Error: " + err);
     });
-  return data;
+  return {data, count};
 };
