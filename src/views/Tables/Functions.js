@@ -3,7 +3,6 @@ import axios from "axios";
 // const baseURL = "http://10.42.0.1";
 const baseURL = "http://localhost";
 
-<<<<<<< HEAD
 
 //customerList
 export const customerList = async (activePage, itemCountPerPage) => {
@@ -34,88 +33,20 @@ export const PendingOrderList = async (activePage, itemCountPerPage) => {
     let data, count;
     await axios
       .get(`${baseURL}:5000/users/pendingorder-list?page=${activePage}&limit=${itemCountPerPage}`, {
-=======
-export const registerPartner = (newPartner) => {
-  console.log("axios worked");
-  return axios
-    .post(`${baseURL}:5000/users/registerPartner`, {
-      partner_name: newPartner.partner_name,
-      partner_email: newPartner.partner_email,
-      partner_mobileno: newPartner.partner_mobileno,
-      partner_address: newPartner.partner_address,
-      pincode: newPartner.pincode,
-      Rate: newPartner.Rate,
-      Commission_Type: newPartner.Commission_Type,
-      partner_gender: newPartner.partner_gender
-    }, {headers:{token:localStorage.getItem('token')}})
-    .then((response) => {
-      console.log("Partner Registerd");
-      // console.log(response)
-    })
-    .catch((e) => console.log(e));
-};
-
-export const updatePartner = updatedPartner => {
-  console.log("axios updated User worked");
-  // console.log(url)
-  return axios
-    .put(
-      `${baseURL}:5000/users/update-partner`,
-      {
-        name: updatedPartner.name,
-        email: updatedPartner.email,
-        mobileno: updatedPartner.mobileno,
-        address: updatedPartner.address,
-        pincode: updatedPartner.pincode,
-        rate: updatedPartner.rate,
-        commission_type: updatedPartner.commission_type,
-        gender: updatedPartner.gender
-      },
-      {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      }
-    )
-    .then((response) => {
-      if (response.status === 200) console.log("Updated");
-      // console.log(response)
-    })
-    .catch((e) => {
-      window.alert("Error: " + e);
-    });
-};
-
-
-
-export const partnerList = async (activePage, itemCountPerPage) => {
-    let data;
-    await axios
-      .get(`${baseURL}:5000/users/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
->>>>>>> d15549c372ddb636a56cadb279b9ad31f8de258c
         headers: {
           token: localStorage.getItem("token"),
         },
       })
       .then((response) => {
         if (response.status === 200) {
-<<<<<<< HEAD
           data = Object.keys(response.data.data).map(o=>response.data.data[o]);
           count= response.data.count
           console.log("response in header = "+ response.headers)
-=======
-          // console.log(typeof(response.data))
-          data = [...response.data];
-          // console.log(data)
-          // console.log(response.headers)
-          // return response.data
->>>>>>> d15549c372ddb636a56cadb279b9ad31f8de258c
         }
       })
       .catch((err) => {
         window.alert("Error: " + err);
       });
-<<<<<<< HEAD
     return {data, count};
   };
 
@@ -191,7 +122,81 @@ export const searchTransaction = async (searchTrans) => {
   
   return data
 };
-=======
+
+
+export const registerPartner = (newPartner) => {
+  console.log("axios worked");
+  return axios
+    .post(`${baseURL}:5000/users/registerPartner`, {
+      partner_name: newPartner.partner_name,
+      partner_email: newPartner.partner_email,
+      partner_mobileno: newPartner.partner_mobileno,
+      partner_address: newPartner.partner_address,
+      pincode: newPartner.pincode,
+      Rate: newPartner.Rate,
+      Commission_Type: newPartner.Commission_Type,
+      partner_gender: newPartner.partner_gender
+    }, {headers:{token:localStorage.getItem('token')}})
+    .then((response) => {
+      console.log("Partner Registerd");
+      // console.log(response)
+    })
+    .catch((e) => console.log(e));
+};
+
+export const updatePartner = updatedPartner => {
+  console.log("axios updated User worked");
+  // console.log(url)
+  return axios
+    .put(
+      `${baseURL}:5000/users/update-partner`,
+      {
+        name: updatedPartner.name,
+        email: updatedPartner.email,
+        mobileno: updatedPartner.mobileno,
+        address: updatedPartner.address,
+        pincode: updatedPartner.pincode,
+        rate: updatedPartner.rate,
+        commission_type: updatedPartner.commission_type,
+        gender: updatedPartner.gender
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) console.log("Updated");
+      // console.log(response)
+    })
+    .catch((e) => {
+      window.alert("Error: " + e);
+    });
+};
+
+
+
+export const partnerList = async (activePage, itemCountPerPage) => {
+    let data;
+    await axios
+      .get(`${baseURL}:5000/users/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          // console.log(typeof(response.data))
+          data = [...response.data];
+          // console.log(data)
+          // console.log(response.headers)
+          // return response.data
+        }
+      })
+      .catch((err) => {
+        window.alert("Error: " + err);
+      });
     return data;
   };
 
@@ -211,4 +216,3 @@ export const searchTransaction = async (searchTrans) => {
     
     return data
   };
->>>>>>> d15549c372ddb636a56cadb279b9ad31f8de258c

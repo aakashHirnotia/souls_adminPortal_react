@@ -37,7 +37,7 @@ export default {
     },
     {
       name: 'Transactions',
-      url: '/tables/transaction',
+      url: '/tables/transactions',
       icon: 'icon-pencil',
     },
     {

@@ -32,16 +32,10 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
 // // const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
  const Customers = React.lazy(() => import('./views/Tables/ViewCustomer'));
-<<<<<<< HEAD
  const PendingOrders = React.lazy(() => import('./views/Tables/ViewPendingOrder'));
- const Partners = React.lazy(() => import('./views/Tables/Partners'));
- const Transaction = React.lazy(() => import('./views/Tables/ViewTransaction'));
-=======
- const PendingOrders = React.lazy(() => import('./views/Tables/PendingOrders'));
  const ViewPartners = React.lazy(() => import('./views/Tables/ViewPartners'));
  const PartnersMember = React.lazy(() => import('./views/Tables/PartnersMember'));
- const Transactions = React.lazy(() => import('./views/Tables/Transactions'));
->>>>>>> d15549c372ddb636a56cadb279b9ad31f8de258c
+ const Transactions = React.lazy(() => import('./views/Tables/ViewTransaction'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
  const ViewRole = React.lazy(() => import('./views/Admin/ViewRole'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
@@ -70,14 +64,9 @@ const routes = [
   { path: '/tables/customer/update', name: 'EditCustomerMember', component: EditCustomerMember },
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
-<<<<<<< HEAD
-   { path: '/tables/partners', name: 'Partners', component: Partners },
-   { path: '/tables/transaction', name: 'Transaction', component: Transaction},
-=======
    { path: '/tables/ViewPartners', name: 'ViewPartners', component: ViewPartners },
    { path: '/tables/view-partner-member/:id', exact: true,  name: 'ViewPartnersMember', component: PartnersMember },
    { path: '/tables/transactions', name: 'Transactions', component: Transactions},
->>>>>>> d15549c372ddb636a56cadb279b9ad31f8de258c
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
    { path: '/admin/role', name: 'ViewRole', component: ViewRole},
    { path: '/admin/teamHasRole', name: 'TeamHasRole', component: TeamHasRole},
