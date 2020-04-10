@@ -1,13 +1,4 @@
-// import React, { Component } from 'react';
 
-// class Partners extends Component {
-//     //state = {  }
-//     render() { 
-//         return ( <div> Partners tables</div> );
-//     }
-// }
- 
-// export default Partners;
 
 
 import React, { Component } from "react";
@@ -23,37 +14,38 @@ class PartnerRow extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({team: this.props.team})
+    this.setState({partner: this.props.partner})
   }
 
   render() {
     return (
-      <tr key={this.state.partner.partnerid}>
-        <th>{this.state.partner.partnerid}</th>
-        <td>{this.state.partner.firstname}</td>
-        <td>{this.state.partner.lastname}</td>
-        <td>{this.state.partner.middlename}</td>
+      <tr key={this.state.partner.partner_id}>
+        <th>{this.state.partner.partner_id}</th>
+        <td>{this.state.partner.partner_name}</td>
+        {/* <td>{this.state.partner.lastname}</td>
+        <td>{this.state.partner.middlename}</td> */}
         <td>{this.state.partner.partner_email}</td>
         <td>{this.state.partner.partner_mobileno}</td>
-        <td>{this.state.partner.partner_alternate_mobileno}</td>
+        {/* <td>{this.state.partner.partner_alternate_mobileno}</td> */}
         <td>{this.state.partner.partner_address}</td>
         <td>{this.state.partner.pincode}</td>
         <td>{this.state.partner.latitude}</td>
-        <td>{this.state.partner.longitude}</td>
-        <td>{this.state.partner.per_visit_price_commission}</td>
-        <td>{this.state.partner.commission_type}</td>
+        <td>{this.state.partner.Longitude}</td>
+        <td>{this.state.partner.Rate}</td>
+        <td>{this.state.partner.Commission_Type}</td>
         <td>{this.state.partner.Onboard_Date}</td>
         <td>{this.state.partner.UpdatedAt}</td>
         <td>{this.state.partner.CreatedAt}</td>
-        <td>{this.state.partner.Created_By}</td>
-        <td>{this.state.partner.Updated_By}</td>
+        <td>{this.state.partner.created_by}</td>
+        <td>{this.state.partner.updated_by}</td>
+        <td>{this.state.partner.partner_gender}</td>
         <td>
-          <Link to={`/partner/view-partner/${this.props.partner.partnerid}`}>
+          <Link to={`/tables/view-partner-member/${this.props.partner.partner_id}`}>
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
           </Link>{" "}
           <Link
             style={{ paddingLeft: "14px" }}
-            to={`/partner/edit-partner/${this.props.partner.partnerid}`}
+            to={`/tables/edit-partner/${this.props.partner.partner_id}`}
           >
             <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
@@ -72,25 +64,25 @@ class ViewPartners extends Component {
 
       data: [],
 
-      partnerid: "",
-      firstname: "",
-      lastname: "",
-      middlename: "",
+      partner_id: "",
+      partner_name: "",
+      // lastname: "",
+      // middlename: "",
       partner_email: "",
       partner_mobileno: "",
-      partner_alternate_mobileno: "",
+      // partner_alternate_mobileno: "",
       partner_address: "",
       pincode: "",
       latitude: "",
-      longitude: "",
-      per_visit_price_commission: "",
-      commission_type: "",
+      Longitude: "",
+      Rate: "",
+      Commission_Type: "",
       Onboard_Date: "",
       UpdatedAt: "",
       CreatedAt: "",
-      Created_By: "",
-      Updated_By: "",
-      Partner_Gender: "",
+      created_by: "",
+      updated_by: "",
+      partner_gender: "",
       errors: {}
     };
 
@@ -117,25 +109,25 @@ class ViewPartners extends Component {
   onSubmit= async (e)=> {
     e.preventDefault();
     const searchUser = {
-      partnerid: this.state.partnerid,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      middlename: this.state.middlename,
+      partner_id: this.state.partner_id,
+      partner_name: this.state.partner_name,
+      // lastname: this.state.lastname,
+      // middlename: this.state.middlename,
       partner_email: this.state.partner_email,
       partner_mobileno: this.state.partner_mobileno,
-      partner_alternate_mobileno: this.state.partner_alternate_mobileno,
+      // partner_alternate_mobileno: this.state.partner_alternate_mobileno,
       partner_address: this.state.partner_address,
       pincode: this.state.pincode,
       latitude: this.state.latitude,
-      longitude: this.state.longitude,
-      per_visit_price_commission: this.state.per_visit_price_commission,
-      commission_type: this.state.commission_type,
+      Longitude: this.state.Longitude,
+      Rate: this.state.Rate,
+      Commission_Type: this.state.Commission_Type,
       Onboard_Date: this.state.Onboard_Date,
       UpdatedAt: this.state.UpdatedAt,
       CreatedAt: this.state.CreatedAt,
-      Created_By: this.state.Created_By,
-      Updated_By: this.state.Updated_By,
-      Partner_Gender: this.state.Partner_Gender
+      created_by: this.state.created_by,
+      updated_by: this.state.updated_by,
+      partner_gender: this.state.partner_gender
     };
 
     const dataRecieved = await searchPartner(searchUser);
@@ -178,7 +170,7 @@ class ViewPartners extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createPartnerBtn" href="/table/add-partner">
+                  <a className="createPartnerBtn" style={{color: "white"}} href="/tables/add-partner">
                     Create Partner
                   </a>
                 </button>
@@ -188,13 +180,13 @@ class ViewPartners extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Partner ID</th>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th scope="col">Middle Name</th>
+                      <th scope="col">Name</th>
+                      {/* <th scope="col">Last Name</th>
+                      <th scope="col">Middle Name</th> */}
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>
-                      <th scope="col">Alterrnate Mobile No</th>
-                      <th scope="col">Partner Address</th>
+                      {/* <th scope="col">Alterrnate Mobile No</th> */}
+                      <th scope="col">Address</th>
                       <th scope="col">Pincode</th>
                       <th scope="col">Latitude</th>
                       <th scope="col">Longitude</th>
@@ -220,8 +212,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="partnerid"
-                          value={this.state.partnerid}
+                          name="partner_id"
+                          value={this.state.partner_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -233,34 +225,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="firstname"
-                          value={this.state.firstname}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="lastname"
-                          value={this.state.lastname}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="middlename"
-                          value={this.state.middlename}
+                          name="partner_name"
+                          value={this.state.partner_name}
                           onChange={this.onChange}
                         />
                       </td>
@@ -287,19 +253,6 @@ class ViewPartners extends Component {
                           style={{ height: "30px" }}
                           name="partner_mobileno"
                           value={this.state.partner_mobileno}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="partner_alternate_mobileno"
-                          value={this.state.partner_alternate_mobileno}
                           onChange={this.onChange}
                         />
                       </td>
@@ -350,8 +303,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="longitude"
-                          value={this.state.longitude}
+                          name="Longitude"
+                          value={this.state.Longitude}
                           onChange={this.onChange}
                         />
                       </td>
@@ -363,8 +316,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="latitude"
-                          value={this.state.latitude}
+                          name="Rate"
+                          value={this.state.Rate}
                           onChange={this.onChange}
                         />
                       </td>
@@ -376,21 +329,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="per_visit_price_commission"
-                          value={this.state.per_visit_price_commission}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="commission_type"
-                          value={this.state.commission_type}
+                          name="Commission_Type"
+                          value={this.state.Commission_Type}
                           onChange={this.onChange}
                         />
                       </td>
@@ -441,8 +381,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="Created_By"
-                          value={this.state.Created_By}
+                          name="created_by"
+                          value={this.state.created_by}
                           onChange={this.onChange}
                         />
                       </td>
@@ -454,8 +394,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="Updated_By"
-                          value={this.state.Updated_By}
+                          name="updated_by"
+                          value={this.state.updated_by}
                           onChange={this.onChange}
                         />
                       </td>
@@ -467,8 +407,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="Partner_Gender"
-                          value={this.state.Partner_Gender}
+                          name="partner_gender"
+                          value={this.state.partner_gender}
                           onChange={this.onChange}
                         />
                       </td>

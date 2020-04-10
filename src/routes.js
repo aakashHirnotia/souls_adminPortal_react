@@ -35,11 +35,15 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
  const Customers = React.lazy(() => import('./views/Tables/ViewCustomer'));
  const PendingOrders = React.lazy(() => import('./views/Tables/PendingOrders'));
  const ViewPartners = React.lazy(() => import('./views/Tables/ViewPartners'));
+ const PartnersMember = React.lazy(() => import('./views/Tables/PartnersMember'));
  const Transactions = React.lazy(() => import('./views/Tables/Transactions'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
  const ViewRole = React.lazy(() => import('./views/Admin/ViewRole'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
 // const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
+const Partner = React.lazy(() => import('./views/Tables/Partner'));
+
+
 const Users = React.lazy(() => import('./views/Users/Users'));
 const Team = React.lazy(() => import('./views/Team/Team'));
 const ViewProfile = React.lazy(() => import('./views/Profile/View'));
@@ -57,12 +61,15 @@ const routes = [
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
    { path: '/tables/ViewPartners', name: 'ViewPartners', component: ViewPartners },
+   { path: '/tables/view-partner-member/:id', exact: true,  name: 'ViewPartnersMember', component: PartnersMember },
    { path: '/tables/transactions', name: 'Transactions', component: Transactions},
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
    { path: '/admin/role', name: 'ViewRole', component: ViewRole},
    { path: '/admin/teamHasRole', name: 'TeamHasRole', component: TeamHasRole},
   // { path: '/base', exact: true, name: 'Base', component: Cards },
   // { path: '/base/cards', name: 'Cards', component: Cards },
+  { path: '/tables/add-partner', exact: true,  name: 'AddPartner', component: Partner },
+  { path: '/tables/edit-partner/:id', exact: true,  name: 'EditPartner', component: Partner },
   // { path: '/base/forms', name: 'Forms', component: Forms },
   // { path: '/base/switches', name: 'Switches', component: Switches },
   // { path: '/base/tables', name: 'Tables', component: Tables },

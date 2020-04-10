@@ -37,6 +37,13 @@ class TeamHasRoleRow extends Component {
             "not defined"
   }
 
+  getRole = (team_has_role_id) => {
+    return  (team_has_role_id === 1 ) ? "Admin" :
+            (team_has_role_id === 2 ) ? "Accountant" :
+            (team_has_role_id === 3 ) ? "Customer Service" :
+            "not defined"
+  }
+
   displayModal = () => {
     this.setState({ showModal: true });
   };
@@ -48,7 +55,7 @@ class TeamHasRoleRow extends Component {
     return (
       <tr key={this.state.teamHasRole.team_has_role_id}>
         <th>{this.state.teamHasRole.teamid}</th>
-        <td>{this.state.teamHasRole.team_has_role_id}</td>
+        <td>{this.getRole(this.state.teamHasRole.team_has_role_id)}</td>
         <td>{this.state.teamHasRole.CreatedAt}</td>
         <td>{this.state.teamHasRole.UpdatedAt}</td>
         <td className={this.getIcon(this.state.teamHasRole.status)} style={this.getColor(this.state.teamHasRole.status)} data-toggle="tooltip" title={this.getTitle(this.state.teamHasRole.status)}></td>
@@ -152,7 +159,7 @@ class TeamHasRole extends Component {
                   <thead>
                     <tr>
                       <th style={{width: "10%"}} scope="col">Team ID</th>
-                      <th style={{width: "10%"}} scope="col">Team Has Role ID</th>
+                      <th style={{width: "10%"}} scope="col">Role</th>
                       <th scope="col">Created At</th>
                       <th scope="col">Updated At</th>
                       <th scope="col">Status</th>

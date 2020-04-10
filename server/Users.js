@@ -10,7 +10,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.69";
+const baseURL = "http://192.168.137.226";
 // const baseURL = "http://localhost"
 // process.env.MODE === "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
@@ -292,7 +292,7 @@ users.get("/team-has-role-list", (req, res) => {
 users.get("/partner-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/partner/List?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -313,7 +313,7 @@ users.get("/search-partner", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/partner/list?partnerid=${req.query.partnerid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&middlename=${req.query.middlename}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_alternate_mobileno=${req.query.partner_alternate_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&per_visit_price_commission=${req.query.per_visit_price_commission}&commission_type=${req.query.commission_type}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&Updated_By=${req.query.Updated_By}&Created_By=${req.query.Created_By}&Partner_Gender=${req.query.Partner_Gender}`, {
+    .get(`${baseURL}:8000/partner/List?partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&Longitude=${req.query.Longitude}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&Onboard_Date=${req.query.Onboard_Date}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&updated_by=${req.query.updated_by}&created_by=${req.query.created_by}&partner_gender=${req.query.partner_gender}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -329,7 +329,74 @@ users.get("/search-partner", (req, res) => {
 });
 
 
+// register partner
+users.post("/registerPartner", (req, res) => {
+  const today = new Date();
+  const partnerData = {
+    partner_name: req.body.partner_name || "aakash",
+    partner_email: req.body.partner_email || "a@jj",
+    partner_mobileno: req.body.partner_mobileno || "2345678",
+    partner_address: req.body.partner_address || "asdfgh",
+    pincode: req.body.pincode || "234567",
+    Rate: req.body.Rate || "10",
+    Commission_Type: req.body.Commission_Type || "advacnce",
+    partner_gender: req.body.partner_gender || "Male"
+  };
+
+  axios
+    .post(`${baseURL}:8000/partner/register`, partnerData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log("dfghj ------------  ")
+      console.log(response.data);
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+
+  console.log("Register request received in node");
+  console.log("Name: " + partnerData.partner_name +" "+ partnerData.partner_address);
+});
+
+//update partner
+users.post("/update-partner", (req, res) => {
+  const today = new Date();
+  const partnerData = {
+    name: req.body.name || "aakash",
+    email: req.body.email || "a@jj",
+    mobileno: req.body.mobileno || "2345678",
+    address: req.body.address || "asdfgh",
+    pincode: req.body.pincode || "234567",
+    rate: req.body.rate || "10",
+    commission_type: req.body.commission_type || "advacnce",
+    gender: req.body.gender || "Male"
+  };
+
+  axios
+    .put(`${baseURL}:8000/partner/update`, partnerData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response.status);
+      res.status(response.status).send(response.data);
+      console.log(response)
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log("Upadate memeber request received in node");
+  console.log("Name: " + partnerData.name);
+});
+
+
 module.exports = users;
-
-
-
