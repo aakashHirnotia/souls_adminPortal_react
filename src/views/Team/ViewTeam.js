@@ -87,7 +87,7 @@ class ViewTeam extends Component {
       itemsCountPerPage: 10,
 
       data: [],
-
+      count: 0,
       id: "",
       first_name: "",
       last_name: "",
@@ -110,9 +110,11 @@ class ViewTeam extends Component {
       this.state.activePage,
       this.state.itemsCountPerPage
     );
-    SetTeamData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
+    console.log("HEYA")
+    console.log(dataRecieved.data)
+    SetTeamData(dataRecieved.data);
+    const newData = dataRecieved.data
+    this.setState({ data: newData, count: dataRecieved.count});
   }
 
 
@@ -149,19 +151,20 @@ class ViewTeam extends Component {
       pageNumber,
       this.state.itemsCountPerPage
     );
-    SetTeamData(dataRecieved);
+    SetTeamData(dataRecieved.data);
     // console.log(dataPageRecieved)
-    const newData = dataRecieved
-    this.setState({ data: newData, activePage: pageNumber });
+    const newData = dataRecieved.data
+    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
   }
   render() {
     // console.log('DAta: ')
     // console.log(this.state.data.forEach(o=>console.log(o)))
-    const teamList = (TeamData.length !== 0 ? TeamData : TeamDatas).filter(
-      team => team.id < 10
-    );
-    console.log(this.state.data.forEach(o => console.log(o)));
-
+    // const teamList = (TeamData.length !== 0 ? TeamData : TeamDatas).filter(
+    //   team => team.id < 10
+    // );
+    // console.log(this.state.data.forEach(o => console.log(o))); 
+      console.log(this.state.count)
+      console.log(this.state.data)
     return (
       <div className="animated fadeIn">
         <Row>
@@ -329,9 +332,9 @@ class ViewTeam extends Component {
                   className="pagination"
                   hideDisabled
                   activePage={this.state.activePage}
-                  itemsCountPerPage={this.itemsCountPerPage}
-                  totalItemsCount={50} // check
-                  pageRangeDisplayed={5}
+                  itemsCountPerPage={10}
+                  totalItemsCount={this.state.count} // check
+                  pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />
               </CardBody>

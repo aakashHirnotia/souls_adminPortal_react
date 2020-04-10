@@ -19,3 +19,13 @@
 // export const getPandingOrderData=(data) => {
 //   return PandingOrderData;
 // }
+
+export let PartnerData=[]
+
+export const SetPartnerData = (data) => {
+    PartnerData=data;
+}
+
+export const getPartnerData=(data) => {
+  return PartnerData;
+}

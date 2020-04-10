@@ -75,7 +75,7 @@ class TeamHasRole extends Component {
       itemsCountPerPage: 10,
 
       data: [],
-
+      count: 0,
       teamid: "",
       team_has_role_id: "",
       status: "",
@@ -94,9 +94,9 @@ class TeamHasRole extends Component {
       this.state.activePage,
       this.state.itemsCountPerPage
     );
-    SetTeamHasRoleData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
+    SetTeamHasRoleData(dataRecieved.data);
+    const newData = dataRecieved.data
+    this.setState({ data: newData, count: dataRecieved.count });
   }
 
 
@@ -125,11 +125,11 @@ class TeamHasRole extends Component {
       pageNumber,
       this.state.itemsCountPerPage
     );
-    SetTeamHasRoleData(dataRecieved);
+    SetTeamHasRoleData(dataRecieved.data);
     // console.log(dataPageRecieved)
-    const newData = dataRecieved
-    console.log("newdata = " + newData.length)
-    this.setState({ data: newData, activePage: pageNumber });
+    const newData = dataRecieved.data
+    // console.log("newdata = " + newData.length)
+    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
   }
   render() {
     // console.log('DAta: ')
@@ -265,9 +265,9 @@ class TeamHasRole extends Component {
                   className="pagination"
                   hideDisabled
                   activePage={this.state.activePage}
-                  itemsCountPerPage={this.itemsCountPerPage}
-                  totalItemsCount={450} // check
-                  pageRangeDisplayed={5}
+                  itemsCountPerPage={5}
+                  totalItemsCount={this.state.count} // check
+                  pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />
               </CardBody>

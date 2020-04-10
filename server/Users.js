@@ -174,15 +174,24 @@ users.get("/view-member", (req, res) => {
 users.get("/team-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/team/list?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/team/list?page=${req.query.page}&limit=${10}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
-      console.log(response)
-
-      res.status(response.status).send(response.data);
+      console.log(response.headers)
+      // console.log("response header is " + response.headers)
+      res.setHeader("total-count",`${response.headers['total-count']}`)
+      res.setHeader("hellp", "5")
+      console.log(res)
+      // res.setHeader("total-count",response.headers['total-pages'])
+      console.log(response.headers['total-count'])
+      console.log("hey")
+      // console.log(response.headers.total-co  unt)
+      // res.status(response.status).send(response.data);
+      res.status(response.status).send(JSON.stringify({data:{...response.data},count: response.headers['total-count']}))
+      // res.status(response.status).send(response.headers);
     })
     .catch(e => {
       console.log(e)
@@ -269,6 +278,27 @@ users.get("/team-has-role-list", (req, res) => {
     })
     .then(response => {
       console.log(" dfdfvfsd" +response)
+      res.setHeader("total-count",`${response.headers['total-count']}`)
+      res.setHeader("hellp", "5")
+      res.status(response.status).send(JSON.stringify({data:{...response.data},count: response.headers['total-count']}))
+    })
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)}
+      
+      );
+});
+
+users.get("/partner-list", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  axios
+    .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${5}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
 
       res.status(response.status).send(response.data);
     })
@@ -279,6 +309,24 @@ users.get("/team-has-role-list", (req, res) => {
       );
 });
 
+users.get("/search-partner", (req, res) => {
+  // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/partner/list?partnerid=${req.query.partnerid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&middlename=${req.query.middlename}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_alternate_mobileno=${req.query.partner_alternate_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&longitude=${req.query.longitude}&per_visit_price_commission=${req.query.per_visit_price_commission}&commission_type=${req.query.commission_type}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&Updated_By=${req.query.Updated_By}&Created_By=${req.query.Created_By}&Partner_Gender=${req.query.Partner_Gender}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
 
 
 module.exports = users;

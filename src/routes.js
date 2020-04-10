@@ -34,7 +34,7 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
  const Customers = React.lazy(() => import('./views/Tables/ViewCustomer'));
  const PendingOrders = React.lazy(() => import('./views/Tables/PendingOrders'));
- const Partners = React.lazy(() => import('./views/Tables/Partners'));
+ const ViewPartners = React.lazy(() => import('./views/Tables/ViewPartners'));
  const Transactions = React.lazy(() => import('./views/Tables/Transactions'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
  const ViewRole = React.lazy(() => import('./views/Admin/ViewRole'));
@@ -56,7 +56,7 @@ const routes = [
   //{ path: '/theme', exact: true, name: 'Theme', component: Colors },
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
-   { path: '/tables/partners', name: 'Partners', component: Partners },
+   { path: '/tables/ViewPartners', name: 'ViewPartners', component: ViewPartners },
    { path: '/tables/transactions', name: 'Transactions', component: Transactions},
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
    { path: '/admin/role', name: 'ViewRole', component: ViewRole},
