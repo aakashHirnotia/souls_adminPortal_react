@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row
+} from 'reactstrap';
 // import jwt_decode from 'jwt-decode'
 import {fetchUserDetails} from './../Team/UserFunctions'
 import {update} from './../Team/UserFunctions'
-import {getProfileData} from './../Tables/Datas'
+// import {getProfileData} from './../Tables/Datas'
+// import { Row } from 'reactstrap'
 
 class ViewProfile extends Component {
   constructor() {
@@ -44,7 +56,6 @@ class ViewProfile extends Component {
     const updatedUser = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
-      gender: this.state.gender,
       email: this.state.email,
       // password: this.state.password,
       joining: this.state.joining,
@@ -89,139 +100,146 @@ class ViewProfile extends Component {
     }
   }
 
+  renderDefaultView=()=>{
+    return (
+      <div  className="animated fadeIn">
+        <Row>
+          <Col xs="12" sm="3"></Col>
+          <Col xs="12" sm="6">
+            <Card>
+              <CardHeader>
+                <strong>Profile</strong>
+                {/* <small> Form</small> */}
+              </CardHeader>
+              <CardBody>
+                <FormGroup>
+                  <Label htmlFor="firstname">First Name</Label>
+                  <Input type="text" name="first_name" value={this.state.first_name} disabled={true} defaultValue={this.state.first_name}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="lastname">Last Name</Label>
+                  <Input type="text" name="last_name" value={this.state.last_name} disabled={true} defaultValue={this.state.last_name}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="email">Email</Label>
+                  <Input type="text" name="email" value={this.state.email} disabled={true} defaultValue={this.state.email}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="mobile">Mobile No</Label>
+                  <Input type="text" name="mobile" value={this.state.mobile} disabled={true} defaultValue={this.state.mobile}/>
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="8">
+                    <FormGroup>
+                      <Label htmlFor="joining">Joining Date</Label>
+                      <Input type="text" name="joining" value={this.state.joining} disabled={true} defaultValue={this.state.joining}/> 
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="role">Role</Label>
+                      <Input type="text" name="role" value={this.state.role} disabled={true} defaultValue={this.state.role}/>
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="8">
+                    <FormGroup>
+                      <Label htmlFor="address">Address</Label>
+                      <Input type="text" name="address" value={this.state.address} disabled={true} defaultValue={this.state.address}/> 
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <Input type="text" name="status" value={this.state.status} disabled={true} defaultValue={this.state.status}/>
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
+                <button 
+                  onClick={this.changeEditMode}
+                  className="btn btn-sm btn-outline-primary btn-block"
+                >
+                  update profile
+                </button>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs="12" sm="3"></Col>
+          </Row>
+       </div>
+    )
+  }
+
   renderEditView=()=>{
     return (
-      <div className="container">
-        <div className="jumbotron mt-2">
-          <div className="row">
-            <div className="col-sm-3"></div>
-            <div className="col-sm-6"> 
-              <div className="col-sm-4 mx-auto">
-                <h1 className="text-center">PROFILE</h1>
-              </div>
-              <form onSubmit={this.onUpdate}>
-                <table className="table col-md-4 mx-auto">
-                  <tbody>
-                    <tr>
-                      <td>First Name:</td>
-                      <input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} defaultValue={this.state.first_name}/>
-                    </tr>
-                    <tr>
-                      <td>Last Name:</td>
-                      <input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} defaultValue={this.state.last_name}/>
-                    </tr>
-                    {/* <tr>
-                      <td>Gender:</td>
-                      <td>{this.state.gender}</td>
-                    </tr> */}
-                    <tr>
-                      <td>Email:</td>
-                      <td>{this.state.email}</td>
-                    </tr>
-                    {/* <tr>
-                      <td>Password:</td>
-                      <input type="password" name="password" value={this.state.password} onChange={this.onChange} defaultValue={this.state.password}/>
-                    </tr> */}
-                    <tr>
-                      <td>Joining:</td>
-                      <td>{this.state.joining}</td>
-                    </tr>
-                    <tr> 
-                      <td>Address:</td>
-                      <input type="text" name="address" value={this.state.address} onChange={this.onChange} defaultValue={this.state.address}/>
-                    </tr>
-                    <tr>
-                      <td>Status:</td>
-                      <td>{this.state.status}</td>
-                    </tr>
-                    <tr>
-                      <td>Role:</td>
-                      <td>{this.state.role}</td>
-                    </tr>
-                    <tr>
-                      <td>Mobile:</td>
-                      <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} defaultValue={this.state.mobile}/>
-                    </tr>
-                  </tbody>
-                </table>
+      <div  className="animated fadeIn">
+        <Row>
+          <Col xs="12" sm="3"></Col>
+          <Col xs="12" sm="6">
+            <Card>
+              <CardHeader>
+                <strong>Update Profile</strong>
+                {/* <small> Form</small> */}
+              </CardHeader>
+              <CardBody>
+                <FormGroup>
+                  <Label htmlFor="firstname">First Name</Label>
+                  <Input type="text" name="first_name" value={this.state.first_name} onChange={this.onChange} defaultValue={this.state.first_name}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="lastname">Last Name</Label>
+                  <Input type="text" name="last_name" value={this.state.last_name} onChange={this.onChange} defaultValue={this.state.last_name}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="email">Email</Label>
+                  <Input type="text" name="email" value={this.state.email} disabled={true} defaultValue={this.state.email}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="mobile">Mobile No</Label>
+                  <Input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} defaultValue={this.state.mobile}/>
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="8">
+                    <FormGroup>
+                      <Label htmlFor="joining">Joining Date</Label>
+                      <Input type="text" name="joining" value={this.state.joining} disabled={true} defaultValue={this.state.joining}/> 
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="role">Role</Label>
+                      <Input type="text" name="role" value={this.state.role} disabled={true} defaultValue={this.state.role}/>
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="8">
+                    <FormGroup>
+                      <Label htmlFor="address">Address</Label>
+                      <Input type="text" name="address" value={this.state.address} onChange={this.onChange} defaultValue={this.state.address}/> 
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <Input type="text" name="status" value={this.state.status} disabled={true} defaultValue={this.state.status}/>
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
                 <button
-                    type="submit"
                     className="btn btn-sm btn-outline-primary btn-block"
                     style={{justifyContent:"center", display:"flex"}}
+                    onClick={this.onUpdate}
                 >
                     Update!
                 </button>
-              </form>
-            </div>
-            <div className="col-sm-3"></div>
-          </div>  
-        </div>
-      </div>
-    )
-
-  }
-
-  renderDefaultView=()=>{
-    return (
-      <div className="container">
-        <div className="jumbotron mt-5">
-        <div className="row">
-            <div className="col-sm-3"></div>
-            <div className="col-sm-6">
-          <div className="col-sm-8 mx-auto">
-            <h1 className="text-center">PROFILE</h1>
-          </div>
-          <table className="table col-md-6 mx-auto">
-            <tbody>
-              <tr>
-                <td>Fisrt Name:</td>
-                <td>{this.state.first_name}</td>
-              </tr>
-              {<tr>
-                <td>Last Name:</td>
-                <td>{this.state.last_name}</td>
-              </tr>}
-              {/* <tr>
-                <td>Gender:</td>
-                <td>{this.state.gender}</td>
-              </tr> */}
-              <tr>
-                <td>Email:</td>
-                <td>{this.state.email}</td>
-              </tr>
-              {/* <tr>
-                <td>Password:</td>
-                <td>{this.state.password}</td>
-              </tr> */}
-              <tr>
-                <td>Joining:</td>
-                <td>{this.state.joining}</td>
-              </tr>
-              <tr>
-                <td>Address:</td>
-                <td>{this.state.address}</td>
-              </tr>
-              <tr>
-                <td>Status:</td>
-                <td>{this.state.status}</td>
-              </tr>
-              <tr>
-                <td>Role:</td>
-                <td>{this.state.role}</td>
-              </tr>
-              <tr>
-                <td>Mobile:</td>
-                <td>{this.state.mobile}</td>
-              </tr>
-            </tbody>
-          </table>
-          <button onClick={this.changeEditMode}
-            className="btn btn-sm btn-outline-primary btn-block">update profile</button>
-        </div>
-        <div className="col-sm-3"></div>
-          </div>  
-        </div>
-      </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs="12" sm="3"></Col>
+          </Row>
+       </div>
     )
   }
 

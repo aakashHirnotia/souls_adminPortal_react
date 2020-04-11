@@ -116,12 +116,10 @@ export const fetchTeamDetails = (token) => {
 
 export const update = (updatedUser) => {
   return axios
-    .post(`${baseURL}:5000/users/update`, {
+    .put(`${baseURL}:5000/users/update`, {
       first_name: updatedUser.first_name,
       last_name: updatedUser.last_name,
-      gender: updatedUser.gender,
       email: updatedUser.email,
-      password: updatedUser.password,
       joining: updatedUser.joining,
       address: updatedUser.address,
       status: updatedUser.status,
@@ -129,6 +127,7 @@ export const update = (updatedUser) => {
       mobile: updatedUser.mobile,
     })
     .then((response) => {
+      console.log("aakash")
       localStorage.removeItem("usertoken");
       localStorage.setItem("usertoken", response.data);
       return response.data;
@@ -140,6 +139,7 @@ export const update = (updatedUser) => {
 
 export const login = async (user) => {
   let message = "";
+  console.log("aakash")
   await axios
     .post(`${baseURL}:5000/users/login`, {
       email: user.email,
@@ -161,6 +161,7 @@ export const login = async (user) => {
       }
     })
     .catch((e) => {
+      console.log(e)
       if (e.response) {
       switch (e.response.status) {
         case 401:

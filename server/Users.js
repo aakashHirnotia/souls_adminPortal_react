@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://localhost"
+const baseURL = "http://10.42.0.69"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -78,7 +78,7 @@ users.post("/login", (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-  // console.log("xxcvjk")
+  console.log("xxcvjk")
   axios
     .post(`${baseURL}:8000/team/login`, userData)
     .then(response => {
@@ -179,17 +179,8 @@ users.get("/team-list", (req, res) => {
       }
     })
     .then(response => {
-      console.log(response.headers)
-      // console.log("response header is " + response.headers)
-      res.setHeader("total-count",`${response.headers['total-count']}`)
-      res.setHeader("hellp", "5")
-      console.log(res)
-      // res.setHeader("total-count",response.headers['total-pages'])
-      console.log(response.headers['total-count'])
-      console.log("hey")
-      // console.log(response.headers.total-co  unt)
-      // res.status(response.status).send(response.data);
-      res.status(response.status).send(JSON.stringify({data:{...response.data},count: response.headers['total-count']}))
+      console.log(response)
+      res.status(response.status).send({data:{...response.data},count: response.headers['total-count']})
       // res.status(response.status).send(response.headers);
     })
     .catch(e => res.status(500).send("Error: " + e));
@@ -323,31 +314,35 @@ users.get("/transaction-search", (req, res) => {
     } )
 });
 
-
-
-users.post("/update", (req, res) => {
+// update self profile
+users.put("/update", (req, res) => {
   // const today = new Date()
   const userData = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
-    gender: req.body.gender,
     email: req.body.email,
-    password: req.body.password,
     joining: req.body.joining,
     address: req.body.address,
     status: req.body.status,
+    role: req.body.role,
     mobile: req.body.mobile
   };
-
-  request.post(`${baseURL}:8000/api/users/update-profile`, userData, function(
-    error,
-    response,
-    body
-  ) {
-    if (!error && response.statusCode == 200) {
-      console.log(body);
+  console.log("aKash")
+  axios
+    .put(`${baseURL}:8000/team/update-member`, userData,{
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
     }
-  });
+    )
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      console.log(e)
+      res.status(500).send("Error: " + e)
+    });
 
   console.log("Update Profile request received in node");
   console.log("Name: " + userData.first_name);
