@@ -15,7 +15,7 @@ const Label = {
     Slot_Date:"Slot Date",
     massage_duration:"Massage Duration",
     customer_address:"Address",
-    pincode:"Pincode",
+    pincode:"PIN Code",
     latitude: "Latitude",
     longitude: "Longitude",
     CreatedAt: "Create Time",
@@ -30,7 +30,7 @@ const Label = {
 class TransactionMember extends Component {
   componentWillMount() {
     if(TransactionData.length==0) {
-      window.location.href='/customers/transaction/list'
+      window.location.href='/tables/transactions'
     }
   }
 
@@ -59,6 +59,11 @@ class TransactionMember extends Component {
                   <i className="icon-info pr-1"></i>Transaction Member:{" "}
                   {transaction.customer_name}
                 </strong>
+                <button 
+                      className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
+                >
+                  <a className="createCustomerBtn" href="/tables/transactions"> Back </a>
+                </button>
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>

@@ -14,11 +14,11 @@ const Label = {
     Slot_Date:"Slot Date",
     massage_duration:"Massage Duration",
     customer_address:"Address",
-    pincode:"Pincode",
+    pincode:"PIN Code",
     latitude: "Latitude",
     longitude: "Longitude",
     CreatedAt: "Create Time",
-    is_order_confirmed: "Is Order Confermed",
+    is_order_confirmed: "Order Status",
     merchant_transaction_id: "Transaction ID",
     total_order_amount:"Total Order Amount",
 }
@@ -26,7 +26,7 @@ const Label = {
 class PendingOrderMember extends Component {
   componentWillMount() {
     if(PendingOrderData.length==0) {
-      window.location.href='/customers/booking/list'
+      window.location.href='/tables/pendingOrders'
     }
   }
 
@@ -55,6 +55,11 @@ class PendingOrderMember extends Component {
                   <i className="icon-info pr-1"></i>PendingOrder Member:{" "}
                   {PendingOrder.customer_name}
                 </strong>
+                <button 
+                      className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
+                >
+                  <a className="createCustomerBtn" href="/tables/pendingOrders"> Back </a>
+                </button>
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>

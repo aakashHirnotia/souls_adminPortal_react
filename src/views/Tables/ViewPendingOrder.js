@@ -28,6 +28,11 @@ class PendingOrderRow extends Component {
     render() {
       return (
         <tr key={this.state.PendingOrder.customer_souls_id}>
+          <td>
+            <Link to={`/pendingorder/view-member/${this.props.PendingOrder.order_id}`}>
+              <i className="fa fa-eye"></i>
+            </Link>
+          </td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_name}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.Slot_Time}</td>
@@ -38,11 +43,7 @@ class PendingOrderRow extends Component {
           <td className={this.getIcon(this.state.PendingOrder.is_order_confirmed)} style={this.getColor(this.state.PendingOrder.is_order_confirmed)}></td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.merchant_transaction_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.total_order_amount}</td>
-          <td>
-            <Link to={`/pendingorder/view-member/${this.props.PendingOrder.order_id}`}>
-              <i className="fa fa-eye"></i>
-            </Link>
-          </td>
+          
         </tr>
       );
     }
@@ -141,21 +142,31 @@ class PendingOrderRow extends Component {
                   <Table responsive hover>
                     <thead>
                       <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">SOULS ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Slot Time</th>
                         <th scope="col">Slot Date</th>
                         <th scope="col">Massage Duration</th>
-                        <th scope="col">Pincode</th>
+                        <th scope="col">PIN Code</th>
                         <th scope="col">Create Time</th>
-                        <th scope="col">Is Order Confirmed</th>
+                        <th scope="col">Order Status</th>
                         <th scope="col">Merchant TXN ID</th>
                         <th scope="col">Amount</th>
-                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
+                      <td scope="col">
+                          <button
+                            type="submit"
+                            className="btn btn-sm btn-outline-primary"
+                            style={{ justifyContent: "center" }}
+                            onClick={this.onSubmit}
+                          >
+                            search!
+                          </button>
+                        </td>
                         <td scope="col">
                           <input
                             type="search"
@@ -259,9 +270,8 @@ class PendingOrderRow extends Component {
                             value={this.state.is_order_confermed}
                             onChange={(e) => this.setState({is_order_confermed: !this.state.is_order_confermed.value})}
                           >
-                           
-                            <option value={true} >true</option>
-                            <option value={false}>false</option>
+                            <option value={true} >Confirmed</option>
+                            <option value={false}>Pending</option>
                           </select>
                         </td>
                         <td scope="col">
@@ -291,16 +301,7 @@ class PendingOrderRow extends Component {
                           />
                         </td>
 
-                        <td scope="col">
-                          <button
-                            type="submit"
-                            className="btn btn-sm btn-outline-primary"
-                            style={{ justifyContent: "center" }}
-                            onClick={this.onSubmit}
-                          >
-                            search!
-                          </button>
-                        </td>
+                        
                       </tr>
   
                       {this.state.data ? (

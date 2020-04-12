@@ -20,6 +20,17 @@ class TransactionRow extends Component {
     render() {
       return (
         <tr key={this.state.Transaction.customer_souls_id}>
+          <td>
+            <Link to={`/transaction/view-member/${this.props.Transaction.order_id}`}>
+              <i className="fa fa-eye"></i>
+            </Link>
+            <Link
+              style={{ paddingLeft: "10px" }}
+              to={`/transaction/edit-member/${this.props.Transaction.order_id}`}
+            >
+              <i className="fa fa-pencil"></i>
+            </Link>
+          </td>
           <td style={{ width: "20%" }}>{this.state.Transaction.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.customer_name}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.merchant_transaction_id}</td>
@@ -33,19 +44,6 @@ class TransactionRow extends Component {
           <td style={{ width: "20%" }}>{this.state.Transaction.transaction_mode}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.bank_type}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.payment_gateway_id}</td>
-
-
-          <td>
-            <Link to={`/transaction/view-member/${this.props.Transaction.order_id}`}>
-              <i className="fa fa-eye"></i>
-            </Link>
-            <Link
-              style={{ paddingLeft: "10px" }}
-              to={`/transaction/edit-member/${this.props.Transaction.order_id}`}
-            >
-              <i className="fa fa-pencil"></i>
-            </Link>
-          </td>
         </tr>
       );
     }
@@ -154,6 +152,7 @@ class TransactionRow extends Component {
                   <Table responsive hover>
                     <thead>
                       <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">SOULS ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Merchant TXN ID</th>
@@ -161,17 +160,27 @@ class TransactionRow extends Component {
                         <th scope="col">Slot Time</th>
                         <th scope="col">Slot Date</th>
                         <th scope="col">Massage Duration</th>
-                        <th scope="col">Pincode</th>
+                        <th scope="col">PIN Code</th>
                         <th scope="col">Create Time</th>
                         <th scope="col">Payment Gateway Mode</th>
                         <th scope="col">Transaction Mode</th>
                         <th scope="col">Bank Type</th>
                         <th scope="col">Payment Gateway ID</th>
-                        <th scope="col">Actions</th>
+                       
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
+                        <td scope="col">
+                          <button
+                            type="submit"
+                            className="btn btn-sm btn-outline-primary"
+                            style={{ justifyContent: "center" }}
+                            onClick={this.onSubmit}
+                          >
+                            search!
+                          </button>
+                        </td>
                         <td scope="col">
                           <input
                             type="search"
@@ -341,16 +350,7 @@ class TransactionRow extends Component {
                             onChange={this.onChange}
                           />
                         </td>
-                        <td scope="col">
-                          <button
-                            type="submit"
-                            className="btn btn-sm btn-outline-primary"
-                            style={{ justifyContent: "center" }}
-                            onClick={this.onSubmit}
-                          >
-                            search!
-                          </button>
-                        </td>
+                        
                       </tr>
   
                       {this.state.data ? (

@@ -26,19 +26,10 @@ class CustomerRow extends Component {
             (status === false ) ? {color:"red"} :
             {color:"black"}
   }
-
     render() {
       // console.log(this.props.customer)
       return (
         <tr key={this.state.customer.customer_souls_id}>
-          <th>{this.state.customer.customer_souls_id}</th>
-          <td style={{ width: "20%" }}>{this.state.customer.customer_name}</td>
-          <td style={{ width: "20%" }}>{this.state.customer.customer_mobile_no}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.customer_gender}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.customer_email}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.CreatedAt}</td>
-          <td className={this.getIcon(this.state.customer.status)} style={this.getColor(this.state.customer.status)}></td>
           <td>
             <Link to={`/customer/view-member/${this.props.customer.customer_id}`}>
               <i className="fa fa-eye"></i>
@@ -50,6 +41,14 @@ class CustomerRow extends Component {
               <i className="fa fa-pencil"></i>
             </Link>
           </td>
+          <th style={{ width: "12%" }}>{this.state.customer.customer_souls_id}</th>
+          <td style={{ width: "15%" }}>{this.state.customer.customer_name}</td>
+          <td style={{ width: "15%" }}>{this.state.customer.customer_mobile_no}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.customer_gender}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.customer_email}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.pincode}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.CreatedAt}</td>
+          <td className={this.getIcon(this.state.customer.status)} style={this.getColor(this.state.customer.status)}></td>
         </tr>
       );
     }
@@ -134,7 +133,6 @@ class CustomerRow extends Component {
       const customerList = customerData.filter(
         customer => customer.id < 10
       );
-      // console.log(this.state.data.forEach(o => console.log(o)));
   
       return (
         <div className="animated fadeIn">
@@ -148,19 +146,29 @@ class CustomerRow extends Component {
                   <Table responsive hover>
                     <thead>
                       <tr>
+                        <th scope="col">Actions</th>
                         <th scope="col">SOULS ID</th>
                         <th style= {{width: "10%"}} scope="col">Name</th>
                         <th scope="col">Mobile No</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Pincode</th>
+                        <th scope="col">PIN Code</th>
                         <th scope="col">Create Time</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
+                      <td scope="col">
+                          <button
+                            type="submit"
+                            className="btn btn-sm btn-outline-primary"
+                            style={{ justifyContent: "center" }}
+                            onClick={this.onSubmit}
+                          >
+                            search!
+                          </button>
+                        </td>
                         <td scope="col">
                           <input
                             type="search"
@@ -263,20 +271,9 @@ class CustomerRow extends Component {
                             value={this.state.status}
                             onChange={(e) => this.setState({status: !this.state.status.value})}
                           >
-                           
-                            <option value={true} >true</option>
-                            <option value={false}>false</option>
+                            <option value={true} >Active</option>
+                            <option value={false}>Inactive</option>
                           </select>
-                        </td>
-                        <td scope="col">
-                          <button
-                            type="submit"
-                            className="btn btn-sm btn-outline-primary"
-                            style={{ justifyContent: "center" }}
-                            onClick={this.onSubmit}
-                          >
-                            search!
-                          </button>
                         </td>
                       </tr>
   

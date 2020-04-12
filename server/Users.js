@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://localhost"
+const baseURL = "http://10.38.1.35"
 
 //Team Registration
 users.post("/register", (req, res) => {
