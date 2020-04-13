@@ -123,6 +123,74 @@ export const searchTransaction = async (searchTrans) => {
   return data
 };
 
+//Update Customer
+export const updateCustomer = updatedUser => {
+  console.log("axios updated User worked");
+  return axios
+    .put(
+      `${baseURL}:5000/users/update-customer`,
+      {
+        customer_name: updatedUser.customer_name,
+        customer_mobile_no: updatedUser.customer_mobile_no,
+        customer_gender: updatedUser.customer_gender,
+        customer_email: updatedUser.customer_email,
+        customer_address: updatedUser.customer_address,
+        pincode: updatedUser.pincode,
+        Last_Access_Time: updatedUser.Last_Access_Time,
+        status: updatedUser.status
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) console.log("Updated");
+    })
+    .catch((e) => {
+      window.alert("Error: " + e);
+    });
+};
+
+//Update Transaction
+export const updateTransaction = updatedUser => {
+  console.log("axios updated transaction worked");
+  return axios
+    .put(
+      `${baseURL}:5000/users/update-transaction`,
+      {
+        number_of_therapist: updatedUser.number_of_therapist,
+        therapist_gender: updatedUser.therapist_gender,
+        massage_for: updatedUser.massage_for,
+        Slot_Time: updatedUser.Slot_Time,
+        Slot_Date: updatedUser.Slot_Date,
+        massage_duration: updatedUser.massage_duration,
+        customer_address: updatedUser.customer_address,
+        pincode: updatedUser.pincode,
+        latitude: updatedUser.latitude,
+        longitude: updatedUser.longitude,
+        merchant_transaction_id: updatedUser.merchant_transaction_id,
+        payment_gateway_mode: updatedUser.payment_gateway_mode,
+        transaction_mode: updatedUser.transaction_mode,
+        bank_type: updatedUser.bank_type,
+        payment_gateway_id: updatedUser.payment_gateway_id,
+        total_order_amount: updatedUser.total_order_amount
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) console.log("Updated");
+    })
+    .catch((e) => {
+      window.alert("Error: " + e);
+    });
+};
+
 
 export const registerPartner = (newPartner) => {
   console.log("axios worked");

@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35"
+const baseURL = "http://3.6.243.136"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -323,6 +323,77 @@ users.get("/transaction-search", (req, res) => {
     } )
 });
 
+//Customer Member Update
+users.put("/update-customer", (req, res) => {
+  const today = new Date();
+  const userData = {
+    customer_name: req.body.customer_name,
+    customer_mobile_no: req.body.customer_mobile_no,
+    customer_gender: req.body.customer_gender,
+    customer_email: req.body.customer_email,
+    customer_address: req.body.customer_address,
+    pincode: req.body.pincode,
+    Last_Access_Time: req.body.Last_Access_Time,
+    status: req.body.status
+  };
+  axios
+    .put(`${baseURL}:8000/team/update-customer-member`, userData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response.status);
+      res.status(response.status).send(response.data);
+      console.log(response)
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log(userData.customer_name);
+});
+
+//Transaction Update
+users.put("/update-transaction", (req, res) => {
+  const today = new Date();
+  const userData = {
+    number_of_therapist: req.body.number_of_therapist,
+    therapist_gender: req.body.therapist_gender,
+    massage_for: req.body.massage_for,
+    Slot_Time: req.body.Slot_Time,
+    Slot_Date: req.body.Slot_Date,
+    massage_duration: req.body.massage_duration,
+    customer_address: req.body.customer_address,
+    pincode: req.body.pincode,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    merchant_transaction_id: req.body.merchant_transaction_id,
+    payment_gateway_mode: req.body.payment_gateway_mode,
+    transaction_mode: req.body.transaction_mode,
+    bank_type: req.body.bank_type,
+    payment_gateway_id: req.body.payment_gateway_id,
+    total_order_amount: req.body.total_order_amount
+  };
+  axios
+    .put(`${baseURL}:8000/team/update-transaction-member`, userData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      // console.log(response.status);
+      res.status(response.status).send(response.data);
+      // console.log(response)
+    })
+    .catch(e => {
+      // console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log(userData.number_of_therapist)
+});
 
 
 users.post("/update", (req, res) => {

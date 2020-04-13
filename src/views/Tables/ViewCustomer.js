@@ -32,13 +32,13 @@ class CustomerRow extends Component {
         <tr key={this.state.customer.customer_souls_id}>
           <td>
             <Link to={`/customer/view-member/${this.props.customer.customer_id}`}>
-              <i className="fa fa-eye"></i>
+              <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
             </Link>
             <Link
               style={{ paddingLeft: "10px" }}
               to={`/customer/edit-member/${this.props.customer.customer_id}`}
             >
-              <i className="fa fa-pencil"></i>
+              <i className="fa fa-pencil" data-toggle="tooltip" title="update"></i>
             </Link>
           </td>
           <th style={{ width: "12%" }}>{this.state.customer.customer_souls_id}</th>
@@ -208,7 +208,7 @@ class CustomerRow extends Component {
                             onChange={this.onChange}
                           />
                         </td><td scope="col">
-                          <input
+                        <select
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -218,7 +218,11 @@ class CustomerRow extends Component {
                             name="customer_gender"
                             value={this.state.customer_gender}
                             onChange={this.onChange}
-                          />
+                          >
+                            <option  >Male</option>
+                            <option >Female</option>
+                            <option >Other</option>
+                          </select>
                         </td>
                         <td scope="col">
                           <input
@@ -269,7 +273,7 @@ class CustomerRow extends Component {
                             style={{ height: "30px" }}
                             name="status"
                             value={this.state.status}
-                            onChange={(e) => this.setState({status: !this.state.status.value})}
+                            onChange={this.onChange}
                           >
                             <option value={true} >Active</option>
                             <option value={false}>Inactive</option>

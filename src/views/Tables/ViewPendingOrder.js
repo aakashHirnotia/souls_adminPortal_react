@@ -30,7 +30,7 @@ class PendingOrderRow extends Component {
         <tr key={this.state.PendingOrder.customer_souls_id}>
           <td>
             <Link to={`/pendingorder/view-member/${this.props.PendingOrder.order_id}`}>
-              <i className="fa fa-eye"></i>
+              <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
             </Link>
           </td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_souls_id}</td>

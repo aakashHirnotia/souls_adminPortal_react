@@ -49,6 +49,7 @@ const ViewProfile = React.lazy(() => import('./views/Profile/View'));
 // const UpdateProfile = React.lazy(() => import('./views/Profile/Update'));
 const ViewTeam = React.lazy(() => import('./views/Team/ViewTeam'));
 const EditCustomerMember = React.lazy(() => import('./views/Tables/EditCustomer'));
+const EditTransaction = React.lazy(() => import('./views/Tables/EditTransaction'));
 const TeamMember = React.lazy(() => import('./views/Team/TeamMember'));
 const CustomerMember = React.lazy(() => import('./views/Tables/CustomerMember'));
 const PendingOrderMember = React.lazy(() => import('./views/Tables/PendingOrderMember'));
@@ -61,7 +62,8 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   //{ path: '/theme', exact: true, name: 'Theme', component: Colors },
-  { path: '/tables/customer/update', name: 'EditCustomerMember', component: EditCustomerMember },
+  { path: '/customer/edit-member/:id', exact:true, name: 'Update Customer', component: EditCustomerMember },
+  { path: '/transaction/edit-member/:id', exact:true, name: 'Update Transaction', component: EditTransaction },
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
    { path: '/tables/ViewPartners', name: 'ViewPartners', component: ViewPartners },

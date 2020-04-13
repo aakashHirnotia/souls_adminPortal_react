@@ -1,14 +1,3 @@
-// //ProfileDAta
-// export let profileData=[]
-
-// export const SetProfileData = (data) => {
-//   profileData=data;
-// }
-
-// export const getProfileData=(data) => {
-//   return profileData;
-// }
-
 
 //CustomerData
 export let customerData=[]
