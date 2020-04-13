@@ -24,7 +24,7 @@ class Role extends Component {
         return (
           <div className="animated fadeIn">
             <Row>
-              <Col xl={10} style={{padding:"10"}}>
+              <Col xl={12} style={{padding:"10"}}>
                 <Card>
                   <CardHeader>
                     <i className="fa fa-align-justify"></i> Role <small className="text-muted">Members</small>

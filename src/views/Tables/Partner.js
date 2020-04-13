@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { registerPartner,updatePartner } from "./Functions";
+import DateCalender from "./DateCalender";
 import {PartnerData, SetPartnerData} from './Datas'
 import {
   Card,
@@ -22,10 +23,20 @@ const intialState = {
   addressError: "",
   pincode: "",
   pincodeError: "",
+  latitude: "",
+  latitudeError: "",
+  longitude: "",
+  longitudeError: "",
   rate: "",
   rateError: "",
   commission_type: "",
   commission_typeError: "",
+  Onboard_Date:"",
+  Onboard_DateError:"",
+  created_by: "",
+  created_byError: "",
+  updated_by: "",
+  updated_byError: "",
   gender: "",
   genderError: "",
   isEditable: "",
@@ -55,6 +66,11 @@ class Partner extends Component {
         mobileno: partner.partner_mobileno,
         address: partner.partner_address,
         pincode: partner.pincode,
+        latitude: partner.latitude,
+        longitude: partner.longitude,
+        created_by: partner.created_by,
+        updated_by: partner.updated_by,
+        Onboard_Date: partner.Onboard_Date,
         rate: partner.Rate,
         commission_type: partner.Commission_Type,
         gender: partner.partner_gender
@@ -73,11 +89,16 @@ class Partner extends Component {
     let mobilenoError = "";
     let addressError = "";
     let pincodeError = "";
+    let latitudeError = "";
+    let longitudeError = "";
     let genderError = "";
     let rateError = "";
     let commission_typeError = "";
+    let Onboard_DateError = "";
+    let created_byError = "";
+    let updated_byError= "";
     if (!this.state.name) {
-      nameError = "Name can't sbe empty";
+      nameError = "Name can't be empty";
     }
     if (!this.state.email || !this.state.email.includes("@")) {
       emailError = "Email can't be empty";
@@ -100,6 +121,21 @@ class Partner extends Component {
     if (!this.state.commission_type) {
       commission_typeError = "Commission Type can't be empty";
     }
+    if (!this.state.latitude) {
+      latitudeError = "Latitude can't be empty";
+    }
+    if (!this.state.longitude) {
+      longitudeError = "Longitude can't be empty";
+    }
+    if (!this.state.Onboard_Date) {
+      Onboard_DateError = "Onboard Date can't be empty";
+    }
+    if (!this.state.updated_by) {
+      updated_byError = "Updated by can't be empty";
+    }
+    if (!this.state.created_by) {
+      created_byError = "Created by can't be empty";
+    }
 
     if (
       nameError ||
@@ -107,6 +143,10 @@ class Partner extends Component {
       mobilenoError ||
       addressError ||
       pincodeError ||
+      latitudeError ||
+      longitudeError ||
+      created_byError ||
+      updated_byError ||
       rateError ||
       commission_typeError ||
       genderError
@@ -117,6 +157,10 @@ class Partner extends Component {
         mobilenoError,
         addressError,
         pincodeError,
+        latitudeError,
+        longitudeError,
+        created_byError,
+        updated_byError,
         rateError,
         commission_typeError,
         genderError
@@ -131,17 +175,20 @@ class Partner extends Component {
     let mobilenoError = "";
     let addressError = "";
     let pincodeError = "";
-    let genderError = "";
+    let latitudeError = "";
+    let longitudeError = "";
     let rateError = "";
     let commission_typeError = "";
+    let updated_byError = "";
+    let created_byError = "";
     if (!this.state.name) {
-        nameError = "Name can't sbe empty";
-      }
+      nameError = "Name can't be empty";
+    }
     if (!this.state.mobileno) {
-        mobilenoError = "Mobile No can't be empty";
+      mobilenoError = "Mobile No can't be empty";
     }
     if (!this.state.address) {
-        addressError = "Address can't be empty";
+      addressError = "Address can't be empty";
     }
     if (!this.state.pincode) {
         pincodeError = "Pincode can't be empty";
@@ -149,34 +196,49 @@ class Partner extends Component {
     if (!this.state.rate) {
         rateError = "Rate can't be empty";
     }
-    if (!this.state.gender) {
-        genderError = "Choose Gender";
-    } 
     if (!this.state.commission_type) {
-        commission_typeError = "Commission Type can't be empty";
+      commission_typeError = "Commission Type can't be empty";
+    }
+    if (!this.state.latitude) {
+      latitudeError = "Latitude can't be empty";
+    }
+    if (!this.state.longitude) {
+      longitudeError = "Longitude can't be empty";
+    }
+    if (!this.state.updated_by) {
+      updated_byError = "Updated by can't be empty";
+    }
+    if (!this.state.created_by) {
+      created_byError = "Created by can't be empty";
     }
 
     if (
-        nameError ||
-        mobilenoError ||
-        addressError ||
-        pincodeError ||
-        rateError ||
-        commission_typeError ||
-        genderError
-      ) {
-        this.setState({
-          nameError,
-          mobilenoError,
-          addressError,
-          pincodeError,
-          rateError,
-          commission_typeError,
-          genderError
-        });
-        return false;
-      }
-      return true;
+      nameError ||
+      mobilenoError ||
+      addressError ||
+      pincodeError ||
+      latitudeError ||
+      longitudeError ||
+      updated_byError ||
+      created_byError ||
+      rateError ||
+      commission_typeError
+    ) {
+      this.setState({
+        nameError,
+        mobilenoError,
+        addressError,
+        pincodeError,
+        latitudeError,
+        longitudeError,
+        created_byError,
+        updated_byError,
+        rateError,
+        commission_typeError
+      });
+      return false;
+    }
+    return true;
   };
 
 
@@ -195,8 +257,12 @@ class Partner extends Component {
           partner_mobileno: this.state.mobileno,
           partner_address: this.state.address,
           pincode: this.state.pincode,
-          Rate: this.state.rate,
-          Commission_Type: this.state.commission_type,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          created_by: this.state.created_by,
+          updated_by: this.state.updated_by,
+          rate: this.state.rate,
+          commission_type: this.state.commission_type,
           partner_gender: this.state.gender
         };
         updatePartner(updatedPartner).then(res => {
@@ -217,8 +283,13 @@ class Partner extends Component {
             partner_mobileno: this.state.mobileno,
             partner_address: this.state.address,
             pincode: this.state.pincode,
-            Rate: this.state.rate,
-            Commission_Type: this.state.commission_type,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            // Onboard_Date: this.state.Onboard_Date,
+            created_by: this.state.created_by,
+            updated_by: this.state.updated_by,
+            rate: this.state.rate,
+            commission_type: this.state.commission_type,
             partner_gender: this.state.gender
           };
           console.log("ffgg")
@@ -238,7 +309,14 @@ class Partner extends Component {
           <Card>
             <CardHeader>
               <strong>Create Partner</strong>
-              {/* <small> Form</small> */}
+              <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+              >
+                <a className="createTeamBtn" href="/tables/ViewPartners">
+                  Back
+                </a>
+              </button>
             </CardHeader>
             <CardBody>
               <form onSubmit={this.onSubmit}>
@@ -255,7 +333,7 @@ class Partner extends Component {
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.first_nameError}
+                        {this.state.nameError}
                       </div>
                     </FormGroup>
                   </div>
@@ -308,8 +386,86 @@ class Partner extends Component {
                     </FormGroup>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="latitude">Latitude</Label>
+                      <Input
+                        type="text"
+                        id="name"
+                        placeholder="latitude"
+                        name="latitude"
+                        value={this.state.latitude}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.latitudeError}
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="longitude">Longitude</Label>
+                      <Input
+                        type="text"
+                        id="longitude"
+                        placeholder="longitude"
+                        name="longitude"
+                        value={this.state.longitude}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.longitudeError}
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="OnboardDate">Onboard Date</Label>
+                        <DateCalender 
+                          value={this.state.Onboard_Date}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.Onboard_DateError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="created_by">Created By</Label>
+                        <Input
+                            type="text"
+                            id="created_by"
+                            placeholder="created_by"
+                            name="created_by"
+                            value={this.state.created_by}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.created_byError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="updated_by">Updated By</Label>
+                        <Input
+                            type="text"
+                            id="updated_by"
+                            placeholder="updated_by"
+                            name="updated_by"
+                            value={this.state.updated_by}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.updated_byError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                </div>
                 <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="pincode">Pincode</Label>
                       <Input
@@ -325,7 +481,7 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="rate">Rate</Label>
                       <Input
@@ -341,23 +497,25 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="commission_type">Commission Type</Label>
-                      <Input
-                        type="text"
-                        id="commission_type"
-                        placeholder="commission_type"
+                    <Label htmlFor="commission_type">Commission Type</Label>
+                      <select
+                        className="form-control"
                         name="commission_type"
                         value={this.state.commission_type}
                         onChange={this.onChange}
-                      />
+                      >
+                        <option></option>
+                        <option>Percentage(%)</option>
+                        <option>Flat</option>
+                      </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.commission_typeError}
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  <Col xs="3">
                     <FormGroup>
                         <Label htmlFor="gender">Gender</Label>
                         <select
@@ -366,6 +524,7 @@ class Partner extends Component {
                             value={this.state.gender}
                             onChange={this.onChange}
                         >
+                            <option></option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
@@ -397,13 +556,20 @@ class Partner extends Component {
         <div>
           <Card>
             <CardHeader>
-              <strong>Create Partner</strong>
-              {/* <small> Form</small> */}
+              <strong>Update Partner</strong>
+              <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+              >
+                <a className="createTeamBtn" href="/tables/ViewPartners">
+                  Back
+                </a>
+              </button>
             </CardHeader>
             <CardBody>
               <form onSubmit={this.onSubmit}>
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="name">Name</Label>
                       <Input
@@ -415,11 +581,11 @@ class Partner extends Component {
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.first_nameError}
+                        {this.state.nameError}
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="email">Email</Label>
                       <Input
@@ -428,15 +594,15 @@ class Partner extends Component {
                         placeholder="email"
                         name="email"
                         value={this.state.email}
-                        onChange={this.onChange}
                         disabled={true}
+                        onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.emailError}
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                         <Label htmlFor="address">Address</Label>
                         <Input
@@ -452,9 +618,107 @@ class Partner extends Component {
                         </div>
                     </FormGroup>
                   </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                        <Label htmlFor="address">Mobile No</Label>
+                        <Input
+                            type="text"
+                            id="mobileno"
+                            placeholder="mobileno"
+                            name="mobileno"
+                            value={this.state.mobileno}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.mobilenoError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="latitude">Latitude</Label>
+                      <Input
+                        type="text"
+                        id="name"
+                        placeholder="Name"
+                        name="latitude"
+                        value={this.state.latitude}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.latitudeError}
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="longitude">Longitude</Label>
+                      <Input
+                        type="text"
+                        id="longitude"
+                        placeholder="longitude"
+                        name="longitude"
+                        value={this.state.longitude}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.longitudeError}
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="Onboard_Date">Onboard Date</Label> <br />
+                        <Input
+                          type="text"
+                          id="Onboard_Date"
+                          name="Onboard_Date"
+                          value={this.state.Onboard_Date}
+                          disabled={true}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.Onboard_DateError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="created_by">Created By</Label>
+                        <Input
+                            type="text"
+                            id="created_by"
+                            placeholder="created_by"
+                            name="created_by"
+                            value={this.state.created_by}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.created_byError}
+                        </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-2">
+                    <FormGroup>
+                        <Label htmlFor="updated_by">Updated By</Label>
+                        <Input
+                            type="text"
+                            id="updated_by"
+                            placeholder="updated_by"
+                            name="updated_by"
+                            value={this.state.updated_by}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.updated_byError}
+                        </div>
+                    </FormGroup>
+                  </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="pincode">Pincode</Label>
                       <Input
@@ -470,7 +734,7 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="rate">Rate</Label>
                       <Input
@@ -486,31 +750,35 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="commission_type">Commission Type</Label>
-                      <Input
-                        type="text"
-                        id="commission_type"
-                        placeholder="commission_type"
+                      <select
+                        className="form-control"
                         name="commission_type"
                         value={this.state.commission_type}
                         onChange={this.onChange}
-                      />
+                      >
+                        <option></option>
+                        <option>Percentage(%)</option>
+                        <option>Flat</option>
+                      </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.commission_typeError}
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                  <Col xs="3">
                     <FormGroup>
                         <Label htmlFor="gender">Gender</Label>
                         <select
                             className="form-control"
                             name="gender"
                             value={this.state.gender}
+                            disabled={true}
                             onChange={this.onChange}
                         >
+                            <option></option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>

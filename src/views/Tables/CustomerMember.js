@@ -50,10 +50,13 @@ class CustomerMember extends Component {
                   <i className="icon-info pr-1"></i>Customer Member:{" "}
                   {customer.customer_name}
                 </strong>
-                <button 
-                      className="btn btn-outline-primary" style={{position:"absolute", right:"20px"}}
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createCustomerBtn" href="/tables/customers"> Back </a>
+                  <a className="createTeamBtn" href="/tables/customers">
+                    Back
+                  </a>
                 </button>
               </CardHeader>
               <CardBody>

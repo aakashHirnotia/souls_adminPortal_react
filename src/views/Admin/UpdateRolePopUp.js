@@ -7,7 +7,7 @@ export default class UpdateRolePopUp extends Component{
     constructor(props){
         super(props);
         this.state= {
-            role: '',
+            role: "",
             teamid: this.props.teamid,
             status: false
         }
@@ -29,6 +29,7 @@ export default class UpdateRolePopUp extends Component{
         let changed =await updateRole(user);
         console.log(changed)
         if(changed) {
+            console.log("role changed succesfully")
             this.setState({status: true})
         }
         
@@ -69,7 +70,7 @@ export default class UpdateRolePopUp extends Component{
                         >
                             <option>Admin</option>
                             <option>Accountant</option>
-                            <option>Customer Care</option>
+                            <option>Customer Service</option>
                         </select>
                         {/* <input type="text" id="role" placeholder="role" name="role" style={{padding: "8px"}} onChange={this.onChange} /> */}
                     </Modal.Body>

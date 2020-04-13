@@ -84,7 +84,7 @@ export const fetchUserDetails = (token, cb) => {
     })
     .then((response) => {
       console.log("respomse data is ----")
-      console.log(response.data)
+      // console.log(response.data)
       console.log("Fetching data");
       cb(response.data, undefined);
     });
@@ -98,7 +98,7 @@ export const fetchTeamDetails = (token) => {
       },
     })
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       if (response.status === 200) {
         console.log("Entered");
       } else {
@@ -116,19 +116,22 @@ export const fetchTeamDetails = (token) => {
 
 export const update = (updatedUser) => {
   return axios
-    .post(`${baseURL}:5000/users/update`, {
-      first_name: updatedUser.first_name,
-      last_name: updatedUser.last_name,
-      gender: updatedUser.gender,
+    .put(`${baseURL}:5000/users/update`, {
+      firstname: updatedUser.firstname,
+      lastname: updatedUser.lastname,
       email: updatedUser.email,
-      password: updatedUser.password,
-      joining: updatedUser.joining,
+      Joining_Date: updatedUser.Joining_Date,
       address: updatedUser.address,
       status: updatedUser.status,
       role: updatedUser.role,
-      mobile: updatedUser.mobile,
-    })
+      mobileno: updatedUser.mobileno,
+    },{
+      headers: {
+        token: localStorage.getItem("token"),
+      }}
+    )
     .then((response) => {
+      // console.log("aakash")
       localStorage.removeItem("usertoken");
       localStorage.setItem("usertoken", response.data);
       return response.data;
@@ -140,13 +143,14 @@ export const update = (updatedUser) => {
 
 export const login = async (user) => {
   let message = "";
+  console.log("aakash")
   await axios
     .post(`${baseURL}:5000/users/login`, {
       email: user.email,
       password: user.password,
     })
     .then((response) => {
-      console.log(response)
+      // console.log(response)
       switch (response.status) {
         case 200: {
           localStorage.setItem("token", response.data.token);
@@ -161,6 +165,7 @@ export const login = async (user) => {
       }
     })
     .catch((e) => {
+      console.log(e)
       if (e.response) {
       switch (e.response.status) {
         case 401:
@@ -231,7 +236,7 @@ export const teamList = async (activePage, itemCountPerPage) => {
         
         // totalcount = [response.headers.total-count]
         // console.log(data)
-        console.log(response)
+        // console.log(response)
         data = Object.keys(response.data.data).map(o=>response.data.data[o])
         count = response.data.count
         console.log("count: "+ count)

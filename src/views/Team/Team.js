@@ -99,7 +99,7 @@ class Team extends Component {
       emailError = "invalid email";
     }
     if (!this.state.joining) {
-      joiningError = "can't be empty";
+      joiningError = "Date can't be empty";
     }
     if (!this.state.address) {
       addressError = "Address can't be empty";
@@ -254,6 +254,14 @@ class Team extends Component {
             <CardHeader>
               <strong>Create Team</strong>
               {/* <small> Form</small> */}
+              <button
+                className="btn btn-primary btn-sm"
+                style={{ position: "absolute", right: "20px" }}
+              >
+                <a className="createTeamBtn" href="/team/list">
+                  Back
+                </a>
+              </button>
             </CardHeader>
             <CardBody>
               <form onSubmit={this.onSubmit}>
@@ -343,10 +351,10 @@ class Team extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="joining-date">Joining Date</Label> <br />
-                      <DateCalender />
-                      {/* <div style={{ fontSize: 10, color: "red" }}>
+                      <DateCalender onChange={this.onChange} />
+                      <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.joiningError}
-                      </div> */}
+                      </div>
                       {/* <Input type="text" id="joining-date" placeholder="DD/MM/YYYY" name="joining" value={this.state.joining}  onChange={this.onChange}/> */}
                     </FormGroup>
                   </Col>
@@ -378,6 +386,7 @@ class Team extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
+                        <option></option>
                         <option>Active</option>
                         <option>Inactive</option>
                         <option>Deleted</option>
@@ -396,6 +405,7 @@ class Team extends Component {
                         value={this.state.role}
                         onChange={this.onChange}
                       >
+                        <option></option>
                         <option>Admin</option>
                         <option>Accountant</option>
                         <option>Customer Care</option>
@@ -414,6 +424,7 @@ class Team extends Component {
                         value={this.state.gender}
                         onChange={this.onChange}
                       >
+                        <option></option>
                         <option>Male</option>
                         <option>Female</option>
                         <option>Other</option>
@@ -448,6 +459,14 @@ class Team extends Component {
             <CardHeader>
               <strong>Edit Member: </strong>
               {/* <small> Form</small> */}
+              <button
+                className="btn btn-primary btn-sm"
+                style={{ position: "absolute", right: "20px" }}
+              >
+                <a className="createTeamBtn" href="/team/list">
+                  Back
+                </a>
+              </button>
             </CardHeader>
             <CardBody>
               <form onSubmit={this.onSubmit}>

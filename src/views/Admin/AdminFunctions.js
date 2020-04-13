@@ -29,7 +29,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   export const searchTeamHasRole = async (searchUser) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/team-has-role-list?status=${searchUser.status}`,{
+      get(`http://localhost:5000/users/searchTeamHasRole?status=${searchUser.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,{
         headers: {
           token: localStorage.getItem("token")
         }
@@ -45,6 +45,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
 
   export const updateRole = async (user) => {
     let changed = false;
+    console.log("hiiiiiii")
     await axios
       .put(`${baseURL}:5000/users/updateTeamRole`, {
         teamid: user.teamid,
