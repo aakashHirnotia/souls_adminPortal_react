@@ -59,7 +59,8 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: '' },
+  // { path: '/', name: 'Home', component: Dashboard },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   //{ path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/customer/edit-member/:id', exact:true, name: 'Update Customer', component: EditCustomerMember },
@@ -114,9 +115,9 @@ const routes = [
   { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
-  { path: '/customer/view-member/:id', exact: true,  name: 'CustomerMember', component: CustomerMember },
-  { path: '/pendingorder/view-member/:id', exact: true,  name: 'PendingOrderMember', component: PendingOrderMember },
-  { path: '/transaction/view-member/:id', exact: true,  name: 'TransactionMember', component: TransactionMember },
+  { path: '/customer/view-member/:id', exact: true,  name: 'Customer / view', component: CustomerMember },
+  { path: '/pendingorder/view-member/:id', exact: true,  name: 'Pending Order', component: PendingOrderMember },
+  { path: '/transaction/view-member/:id', exact: true,  name: 'Transaction', component: TransactionMember },
   { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: Team },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
