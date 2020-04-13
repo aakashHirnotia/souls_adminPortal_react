@@ -54,15 +54,15 @@ class ViewProfile extends Component {
     this.changeEditMode()
     
     const updatedUser = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      firstname: this.state.first_name,
+      lastname: this.state.last_name,
       email: this.state.email,
       // password: this.state.password,
-      joining: this.state.joining,
+      Joining_Date: this.state.joining,
       address: this.state.address,
       status: this.state.status,
       role: this.state.role,
-      mobile: this.state.mobile
+      mobileno: this.state.mobile
     }
 
     update(updatedUser).then(res => {

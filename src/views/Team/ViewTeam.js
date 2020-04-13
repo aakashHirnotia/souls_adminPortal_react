@@ -46,13 +46,6 @@ class TeamRow extends Component {
   render() {
     return (
       <tr key={this.state.team.teamid}>
-        <th>{this.state.team.teamid}</th>
-        <td style={{ width: "10%" }}>{this.state.team.firstname}</td>
-        <td style={{ width: "10%" }}>{this.state.team.lastname}</td>
-        <td>{this.state.team.email}</td>
-        <td>{this.state.team.mobileno}</td>
-        <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
-        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)} data-toggle="tooltip" title={this.getTitle(this.state.team.status)}></td>
         <td>
           <Link to={`/team/view-member/${this.props.team.teamid}`}>
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
@@ -68,6 +61,13 @@ class TeamRow extends Component {
             <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
         </td>
+        <th>{this.state.team.teamid}</th>
+        <td style={{ width: "10%" }}>{this.state.team.firstname}</td>
+        <td style={{ width: "10%" }}>{this.state.team.lastname}</td>
+        <td>{this.state.team.email}</td>
+        <td>{this.state.team.mobileno}</td>
+        <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
+        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)} data-toggle="tooltip" title={this.getTitle(this.state.team.status)}></td>
         <PasswordPopUp
           email={this.state.team.email}
           show={this.state.showModal}
@@ -182,6 +182,7 @@ class ViewTeam extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
+                      <th scope="col">Actions</th>
                       <th style= {{width: "5%"}} scope="col">ID</th>
                       <th style= {{width: "8%"}} scope="col">First Name</th>
                       <th style= {{width: "8%"}} scope="col">Last Name</th>
@@ -189,13 +190,22 @@ class ViewTeam extends Component {
                       <th style= {{width: "15%"}} scope="col">Mobile</th>
                       <th style= {{width: "25%"}} scope="col">Joining Date</th>
                       <th style= {{width: "5%"}} scope="col">Status</th>
-                      <th scope="col">Actions</th>
 
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       {/* <form onSubmit={this.onSubmit}> */}
+                      <td scope="col">
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-outline-primary"
+                          style={{ justifyContent: "center" }}
+                          onClick={this.onSubmit}
+                        >
+                          search!
+                        </button>
+                      </td>
                       <td scope="col">
                         <input
                           type="search"
@@ -287,20 +297,11 @@ class ViewTeam extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
+                          <option ></option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                           <option value="Deleted">Deleted</option>
                         </select>
-                      </td>
-                      <td scope="col">
-                        <button
-                          type="submit"
-                          className="btn btn-sm btn-outline-primary"
-                          style={{ justifyContent: "center" }}
-                          onClick={this.onSubmit}
-                        >
-                          search!
-                        </button>
                       </td>
                     </tr>
 

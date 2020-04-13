@@ -54,6 +54,14 @@ class PartnersMember extends Component {
                   <i className="icon-info pr-1"></i>Partner:{" "}
                   {partner.partner_name}
                 </strong>
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+                >
+                  <a className="createTeamBtn" href="/tables/ViewPartners">
+                    Back
+                  </a>
+                </button>  
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>

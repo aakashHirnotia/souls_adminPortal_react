@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.42.0.69"
+const baseURL = "http://10.38.1.35"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -22,7 +22,7 @@ users.post("/register", (req, res) => {
     mobileno: req.body.mobile || "1234567789",
     role: req.body.role || "admin"
   };
-
+  console.log(userData.firstname)
   axios
     .post(`${baseURL}:8000/team/add-member`, userData)
     .then(response => {
@@ -35,7 +35,7 @@ users.post("/register", (req, res) => {
       res.status(500).send(e);
     });
   console.log("Register request received in node");
-  console.log("Name: " + userData.first_name);
+  console.log("Name: " + userData.firstname);
 });
 
 //Team Member Update
@@ -53,7 +53,7 @@ users.post("/update-member", (req, res) => {
   };
 
   axios
-    .put(`${baseURL}:8000/team/update-team-member`, userData, {
+    .put(`${baseURL}:8000/team/update/team-member`, userData, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -318,25 +318,25 @@ users.get("/transaction-search", (req, res) => {
 users.put("/update", (req, res) => {
   // const today = new Date()
   const userData = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    joining: req.body.joining,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    // email: req.body.email,
+    // Joining_Date: req.body.Joining_Date,
     address: req.body.address,
     status: req.body.status,
-    role: req.body.role,
-    mobile: req.body.mobile
+    // role: req.body.role,
+    mobileno: req.body.mobileno
   };
   console.log("aKash")
   axios
-    .put(`${baseURL}:8000/team/update-member`, userData,{
+    .put(`${baseURL}:8000/team/update/profile`, userData,{
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     }
     )
     .then(response => {
-      console.log(response)
+      console.log(response.data)
       res.status(response.status).send(response.data);
     })
     .catch(e => {
@@ -345,25 +345,26 @@ users.put("/update", (req, res) => {
     });
 
   console.log("Update Profile request received in node");
-  console.log("Name: " + userData.first_name);
+  console.log("Name: " + userData.firstname);
 });
 
 users.put("/updateTeamRole", (req, res) => {
   const userData = {
     teamid: req.body.teamid,
-    role: req.body.role
+    role_name: req.body.role
   };
   console.log("Role change request Received!");
+  console.log(userData.teamid +" "+ userData.role);
 
   axios
-    .put(`${baseURL}:8000/team/update-member/role`, userData,{
+    .put(`${baseURL}:8000/team/has-role/update`, userData,{
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     }
     )
     .then(response => {
-      console.log(response)
+      // console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch(e => {
@@ -376,7 +377,7 @@ users.get("/searchTeamHasRole", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/team/has-role/view?status=${req.query.status}`, {
+    .get(`${baseURL}:8000/team/has-role/list?status=${req.query.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -394,13 +395,13 @@ users.get("/searchTeamHasRole", (req, res) => {
 users.get("/team-has-role-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/team/has-role/view?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${5}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
-      console.log(" dfdfvfsd" +response)
+      // console.log(" dfdfvfsd" +response)
       res.setHeader("total-count",`${response.headers['total-count']}`)
       res.setHeader("hellp", "5")
       res.status(response.status).send(JSON.stringify({data:{...response.data},count: response.headers['total-count']}))
@@ -415,15 +416,15 @@ users.get("/team-has-role-list", (req, res) => {
 users.get("/partner-list", (req, res) => {
   console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   axios
-    .get(`${baseURL}:8000/partner/List?page=${req.query.page}&limit=${5}`, {
+    .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${10}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
-      console.log(response)
+      // console.log(response)
 
-      res.status(response.status).send(response.data);
+      res.status(response.status).send({data:{...response.data},count: response.headers['total-count']})
     })
     .catch(e => {
       console.log(e)
@@ -436,7 +437,7 @@ users.get("/search-partner", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/partner/List?partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&Longitude=${req.query.Longitude}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&Onboard_Date=${req.query.Onboard_Date}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&updated_by=${req.query.updated_by}&created_by=${req.query.created_by}&partner_gender=${req.query.partner_gender}`, {
+    .get(`${baseURL}:8000/partner/list?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&pincode=${searchUser.pincode}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&partner_gender=${searchUser.partner_gender}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -456,14 +457,20 @@ users.get("/search-partner", (req, res) => {
 users.post("/registerPartner", (req, res) => {
   const today = new Date();
   const partnerData = {
-    partner_name: req.body.partner_name || "aakash",
-    partner_email: req.body.partner_email || "a@jj",
-    partner_mobileno: req.body.partner_mobileno || "2345678",
-    partner_address: req.body.partner_address || "asdfgh",
-    pincode: req.body.pincode || "234567",
-    Rate: req.body.Rate || "10",
-    Commission_Type: req.body.Commission_Type || "advacnce",
-    partner_gender: req.body.partner_gender || "Male"
+    partner_name: req.body.partner_name,
+    partner_email: req.body.partner_email,
+    partner_mobileno: req.body.partner_mobileno,
+    partner_address: req.body.partner_address,
+    pincode: req.body.pincode,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    // Onboard_Date: req.body.Onboard_Date,
+    created_by: req.body.created_by,
+    updated_by: req.body.updated_by,
+    rate: req.body.rate,
+    commission_type: req.body.commission_type,
+    partner_gender: req.body.partner_gender
+
   };
 
   axios
@@ -474,7 +481,7 @@ users.post("/registerPartner", (req, res) => {
     })
     .then(response => {
       console.log("dfghj ------------  ")
-      console.log(response.data);
+      // console.log(response.data);
       res.status(response.status).send(response.data);
     })
     .catch(e => {
@@ -488,17 +495,23 @@ users.post("/registerPartner", (req, res) => {
 });
 
 //update partner
-users.post("/update-partner", (req, res) => {
+users.put("/update-partner", (req, res) => {
   const today = new Date();
   const partnerData = {
-    name: req.body.name || "aakash",
-    email: req.body.email || "a@jj",
-    mobileno: req.body.mobileno || "2345678",
-    address: req.body.address || "asdfgh",
-    pincode: req.body.pincode || "234567",
-    rate: req.body.rate || "10",
-    commission_type: req.body.commission_type || "advacnce",
-    gender: req.body.gender || "Male"
+
+    partner_name: req.body.partner_name,
+    partner_email: req.body.partner_email,
+    partner_mobileno: req.body.partner_mobileno,
+    partner_address: req.body.partner_address,
+    pincode: req.body.pincode,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+    created_by: req.body.created_by,
+    updated_by: req.body.updated_by,
+    rate: req.body.rate,
+    partner_gender: req.body.partner_gender,
+    commission_type: req.body.commission_type
+
   };
 
   axios
@@ -508,9 +521,9 @@ users.post("/update-partner", (req, res) => {
       }
     })
     .then(response => {
-      console.log(response.status);
+      // console.log(response.status);
       res.status(response.status).send(response.data);
-      console.log(response)
+      // console.log(response)
     })
     .catch(e => {
       console.log("ERROR");
@@ -518,7 +531,7 @@ users.post("/update-partner", (req, res) => {
       res.status(500).send(e);
     });
   console.log("Upadate memeber request received in node");
-  console.log("Name: " + partnerData.name);
+  console.log("Name: " + partnerData.partner_name);
 });
 
 

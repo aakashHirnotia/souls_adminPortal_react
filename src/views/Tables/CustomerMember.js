@@ -21,7 +21,7 @@ const Label = {
 class CustomerMember extends Component {
   componentWillMount() {
     if(customerData.length==0) {
-      window.location.href='/customers/list'
+      window.location.href='/tables/customers'
     }
   }
 
@@ -50,6 +50,14 @@ class CustomerMember extends Component {
                   <i className="icon-info pr-1"></i>Customer Member:{" "}
                   {customer.customer_name}
                 </strong>
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+                >
+                  <a className="createTeamBtn" href="/tables/customers">
+                    Back
+                  </a>
+                </button>
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>

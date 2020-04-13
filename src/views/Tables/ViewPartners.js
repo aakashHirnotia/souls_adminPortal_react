@@ -20,25 +20,6 @@ class PartnerRow extends Component {
   render() {
     return (
       <tr key={this.state.partner.partner_id}>
-        <th>{this.state.partner.partner_id}</th>
-        <td>{this.state.partner.partner_name}</td>
-        {/* <td>{this.state.partner.lastname}</td>
-        <td>{this.state.partner.middlename}</td> */}
-        <td>{this.state.partner.partner_email}</td>
-        <td>{this.state.partner.partner_mobileno}</td>
-        {/* <td>{this.state.partner.partner_alternate_mobileno}</td> */}
-        <td>{this.state.partner.partner_address}</td>
-        <td>{this.state.partner.pincode}</td>
-        <td>{this.state.partner.latitude}</td>
-        <td>{this.state.partner.Longitude}</td>
-        <td>{this.state.partner.Rate}</td>
-        <td>{this.state.partner.Commission_Type}</td>
-        <td>{this.state.partner.Onboard_Date}</td>
-        <td>{this.state.partner.UpdatedAt}</td>
-        <td>{this.state.partner.CreatedAt}</td>
-        <td>{this.state.partner.created_by}</td>
-        <td>{this.state.partner.updated_by}</td>
-        <td>{this.state.partner.partner_gender}</td>
         <td>
           <Link to={`/tables/view-partner-member/${this.props.partner.partner_id}`}>
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
@@ -50,6 +31,16 @@ class PartnerRow extends Component {
             <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
         </td>
+        <th>{this.state.partner.partner_id}</th>
+        <td>{this.state.partner.partner_name}</td>
+        <td>{this.state.partner.partner_email}</td>
+        <td>{this.state.partner.partner_mobileno}</td>
+        <td>{this.state.partner.pincode}</td>
+        <td>{this.state.partner.Rate}</td>
+        <td>{this.state.partner.Commission_Type}</td>
+        <td>{this.state.partner.UpdatedAt}</td>
+        <td>{this.state.partner.CreatedAt}</td>
+        <td>{this.state.partner.partner_gender}</td>
       </tr>
     );
   }
@@ -63,14 +54,11 @@ class ViewPartners extends Component {
       itemsCountPerPage: 10,
 
       data: [],
-
+      count: 0,
       partner_id: "",
       partner_name: "",
-      // lastname: "",
-      // middlename: "",
       partner_email: "",
       partner_mobileno: "",
-      // partner_alternate_mobileno: "",
       partner_address: "",
       pincode: "",
       latitude: "",
@@ -96,9 +84,9 @@ class ViewPartners extends Component {
       this.state.activePage,
       this.state.itemsCountPerPage
     );
-    SetPartnerData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
+    SetPartnerData(dataRecieved.data);
+    const newData = dataRecieved.data
+    this.setState({ data: newData,count: dataRecieved.count });
   }
 
 
@@ -111,22 +99,13 @@ class ViewPartners extends Component {
     const searchUser = {
       partner_id: this.state.partner_id,
       partner_name: this.state.partner_name,
-      // lastname: this.state.lastname,
-      // middlename: this.state.middlename,
       partner_email: this.state.partner_email,
       partner_mobileno: this.state.partner_mobileno,
-      // partner_alternate_mobileno: this.state.partner_alternate_mobileno,
-      partner_address: this.state.partner_address,
       pincode: this.state.pincode,
-      latitude: this.state.latitude,
-      Longitude: this.state.Longitude,
       Rate: this.state.Rate,
       Commission_Type: this.state.Commission_Type,
-      Onboard_Date: this.state.Onboard_Date,
       UpdatedAt: this.state.UpdatedAt,
       CreatedAt: this.state.CreatedAt,
-      created_by: this.state.created_by,
-      updated_by: this.state.updated_by,
       partner_gender: this.state.partner_gender
     };
 
@@ -145,18 +124,12 @@ class ViewPartners extends Component {
       pageNumber,
       this.state.itemsCountPerPage
     );
-    SetPartnerData(dataRecieved);
+    SetPartnerData(dataRecieved.data);
     // console.log(dataPageRecieved)
-    const newData = dataRecieved
-    this.setState({ data: newData, activePage: pageNumber });
+    const newData = dataRecieved.data
+    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
   }
   render() {
-    // console.log('DAta: ')
-    // console.log(this.state.data.forEach(o=>console.log(o)))
-    // const teamList = (TeamData.length !== 0 ? TeamData : TeamDatas).filter(
-    //   team => team.id < 10
-    // );
-    // console.log(this.state.data.forEach(o => console.log(o)));
 
     return (
       <div className="animated fadeIn">
@@ -179,31 +152,31 @@ class ViewPartners extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
+                      <th scope="col">Actions</th>
                       <th scope="col">Partner ID</th>
                       <th scope="col">Name</th>
-                      {/* <th scope="col">Last Name</th>
-                      <th scope="col">Middle Name</th> */}
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>
-                      {/* <th scope="col">Alterrnate Mobile No</th> */}
-                      <th scope="col">Address</th>
-                      <th scope="col">Pincode</th>
-                      <th scope="col">Latitude</th>
-                      <th scope="col">Longitude</th>
+                      <th scope="col">PIN Code</th>
                       <th scope="col">Per Visit Commission</th>
                       <th scope="col">Commission Type</th>
-                      <th scope="col">Onboard Date</th>
                       <th scope="col">Updated At</th>
                       <th scope="col">Created At</th>
-                      <th scope="col">Updated By</th>
-                      <th scope="col">Created By</th>
-                      <th scope="col">Gender</th>
-                      <th scope="col">Actions</th>  
+                      <th scope="col">Gender</th>  
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      {/* <form onSubmit={this.onSubmit}> */}
+                      <td scope="col">
+                        <button
+                          type="submit"
+                          className="btn btn-sm btn-outline-primary"
+                          style={{ justifyContent: "center" }}
+                          onClick={this.onSubmit}
+                        >
+                          search!
+                        </button>
+                      </td>
                       <td scope="col">
                         <input
                           type="search"
@@ -264,47 +237,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="partner_address"
-                          value={this.state.partner_address}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
                           name="pincode"
                           value={this.state.pincode}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="latitude"
-                          value={this.state.latitude}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="Longitude"
-                          value={this.state.Longitude}
                           onChange={this.onChange}
                         />
                       </td>
@@ -322,7 +256,7 @@ class ViewPartners extends Component {
                         />
                       </td>
                       <td scope="col">
-                        <input
+                        <select
                           type="search"
                           class="form-control mr-sm-2"
                           id=""
@@ -332,20 +266,11 @@ class ViewPartners extends Component {
                           name="Commission_Type"
                           value={this.state.Commission_Type}
                           onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="Onboard_Date"
-                          value={this.state.Onboard_Date}
-                          onChange={this.onChange}
-                        />
+                        >
+                          <option ></option>
+                          <option value="%">%</option>
+                          <option value="Flat">Flat</option>
+                        </select>
                       </td>
                       <td scope="col">
                         <input
@@ -374,55 +299,23 @@ class ViewPartners extends Component {
                         />
                       </td>
                       <td scope="col">
-                        <input
+                        <select
                           type="search"
                           class="form-control mr-sm-2"
                           id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="created_by"
-                          value={this.state.created_by}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="updated_by"
-                          value={this.state.updated_by}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
+                          placeholder="select"
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="partner_gender"
                           value={this.state.partner_gender}
                           onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <button
-                          type="submit"
-                          className="btn btn-sm btn-outline-primary"
-                          style={{ justifyContent: "center" }}
-                          onClick={this.onSubmit}
                         >
-                          search!
-                        </button>
+                          <option ></option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
                       </td>
-                      {/* </form> */}
                     </tr>
 
                     {this.state.data ? (
@@ -446,9 +339,9 @@ class ViewPartners extends Component {
                   className="pagination"
                   hideDisabled
                   activePage={this.state.activePage}
-                  itemsCountPerPage={this.itemsCountPerPage}
-                  totalItemsCount={50} // check
-                  pageRangeDisplayed={5}
+                  itemsCountPerPage={10}
+                  totalItemsCount={this.state.count} // check
+                  pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />
               </CardBody>

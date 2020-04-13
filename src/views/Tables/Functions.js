@@ -125,7 +125,8 @@ export const searchTransaction = async (searchTrans) => {
 
 
 export const registerPartner = (newPartner) => {
-  console.log("axios worked");
+  console.log(newPartner.partner_name);
+  console.log(newPartner.Onboard_Date);
   return axios
     .post(`${baseURL}:5000/users/registerPartner`, {
       partner_name: newPartner.partner_name,
@@ -133,9 +134,15 @@ export const registerPartner = (newPartner) => {
       partner_mobileno: newPartner.partner_mobileno,
       partner_address: newPartner.partner_address,
       pincode: newPartner.pincode,
-      Rate: newPartner.Rate,
-      Commission_Type: newPartner.Commission_Type,
+      latitude: newPartner.latitude,
+      longitude: newPartner.longitude,
+      Onboard_Date: newPartner.Onboard_Date,
+      created_by: newPartner.created_by,
+      updated_by: newPartner.updated_by,
+      rate: newPartner.rate,
+      commission_type: newPartner.commission_type,
       partner_gender: newPartner.partner_gender
+
     }, {headers:{token:localStorage.getItem('token')}})
     .then((response) => {
       console.log("Partner Registerd");
@@ -151,14 +158,18 @@ export const updatePartner = updatedPartner => {
     .put(
       `${baseURL}:5000/users/update-partner`,
       {
-        name: updatedPartner.name,
-        email: updatedPartner.email,
-        mobileno: updatedPartner.mobileno,
-        address: updatedPartner.address,
+        partner_name: updatedPartner.partner_name,
+        partner_email: updatedPartner.partner_email,
+        partner_mobileno: updatedPartner.partner_mobileno,
+        partner_address: updatedPartner.partner_address,
         pincode: updatedPartner.pincode,
+        latitude: updatedPartner.latitude,
+        longitude: updatedPartner.longitude,
+        created_by: updatedPartner.created_by,
+        updated_by: updatedPartner.updated_by,
         rate: updatedPartner.rate,
-        commission_type: updatedPartner.commission_type,
-        gender: updatedPartner.gender
+        partner_gender: updatedPartner.partner_gender,
+        commission_type: updatedPartner.commission_type
       },
       {
         headers: {
@@ -178,7 +189,7 @@ export const updatePartner = updatedPartner => {
 
 
 export const partnerList = async (activePage, itemCountPerPage) => {
-    let data;
+    let data, count;
     await axios
       .get(`${baseURL}:5000/users/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
@@ -188,7 +199,8 @@ export const partnerList = async (activePage, itemCountPerPage) => {
       .then((response) => {
         if (response.status === 200) {
           // console.log(typeof(response.data))
-          data = [...response.data];
+          data = Object.keys(response.data.data).map(o=>response.data.data[o])
+          count = response.data.count
           // console.log(data)
           // console.log(response.headers)
           // return response.data
@@ -197,13 +209,13 @@ export const partnerList = async (activePage, itemCountPerPage) => {
       .catch((err) => {
         window.alert("Error: " + err);
       });
-    return data;
+    return {data, count};
   };
 
   export const searchPartner = async (searchUser) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/search-partner?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&partner_address=${searchUser.partner_address}&pincode=${searchUser.pincode}&latitude=${searchUser.latitude}&Longitude=${searchUser.Longitude}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&Onboard_Date=${searchUser.Onboard_Date}&Onboard_Date=${searchUser.Onboard_Date}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&updated_by=${searchUser.updated_by}&created_by=${searchUser.created_by}&partner_gender=${searchUser.partner_gender}`,{
+      get(`http://localhost:5000/users/search-partner?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&pincode=${searchUser.pincode}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&partner_gender=${searchUser.partner_gender}`,{
         headers: {
           token: localStorage.getItem("token")
         }
