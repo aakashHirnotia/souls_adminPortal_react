@@ -387,8 +387,6 @@ users.put("/update-transaction", (req, res) => {
 });
 
 
-users.post("/update", (req, res) => {
-// update self profile
 users.put("/update", (req, res) => {
   // const today = new Date()
   const userData = {
@@ -609,4 +607,4 @@ users.put("/update-partner", (req, res) => {
 });
 
 
-module.exports = users;
+module.exports = users
