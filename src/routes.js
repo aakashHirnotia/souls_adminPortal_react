@@ -39,6 +39,10 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
  const AssignPartners = React.lazy(() => import('./views/Tables/AssignPartners'));
  const ViewRole = React.lazy(() => import('./views/Admin/ViewRole'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
+ const SoulsSettings = React.lazy(() => import('./views/Admin/SoulsSettings'));
+ const ViewCommunicationTempelate = React.lazy(() => import('./views/Admin/ViewCommunicationTempelate'));
+ const CommunicationTempelate = React.lazy(() => import('./views/Admin/CommunicationTempelate'));
+ const CommTempelateMember = React.lazy(() => import('./views/Admin/CommTempelateMember'));
 // const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Partner = React.lazy(() => import('./views/Tables/Partner'));
 const PartnerEdit = React.lazy(() => import('./views/Tables/PartnerEdit'));
@@ -78,6 +82,11 @@ const routes = [
    { path: '/tables/assignPartners', name: 'AssignPartners', component: AssignPartners},
    { path: '/admin/role', name: 'ViewRole', component: ViewRole},
    { path: '/admin/teamHasRole', name: 'TeamHasRole', component: TeamHasRole},
+   { path: '/admin/SoulsSettings', name: 'Souls Settings', component: SoulsSettings},
+   { path: '/admin/viewCommunicationTempelate', name: 'Communication Tempelate', component: ViewCommunicationTempelate},
+   { path: '/admin/view-communication-tempelate/:id', exact: true,  name: 'View Communication Tempelate', component: CommTempelateMember },
+   { path: '/admin/add-communication-tempelate', exact: true,  name: 'Create Communication Tempelate', component: CommunicationTempelate },
+   { path: '/admin/edit-communication-tempelate', exact: true,  name: 'Update Communication Tempelate', component: CommunicationTempelate },
   // { path: '/base', exact: true, name: 'Base', component: Cards },
   // { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/tables/add-partner', exact: true,  name: 'AddPartner', component: Partner },

@@ -1,82 +1,76 @@
+// import React, { Component } from 'react';
+
+// class ViewCommunicationTempelate extends Component {
+//     //state = {  }
+//     render() { 
+//         return ( <div> Communication Tempelate</div> );
+//     }
+// }
+ 
+// export default ViewCommunicationTempelate;
+
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { TeamHasRoleData, TeamHasRoleDatas, SetTeamHasRoleData } from "./Datas";
+import { CommTempelateData, SetCommTempelateData } from "./Datas";
 import Pagination from "react-js-pagination";
-import UpdateRolePopUp from "./UpdateRolePopUp.js";
-import { teamHasRoleList, searchTeamHasRole } from "./AdminFunctions";
+import { communicationTempelateList, searchCommunicationTempelate } from "./AdminFunctions";
 
-class TeamHasRoleRow extends Component {
+class CommunicationTempelateRow extends Component {
   state = {
-    showModal: false,
-    teamHasRole: this.props.teamHasRole
+    communicationTempelate: this.props.communicationTempelate
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({teamHasRole: this.props.teamHasRole})
+    this.setState({communicationTempelate: this.props.communicationTempelate})
   }
 
   getIcon = (status) => {
     return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
             (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
-            (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
             'primary'
   }
 
   getColor = (status) => {
     return  (status === 'Active' || status === 'active')  ? {color:"green"} :
             (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
-            (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
             {color:"black"}
   }
 
   getTitle = (status) => {
     return  (status === 'Active' || status === 'active')  ? "active" :
             (status === 'Inactive' || status === 'inactive') ? "inactive" :
-            (status === 'Deleted' || status === 'deleted')  ? "deleted" :
             "not defined"
   }
-
-  getRole = (team_has_role_id) => {
-    return  (team_has_role_id === 1 ) ? "Admin" :
-            (team_has_role_id === 2 ) ? "Accountant" :
-            (team_has_role_id === 3 ) ? "Customer Service" :
-            "not defined"
-  }
-
-  displayModal = () => {
-    this.setState({ showModal: true });
-  };
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
 
   render() {
     return (
-      <tr key={this.state.teamHasRole.team_has_role_id}>
+      <tr key={this.state.communicationTempelate.communicationTempelateID}>
         <td>
-          <Link style={{ paddingLeft: "14px" }} onClick={this.displayModal}>
-            <i className="fa fa-pencil" data-toggle="tooltip" title="Update Role"></i>
+          <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}>
+            <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
+          </Link>{" "}
+          <Link
+            style={{ paddingLeft: "14px" }}
+            to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}
+          >
+            <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
         </td>
-        <th>{this.state.teamHasRole.teamid}</th>
-        <th>{this.state.teamHasRole.first_name}</th>
-        <th>{this.state.teamHasRole.last_name}</th>
-        <td>{this.getRole(this.state.teamHasRole.team_has_role_id)}</td>
-        <td>{this.state.teamHasRole.CreatedAt}</td>
-        <td>{this.state.teamHasRole.UpdatedAt}</td>
-        <td className={this.getIcon(this.state.teamHasRole.status)} style={this.getColor(this.state.teamHasRole.status)} data-toggle="tooltip" title={this.getTitle(this.state.teamHasRole.status)}></td>
-        <UpdateRolePopUp
-          teamid={this.state.teamHasRole.teamid}
-          show={this.state.showModal}
-          handleClose={this.closeModal}
-        />
+        <th>{this.state.communicationTempelate.communicationTempelateID}</th>
+        <td>{this.state.communicationTempelate.type}</td>
+        <td>{this.state.communicationTempelate.trigger_time}</td>
+        <td>{this.state.communicationTempelate.trigger_for}</td>
+        <td>{this.state.communicationTempelate.smsContent}</td>
+        <td>{this.state.communicationTempelate.subject}</td>
+        <td>{this.state.communicationTempelate.emailContent}</td>
+        <td className={this.getIcon(this.state.communicationTempelate.status)} style={this.getColor(this.state.communicationTempelate.status)} data-toggle="tooltip" title={this.getTitle(this.state.communicationTempelate.status)}></td>
       </tr>
     );
   }
 }
 
-class TeamHasRole extends Component {
+class ViewCommunicationTempelate extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,13 +79,14 @@ class TeamHasRole extends Component {
 
       data: [],
       count: 0,
-      teamid: 0,
-      first_name: "",
-      last_name: "",
-      team_has_role_id: "",
+      communicationTempelateID: "",
+      type: "",
+      trigger_time: "",
+      trigger_for: "",
+      smsContent: "",
+      subject: "",
+      emailContent: "",
       status: "",
-      CreatedAt: "",
-      UpdatedAt: "",
       errors: {}
     };
 
@@ -101,13 +96,13 @@ class TeamHasRole extends Component {
 
 
   async componentDidMount() {
-    const dataRecieved = await teamHasRoleList(
+    const dataRecieved = await communicationTempelateList(
       this.state.activePage,
       this.state.itemsCountPerPage
     );
-    SetTeamHasRoleData(dataRecieved.data);
+    SetCommTempelateData(dataRecieved.data);
     const newData = dataRecieved.data
-    this.setState({ data: newData, count: dataRecieved.count });
+    this.setState({ data: newData, count: dataRecieved.count});
   }
 
 
@@ -117,14 +112,19 @@ class TeamHasRole extends Component {
 
   onSubmit= async (e)=> {
     e.preventDefault();
-    const searchUser = {
-      firstname: this.state.first_name,
-      lastname: this.state.last_name,
+    const searchCommTempelate = {
+      communicationTempelateID: this.state.communicationTempelateID,
+      type: this.state.type,
+      trigger_time: this.state.trigger_time,
+      trigger_for: this.state.trigger_for,
+      smsContent: this.state.smsContent,
+      subject: this.state.subject,
+      emailContent: this.state.emailContent,
       status: this.state.status
     };
 
-    const dataRecieved = await searchTeamHasRole(searchUser);
-    SetTeamHasRoleData(dataRecieved);
+    const dataRecieved = await searchCommunicationTempelate(searchCommTempelate);
+    SetCommTempelateData(dataRecieved);
     const newData = dataRecieved
     this.setState({ data: newData });
   }
@@ -134,43 +134,49 @@ class TeamHasRole extends Component {
     // this.setState({ activePage: pageNumber });
     console.log(`active page is ${this.state.activePage}`);
 
-    const dataRecieved = await teamHasRoleList(
+    const dataRecieved = await communicationTempelateList(
       pageNumber,
       this.state.itemsCountPerPage
     );
-    SetTeamHasRoleData(dataRecieved.data);
+    SetCommTempelateData(dataRecieved.data);
     // console.log(dataPageRecieved)
     const newData = dataRecieved.data
-    // console.log("newdata = " + newData.length)
     this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
   }
   render() {
-
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xl={12} style={{ padding: "0" }}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Team Has Role{" "}
+                <i className="fa fa-align-justify"></i> Communication Tempelate{" "}
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+                >
+                  <a className="create" href="/admin/add-communication-tempelate" style={{color: "white"}}>
+                    Create
+                  </a>
+                </button>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">Actions</th>  
-                      <th style={{width: "10%"}} scope="col">Team ID</th>
-                      <th scope="col">First Name</th>
-                      <th scope="col">Last Name</th>
-                      <th style={{width: "10%"}} scope="col">Role</th>
-                      <th scope="col">Created At</th>
-                      <th scope="col">Updated At</th>
+                      <th scope="col">Actions</th>
+                      <th scope="col">ID</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Trigger Time</th>
+                      <th scope="col">Trigger For</th>
+                      <th scope="col">SMS Content</th>
+                      <th scope="col">Subject</th>
+                      <th scope="col">Email Content</th>
                       <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      {/* <form onSubmit={this.onSubmit}> */}
                       <td scope="col">
                         <button
                           type="submit"
@@ -189,8 +195,8 @@ class TeamHasRole extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="teamid"
-                          value={this.state.teamid}
+                          name="communicationTempelateID"
+                          value={this.state.communicationTempelateID}
                           onChange={this.onChange}
                         />
                       </td>
@@ -202,8 +208,56 @@ class TeamHasRole extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="first_name"
-                          value={this.state.first_name}
+                          name="type"
+                          value={this.state.type}
+                          onChange={this.onChange}
+                        />
+                      </td>
+                      <td scope="col">
+                        <select
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="trigger_time"
+                          value={this.state.trigger_time}
+                          onChange={this.onChange}
+                        >
+                          <option ></option>
+                          <option value="10">10 min.</option>
+                          <option value="30">30 min.</option>
+                          <option value="60">1 hour</option>
+                        </select>
+                      </td>
+                      <td scope="col">
+                        <select
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="trigger_for"
+                          value={this.state.trigger_for}
+                          onChange={this.onChange}
+                        >
+                          <option ></option>
+                          <option value="customer">Customer</option>
+                          <option value="partner">Partner</option>
+                        </select>
+                      </td>
+                      <td scope="col">
+                        <input
+                          type="search"
+                          class="form-control mr-sm-2"
+                          id=""
+                          placeholder=""
+                          aria-label="Search for..."
+                          style={{ height: "30px" }}
+                          name="smsContent"
+                          value={this.state.smsContent}
                           onChange={this.onChange}
                         />
                       </td>
@@ -215,8 +269,8 @@ class TeamHasRole extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="last_name"
-                          value={this.state.last_name}
+                          name="subject"
+                          value={this.state.subject}
                           onChange={this.onChange}
                         />
                       </td>
@@ -228,39 +282,12 @@ class TeamHasRole extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="team_has_role_id"
-                          value={this.state.team_has_role_id}
+                          name="emailContent"
+                          value={this.state.emailContent}
                           onChange={this.onChange}
                         />
                       </td>
                       <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="CreatedAt"
-                          value={this.state.CreatedAt}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="UpdatedAt"
-                          value={this.state.UpdatedAt}
-                          onChange={this.onChange}
-                        />
-                      </td>
-                      <td scope="col">
-                        {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
                         <select
                           type="search"
                           class="form-control mr-sm-2"
@@ -273,9 +300,8 @@ class TeamHasRole extends Component {
                           onChange={this.onChange}
                         >
                           <option ></option>
-                          <option value="Active">Active</option>
-                          <option value="Inactive">Inactive</option>
-                          <option value="Deleted">Deleted</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
                         </select>
                       </td>
                     </tr>
@@ -283,15 +309,15 @@ class TeamHasRole extends Component {
                     {this.state.data ? (
                       <React.Fragment>
                         {this.state.data &&
-                          this.state.data.map((teamHasRole, index) => (
-                            // {teamList.map((team, index) =>
-                            <TeamHasRoleRow key={index} teamHasRole={teamHasRole} />
+                          this.state.data.map((communicationTempelate, index) => (
+                            // {teamList.map((communicationTempelate, index) =>
+                            <CommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
                           ))}
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((teamHasRole, index) => (
-                          <TeamHasRoleRow key={index} teamHasRole={teamHasRole} />
+                        {this.state.data.length!=0 && this.state.data.map((communicationTempelate, index) => (
+                          <CommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
                         ))}
                       </React.Fragment>
                     )}
@@ -301,7 +327,7 @@ class TeamHasRole extends Component {
                   className="pagination"
                   hideDisabled
                   activePage={this.state.activePage}
-                  itemsCountPerPage={5}
+                  itemsCountPerPage={10}
                   totalItemsCount={this.state.count} // check
                   pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
@@ -315,4 +341,4 @@ class TeamHasRole extends Component {
   }
 }
 
-export default TeamHasRole;
+export default ViewCommunicationTempelate;

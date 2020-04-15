@@ -68,6 +68,16 @@ export default {
           name: 'Team Has Role',
           url: '/admin/teamHasRole',
           icon: 'icon-cursor',
+        },
+        {
+          name: 'SOULS Settings',
+          url: '/admin/soulsSettings',
+          icon: 'icon-cursor',
+        },
+        {
+          name: 'Communication Tempelate',
+          url: '/admin/communicationTempelate',
+          icon: 'icon-cursor',
         }
       ]
     }
