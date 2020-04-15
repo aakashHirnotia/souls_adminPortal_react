@@ -11,6 +11,7 @@ import {
   Input,
   Label
 } from "reactstrap";
+import TextEditor from "../Admin/TextEditor.js";
 
 const intialState = {
   first_name: "",
@@ -68,7 +69,7 @@ class Team extends Component {
   }
 
 
-  onChange(e) {
+  onChange(e,editor) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -245,8 +246,12 @@ class Team extends Component {
       }
     }
   }
+  onChangeDate = (date) => {
+    this.setState({joining: date})
+  }
 
   render() {
+    console.log(this.state.joining)
     return (
       <div>{!this.state.isEditable ? (
         <div>
@@ -351,7 +356,7 @@ class Team extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="joining-date">Joining Date</Label> <br />
-                      <DateCalender onChange={this.onChange} />
+                      <DateCalender value={this.state.joining} onChange={this.onChangeDate}/>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.joiningError}
                       </div>
@@ -372,6 +377,7 @@ class Team extends Component {
                         value={this.state.address}
                         onChange={this.onChange}
                       />
+                      {/* <TextEditor value={this.state.address} onChange={this.onChangeEditor}/> */}
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.addressError}
                       </div>

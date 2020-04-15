@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 
-import RoleData from './RoleData'
+import {RoleData} from './Datas'
 
 function RoleRow(props) {
     const role = props.role

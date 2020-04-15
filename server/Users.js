@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35"
+const baseURL = "http://3.6.243.136"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -35,7 +35,7 @@ users.post("/register", (req, res) => {
       res.status(500).send(e);
     });
   console.log("Register request received in node");
-  console.log("Name: " + userData.firstname);
+  console.log("Name: " + userData.firstname + " address:" + userData.joining);
 });
 
 //Team Member Update
@@ -437,7 +437,7 @@ users.get("/search-partner", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   console.log("request Recieved for filter in node") 
   axios
-    .get(`${baseURL}:8000/partner/list?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&pincode=${searchUser.pincode}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&partner_gender=${searchUser.partner_gender}`, {
+    .get(`${baseURL}:8000/partner/list?partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&pincode=${req.query.pincode}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&partner_gender=${req.query.partner_gender}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -532,6 +532,157 @@ users.put("/update-partner", (req, res) => {
     });
   console.log("Upadate memeber request received in node");
   console.log("Name: " + partnerData.partner_name);
+});
+
+//Souls Settings List
+users.get("/soulsSettings", (req, res) => {
+  // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  // console.log("aakash")
+  axios
+    .get(`${baseURL}:8000/team/soulsSettings`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      // console.log(response)
+      res.status(response.status).send(response.data);
+      // res.status(response.status).send(response.headers);
+    })
+    .catch(e => res.status(500).send("Error: " + e));
+});
+
+// update souls settings
+users.put("/updateSettings", (req, res) => {
+  const today = new Date();
+  const settingsData = {
+    soulsSettingsID: req.body.soulsSettingsID,
+    url: req.body.url,
+    description: req.body.description,
+    hostname: req.body.hostname,
+    username: req.body.username,
+    password: req.body.password
+  };
+
+  axios
+    .put(`${baseURL}:8000/settings/update`, settingsData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      // console.log(response.status);
+      res.status(response.status).send(response.data);
+      // console.log(response)
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log("Upadate memeber request received in node");
+  console.log("Name: " + settingsData.username);
+});
+
+//communication tempelate list
+users.get("/communicationTempelateList", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  axios
+    .get(`${baseURL}:8000/team/communicationTempelateList?page=${req.query.page}&limit=${10}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      res.status(response.status).send({data:{...response.data},count: response.headers['total-count']})
+      // res.status(response.status).send(response.headers);
+    })
+    .catch(e => res.status(500).send("Error: " + e));
+});
+
+//search communication tempelate
+users.get("/searchCommTempelate", (req, res) => {
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/searchCommTempelate?communicationTempelateID=${req.query.communicationTempelateID}&type=${req.query.type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&smsContent=${req.query.smsContent}&subject=${req.query.subject}&emailContent=${req.query.emailContent}&status=${req.query.status}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
+
+// create comm tmpelate
+users.post("/createCommTempelate", (req, res) => {
+  const today = new Date();
+  const Data = {       
+    type: req.body.type,
+    trigger_time: req.body.trigger_time,
+    trigger_for: req.body.trigger_for,
+    smsContent: req.body.smsContent,
+    subject: req.body.subject,
+    emailContent: req.body.emailContent,
+    status: req.body.status
+
+  };
+
+  axios
+    .post(`${baseURL}:8000/commTempelate/create`, Data, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log("dfghj ------------  ")
+      // console.log(response.data);
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+
+  console.log("Register request received in node");
+});
+
+//update comm tempelate
+users.put("/updateCommTempelate", (req, res) => {
+  const today = new Date();
+  const Data = {
+    type: req.body.type,
+    trigger_time: req.body.trigger_time,
+    trigger_for: req.body.trigger_for,
+    smsContent: req.body.smsContent,
+    subject: req.body.subject,
+    emailContent: req.body.emailContent,
+    status: req.body.status
+  };
+
+  axios
+    .put(`${baseURL}:8000/commTempelate/update`, Data, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      // console.log(response.status);
+      res.status(response.status).send(response.data);
+      // console.log(response)
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log("Upadate memeber request received in node");
 });
 
 
