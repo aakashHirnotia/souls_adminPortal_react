@@ -28,23 +28,26 @@ export const register = (newUser) => {
 };
 
 export const search = async (searchUser) => {
-  let data = []
-  await axios.
-    get(`http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,{
-      headers: {
-        token: localStorage.getItem("token")
+  let data = [];
+  await axios
+    .get(
+      `http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
       }
-    })
+    )
     .then((response) => {
       data = [...response.data];
       // console.log(response)
     })
     .catch((e) => console.log(e));
-  
-  return data
+
+  return data;
 };
 
-export const updateMember = updatedUser => {
+export const updateMember = (updatedUser) => {
   console.log("axios updated User worked");
   // console.log(url)
   return axios
@@ -58,7 +61,7 @@ export const updateMember = updatedUser => {
         email: updatedUser.email,
         status: updatedUser.status,
         role: updatedUser.role,
-        mobile: updatedUser.mobile
+        mobile: updatedUser.mobile,
       },
       {
         headers: {
@@ -83,7 +86,7 @@ export const fetchUserDetails = (token, cb) => {
       },
     })
     .then((response) => {
-      console.log("respomse data is ----")
+      console.log("respomse data is ----");
       // console.log(response.data)
       console.log("Fetching data");
       cb(response.data, undefined);
@@ -116,19 +119,23 @@ export const fetchTeamDetails = (token) => {
 
 export const update = (updatedUser) => {
   return axios
-    .put(`${baseURL}:5000/users/update`, {
-      firstname: updatedUser.firstname,
-      lastname: updatedUser.lastname,
-      email: updatedUser.email,
-      Joining_Date: updatedUser.Joining_Date,
-      address: updatedUser.address,
-      status: updatedUser.status,
-      role: updatedUser.role,
-      mobileno: updatedUser.mobileno,
-    },{
-      headers: {
-        token: localStorage.getItem("token")
-      }}
+    .put(
+      `${baseURL}:5000/users/update`,
+      {
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        email: updatedUser.email,
+        Joining_Date: updatedUser.Joining_Date,
+        address: updatedUser.address,
+        status: updatedUser.status,
+        role: updatedUser.role,
+        mobileno: updatedUser.mobileno,
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
     )
     .then((response) => {
       // console.log("aakash")
@@ -142,24 +149,25 @@ export const update = (updatedUser) => {
 };
 
 export const updateProfilePic = (formData) => {
-  console.log("In userFucntions React---")
-  console.log(formData.get('myImage'))
-  console.log(formData)
-  return axios 
-    .post(`${baseURL}:8000/update/profilePic`,formData,{    //directly send to go server
+  console.log("In userFucntions React---");
+  console.log(formData.get("myImage"));
+  console.log(formData);
+  return axios
+    .post(`${baseURL}:8000/update/profilePic`, formData, {
+      //directly send to go server
       headers: {
         token: localStorage.getItem("token"),
-        'content-type': 'multipart/form-data'
-      }}
-    )
+        "content-type": "multipart/form-data",
+      },
+    })
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
 export const login = async (user) => {
   let message = "";
-  console.log("aakash")
+  console.log("aakash");
   await axios
     .post(`${baseURL}:5000/users/login`, {
       email: user.email,
@@ -181,43 +189,46 @@ export const login = async (user) => {
       }
     })
     .catch((e) => {
-      console.log(e)
+      console.log(e);
       if (e.response) {
-      switch (e.response.status) {
-        case 401:
-          message = e.response.data.message;
-          return;
-        default:
-          return e.response.status;
+        switch (e.response.status) {
+          case 401:
+            message = e.response.data.message;
+            return;
+          default:
+            return e.response.status;
+        }
+      } else {
+        window.alert(e);
       }
-    }
-    else {
-      window.alert(e)
-    }}
-    );
+    });
   return message;
 };
 
 export const updatePassword = async (user) => {
   let changed = false;
   await axios
-    .put(`${baseURL}:5000/users/password`, {
-      email: user.email,
-      password: user.password,
-    },{
-      headers: {
-        token: localStorage.getItem("token"),
-      }}
+    .put(
+      `${baseURL}:5000/users/password`,
+      {
+        email: user.email,
+        password: user.password,
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
     )
     .then((response) => {
       if (response.status == 200) {
-        changed= true;
-      } else changed= false;
+        changed = true;
+      } else changed = false;
     })
     .catch((err) => {
       window.alert("Error: " + err);
     });
-    return changed
+  return changed;
 };
 
 // export const logout = user => {
@@ -237,31 +248,37 @@ export const updatePassword = async (user) => {
 //     })
 // }
 
-export const teamList = async (activePage, itemCountPerPage) => {
+export const teamList = async (query) => {
   let data, count;
   // let totalcount;
   await axios
-    .get(`${baseURL}:5000/users/team-list?page=${activePage}&limit=${itemCountPerPage}`, {
-      headers: {
-        token: localStorage.getItem("token"),
-      },
-    })
+    .get(
+      `${baseURL}:5000/users/team-list?page=${query.page || ""}&limit=${
+        query.limit || ""
+      }&teamid=${query.teamid || ""}&firstname=${
+        query.firstname || ""
+      }&lastname=${query.lastname || ""}&email=${query.email || ""}&joining=${
+        query.joining || ""
+      }&status=${query.status || ""}&role=${query.role || ""}&mobileno=${
+        query.mobileno || ""
+      }`,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
     .then((response) => {
       if (response.status === 200) {
-        // console.log(typeof(response.data))
-        
-        // totalcount = [response.headers.total-count]
-        // console.log(data)
-        // console.log(response)
-        data = Object.keys(response.data.data).map(o=>response.data.data[o])
-        count = response.data.count
-        console.log("count: "+ count)
-        // console.log("headers in resonse is "+response.headers(["total-count"]));
-        // return response.data
+        data = Object.keys(response.data.data).map(
+          (o) => response.data.data[o]
+        );
+        count = response.data.count;
+        console.log("count: " + count);
       }
     })
     .catch((err) => {
       window.alert("Error: " + err);
     });
-  return {data, count};
+  return { data, count };
 };

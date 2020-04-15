@@ -9,33 +9,42 @@ import { teamList, search } from "./UserFunctions";
 class TeamRow extends Component {
   state = {
     showModal: false,
-    team: this.props.team
+    team: this.props.team,
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({team: this.props.team})
+    this.setState({ team: this.props.team });
   }
 
   getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
-            (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
-            'primary'
-  }
+    return status === "Active" || status === "active"
+      ? "fa fa-check-square fa-lg"
+      : status === "Inactive" || status === "inactive"
+      ? "fa fa-window-close-o fa-lg"
+      : status === "Deleted" || status === "deleted"
+      ? "fa fa-trash"
+      : "primary";
+  };
 
   getColor = (status) => {
-    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
-            (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
-            {color:"black"}
-  }
+    return status === "Active" || status === "active"
+      ? { color: "green" }
+      : status === "Inactive" || status === "inactive"
+      ? { color: "red" }
+      : status === "Deleted" || status === "deleted"
+      ? { color: "red" }
+      : { color: "black" };
+  };
 
   getTitle = (status) => {
-    return  (status === 'Active' || status === 'active')  ? "active" :
-            (status === 'Inactive' || status === 'inactive') ? "inactive" :
-            (status === 'Deleted' || status === 'deleted')  ? "deleted" :
-            "not defined"
-  }
+    return status === "Active" || status === "active"
+      ? "active"
+      : status === "Inactive" || status === "inactive"
+      ? "inactive"
+      : status === "Deleted" || status === "deleted"
+      ? "deleted"
+      : "not defined";
+  };
 
   displayModal = () => {
     this.setState({ showModal: true });
@@ -51,7 +60,11 @@ class TeamRow extends Component {
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
           </Link>
           <Link style={{ padding: "10px" }} onClick={this.displayModal}>
-            <i className="fa fa-key" data-toggle="tooltip" title="change password"></i>
+            <i
+              className="fa fa-key"
+              data-toggle="tooltip"
+              title="change password"
+            ></i>
           </Link>{" "}
           <br />
           <Link
@@ -67,7 +80,12 @@ class TeamRow extends Component {
         <td>{this.state.team.email}</td>
         <td>{this.state.team.mobileno}</td>
         <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
-        <td className={this.getIcon(this.state.team.status)} style={this.getColor(this.state.team.status)} data-toggle="tooltip" title={this.getTitle(this.state.team.status)}></td>
+        <td
+          className={this.getIcon(this.state.team.status)}
+          style={this.getColor(this.state.team.status)}
+          data-toggle="tooltip"
+          title={this.getTitle(this.state.team.status)}
+        ></td>
         <PasswordPopUp
           email={this.state.team.email}
           show={this.state.showModal}
@@ -94,32 +112,29 @@ class ViewTeam extends Component {
       joining: "",
       status: "",
       mobile: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
   }
-
-
 
   async componentDidMount() {
     const dataRecieved = await teamList(
       this.state.activePage,
       this.state.itemsCountPerPage
     );
-    console.log("HEYA")
-    console.log(dataRecieved.data)
+    console.log("HEYA");
+    console.log(dataRecieved.data);
     SetTeamData(dataRecieved.data);
-    const newData = dataRecieved.data
-    this.setState({ data: newData, count: dataRecieved.count});
+    const newData = dataRecieved.data;
+    this.setState({ data: newData, count: dataRecieved.count });
   }
-
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit= async (e)=> {
+  onSubmit = async (e) => {
     e.preventDefault();
     const searchUser = {
       id: this.state.id,
@@ -129,14 +144,14 @@ class ViewTeam extends Component {
       joining: this.state.joining,
       status: this.state.status,
       role: this.state.role,
-      mobileno: this.state.mobile
+      mobileno: this.state.mobile,
     };
 
     const dataRecieved = await search(searchUser);
     SetTeamData(dataRecieved);
-    const newData = dataRecieved
+    const newData = dataRecieved;
     this.setState({ data: newData });
-  }
+  };
 
   handlePageChange = async (pageNumber) => {
     console.log(`pageNumber is ${pageNumber}`);
@@ -147,20 +162,25 @@ class ViewTeam extends Component {
       pageNumber,
       this.state.itemsCountPerPage
     );
+    console.log(pageNumber);
     SetTeamData(dataRecieved.data);
     // console.log(dataPageRecieved)
-    const newData = dataRecieved.data
-    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
-  }
+    const newData = dataRecieved.data;
+    this.setState({
+      data: newData,
+      activePage: pageNumber,
+      count: dataRecieved.count,
+    });
+  };
   render() {
     // console.log('DAta: ')
     // console.log(this.state.data.forEach(o=>console.log(o)))
     // const teamList = (TeamData.length !== 0 ? TeamData : TeamDatas).filter(
     //   team => team.id < 10
     // );
-    // console.log(this.state.data.forEach(o => console.log(o))); 
-      console.log(this.state.count)
-      console.log(this.state.data)
+    // console.log(this.state.data.forEach(o => console.log(o)));
+    console.log(this.state.count);
+    console.log(this.state.data);
     return (
       <div className="animated fadeIn">
         <Row>
@@ -183,22 +203,38 @@ class ViewTeam extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th style= {{width: "5%"}} scope="col">ID</th>
-                      <th style= {{width: "8%"}} scope="col">First Name</th>
-                      <th style= {{width: "8%"}} scope="col">Last Name</th>
-                      <th style= {{width: "18%"}} scope="col">Email</th>
-                      <th style= {{width: "15%"}} scope="col">Mobile</th>
-                      <th style= {{width: "25%"}} scope="col">Joining Date</th>
-                      <th style= {{width: "5%"}} scope="col">Status</th>
-
+                      <th style={{ width: "5%" }} scope="col">
+                        ID
+                      </th>
+                      <th style={{ width: "8%" }} scope="col">
+                        First Name
+                      </th>
+                      <th style={{ width: "8%" }} scope="col">
+                        Last Name
+                      </th>
+                      <th style={{ width: "18%" }} scope="col">
+                        Email
+                      </th>
+                      <th style={{ width: "15%" }} scope="col">
+                        Mobile
+                      </th>
+                      <th style={{ width: "25%" }} scope="col">
+                        Joining Date
+                      </th>
+                      <th style={{ width: "5%" }} scope="col">
+                        Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       {/* <form onSubmit={this.onSubmit}> */}
                       <td scope="col">
-                        <button type="submit" className="btn btn-outline-primary" 
-                          onClick={this.onSubmit}>
+                        <button
+                          type="submit"
+                          className="btn btn-outline-primary"
+                          onClick={this.onSubmit}
+                        >
                           Search
                         </button>
                         {/* <button
@@ -300,7 +336,9 @@ class ViewTeam extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
+                          <option value="" selected>
+                            {this.state.status !== "" ? "Clear" : "Select"}
+                          </option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                           <option value="Deleted">Deleted</option>
@@ -318,9 +356,10 @@ class ViewTeam extends Component {
                       </React.Fragment>
                     ) : (
                       <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((team, index) => (
-                          <TeamRow key={index} team={team} />
-                        ))}
+                        {this.state.data.length != 0 &&
+                          this.state.data.map((team, index) => (
+                            <TeamRow key={index} team={team} />
+                          ))}
                       </React.Fragment>
                     )}
                   </tbody>
