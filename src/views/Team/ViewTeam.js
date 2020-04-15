@@ -197,14 +197,18 @@ class ViewTeam extends Component {
                     <tr>
                       {/* <form onSubmit={this.onSubmit}> */}
                       <td scope="col">
-                        <button
+                        <button type="submit" className="btn btn-outline-primary" 
+                          onClick={this.onSubmit}>
+                          Search
+                        </button>
+                        {/* <button
                           type="submit"
                           className="btn btn-sm btn-outline-primary"
                           style={{ justifyContent: "center" }}
                           onClick={this.onSubmit}
                         >
                           search!
-                        </button>
+                        </button> */}
                       </td>
                       <td scope="col">
                         <input

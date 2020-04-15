@@ -56,6 +56,9 @@ class EditAssignPartner extends Component {
   }
 
   componentWillMount(){
+    if(AssignPartnerData.length==0) {
+      window.location.href='/tables/assignPartners'
+    }
     this.setState({isEditable: window.location.pathname.includes('/edit-member')})
   }
   

@@ -43,6 +43,9 @@ class EditCustomer extends Component {
   }
 
   componentWillMount(){
+    if(customerData.length==0) {
+      window.location.href='/tables/customers'
+    }
     this.setState({isEditable: window.location.pathname.includes('/edit-member')})
   }
   

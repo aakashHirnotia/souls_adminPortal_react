@@ -41,10 +41,12 @@ const Dashboard = React.lazy(() => import('./views/Dashboard'));
  const TeamHasRole = React.lazy(() => import('./views/Admin/TeamHasRole'));
 // const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Partner = React.lazy(() => import('./views/Tables/Partner'));
+const PartnerEdit = React.lazy(() => import('./views/Tables/PartnerEdit'));
 
 
 const Users = React.lazy(() => import('./views/Users/Users'));
 const Team = React.lazy(() => import('./views/Team/Team'));
+const TeamEdit = React.lazy(() => import('./views/Team/TeamEdit'));
 const ViewProfile = React.lazy(() => import('./views/Profile/View'));
 // const UpdateProfile = React.lazy(() => import('./views/Profile/Update'));
 const ViewTeam = React.lazy(() => import('./views/Team/ViewTeam'));
@@ -79,7 +81,7 @@ const routes = [
   // { path: '/base', exact: true, name: 'Base', component: Cards },
   // { path: '/base/cards', name: 'Cards', component: Cards },
   { path: '/tables/add-partner', exact: true,  name: 'AddPartner', component: Partner },
-  { path: '/tables/edit-partner/:id', exact: true,  name: 'EditPartner', component: Partner },
+  { path: '/tables/edit-partner/:id', exact: true,  name: 'EditPartner', component: PartnerEdit },
   // { path: '/base/forms', name: 'Forms', component: Forms },
   // { path: '/base/switches', name: 'Switches', component: Switches },
   // { path: '/base/tables', name: 'Tables', component: Tables },
@@ -115,14 +117,15 @@ const routes = [
   { path: '/users', exact: true,  name: 'Users', component: Users },
   // { path: '/profile/update', exact: true,  name: 'Update Profile', component: UpdateProfile },
   { path: '/profile/view', exact: true,  name: 'View Profile', component: ViewProfile },
-  { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
+ 
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
   { path: '/customer/view-member/:id', exact: true,  name: 'Customer / view', component: CustomerMember },
   { path: '/assignpartner/view-member/:id', exact: true,  name: 'AssignPartner / view', component: AssignPartnerMember },
   { path: '/pendingorder/view-member/:id', exact: true,  name: 'Pending Order', component: PendingOrderMember },
   { path: '/transaction/view-member/:id', exact: true,  name: 'Transaction', component: TransactionMember },
-  { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: Team },
+  { path: '/team/add-member', exact: true,  name: 'AddMember', component: Team },
+  { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: TeamEdit },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
 ];
 

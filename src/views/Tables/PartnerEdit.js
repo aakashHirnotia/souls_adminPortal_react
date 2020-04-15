@@ -53,9 +53,9 @@ class Partner extends Component {
   }
 
   componentWillMount(){
-    // if(PartnerData.length==0) {
-    //   window.location.href='/tables/ViewPartners'
-    // }
+    if(PartnerData.length==0) {
+      window.location.href='/tables/ViewPartners'
+    }
     this.setState({isEditable: window.location.pathname.includes('/edit-partner')})
   }
   

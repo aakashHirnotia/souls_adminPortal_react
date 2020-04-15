@@ -61,6 +61,9 @@ class EditTransaction extends Component {
   }
 
   componentWillMount(){
+    if(TransactionData.length==0) {
+      window.location.href='/tables/transactions'
+    }
     this.setState({isEditable: window.location.pathname.includes('/edit-member')})
   }
   
