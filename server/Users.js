@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35"
+const baseURL = "http://3.6.243.136"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -78,7 +78,6 @@ users.post("/login", (req, res) => {
     email: req.body.email,
     password: req.body.password
   };
-  console.log("xxcvjk")
   axios
     .post(`${baseURL}:8000/team/login`, userData)
     .then(response => {
@@ -484,6 +483,59 @@ users.put("/update", (req, res) => {
   console.log("Update Profile request received in node");
   console.log("Name: " + userData.firstname);
 });
+
+const path = require("path");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+   destination: "./public/uploads/",
+   filename: function(req, file, cb){
+      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+   }
+});
+
+// const uploads = multer({
+//    storage: storage,
+//    limits:{fileSize: 1000000},
+// }).single("myImage");
+
+// // const router = express.Router();
+// users.post("/update/profilePic", (req,res)=> {
+//    uploads(req, res, (err) => {
+//       console.log("Request ---", req.body);
+//       console.log("Request file ---", req.file);//Here you get file.
+//       /*Now do where ever you want to do*/
+//       if(!err)
+//          return res.send(200).end();
+//    })
+// })
+
+// users.post("/update/profilePic", (req, res) => {
+//   console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+//   // console.log(req)
+//   console.log("Request file ---", req.body)
+//   console.log(req.body)
+//   // console.log(req)
+//   axios
+//     .put(`${baseURL}:8000/team/update/profilePic`, req.file,{
+//       headers: {
+//         Authorization: `Bearer ${req.headers.token}`,
+//         'content-type':`${req.headers['content-type']}`
+//       }
+//     }
+//     )
+//     // .then(response => {
+//     //   console.log(response.data)
+//     //   res.status(response.status).send(response.data);
+//     // })
+//     .catch(e => {
+//       // console.log(e)
+//       res.status(500).send("Error: " + e)
+//     });
+
+//   console.log("Update Profile Pic request received in node");
+//   // console.log("File: " + req.file);
+// });
 
 users.put("/updateTeamRole", (req, res) => {
   const userData = {

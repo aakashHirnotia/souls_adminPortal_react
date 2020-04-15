@@ -127,7 +127,7 @@ export const update = (updatedUser) => {
       mobileno: updatedUser.mobileno,
     },{
       headers: {
-        token: localStorage.getItem("token"),
+        token: localStorage.getItem("token")
       }}
     )
     .then((response) => {
@@ -140,6 +140,22 @@ export const update = (updatedUser) => {
       console.log(err);
     });
 };
+
+export const updateProfilePic = (formData) => {
+  console.log("In userFucntions React---")
+  console.log(formData.get('myImage'))
+  console.log(formData)
+  return axios 
+    .post(`${baseURL}:8000/update/profilePic`,formData,{    //directly send to go server
+      headers: {
+        token: localStorage.getItem("token"),
+        'content-type': 'multipart/form-data'
+      }}
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 export const login = async (user) => {
   let message = "";

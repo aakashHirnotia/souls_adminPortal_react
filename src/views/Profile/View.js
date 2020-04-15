@@ -13,6 +13,7 @@ import {
 // import jwt_decode from 'jwt-decode'
 import {fetchUserDetails} from './../Team/UserFunctions'
 import {update} from './../Team/UserFunctions'
+import {updateProfilePic} from './../Team/UserFunctions'
 // import {getProfileData} from './../Tables/Datas'
 // import { Row } from 'reactstrap'
 
@@ -20,6 +21,8 @@ class ViewProfile extends Component {
   constructor() {
     super()
     this.state = {
+      file: null,
+      fileURL : '',
       data:[],
       first_name:'',
       last_name: '',
@@ -36,12 +39,39 @@ class ViewProfile extends Component {
     }
     this.onChange = this.onChange.bind(this)
     this.onUpdate = this.onUpdate.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onFormChange = this.onFormChange.bind(this);
   }
 
   changeEditMode=()=>{
     this.setState({
       isInEditMode: !this.state.isInEditMode
     })
+  }
+
+  onFormSubmit(e){
+    e.preventDefault();
+    const formData = new FormData();
+    console.log("File onFormChange, file changed to = ");
+    console.log(this.state.file);   
+    formData.append('myImage',this.state.file);
+    // console.log("formdata" )
+    // console.log(formData.get('myImage'))
+    // const config = {
+    //     headerormData.append('myIs: {
+    //       token: localStorage.getItem("token"),
+    //       'content-type': 'multipart/form-data'
+    //     }
+    // };
+
+    updateProfilePic(formData);
+}
+  onFormChange(e) {
+    console.log(URL.createObjectURL(e.target.files[0]));  
+    this.setState({file:e.target.files[0]});  
+    this.setState({fileURL: URL.createObjectURL(e.target.files[0])}); 
+    console.log("1234567890") 
+    console.log(URL.createObjectURL(e.target.files[0]));                                                   
   }
 
   onChange(e){
@@ -74,8 +104,6 @@ class ViewProfile extends Component {
   componentDidMount() {
     // const token = localStorage.usertoken
     const token = localStorage.getItem('token')
-    // const decoded = jwt_decode(token)
-    console.log("token = "+token)
     fetchUserDetails(token, this.fetchedUser)
   }
 
@@ -88,9 +116,7 @@ class ViewProfile extends Component {
       this.setState({
         first_name: res.firstname,
         last_name: res.lastname,
-        // gender: res.gender,
         email: res.email,
-        // password: res.password,
         joining: res.Joining_Date,
         address: res.address,
         status: res.status,
@@ -104,12 +130,26 @@ class ViewProfile extends Component {
     return (
       <div  className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="3"></Col>
+          <Col xs="12" sm="3">
+          <FormGroup row>
+            <div className="team-player">
+              <img
+                className="rounded-circle img-fluid img-raised"
+                src={(this.state.fileURL==='' ? require('./avtar.jpg') : this.state.fileURL)}
+                style={{height:"200px", width:"200px"}}
+              ></img>
+            </div>
+            {/* <Col xs="12" md="9" style={{paddingTop: "40px"}}>
+              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
+              <button type="submit" onClick={this.onFormSubmit}>Upload</button>
+            </Col> */}
+            
+          </FormGroup>
+          </Col>
           <Col xs="12" sm="6">
             <Card>
               <CardHeader>
                 <strong>Profile</strong>
-                {/* <small> Form</small> */}
               </CardHeader>
               <CardBody>
                 <FormGroup>
@@ -175,7 +215,22 @@ class ViewProfile extends Component {
     return (
       <div  className="animated fadeIn">
         <Row>
-          <Col xs="12" sm="3"></Col>
+          <Col xs="12" sm="3">
+          <FormGroup row>
+            <div className="team-player">
+              <img
+                className="rounded-circle img-fluid img-raised"
+                src={(this.state.fileURL==='' ? require('./avtar.jpg') : this.state.fileURL)}
+                style={{height:"200px", width:"200px"}}
+              ></img>
+            </div>
+            <Col xs="12" md="9" style={{paddingTop: "40px"}}>
+              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
+              <button type="submit" onClick={this.onFormSubmit}>Upload</button>
+            </Col>
+            
+          </FormGroup>
+          </Col>
           <Col xs="12" sm="6">
             <Card>
               <CardHeader>
