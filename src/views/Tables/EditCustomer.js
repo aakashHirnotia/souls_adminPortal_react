@@ -56,7 +56,7 @@ class EditCustomer extends Component {
         customer_email: customer.customer_email,
         customer_address: customer.customer_address,
         pincode: customer.pincode,
-        Last_Access_Time: customer.Last_Access_Time,
+        registrated_source: customer.registrated_source,
         status: customer.status
     })
   }
@@ -73,7 +73,7 @@ class EditCustomer extends Component {
     let customer_emailError = "";
     let customer_addressError = "";
     let pincodeError = "";
-    let Last_Access_TimeError = "";
+    let registrated_sourceError = "";
     let statusError = "";
     if (!this.state.customer_name) {
       customer_nameError = "Name can't sbe empty";
@@ -93,8 +93,8 @@ class EditCustomer extends Component {
     if (!this.state.pincode) {
       pincodeError = "Pincode can't be empty";
     }
-    if (!this.state.Last_Access_Time) {
-        Last_Access_TimeError = "Can't be empty";
+    if (!this.state.registrated_source) {
+        registrated_sourceError = "Can't be empty";
     }
     if (!this.state.status) {
       statusError = "Choose Status";
@@ -107,7 +107,7 @@ class EditCustomer extends Component {
       customer_emailError ||
       customer_addressError ||
       pincodeError ||
-      Last_Access_TimeError ||
+      registrated_sourceError ||
       statusError 
     ) {
       this.setState({
@@ -117,7 +117,7 @@ class EditCustomer extends Component {
         customer_emailError,
         customer_addressError,
         pincodeError,
-        Last_Access_TimeError,
+        registrated_sourceError,
         statusError
       });
       return false;
@@ -140,11 +140,11 @@ class EditCustomer extends Component {
           customer_email: this.state.customer_email,
           customer_address: this.state.customer_address,
           pincode: this.state.pincode,
-          Last_Access_Time: this.state.Last_Access_Time,
+          registrated_source: this.state.registrated_source,
           status: this.state.status
         };
         updateCustomer(updatedUser).then(res => {
-          this.props.history.push(`/customers/list`);
+          this.props.history.push(`/tables/customers`);
         });
         this.setState(intialState);
     }
@@ -157,7 +157,7 @@ class EditCustomer extends Component {
             <CardHeader>
               <strong>Update Customer: </strong>
               <button 
-                      className="btn btn-outline-primary" style={{position:"absolute", right:"20px"}}
+                      className="btn btn-primary-primary" style={{position:"absolute", right:"15px"}}
                 >
                   <a className="createCustomerBtn" href="/tables/customers"> Back </a>
               </button>
@@ -191,6 +191,7 @@ class EditCustomer extends Component {
                         name="customer_mobile_no"
                         value={this.state.customer_mobile_no}
                         onChange={this.onChange}
+                        disabled={true}
                       />
                       <div style={{ fontSize: 0, color: "red" }}>
                         {this.state.customer_mobile_noError}
@@ -219,7 +220,7 @@ class EditCustomer extends Component {
                     <FormGroup>
                       <Label htmlFor="address">Address</Label>
                       <Input
-                        type="text"
+                        type="textarea"
                         id="address"
                         placeholder="Address"
                         name="customer_address"
@@ -241,7 +242,7 @@ class EditCustomer extends Component {
                         name="pincode"
                         value={this.state.pincode}
                         onChange={this.onChange}
-                        // disabled={true}
+                        
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.pincodeError}
@@ -259,9 +260,10 @@ class EditCustomer extends Component {
                         value={this.state.customer_gender}
                         onChange={this.onChange}
                       >
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                        <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other" >Other</option>
                       </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.customer_genderError}
@@ -277,8 +279,9 @@ class EditCustomer extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
-                        <option>Active</option>
-                        <option>Inactive</option>
+                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
                       </select>
                       <div style={{ fontSize: 20, color: "red" }}>
                         {this.state.statusError}
@@ -287,15 +290,15 @@ class EditCustomer extends Component {
                   </Col>
                   <Col xs="4">
                     <FormGroup>
-                      <Label htmlFor="Last access time">Last Access Time</Label>
+                      <Label htmlFor="Last access time">Registrated Source</Label>
                       <Input
                         className="form-control"
-                        name="Last_Access_Time"
-                        value={this.state.Last_Access_Time}
+                        name="registrated_source"
+                        value={this.state.registrated_source}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                          {this.state.customer_genderError}
+                          {this.state.registrated_sourceError}
                       </div>
                     </FormGroup>
                   </Col>

@@ -226,7 +226,7 @@ class EditTransaction extends Component {
             total_order_amount: this.state.total_order_amount
         };
         updateTransaction(updatedUser).then(res => {
-          this.props.history.push(`/transaction/list`);
+          this.props.history.push(`/tables/transactions`);
         });
         this.setState(intialState);   
     }
@@ -252,8 +252,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="no of therapists">Number of Therapists</Label>
                       <Input
                         type="text"
-                        // id="name"
-                        // placeholder="name"
                         name="number_of_therapist"
                         value={this.state.number_of_therapist}
                         onChange={this.onChange}
@@ -272,9 +270,10 @@ class EditTransaction extends Component {
                         value={this.state.therapist_gender}
                         onChange={this.onChange}
                       >
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
+                        <option value="" selected>{this.state.therapist_gender!==""?"Clear":"Select"}</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other" >Other</option>
                       </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.therapist_genderError}
@@ -290,8 +289,9 @@ class EditTransaction extends Component {
                         value={this.state.massage_for}
                         onChange={this.onChange}
                       >
-                        <option>Myself</option>
-                        <option>friend</option>
+                        <option value="" selected>{this.state.massage_for!==""?"Clear":"Select"}</option>
+                        <option value="myself">Myself</option>
+                        <option value="friend">friend</option>
                       </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.massage_forError}
@@ -303,8 +303,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="slot time">Slot Time</Label>
                       <Input
                         type="text"
-                        // id="email"
-                        // placeholder="Email"
+                        placeholder="HH:MM:SS"
                         name="Slot_Time"
                         value={this.state.Slot_Time}
                         onChange={this.onChange}
@@ -321,8 +320,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="slot date">Slot Date</Label>
                       <Input
                         type="text"
-                        // id="address"
-                        // placeholder="Address"
+                        placeholder="DD:MM:YYYY"
                         name="Slot_Date"
                         value={this.state.Slot_Date}
                         onChange={this.onChange}
@@ -337,8 +335,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="massage duration">Massage Duration</Label>
                       <Input
                         type="text"
-                        // id="address"
-                        // placeholder="Address"
                         name="massage_duration"
                         value={this.state.massage_duration}
                         onChange={this.onChange}
@@ -348,13 +344,11 @@ class EditTransaction extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="6">
                     <FormGroup>
                       <Label htmlFor="address">Address</Label>
                       <Input
-                        type="text"
-                        // id="address"
-                        // placeholder="Address"
+                        type="textarea"
                         name="customer_address"
                         value={this.state.customer_address}
                         onChange={this.onChange}
@@ -364,20 +358,50 @@ class EditTransaction extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="Pincode">Pincode</Label>
                       <Input
                         type="text"
-                        // id="pincode"
-                        // placeholder="Pincode"
                         name="pincode"
                         value={this.state.pincode}
+                        onChange={this.onChange}
+                        
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.pincodeError}
+                      </div>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="latitude">Latitude</Label>
+                      <Input
+                        type="text"
+                        name="latitude"
+                        value={this.state.latitude}
                         onChange={this.onChange}
                         // disabled={true}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.pincodeError}
+                        {this.state.latitudeError}
+                      </div>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="longitude">Longitude</Label>
+                      <Input
+                        type="text"
+                        name="longitude"
+                        value={this.state.longitude}
+                        onChange={this.onChange}
+                        // disabled={true}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.longitudeError}
                       </div>
                     </FormGroup>
                   </Col>
@@ -388,11 +412,10 @@ class EditTransaction extends Component {
                       <Label htmlFor="merchant transaction id">Merchant Transaction ID</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="merchant_transaction_id"
                         value={this.state.merchant_transaction_id}
                         onChange={this.onChange}
+                        disabled={true}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.merchant_transaction_idError}
@@ -404,8 +427,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="payment gateway mode">Payment Gateway Mode</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="payment_gateway_mode"
                         value={this.state.payment_gateway_mode}
                         onChange={this.onChange}
@@ -420,8 +441,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="transaction mode">Transaction Mode</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="transaction_mode"
                         value={this.state.transaction_mode}
                         onChange={this.onChange}
@@ -438,8 +457,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="bank type">Bank Type</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="bank_type"
                         value={this.state.bank_type}
                         onChange={this.onChange}
@@ -454,8 +471,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="payment gateway id">Payment Gateway ID</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="payment_gateway_id"
                         value={this.state.payment_gateway_id}
                         onChange={this.onChange}
@@ -470,8 +485,6 @@ class EditTransaction extends Component {
                       <Label htmlFor="total order amount">Total Order Amount</Label>
                       <Input
                         type="text"
-                        // id="gender"
-                        // placeholder="gender"
                         name="total_order_amount"
                         value={this.state.total_order_amount}
                         onChange={this.onChange}

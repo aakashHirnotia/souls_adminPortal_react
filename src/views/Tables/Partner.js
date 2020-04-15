@@ -524,7 +524,7 @@ class Partner extends Component {
                             value={this.state.gender}
                             onChange={this.onChange}
                         >
-                            <option></option>
+                            <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
@@ -676,7 +676,7 @@ class Partner extends Component {
                           id="Onboard_Date"
                           name="Onboard_Date"
                           value={this.state.Onboard_Date}
-                          disabled={true}
+                          // disabled={true}
                           onChange={this.onChange}
                         />
                         <div style={{ fontSize: 10, color: "red" }}>
@@ -775,10 +775,10 @@ class Partner extends Component {
                             className="form-control"
                             name="gender"
                             value={this.state.gender}
-                            disabled={true}
+                            // disabled={true}
                             onChange={this.onChange}
                         >
-                            <option></option>
+                            <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>

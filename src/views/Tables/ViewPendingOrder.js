@@ -13,15 +13,15 @@ class PendingOrderRow extends Component {
       this.setState({PendingOrder: this.props.PendingOrder})
     }
 
-    getIcon = (is_order_confirmed) => {
-      return  (is_order_confirmed === true) ? 'fa fa-check-square fa-lg' :
-              (is_order_confirmed === false) ? 'fa fa-window-close-o fa-lg' :
+    getIcon = (status) => {
+      return  (status === 'Confirmed' || status === 'confirmed') ? 'fa fa-check-square fa-lg' :
+              (status === 'Pending' || status === 'pending') ? 'fa fa-window-close-o fa-lg' :
               'primary'
     }
   
-    getColor = (is_order_confirmed) => {
-      return  (is_order_confirmed === true )  ? {color:"green"} :
-              (is_order_confirmed === false ) ? {color:"red"} :
+    getColor = (status) => {
+      return  (status === 'Confirmed' || status === 'confirmed')  ? {color:"green"} :
+              (status === 'Pending' || status === 'pending') ? {color:"red"} :
               {color:"black"}
     }
 
@@ -58,15 +58,15 @@ class PendingOrderRow extends Component {
   
         data: [],
         count: 0,
-        souls_ID:"",
+        customer_souls_id:"",
         customer_name:"",
-        slot_time:"",
-        slot_date:"",
+        Slot_Time:"",
+        Slot_Date:"",
         massage_duration:"",
         pincode:"",
-        create_at: "",
-        is_order_confermed: "",
-        transaction_ID: "",
+        CreatedAt: "",
+        is_order_confirmed: "",
+        merchant_transaction_id: "",
         total_order_amount:"",
         errors: {}
       };
@@ -90,15 +90,15 @@ class PendingOrderRow extends Component {
     onSubmit = async(e)=> {
       e.preventDefault();
       const searchPanding = {
-        souls_ID: this.state.souls_ID,
+        customer_souls_id: this.state.customer_souls_id,
         customer_name:this.state.customer_name,
-        slot_time: this.state.slot_time,
-        slot_date: this.state.slot_date,
+        Slot_Time: this.state.Slot_Time,
+        Slot_Date: this.state.Slot_Date,
         massage_duration: this.state.massage_duration,
         pincode: this.state.pincode,
-        create_at: this.state.create_at,
-        is_order_confermed: this.state.is_order_confermed,
-        transaction_ID: this.state.transaction_ID,
+        CreatedAt: this.state.CreatedAt,
+        is_order_confirmed: this.state.is_order_confirmed,
+        merchant_transaction_id: this.state.merchant_transaction_id,
         total_order_amount: this.state.total_order_amount,
     };
       const dataRecieved = await searchPendingOrder(searchPanding);
@@ -123,7 +123,6 @@ class PendingOrderRow extends Component {
   
   
     render() {
-      // console.log('DAta: ')
       // console.log(this.state.data.forEach(o=>console.log(o)))
       const PendingOrderList = PendingOrderData.filter(
         PendingOrder => PendingOrder.Order_ID < 10
@@ -175,8 +174,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="souls_ID"
-                            value={this.state.souls_ID}
+                            name="customer_souls_id"
+                            value={this.state.customer_souls_id}
                             onChange={this.onChange}
                           />
                         </td>
@@ -201,8 +200,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="slot_time"
-                            value={this.state.slot_time}
+                            name="Slot_Time"
+                            value={this.state.Slot_Time}
                             onChange={this.onChange}
                           />
                         </td>
@@ -214,8 +213,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="slot_date"
-                            value={this.state.slot_date}
+                            name="Slot_Date"
+                            value={this.state.Slot_Date}
                             onChange={this.onChange}
                           />
                         </td>
@@ -253,8 +252,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="create_at"
-                            value={this.state.create_at}
+                            name="CreatedAt"
+                            value={this.state.CreatedAt}
                             onChange={this.onChange}
                           />
                         </td>
@@ -266,12 +265,13 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="is_order_confermed"
-                            value={this.state.is_order_confermed}
-                            onChange={(e) => this.setState({is_order_confermed: !this.state.is_order_confermed.value})}
+                            name="is_order_confirmed"
+                            value={this.state.is_order_confirmed}
+                            onChange={(e) => this.setState({is_order_confirmed: !this.state.is_order_confirmed.value})}
                           >
-                            <option value={true} >Confirmed</option>
-                            <option value={false}>Pending</option>
+                            <option value="" selected>{this.state.is_order_confirmed!==""?"Clear":"Select"}</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="pending">Pending</option>
                           </select>
                         </td>
                         <td scope="col">
@@ -282,8 +282,8 @@ class PendingOrderRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="transaction_ID"
-                            value={this.state.transaction_ID}
+                            name="merchant_transaction_id"
+                            value={this.state.merchant_transaction_id}
                             onChange={this.onChange}
                           />
                         </td>

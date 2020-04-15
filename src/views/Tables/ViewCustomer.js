@@ -16,16 +16,17 @@ class CustomerRow extends Component {
   }
 
   getIcon = (status) => {
-    return  (status === true) ? 'fa fa-check-square fa-lg' :
-            (status === false) ? 'fa fa-window-close-o fa-lg' :
+    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
+            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
             'primary'
   }
 
   getColor = (status) => {
-    return  (status === true )  ? {color:"green"} :
-            (status === false ) ? {color:"red"} :
+    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
+            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
             {color:"black"}
   }
+
     render() {
       // console.log(this.props.customer)
       return (
@@ -74,7 +75,7 @@ class CustomerRow extends Component {
         CreatedAt: "",
         registrated_source: "",
         Last_Access_Time: "",
-        status: false,
+        status: "",
         errors: {}
       };
       this.onChange = this.onChange.bind(this);
@@ -91,6 +92,7 @@ class CustomerRow extends Component {
     }
 
     onChange(e) {
+      console.log(e.target.name)
       this.setState({ [e.target.name]: e.target.value });
     }
   
@@ -133,7 +135,8 @@ class CustomerRow extends Component {
       const customerList = customerData.filter(
         customer => customer.id < 10
       );
-  
+        console.log(this.state)
+
       return (
         <div className="animated fadeIn">
           <Row>
@@ -207,8 +210,9 @@ class CustomerRow extends Component {
                             value={this.state.customer_mobile_no}
                             onChange={this.onChange}
                           />
-                        </td><td scope="col">
-                        <select
+                        </td>
+                        <td scope="col">
+                          <select
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -218,10 +222,11 @@ class CustomerRow extends Component {
                             name="customer_gender"
                             value={this.state.customer_gender}
                             onChange={this.onChange}
-                          >
-                            <option  >Male</option>
-                            <option >Female</option>
-                            <option >Other</option>
+                          > 
+                            <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other" >Other</option>
                           </select>
                         </td>
                         <td scope="col">
@@ -275,8 +280,9 @@ class CustomerRow extends Component {
                             value={this.state.status}
                             onChange={this.onChange}
                           >
-                            <option value={true} >Active</option>
-                            <option value={false}>Inactive</option>
+                            <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
                           </select>
                         </td>
                       </tr>

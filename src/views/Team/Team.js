@@ -386,7 +386,7 @@ class Team extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
-                        <option></option>
+                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
                         <option>Active</option>
                         <option>Inactive</option>
                         <option>Deleted</option>
@@ -405,7 +405,7 @@ class Team extends Component {
                         value={this.state.role}
                         onChange={this.onChange}
                       >
-                        <option></option>
+                        <option value="" selected>{this.state.role!==""?"Clear":"Select"}</option>
                         <option>Admin</option>
                         <option>Accountant</option>
                         <option>Customer Care</option>
@@ -424,7 +424,7 @@ class Team extends Component {
                         value={this.state.gender}
                         onChange={this.onChange}
                       >
-                        <option></option>
+                        <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
                         <option>Male</option>
                         <option>Female</option>
                         <option>Other</option>
@@ -563,6 +563,7 @@ class Team extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
+                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
                         <option>Active</option>
                         <option>Inactive</option>
                         <option>Deleted</option>
@@ -599,6 +600,7 @@ class Team extends Component {
                         value={this.state.gender}
                         onChange={this.onChange}
                       >
+                        <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
                         <option>Male</option>
                         <option>Female</option>
                         <option>Other</option>

@@ -145,12 +145,6 @@ class TeamHasRole extends Component {
     this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
   }
   render() {
-    // console.log('DAta: ')
-    // console.log(this.state.data.forEach(o=>console.log(o)))
-    // const teamList = (TeamHasRoleData.length !== 0 ? TeamHasRoleData : TeamHasRoleDatas).filter(
-    //   team => team.id < 10
-    // );
-    // console.log(this.state.data.forEach(o => console.log(o)));
 
     return (
       <div className="animated fadeIn">

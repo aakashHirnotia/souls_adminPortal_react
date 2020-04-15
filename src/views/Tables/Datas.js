@@ -31,10 +31,8 @@ export const SetTransactionData = (data) => {
 export const getTransactionData=(data) => {
   return TransactionData;
 }
-// export const getPandingOrderData=(data) => {
-//   return PandingOrderData;
-// }
 
+//Partner Data
 export let PartnerData=[]
 
 export const SetPartnerData = (data) => {
@@ -43,4 +41,15 @@ export const SetPartnerData = (data) => {
 
 export const getPartnerData=(data) => {
   return PartnerData;
+}
+
+//Assign Partner Data
+export let AssignPartnerData=[]
+
+export const SetAssignPartnerData = (data) => {
+    AssignPartnerData=data;
+}
+
+export const getAssignPartner=(data) => {
+  return AssignPartnerData;
 }

@@ -310,7 +310,7 @@ class ViewPartners extends Component {
                           value={this.state.partner_gender}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>{this.state.partner_gender!==""?"Clear":"Select"}</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                           <option value="Other">Other</option>

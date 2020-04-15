@@ -50,8 +50,10 @@ const ViewProfile = React.lazy(() => import('./views/Profile/View'));
 const ViewTeam = React.lazy(() => import('./views/Team/ViewTeam'));
 const EditCustomerMember = React.lazy(() => import('./views/Tables/EditCustomer'));
 const EditTransaction = React.lazy(() => import('./views/Tables/EditTransaction'));
+const EditAssignPartner = React.lazy(() => import('./views/Tables/EditAssignPartner'));
 const TeamMember = React.lazy(() => import('./views/Team/TeamMember'));
 const CustomerMember = React.lazy(() => import('./views/Tables/CustomerMember'));
+const AssignPartnerMember = React.lazy(() => import('./views/Tables/AssignPartnerMember'));
 const PendingOrderMember = React.lazy(() => import('./views/Tables/PendingOrderMember'));
 const TransactionMember = React.lazy(() => import('./views/Tables/TransactionMember'));
 // const TeamEditMember = React.lazy(() => import('./views/Team/TeamEditMember'));
@@ -65,6 +67,7 @@ const routes = [
   //{ path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/customer/edit-member/:id', exact:true, name: 'Update Customer', component: EditCustomerMember },
   { path: '/transaction/edit-member/:id', exact:true, name: 'Update Transaction', component: EditTransaction },
+  { path: '/assignpartner/edit-member/:id', exact:true, name: 'Update Assign Partner', component: EditAssignPartner },
    { path: '/tables/customers', name: 'Customers', component: Customers },
    { path: '/tables/pendingOrders', name: 'Pending Orders', component: PendingOrders },
    { path: '/tables/ViewPartners', name: 'ViewPartners', component: ViewPartners },
@@ -116,6 +119,7 @@ const routes = [
   { path: '/team/list', exact: true,  name: 'TeamList', component: ViewTeam },
   { path: '/team/view-member/:id', exact: true,  name: 'ViewMember', component: TeamMember },
   { path: '/customer/view-member/:id', exact: true,  name: 'Customer / view', component: CustomerMember },
+  { path: '/assignpartner/view-member/:id', exact: true,  name: 'AssignPartner / view', component: AssignPartnerMember },
   { path: '/pendingorder/view-member/:id', exact: true,  name: 'Pending Order', component: PendingOrderMember },
   { path: '/transaction/view-member/:id', exact: true,  name: 'Transaction', component: TransactionMember },
   { path: '/team/edit-member/:id', exact: true,  name: 'EditMember', component: Team },

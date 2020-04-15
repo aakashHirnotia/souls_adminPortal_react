@@ -58,20 +58,19 @@ class TransactionRow extends Component {
   
         data: [],
         count: 0,
-        souls_ID:"",
+        customer_souls_id:"",
         customer_name:"",
-        merchant_transaction_ID: "",
+        merchant_transaction_id: "",
         total_order_amount:"",
-        slot_time:"",
-        slot_date:"",
+        Slot_Time:"",
+        Slot_Date:"",
         massage_duration:"",
         pincode:"",
-        create_at: "",
+        CreatedAt: "",
         payment_gateway_mode:"",
         transaction_mode:"",
         bank_type:"",
-        payment_gateway_ID:"",
-
+        payment_gateway_id:"",
         errors: {}
       };
       this.onChange = this.onChange.bind(this);
@@ -96,18 +95,18 @@ class TransactionRow extends Component {
     onSubmit = async(e)=> {
       e.preventDefault();
       const searchTrans = {
-        souls_ID: this.state.souls_ID,
+        customer_souls_id: this.state.customer_souls_id,
         customer_name:this.state.customer_name,
-        slot_time: this.state.slot_time,
-        slot_date: this.state.slot_date,
+        Slot_Time: this.state.Slot_Time,
+        Slot_Date: this.state.Slot_Date,
         massage_duration: this.state.massage_duration,
         pincode: this.state.pincode,
-        create_at: this.state.create_at,
-        merchant_transaction_ID: this.state.merchant_transaction_ID,
+        CreatedAt: this.state.CreatedAt,
+        merchant_transaction_id: this.state.merchant_transaction_id,
         payment_gateway_mode: this.state.payment_gateway_mode,
         transaction_mode: this.state.transaction_mode,
         bank_type: this.state.bank_type,
-        payment_gateway_ID: this.state.payment_gateway_ID,
+        payment_gateway_id: this.state.payment_gateway_id,
         total_order_amount: this.state.total_order_amount,
     };
   
@@ -189,8 +188,8 @@ class TransactionRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="souls_ID"
-                            value={this.state.souls_ID}
+                            name="customer_souls_id"
+                            value={this.state.customer_souls_id}
                             onChange={this.onChange}
                           />
                         </td>
@@ -208,20 +207,20 @@ class TransactionRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="merchant_transaction_ID"
-                            value={this.state.merchant_transaction_ID}
+                            name="merchant_transaction_id"
+                            value={this.state.merchant_transaction_id}
                             onChange={this.onChange}
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -241,8 +240,8 @@ class TransactionRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="slot_time"
-                            value={this.state.slot_time}
+                            name="Slot_Time"
+                            value={this.state.Slot_Time}
                             onChange={this.onChange}
                           />
                         </td>
@@ -254,8 +253,8 @@ class TransactionRow extends Component {
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="slot_date"
-                            value={this.state.slot_date}
+                            name="Slot_Date"
+                            value={this.state.Slot_Date}
                             onChange={this.onChange}
                           />
                         </td>
@@ -286,20 +285,20 @@ class TransactionRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="create_at"
-                            value={this.state.create_at}
+                            name="CreatedAt"
+                            value={this.state.CreatedAt}
                             onChange={this.onChange}
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -312,7 +311,7 @@ class TransactionRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -325,7 +324,7 @@ class TransactionRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
@@ -338,15 +337,15 @@ class TransactionRow extends Component {
                           />
                         </td>
                         <td scope="col">
-                          <select
+                          <input
                             type="search"
                             class="form-control mr-sm-2"
                             id=""
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="payment_gateway_ID"
-                            value={this.state.payment_gateway_ID}
+                            name="payment_gateway_id"
+                            value={this.state.payment_gateway_id}
                             onChange={this.onChange}
                           />
                         </td>

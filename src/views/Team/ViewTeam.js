@@ -285,7 +285,6 @@ class ViewTeam extends Component {
                         />
                       </td>
                       <td scope="col">
-                        {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
                         <select
                           type="search"
                           class="form-control mr-sm-2"
@@ -297,7 +296,7 @@ class ViewTeam extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                           <option value="Deleted">Deleted</option>
@@ -327,7 +326,7 @@ class ViewTeam extends Component {
                   hideDisabled
                   activePage={this.state.activePage}
                   itemsCountPerPage={10}
-                  totalItemsCount={this.state.count} // check
+                  totalItemsCount={this.state.count}
                   pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />

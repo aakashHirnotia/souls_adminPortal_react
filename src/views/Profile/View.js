@@ -158,7 +158,7 @@ class ViewProfile extends Component {
                 </FormGroup>
                 <button 
                   onClick={this.changeEditMode}
-                  className="btn btn-sm btn-outline-primary btn-block"
+                  className="btn btn-outline-primary"
                 >
                   update profile
                 </button>
@@ -228,7 +228,7 @@ class ViewProfile extends Component {
                   </Col>
                 </FormGroup>
                 <button
-                    className="btn btn-sm btn-outline-primary btn-block"
+                    className="btn btn-outline-primary"
                     style={{justifyContent:"center", display:"flex"}}
                     onClick={this.onUpdate}
                 >

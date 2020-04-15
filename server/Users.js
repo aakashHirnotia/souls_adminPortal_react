@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136"
+const baseURL = "http://10.38.1.35"
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -241,6 +241,24 @@ users.get("/transaction-list", (req, res) => {
     .catch(e => res.status(500).send("Error: " + e));
 });
 
+//Assign Partner List
+users.get("/assign-partner-list", (req, res) => {
+  console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  axios
+    .get(`${baseURL}:8000/assign/partner/list?page=${req.query.page}&limit=${5}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response)
+      res.setHeader("total-count",`${response.headers['total-count']}`)
+      res.setHeader("help","5")
+      res.status(response.status).send(JSON.stringify({data:{...response.data},count: response.headers['total-count']}));
+    })
+    .catch(e => res.status(500).send("Error: " + e));
+});
+
 //Team Search
 users.get("/search", (req, res) => {
   console.log("request Recieved for filter in node") 
@@ -262,14 +280,14 @@ users.get("/search", (req, res) => {
 //customer search
 users.get("/customer-search", (req, res) => {
   console.log("request Recieved for filter in node (customer search)") 
-  // console.log("status = " + req.query.status);
   axios
-    .get(`${baseURL}:8000/customers/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&mobileno=${req.query.mobileno}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&createtime=${req.query.createtime}&status=${req.query.status}`, {
+    .get(`${baseURL}:8000/customers/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&createtime=${req.query.createtime}&status=${req.query.status}`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
+      console.log("response" + response)
       res.status(response.status).send(response.data);
     })
     .catch(e =>{
@@ -288,6 +306,7 @@ users.get("/pendingorder-search", (req, res) => {
       }
     })
     .then(response => {
+      console.log("response" + response)
       res.status(response.status).send(response.data);
     })
     .catch(e =>{
@@ -314,6 +333,24 @@ users.get("/transaction-search", (req, res) => {
     } )
 });
 
+//Assign Partner search
+users.get("/assign-partner-search", (req, res) => {
+  console.log("request Recieved for filter in node") 
+  axios
+    .get(`${baseURL}:8000/assign/partner/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&partner_souls_id=${req.query.partner_souls_id}&partner_name=${req.query.partner_name}&partner_mobileno=${req.query.partner_mobileno}&CreatedAt=${req.query.CreatedAt}&status=${req.query.status}`, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      res.status(response.status).send(response.data);
+    })
+    .catch(e =>{
+      console.log("ERROR:"+ e)
+      res.status(500).send("Error: " + e);
+    } )
+});
+
 //Customer Member Update
 users.put("/update-customer", (req, res) => {
   const today = new Date();
@@ -324,11 +361,11 @@ users.put("/update-customer", (req, res) => {
     customer_email: req.body.customer_email,
     customer_address: req.body.customer_address,
     pincode: req.body.pincode,
-    Last_Access_Time: req.body.Last_Access_Time,
+    registrated_source: req.body.registrated_source,
     status: req.body.status
   };
   axios
-    .put(`${baseURL}:8000/team/update-customer-member`, userData, {
+    .put(`${baseURL}:8000/customers/update`, userData, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
@@ -368,22 +405,50 @@ users.put("/update-transaction", (req, res) => {
     total_order_amount: req.body.total_order_amount
   };
   axios
-    .put(`${baseURL}:8000/team/update-transaction-member`, userData, {
+    .put(`${baseURL}:8000/customers/transaction/update`, userData, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`
       }
     })
     .then(response => {
-      // console.log(response.status);
       res.status(response.status).send(response.data);
-      // console.log(response)
     })
     .catch(e => {
-      // console.log("ERROR");
       console.log(e);
       res.status(500).send(e);
     });
   console.log(userData.number_of_therapist)
+});
+
+//Assign Member Update
+users.put("/update-assign-partner", (req, res) => {
+  const today = new Date();
+  const userData = {
+    partner_souls_id: req.body.partner_souls_id,
+    partner_name: req.body.partner_name,
+    partner_mobileno: req.body.partner_mobileno,
+    Commission_Type: req.body.Commission_Type,
+    commission_type: req.body.commission_type,
+    updated_by: req.body.updated_by,
+    status: req.body.status
+  };
+  axios
+    .put(`${baseURL}:8000/assignpartner/update-assign-partner`, userData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`
+      }
+    })
+    .then(response => {
+      console.log(response.status);
+      res.status(response.status).send(response.data);
+      console.log(response)
+    })
+    .catch(e => {
+      console.log("ERROR");
+      console.log(e);
+      res.status(500).send(e);
+    });
+  console.log(userData.customer_name);
 });
 
 

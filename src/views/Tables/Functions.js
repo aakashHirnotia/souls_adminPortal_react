@@ -72,11 +72,33 @@ export const TransactionList = async (activePage, itemCountPerPage) => {
   return {data, count};
 };
 
+//Assign Partner List
+export const AssignPartnerList = async (activePage, itemCountPerPage) => {
+  let data, count;
+  await axios
+    .get(`${baseURL}:5000/users/assign-partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        data = Object.keys(response.data.data).map(o=>response.data.data[o]);
+        count= response.data.count
+        console.log("response in header = "+ response.headers)
+      }
+    })
+    .catch((err) => {
+      window.alert("Error: " + err);
+    });
+  return {data, count};
+};
+
 //Customer search
 export const searchCust = async (searchCustomer) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&mobileno=${searchCustomer.mobileno}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&createtime=${searchCustomer.createtime}&status=${searchCustomer.status}`,{
+    get(`http://localhost:5000/users/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&customer_mobile_no=${searchCustomer.customer_mobile_no}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&CreatedAt=${searchCustomer.CreatedAt}&status=${searchCustomer.status}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -123,6 +145,23 @@ export const searchTransaction = async (searchTrans) => {
   return data
 };
 
+//Assign Partner search
+export const searchAssignPart = async (searchAssignPartner) => {
+  let data = []
+  await axios.
+    get(`http://localhost:5000/users/assign-partner-search?customer_souls_id=${searchAssignPartner.customer_souls_id}&customer_name=${searchAssignPartner.customer_name}&Slot_Time=${searchAssignPartner.Slot_Time}&Slot_Date=${searchAssignPartner.Slot_Date}&partner_souls_id=${searchAssignPartner.partner_souls_id}&partner_name=${searchAssignPartner.partner_name}&partner_mobileno=${searchAssignPartner.partner_mobileno}&CreatedAt=${searchAssignPartner.CreatedAt}&status=${searchAssignPartner.status}`,{
+      headers: {
+        token: localStorage.getItem("token")
+      }
+    })
+    .then((response) => {
+      data = [...response.data];
+    })
+    .catch((e) => console.log(e));
+  
+  return data
+};
+
 //Update Customer
 export const updateCustomer = updatedUser => {
   console.log("axios updated User worked");
@@ -136,7 +175,7 @@ export const updateCustomer = updatedUser => {
         customer_email: updatedUser.customer_email,
         customer_address: updatedUser.customer_address,
         pincode: updatedUser.pincode,
-        Last_Access_Time: updatedUser.Last_Access_Time,
+        registrated_source: updatedUser.registrated_source,
         status: updatedUser.status
       },
       {
@@ -191,6 +230,34 @@ export const updateTransaction = updatedUser => {
     });
 };
 
+//Update Assign Partner
+export const updateAssignPartner = updatedUser => {
+  console.log("axios updated User worked");
+  return axios
+    .put(
+      `${baseURL}:5000/users/update-assign-partner`,
+      {
+        partner_souls_id: updatedUser.partner_souls_id,
+        partner_name: updatedUser.partner_name,
+        partner_mobileno: updatedUser.partner_mobileno,
+        Commission_Type: updatedUser.Commission_Type,
+        commission_type: updatedUser.commission_type,
+        updated_by: updatedUser.updated_by,
+        status: updatedUser.status
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((response) => {
+      if (response.status === 200) console.log("Updated");
+    })
+    .catch((e) => {
+      window.alert("Error: " + e);
+    });
+};
 
 export const registerPartner = (newPartner) => {
   console.log(newPartner.partner_name);
