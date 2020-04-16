@@ -1,61 +1,19 @@
-
-
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { PartnerData, SetPartnerData } from "../Datas";
+import { PartnerData, SetPartnerData } from "../../Datas";
 import Pagination from "react-js-pagination";
-import { partnerList, searchPartner } from "../Functions";
-
-class PartnerRow extends Component {
-  state = { 
-    partner: this.props.partner
-  };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({partner: this.props.partner})
-  }
-
-  render() {
-    return (
-      <tr key={this.state.partner.partner_id}>
-        <td>
-          <Link to={`/tables/view-partner-member/${this.props.partner.partner_id}`}>
-            <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
-          </Link>{" "}
-          <Link
-            style={{ paddingLeft: "14px" }}
-            to={`/tables/edit-partner/${this.props.partner.partner_id}`}
-          >
-            <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
-          </Link>
-        </td>
-        <th>{this.state.partner.partner_id}</th>
-        <td>{this.state.partner.partner_name}</td>
-        <td>{this.state.partner.partner_email}</td>
-        <td>{this.state.partner.partner_mobileno}</td>
-        <td>{this.state.partner.pincode}</td>
-        <td>{this.state.partner.Rate}</td>
-        <td>{this.state.partner.Commission_Type}</td>
-        <td>{this.state.partner.UpdatedAt}</td>
-        <td>{this.state.partner.CreatedAt}</td>
-        <td>{this.state.partner.partner_gender}</td>
-      </tr>
-    );
-  }
-}
+import { partnerList, searchPartner } from "../../Functions";
+import queryString from "query-string";
+import PartnerRow from "./PartnerRow";
 
 class ViewPartners extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 1,
-      itemsCountPerPage: 10,
-
-      data: [],
-      count: 0,
+  state = {
+    query:{ 
+      page:1,
+      limit: 10,
       partner_id: "",
+      partner_souls_id: "",
       partner_name: "",
       partner_email: "",
       partner_mobileno: "",
@@ -71,66 +29,115 @@ class ViewPartners extends Component {
       created_by: "",
       updated_by: "",
       partner_gender: "",
-      errors: {}
+    },
+      data: [],
+      count: 0,
+      isFetching: true,
     };
 
-    this.onChange = this.onChange.bind(this);
-  }
-
-
-
+  // async componentDidMount() {
+  //   const dataRecieved = await partnerList(
+  //     this.state.activePage,
+  //     this.state.itemsCountPerPage
+  //   );
+  //   SetPartnerData(dataRecieved.data);
+  //   const newData = dataRecieved.data
+  //   this.setState({ data: newData,count: dataRecieved.count });
+  // }
   async componentDidMount() {
-    const dataRecieved = await partnerList(
-      this.state.activePage,
-      this.state.itemsCountPerPage
-    );
+    let url = this.props.location.search;
+    let query = queryString.parse(url);
+    console.log(query);
+    await this.handleQuery(query);
+  }
+
+  async UNSAFE_componentWillReceiveProps(nP) {
+    let url = nP.location.search;
+    let query = queryString.parse(url);
+    console.log("PARSED")
+    console.log(query);
+    await this.handleQuery(query);
+  }
+  handleQuery = async (query) => {
+    query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
+    query["limit"] = 10;
+    const dataRecieved = await partnerList(query);
+    console.log(dataRecieved.data)
     SetPartnerData(dataRecieved.data);
-    const newData = dataRecieved.data
-    this.setState({ data: newData,count: dataRecieved.count });
-  }
+    const newData = dataRecieved.data;
+    this.setState({
+      data: newData,
+      count: dataRecieved.count,
+      query,
+      isFetching: false,
+    });
+  };
 
+  onChange = (e) => {
+    const query = this.state.query;
+    query[e.target.name] = e.target.value;
+    this.setState({ query });
+  };
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  onSubmit= async (e)=> {
+  onSubmit = (e) => {
     e.preventDefault();
-    const searchUser = {
-      partner_id: this.state.partner_id,
-      partner_name: this.state.partner_name,
-      partner_email: this.state.partner_email,
-      partner_mobileno: this.state.partner_mobileno,
-      pincode: this.state.pincode,
-      Rate: this.state.Rate,
-      Commission_Type: this.state.Commission_Type,
-      UpdatedAt: this.state.UpdatedAt,
-      CreatedAt: this.state.CreatedAt,
-      partner_gender: this.state.partner_gender
-    };
+    const query = this.state.query;
+    query["page"] = 1;
+    query["limit"] = 10;
+    let queryStr = "";
+    Object.keys(query).forEach((o) => {
+      if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+    });
+    queryStr = queryStr.replace(queryStr.length - 1, "");
+    // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+    window.location.href = "/tables/ViewPartners" + "?" + `${queryStr}`
+  };
 
-    const dataRecieved = await searchPartner(searchUser);
-    SetPartnerData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
-  }
+  handlePageChange = (page) => {
+    // let queryStr = "";
+    // Object.keys(this.state.query).forEach((o) => {
+    //   if(o=='page')queryStr += `${o}=${page}&`;
+    //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
+    // });
+    // queryStr = queryStr.replace(queryStr.length - 1, "");
+    // console.log(queryStr);
+    // window.location.href = "/team/list" + "?" + `${queryStr}`;
+    if (window.location.pathname.includes("?")) {
+      // this.props.history.push(window.location.pathname + `page=${page}`);
+      window.location.href =window.location.pathname + `page=${page}`
+    }
+    else {
+      window.location.href = window.location.pathname + "?" + `page=${page}`
+      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+    }
+  };
 
-  handlePageChange = async (pageNumber) => {
-    console.log(`pageNumber is ${pageNumber}`);
-    // this.setState({ activePage: pageNumber });
-    console.log(`active page is ${this.state.activePage}`);
+  clearFilter = () => {
+    // this.handleQuery({ page: 1, limit: 10 });
+    // const query = {
+    //   page: 1,
+    //   limit: 10,
+    //   firstname: "",
+    //   lastname: "",
+    //   teamid: "",
+    //   email: "",
+    //   joining: "",
+    //   status: "",
+    //   role: "",
+    //   mobileno: "",
+    // };
 
-    const dataRecieved = await partnerList(
-      pageNumber,
-      this.state.itemsCountPerPage
-    );
-    SetPartnerData(dataRecieved.data);
-    // console.log(dataPageRecieved)
-    const newData = dataRecieved.data
-    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
-  }
+    const query = this.state.query
+    Object.keys(query).map(o=>query[o]="")
+    this.setState({ query });
+    this.props.history.push("/tables/ViewPartners");
+  };
+
   render() {
-
+    console.log("QUERY");
+    console.log(this.state.query);
+    console.log("DATA");
+    console.log(this.state.data);
     return (
       <div className="animated fadeIn">
         <Row>
@@ -140,20 +147,28 @@ class ViewPartners extends Component {
                 <i className="fa fa-align-justify"></i> Partner's{" "}
                 <small className="text-muted">Table</small>
                 <button
-                  className="btn btn-primary btn-sm"
-                  style={{ position: "absolute", right: "20px" }}
+                  type="submit"
+                  className="btn btn-outline-primary  btn-sm"
+                  onClick={this.clearFilter}
+                  style={{ position: "absolute", right: "120px" }}
                 >
-                  <a className="createPartnerBtn" style={{color: "white"}} href="/tables/add-partner">
-                    Create Partner
-                  </a>
+                  Clear Filter
                 </button>
+                <Link className="createBtn" to="/tables/add-partner">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ position: "absolute", right: "20px" }}
+                  >
+                    Create Partner
+                  </button>
+                </Link>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th scope="col">Partner ID</th>
+                      <th scope="col">SOULS ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>
@@ -170,11 +185,10 @@ class ViewPartners extends Component {
                       <td scope="col">
                         <button
                           type="submit"
-                          className="btn btn-sm btn-outline-primary"
-                          style={{ justifyContent: "center" }}
+                          className="btn btn-outline-primary"
                           onClick={this.onSubmit}
                         >
-                          search!
+                          Search
                         </button>
                       </td>
                       <td scope="col">
@@ -185,8 +199,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="partner_id"
-                          value={this.state.partner_id}
+                          name="partner_souls_id"
+                          value={this.state.query.partner_souls_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -199,7 +213,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="partner_name"
-                          value={this.state.partner_name}
+                          value={this.state.query.partner_name}
                           onChange={this.onChange}
                         />
                       </td>
@@ -212,7 +226,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="partner_email"
-                          value={this.state.partner_email}
+                          value={this.state.query.partner_email}
                           onChange={this.onChange}
                         />
                       </td>
@@ -225,7 +239,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="partner_mobileno"
-                          value={this.state.partner_mobileno}
+                          value={this.state.query.partner_mobileno}
                           onChange={this.onChange}
                         />
                       </td>
@@ -238,7 +252,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="pincode"
-                          value={this.state.pincode}
+                          value={this.state.query.pincode}
                           onChange={this.onChange}
                         />
                       </td>
@@ -251,7 +265,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="Rate"
-                          value={this.state.Rate}
+                          value={this.state.query.Rate}
                           onChange={this.onChange}
                         />
                       </td>
@@ -264,7 +278,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="Commission_Type"
-                          value={this.state.Commission_Type}
+                          value={this.state.query.Commission_Type}
                           onChange={this.onChange}
                         >
                           <option ></option>
@@ -281,7 +295,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="UpdatedAt"
-                          value={this.state.UpdatedAt}
+                          value={this.state.query.UpdatedAt}
                           onChange={this.onChange}
                         />
                       </td>
@@ -294,7 +308,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="CreatedAt"
-                          value={this.state.CreatedAt}
+                          value={this.state.query.CreatedAt}
                           onChange={this.onChange}
                         />
                       </td>
@@ -307,7 +321,7 @@ class ViewPartners extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="partner_gender"
-                          value={this.state.partner_gender}
+                          value={this.state.query.partner_gender}
                           onChange={this.onChange}
                         >
                           <option value="" selected>{this.state.partner_gender!==""?"Clear":"Select"}</option>
@@ -327,20 +341,30 @@ class ViewPartners extends Component {
                           ))}
                       </React.Fragment>
                     ) : (
-                      <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((partner, index) => (
-                          <PartnerRow key={index} partner={partner} />
-                        ))}
-                      </React.Fragment>
+                      <div>
+                        {this.state.isFetching ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div
+                            style={{
+                              margin: "auto",
+                              color: "red",
+                              width: "100%",
+                            }}
+                          >
+                            NO RECORDS FOUND
+                          </div>
+                        )}
+                      </div>
                     )}
                   </tbody>
                 </Table>
                 <Pagination
                   className="pagination"
                   hideDisabled
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={this.state.count} // check
+                  activePage={this.state.query.page}
+                  itemsCountPerPage={this.state.query.limit}
+                  totalItemsCount={this.state.count}
                   pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />

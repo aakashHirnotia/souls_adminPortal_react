@@ -1,14 +1,34 @@
 import axios from "axios";
-
+import { store } from "react-notifications-component";
 // const baseURL = "http://10.42.0.1";
 const baseURL = "http://localhost";
 
 
+export const displayNotification = (title, message, type) => {
+  store.addNotification({
+    title: title || "",
+    message: message || "",
+    type: type || "success", // success //danger // info //default //warning
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+  console.log("gel");
+};
+
 //customerList
-export const customerList = async (activePage, itemCountPerPage) => {
+export const customerList = async (query) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/customers/customer-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    // .get(`${baseURL}:5000/customers/customer-list?page=${activePage}&limit=${itemCountPerPage}`,
+    .get(
+      `${baseURL}:5000/customers/customer-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&customer_mobile_no=${query.customer_mobile_no || ""}&customer_gender=${query.customer_gender || ""}&customer_email=${query.customer_email || ""}&pincode=${query.pincode || ""}&status=${query.status || ""}`,
+    {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -21,7 +41,7 @@ export const customerList = async (activePage, itemCountPerPage) => {
       }
     })
     .catch((err) => {
-      window.alert("Error: " + err);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 
     
@@ -323,26 +343,25 @@ export const updatePartner = updatedPartner => {
 
 
 
-export const partnerList = async (activePage, itemCountPerPage) => {
+export const partnerList = async (query) => {
     let data, count;
     await axios
-      .get(`${baseURL}:5000/partners/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      // .get(`${baseURL}:5000/partners/partner-list?page=${activePage}&limit=${itemCountPerPage}`, 
+      .get(
+        `${baseURL}:5000/partners/partner-list?page=${query.page || ""}&limit=${query.limit || ""}&partner_id=${query.partner_id || ""}&partner_name=${query.partner_name || ""}&partner_email=${query.partner_email || ""}&partner_mobileno=${query.partner_mobileno || ""}&partner_address=${query.partner_address || ""}&pincode=${query.pincode || ""}&latitude=${query.latitude || ""}&Longitude=${query.Longitude || ""}&Rate=${query.Rate || ""}&Commission_Type=${query.Commission_Type || ""}&Onboard_Date=${query.Onboard_Date || ""}&UpdatedAt=${query.UpdatedAt || ""}&CreatedAt=${query.CreatedAt || ""}&created_by=${query.created_by || ""}&updated_by=${query.updated_by || ""}&partner_gender=${query.partner_gender || ""}`,
+      {
         headers: {
           token: localStorage.getItem("token"),
         },
       })
       .then((response) => {
         if (response.status === 200) {
-          // console.log(typeof(response.data))
           data = Object.keys(response.data.data).map(o=>response.data.data[o])
           count = response.data.count
-          // console.log(data)
-          // console.log(response.headers)
-          // return response.data
         }
       })
       .catch((err) => {
-        window.alert("Error: " + err);
+        displayNotification("Error", "Internal Server Error", "danger");
       });
     return {data, count};
   };

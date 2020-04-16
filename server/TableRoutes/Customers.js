@@ -17,21 +17,27 @@ customers.get("/customer-list", (req, res) => {
         " and countsPerPage is 5"
     );
     axios
-      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${10}`, {
+      // .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${10}`,
+      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&status=${req.query.status}`,
+      {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
       })
       .then((response) => {
-        console.log(response);
-        res.setHeader("total-count", `${response.headers["total-count"]}`);
-        res.setHeader("help", "5");
-        res.status(response.status).send(
-          JSON.stringify({
-            data: { ...response.data },
-            count: response.headers["total-count"],
-          })
-        );
+        // console.log(response);
+        // res.setHeader("total-count", `${response.headers["total-count"]}`);
+        // res.setHeader("help", "5");
+        // res.status(response.status).send(
+        //   JSON.stringify({
+        //     data: { ...response.data },
+        //     count: response.headers["total-count"],
+        //   })
+        // );
+        res.status(response.status).send({
+          data: { ...response.data },
+          count: response.headers["total-count"],
+        });
       })
       .catch((e) => {
         console.log(e);

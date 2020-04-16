@@ -1,69 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { customerData, SetCustomerData } from "../Datas";
+import { customerData, SetCustomerData } from "../../Datas";
 import Pagination from "react-js-pagination";
-import { customerList, searchCust } from "../Functions";
+import CustomerRow from "./CustomerRow";
+import { customerList, searchCust } from "./../../Functions";
+import queryString from "query-string";
 
-
-class CustomerRow extends Component {
-  state = {
-    customer: this.props.customer
-  };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({customer: this.props.customer})
-  }
-
-  getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
-            'primary'
-  }
-
-  getColor = (status) => {
-    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
-            {color:"black"}
-  }
-
-    render() {
-      // console.log(this.props.customer)
-      return (
-        <tr key={this.state.customer.customer_souls_id}>
-          <td>
-            <Link to={`/customer/view-member/${this.props.customer.customer_id}`}>
-              <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
-            </Link>
-            <Link
-              style={{ paddingLeft: "10px" }}
-              to={`/customer/edit-member/${this.props.customer.customer_id}`}
-            >
-              <i className="fa fa-pencil" data-toggle="tooltip" title="update"></i>
-            </Link>
-          </td>
-          <th style={{ width: "12%" }}>{this.state.customer.customer_souls_id}</th>
-          <td style={{ width: "15%" }}>{this.state.customer.customer_name}</td>
-          <td style={{ width: "15%" }}>{this.state.customer.customer_mobile_no}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.customer_gender}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.customer_email}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.CreatedAt}</td>
-          <td className={this.getIcon(this.state.customer.status)} style={this.getColor(this.state.customer.status)}></td>
-        </tr>
-      );
-    }
-  }
   
   class ViewCustomer extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        activePage: 1,
-        itemsCountPerPage: 10,
-  
-        data: [],
-        count: 0,
+    state = {
+      query: { 
+        page:1,
+        limit: 10,
         id: "",
         customer_souls_id:"",
         customer_name: "",
@@ -75,68 +24,124 @@ class CustomerRow extends Component {
         CreatedAt: "",
         registrated_source: "",
         Last_Access_Time: "",
-        status: "",
-        errors: {}
-      };
-      this.onChange = this.onChange.bind(this);
-    }
+        status: ""
+      },
+        data: [],
+        count: 0,
+        isFetching: true,
+        errors:{}
+        
+    };
     
+    // async componentDidMount() {
+    //   const dataRecieved = await customerList(
+    //     this.state.activePage,
+    //     this.state.itemsCountPerPage
+    //   );
+    //   SetCustomerData(dataRecieved.data);
+    //   const newData = dataRecieved.data
+    //   this.setState({ data: newData, count: dataRecieved.count });
+    // }
     async componentDidMount() {
-      const dataRecieved = await customerList(
-        this.state.activePage,
-        this.state.itemsCountPerPage
-      );
-      SetCustomerData(dataRecieved.data);
-      const newData = dataRecieved.data
-      this.setState({ data: newData, count: dataRecieved.count });
+      let url = this.props.location.search;
+      let query = queryString.parse(url);
+      console.log(query);
+      await this.handleQuery(query);
     }
 
-    onChange(e) {
-      console.log(e.target.name)
-      this.setState({ [e.target.name]: e.target.value });
+    async UNSAFE_componentWillReceiveProps(nP) {
+      let url = nP.location.search;
+      let query = queryString.parse(url);
+      console.log("PARSED")
+      console.log(query);
+      await this.handleQuery(query);
     }
+
+    handleQuery = async (query) => {
+      query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
+      query["limit"] = 10;
+      const dataRecieved = await customerList(query);
+      console.log(dataRecieved.data)
+      SetCustomerData(dataRecieved.data);
+      const newData = dataRecieved.data;
+      this.setState({
+        data: newData,
+        count: dataRecieved.count,
+        query,
+        isFetching: false,
+      });
+    };
+    onChange = (e) => {
+      const query = this.state.query;
+      query[e.target.name] = e.target.value;
+      this.setState({ query });
+    };
   
-    onSubmit= async (e) =>{
+    // onSubmit= async (e) =>{
+    //   e.preventDefault();
+    //   const searchCustomer = {
+    //     customer_souls_id: this.state.customer_souls_id,
+    //     customer_name: this.state.customer_name,
+    //     customer_mobile_no: this.state.customer_mobile_no,
+    //     customer_gender: this.state.customer_gender,
+    //     customer_email: this.state.customer_email,
+    //     pincode: this.state.pincode,
+    //     CreatedAt: this.state.CreatedAt,
+    //     status: this.state.status
+    //   };
+  
+    //   const dataRecieved = await searchCust(searchCustomer);
+    //   SetCustomerData(dataRecieved);
+    //   const newData = dataRecieved
+    //   this.setState({ data: newData });
+    // }
+
+    onSubmit = (e) => {
       e.preventDefault();
-      const searchCustomer = {
-        customer_souls_id: this.state.customer_souls_id,
-        customer_name: this.state.customer_name,
-        customer_mobile_no: this.state.customer_mobile_no,
-        customer_gender: this.state.customer_gender,
-        customer_email: this.state.customer_email,
-        pincode: this.state.pincode,
-        CreatedAt: this.state.CreatedAt,
-        status: this.state.status
-      };
+      const query = this.state.query;
+      query["page"] = 1;
+      query["limit"] = 10;
+      let queryStr = "";
+      Object.keys(query).forEach((o) => {
+        if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+      });
+      queryStr = queryStr.replace(queryStr.length - 1, "");
+      // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+      window.location.href = "/tables/customers" + "?" + `${queryStr}`
+    };
   
-      const dataRecieved = await searchCust(searchCustomer);
-      SetCustomerData(dataRecieved);
-      const newData = dataRecieved
-      this.setState({ data: newData });
-    }
+    handlePageChange = (page) => {
+      // let queryStr = "";
+      // Object.keys(this.state.query).forEach((o) => {
+      //   if(o=='page')queryStr += `${o}=${page}&`;
+      //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
+      // });
+      // queryStr = queryStr.replace(queryStr.length - 1, "");
+      // console.log(queryStr);
+      // window.location.href = "/team/list" + "?" + `${queryStr}`;
+      if (window.location.pathname.includes("?")) {
+        // this.props.history.push(window.location.pathname + `page=${page}`);
+        window.location.href =window.location.pathname + `page=${page}`
+      }
+      else {
+        window.location.href = window.location.pathname + "?" + `page=${page}`
+        // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+      }
+    };
   
-    handlePageChange = async (pageNumber)=> {
-      console.log(`pageNumber is ${pageNumber}`);
-      // this.setState({ activePage: pageNumber });
-      console.log(`active page is ${this.state.activePage}`);
+    clearFilter = () => {
   
-      const dataRecieved = await customerList(
-        pageNumber,
-        this.state.itemsCountPerPage
-      );
-      SetCustomerData(dataRecieved.data);
-      const newData = dataRecieved.data
-      this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
-    }
-  
-  
-    render() {
-      // console.log(this.state.data.forEach(o=>console.log(o)))
-      const customerList = customerData.filter(
-        customer => customer.id < 10
-      );
-        console.log(this.state)
+      const query = this.state.query
+      Object.keys(query).map(o=>query[o]="")
+      this.setState({ query });
+      this.props.history.push("/tables/customers");
+    };
 
+    render() {
+      console.log("QUERY");
+      console.log(this.state.query);
+      console.log("DATA");
+      console.log(this.state.data);
       return (
         <div className="animated fadeIn">
           <Row>
@@ -144,6 +149,14 @@ class CustomerRow extends Component {
               <Card>
                 <CardHeader>
                   <i className="fa fa-align-justify"></i> Customer Table{" "}
+                  <button
+                  type="submit"
+                  className="btn btn-outline-primary  btn-sm"
+                  onClick={this.clearFilter}
+                  style={{ position: "absolute", right: "20px" }}
+                  >
+                    Clear Filter
+                  </button>
                 </CardHeader>
                 <CardBody>
                   <Table responsive hover>
@@ -181,7 +194,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="customer_souls_id"
-                            value={this.state.customer_souls_id}
+                            value={this.state.query.customer_souls_id}
                             onChange={this.onChange}
                           />
                         </td>
@@ -194,7 +207,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="customer_name"
-                            value={this.state.customer_name}
+                            value={this.state.query.customer_name}
                             onChange={this.onChange}
                           />
                         </td>
@@ -207,7 +220,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="customer_mobile_no"
-                            value={this.state.customer_mobile_no}
+                            value={this.state.query.customer_mobile_no}
                             onChange={this.onChange}
                           />
                         </td>
@@ -220,7 +233,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="customer_gender"
-                            value={this.state.customer_gender}
+                            value={this.state.query.customer_gender}
                             onChange={this.onChange}
                           > 
                             <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option>
@@ -238,7 +251,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="customer_email"
-                            value={this.state.customer_email}
+                            value={this.state.query.customer_email}
                             onChange={this.onChange}
                           />
                         </td>
@@ -251,7 +264,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="pincode"
-                            value={this.state.pincode}
+                            value={this.state.query.pincode}
                             onChange={this.onChange}
                           />
                         </td>
@@ -264,7 +277,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="CreatedAt"
-                            value={this.state.CreatedAt}
+                            value={this.state.query.CreatedAt}
                             onChange={this.onChange}
                           />
                         </td>
@@ -277,7 +290,7 @@ class CustomerRow extends Component {
                             aria-label="Search for..."
                             style={{ height: "30px" }}
                             name="status"
-                            value={this.state.status}
+                            value={this.state.query.status}
                             onChange={this.onChange}
                           >
                             <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
@@ -296,20 +309,30 @@ class CustomerRow extends Component {
                             ))}
                         </React.Fragment>
                       ) : (
-                        <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((customer, index) => (
-                          <CustomerRow key={index} customer={customer} />
-                        ))}
-                      </React.Fragment>
+                        <div>
+                          {this.state.isFetching ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <div
+                              style={{
+                                margin: "auto",
+                                color: "red",
+                                width: "100%",
+                              }}
+                            >
+                              NO RECORDS FOUND
+                            </div>
+                          )}
+                        </div>
                       )}
                     </tbody>
                   </Table>
                   <Pagination
                     className="pagination"
                     hideDisabled
-                    activePage={this.state.activePage}
-                    itemsCountPerPage={10}
-                    totalItemsCount={this.state.count} // check
+                    activePage={this.state.query.page}
+                    itemsCountPerPage={this.state.query.limit}
+                    totalItemsCount={this.state.count}
                     pageRangeDisplayed={10}
                     onChange={this.handlePageChange}
                   />

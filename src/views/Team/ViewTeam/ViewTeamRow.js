@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import PasswordPopUp from "../PasswordPopUp.js";
-import { TeamData, TeamDatas, SetTeamData } from "../TeamData";
-import Pagination from "react-js-pagination";
-import { teamList, search } from "../UserFunctions";
+// import { TeamData, TeamDatas, SetTeamData } from "../TeamData";
+// import Pagination from "react-js-pagination";
+// import { teamList, search } from "../UserFunctions";
 
 class TeamRow extends Component {
   state = {

@@ -305,6 +305,14 @@ class Partner extends Component {
     }
   }
 
+  onChangeDate = (date) => {
+    // console.log(date.Date());
+    console.log("HELLLO");
+    // const setStartDate = new Date().setStartDate;
+    // console.log(setStartDate(date));
+    this.setState({ Onboard_Date: date });
+  };
+
   render() {
     return (
       <div>{!this.state.isEditable ? (
@@ -422,31 +430,15 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-3">
                     <FormGroup>
                         <Label htmlFor="OnboardDate">Onboard Date</Label>
                         <DateCalender 
                           value={this.state.Onboard_Date}
-                          onChange={this.onChange}
+                          onChange={this.onChangeDate}
                         />
                         <div style={{ fontSize: 10, color: "red" }}>
                             {this.state.Onboard_DateError}
-                        </div>
-                    </FormGroup>
-                  </div>
-                  <div className="col-md-2">
-                    <FormGroup>
-                        <Label htmlFor="created_by">Created By</Label>
-                        <Input
-                            type="text"
-                            id="created_by"
-                            placeholder="created_by"
-                            name="created_by"
-                            value={this.state.created_by}
-                            onChange={this.onChange}
-                        />
-                        <div style={{ fontSize: 10, color: "red" }}>
-                            {this.state.created_byError}
                         </div>
                     </FormGroup>
                   </div>
@@ -484,7 +476,7 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+                  <Col xs="2">
                     <FormGroup>
                       <Label htmlFor="rate">Rate</Label>
                       <Input
@@ -500,7 +492,23 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+                  <Col xs="2">
+                    <FormGroup>
+                        <Label htmlFor="created_by">Created By</Label>
+                        <Input
+                            type="text"
+                            id="created_by"
+                            placeholder="created_by"
+                            name="created_by"
+                            value={this.state.created_by}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.created_byError}
+                        </div>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="2">
                     <FormGroup>
                     <Label htmlFor="commission_type">Commission Type</Label>
                       <select
@@ -518,7 +526,7 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="3">
+                  <Col xs="2">
                     <FormGroup>
                         <Label htmlFor="gender">Gender</Label>
                         <select
@@ -645,7 +653,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="name"
-                        placeholder="Name"
+                        placeholder="latitude"
                         name="latitude"
                         value={this.state.latitude}
                         onChange={this.onChange}
@@ -674,13 +682,9 @@ class Partner extends Component {
                   <div className="col-md-2">
                     <FormGroup>
                         <Label htmlFor="Onboard_Date">Onboard Date</Label> <br />
-                        <Input
-                          type="text"
-                          id="Onboard_Date"
-                          name="Onboard_Date"
+                        <DateCalender
                           value={this.state.Onboard_Date}
-                          // disabled={true}
-                          onChange={this.onChange}
+                          onChange={this.onChangeDate}
                         />
                         <div style={{ fontSize: 10, color: "red" }}>
                             {this.state.Onboard_DateError}

@@ -305,6 +305,14 @@ class Partner extends Component {
     }
   }
 
+  onChangeDate = (date) => {
+    // console.log(date.Date());
+    console.log("HELLLO");
+    // const setStartDate = new Date().setStartDate;
+    // console.log(setStartDate(date));
+    this.setState({ Onboard_Date: date });
+  };
+
   render() {
     return (
       <div>{!this.state.isEditable ? (
@@ -395,7 +403,7 @@ class Partner extends Component {
                       <Label htmlFor="latitude">Latitude</Label>
                       <Input
                         type="text"
-                        id="name"
+                        id="latitude"
                         placeholder="latitude"
                         name="latitude"
                         value={this.state.latitude}
@@ -427,7 +435,7 @@ class Partner extends Component {
                         <Label htmlFor="OnboardDate">Onboard Date</Label>
                         <DateCalender 
                           value={this.state.Onboard_Date}
-                          onChange={this.onChange}
+                          onChange={this.onChangeDate}
                         />
                         <div style={{ fontSize: 10, color: "red" }}>
                             {this.state.Onboard_DateError}
@@ -645,7 +653,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="name"
-                        placeholder="Name"
+                        placeholder="latitude"
                         name="latitude"
                         value={this.state.latitude}
                         onChange={this.onChange}
@@ -660,7 +668,7 @@ class Partner extends Component {
                       <Label htmlFor="longitude">Longitude</Label>
                       <Input
                         type="text"
-                        id="longitude"
+                        id="name"
                         placeholder="longitude"
                         name="longitude"
                         value={this.state.longitude}
@@ -673,14 +681,10 @@ class Partner extends Component {
                   </div>
                   <div className="col-md-2">
                     <FormGroup>
-                        <Label htmlFor="Onboard_Date">Onboard Date</Label> <br />
-                        <Input
-                          type="text"
-                          id="Onboard_Date"
-                          name="Onboard_Date"
+                        <Label htmlFor="Onboard_Date">Onboard Date</Label> 
+                        <DateCalender
                           value={this.state.Onboard_Date}
-                          // disabled={true}
-                          onChange={this.onChange}
+                          onChange={this.onChangeDate}
                         />
                         <div style={{ fontSize: 10, color: "red" }}>
                             {this.state.Onboard_DateError}
@@ -762,7 +766,7 @@ class Partner extends Component {
                         value={this.state.commission_type}
                         onChange={this.onChange}
                       >
-                        <option></option>
+                        <option value="" selected>{this.state.commission_type!==""?"Clear":"Select"}</option>
                         <option>Percentage(%)</option>
                         <option>Flat</option>
                       </select>

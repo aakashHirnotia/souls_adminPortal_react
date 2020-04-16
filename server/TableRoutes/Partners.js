@@ -15,7 +15,7 @@ partners.get("/partner-list", (req, res) => {
         " and countsPerPage is 5"
     );
     axios
-      .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${10}`, {
+      .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${req.query.limit}&partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&Longitude=${req.query.Longitude}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&created_by=${req.query.created_by}&updated_by=${req.query.updated_by}&partner_gender=${req.query.partner_gender}`, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
@@ -34,27 +34,27 @@ partners.get("/partner-list", (req, res) => {
       });
   });
   
-  partners.get("/search-partner", (req, res) => {
-    // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
-    console.log("request Recieved for filter in node");
-    axios
-      .get(
-        `${baseURL}:8000/partner/list?partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&pincode=${req.query.pincode}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&partner_gender=${req.query.partner_gender}`,
-        {
-          headers: {
-            Authorization: `Bearer ${req.headers.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-        res.status(response.status).send(response.data);
-      })
-      .catch((e) => {
-        console.log("ERROR:" + e);
-        res.status(500).send("Error: " + e);
-      });
-  });
+  // partners.get("/search-partner", (req, res) => {
+  //   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
+  //   console.log("request Recieved for filter in node");
+  //   axios
+  //     .get(
+  //       `${baseURL}:8000/partner/list?partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&pincode=${req.query.pincode}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&partner_gender=${req.query.partner_gender}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${req.headers.token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       console.log(response);
+  //       res.status(response.status).send(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log("ERROR:" + e);
+  //       res.status(500).send("Error: " + e);
+  //     });
+  // });
   
   // register partner
   partners.post("/registerPartner", (req, res) => {
