@@ -36,25 +36,25 @@ class ViewCommunicationTempelateRow extends Component {
   
     render() {
       return (
-        <tr key={this.state.communicationTempelate.communicationTempelateID}>
+        <tr key={this.state.communicationTempelate.templ_id}>
           <td>
-            <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}>
+            <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.templ_id}`}>
               <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
             </Link>{" "}
             <Link
               style={{ paddingLeft: "14px" }}
-              to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}
+              to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.templ_id}`}
             >
               <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
             </Link>
           </td>
-          <th>{this.state.communicationTempelate.communicationTempelateID}</th>
-          <td>{this.state.communicationTempelate.type}</td>
+          <th>{this.state.communicationTempelate.templ_id}</th>
+          <td>{this.state.communicationTempelate.templ_type}</td>
           <td>{this.state.communicationTempelate.trigger_time}</td>
           <td>{this.state.communicationTempelate.trigger_for}</td>
-          <td>{this.state.communicationTempelate.smsContent}</td>
+          <td>{this.state.communicationTempelate.sms_content}</td>
           <td>{this.state.communicationTempelate.subject}</td>
-          <td>{this.state.communicationTempelate.emailContent}</td>
+          <td>{this.state.communicationTempelate.email_content}</td>
           <td className={this.getIcon(this.state.communicationTempelate.status)} style={this.getColor(this.state.communicationTempelate.status)} data-toggle="tooltip" title={this.getTitle(this.state.communicationTempelate.status)}></td>
         </tr>
       );

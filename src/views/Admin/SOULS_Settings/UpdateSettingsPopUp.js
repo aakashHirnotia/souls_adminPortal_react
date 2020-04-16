@@ -17,7 +17,7 @@ export default class UpdateRolePopUp extends Component{
         super(props);
         this.state= {
             status: false,
-            soulsSettingsID: this.props.soulsSettingsID,
+            souls_setting_id: this.props.souls_setting_id,
             type: "",
             url: "",
             description: "",
@@ -36,7 +36,7 @@ export default class UpdateRolePopUp extends Component{
     onSubmit=async (e)=>{
         e.preventDefault()
         const user = {
-            soulsSettingsID: this.state.soulsSettingsID,
+            souls_setting_id: this.state.souls_setting_id,
             url: this.state.url,
             description: this.state.description,
             hostname: this.state.hostname,
@@ -62,35 +62,35 @@ export default class UpdateRolePopUp extends Component{
                         <Modal.Title style={{color:"green"}}>{this.state.type} Settings Updated !! </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={this.onSubmit}>
+                        <form onSubmit={this.onSubmit} style={{padding:"30px", margin:"30px"}}>
                             <FormGroup row className="my-0">
-                                <label htmlFor="url" style={{color:"green"}}>URL</label>
+                                <Label htmlFor="url" style={{color:"green"}}>URL</Label>
                                 <br></br>
-                                <input type="text" id="url" placeholder="url" name="url" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
+                                <Input type="text" id="url" placeholder="url" name="url" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
                             </FormGroup>
                             <FormGroup row className="my-0">
-                                <label htmlFor="description" style={{color:"green"}}>Description</label>
+                                <Label htmlFor="description" style={{color:"green"}}>Description</Label>
                                 <br></br>
-                                <input type="text" id="description" placeholder="description" name="description" style={{padding: "8px"}} onChange={this.onChange} disabled={true}/>
+                                <Input type="text" id="description" placeholder="description" name="description" style={{padding: "8px"}} onChange={this.onChange} disabled={true}/>
                             </FormGroup>
                             <FormGroup row className="my-0">
-                                <label htmlFor="hostname" style={{color:"green"}}>Host Name</label>
+                                <Label htmlFor="hostname" style={{color:"green"}}>Host Name</Label>
                                 <br></br>
-                                <input type="text" id="hostname" placeholder="hostname" name="hostname" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
+                                <Input type="text" id="hostname" placeholder="hostname" name="hostname" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
                             </FormGroup>
                             <FormGroup>
                                 <Col xs="6">
                                     <FormGroup>
-                                        <label htmlFor="username" style={{color:"green"}}>User Name</label>
+                                        <Label htmlFor="username" style={{color:"green"}}>User Name</Label>
                                         <br></br>
-                                        <input type="text" id="username" placeholder="username" name="username" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
+                                        <Input type="text" id="username" placeholder="username" name="username" style={{padding: "8px"}} onChange={this.onChange} disabled={true} />
                                     </FormGroup>
                                 </Col>
                                 <Col xs="6">
                                     <FormGroup>
-                                        <label htmlFor="password" style={{color:"green"}}>Password</label>
+                                        <Label htmlFor="password" style={{color:"green"}}>Password</Label>
                                         <br></br>
-                                        <input type="text" id="password" placeholder="password" name="password" style={{padding: "8px"}} onChange={this.onChange} disabled={true}/>
+                                        <Input type="text" id="password" placeholder="password" name="password" style={{padding: "8px"}} onChange={this.onChange} disabled={true}/>
                                     </FormGroup>
                                 </Col>
                             </FormGroup>
@@ -108,35 +108,35 @@ export default class UpdateRolePopUp extends Component{
                     <Modal.Title>Update {this.state.type} Settings</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={this.onSubmit}>
+                        <form onSubmit={this.onSubmit}  style={{padding:"30px", margin:"30px"}}>
                             <FormGroup row className="my-0">
                                 <label htmlFor="url">URL</label>
                                 <br></br>
-                                <input type="text" id="url" placeholder="url" name="url" style={{padding: "8px"}} onChange={this.onChange} />
+                                <Input type="text" id="url" placeholder="url" name="url" style={{padding: "8px"}} onChange={this.onChange} />
                             </FormGroup>
                             <FormGroup row className="my-0">
                                 <label htmlFor="description">Description</label>
                                 <br></br>
-                                <input type="text" id="description" placeholder="description" name="description" style={{padding: "8px"}} onChange={this.onChange} />
+                                <Input type="text" id="description" placeholder="description" name="description" style={{padding: "8px"}} onChange={this.onChange} />
                             </FormGroup>
                             <FormGroup row className="my-0">
                                 <label htmlFor="hostname">Host Name</label>
                                 <br></br>
-                                <input type="text" id="hostname" placeholder="hostname" name="hostname" style={{padding: "8px"}} onChange={this.onChange} />
+                                <Input type="text" id="hostname" placeholder="hostname" name="hostname" style={{padding: "8px"}} onChange={this.onChange} />
                             </FormGroup>
                             <FormGroup>
                                 <Col xs="6">
                                     <FormGroup>
                                         <label htmlFor="username">User Name</label>
                                         <br></br>
-                                        <input type="text" id="username" placeholder="username" name="username" style={{padding: "8px"}} onChange={this.onChange} />
+                                        <Input type="text" id="username" placeholder="username" name="username" style={{padding: "8px"}} onChange={this.onChange} />
                                     </FormGroup>
                                 </Col>
                                 <Col xs="6">
                                     <FormGroup>
                                         <label htmlFor="password">Password</label>
                                         <br></br>
-                                        <input type="text" id="password" placeholder="password" name="password" style={{padding: "8px"}} onChange={this.onChange} />
+                                        <Input type="text" id="password" placeholder="password" name="password" style={{padding: "8px"}} onChange={this.onChange} />
                                     </FormGroup>
                                 </Col>
                             </FormGroup>

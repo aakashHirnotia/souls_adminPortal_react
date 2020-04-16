@@ -6,7 +6,7 @@ const request = require("request");
 communicationTempelates.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35";
+const baseURL = "http://3.6.243.136";
 
 
 //communication tempelate list
@@ -18,13 +18,11 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/communicationTempelateList?page=${
-          req.query.page
-        }&limit=${10}`,
+        `${baseURL}:8000/team/communication/tempelate/list??page=${req.query.page}&limit=${req.query.limit}&templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
-          },
+          },  
         }
       )
       .then((response) => {
@@ -63,17 +61,17 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
   communicationTempelates.post("/createCommTempelate", (req, res) => {
     const today = new Date();
     const Data = {
-      type: req.body.type,
+      templ_type: req.body.type,
       trigger_time: req.body.trigger_time,
       trigger_for: req.body.trigger_for,
-      smsContent: req.body.smsContent,
+      sms_content: req.body.smsContent,
       subject: req.body.subject,
-      emailContent: req.body.emailContent,
+      email_content: req.body.emailContent,
       status: req.body.status,
     };
   
     axios
-      .post(`${baseURL}:8000/commTempelate/create`, Data, {
+      .post(`${baseURL}:8000/communication/tempelate/create`, Data, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
@@ -96,17 +94,17 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
   communicationTempelates.put("/updateCommTempelate", (req, res) => {
     const today = new Date();
     const Data = {
-      type: req.body.type,
+      templ_type: req.body.type,
       trigger_time: req.body.trigger_time,
       trigger_for: req.body.trigger_for,
-      smsContent: req.body.smsContent,
+      sms_content: req.body.smsContent,
       subject: req.body.subject,
-      emailContent: req.body.emailContent,
+      email_content: req.body.emailContent,
       status: req.body.status,
     };
   
     axios
-      .put(`${baseURL}:8000/commTempelate/update`, Data, {
+      .put(`${baseURL}:8000/communication/tempelate/update`, Data, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },

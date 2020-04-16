@@ -23,13 +23,13 @@ class ViewCommunicationTempelate extends Component {
     query:{
       page: 1,
       limit: 10,
-      communicationTempelateID: "",
-      type: "",
+      templ_id: "",
+      templ_type: "",
       trigger_time: "",
       trigger_for: "",
-      smsContent: "",
+      sms_content: "",
       subject: "",
-      emailContent: "",
+      email_content: "",
       status: ""
     },
       data: [],
@@ -199,8 +199,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="communicationTempelateID"
-                          value={this.state.query.communicationTempelateID}
+                          name="templ_id"
+                          value={this.state.query.templ_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -212,8 +212,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="type"
-                          value={this.state.query.type}
+                          name="templ_type"
+                          value={this.state.query.templ_type}
                           onChange={this.onChange}
                         />
                       </td>
@@ -260,8 +260,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="smsContent"
-                          value={this.state.query.smsContent}
+                          name="sms_content"
+                          value={this.state.query.sms_content}
                           onChange={this.onChange}
                         />
                       </td>
@@ -286,8 +286,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="emailContent"
-                          value={this.state.query.emailContent}
+                          name="email_content"
+                          value={this.state.query.email_content}
                           onChange={this.onChange}
                         />
                       </td>

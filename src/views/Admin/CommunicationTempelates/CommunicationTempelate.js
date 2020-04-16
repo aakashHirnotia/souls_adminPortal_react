@@ -48,9 +48,9 @@ class CommunicationTempelate extends Component {
   componentDidMount(){
 
     if(this.state.isEditable){
-      const communicationTempelate = CommTempelateData.find( communicationTempelate => communicationTempelate.communicationTempelateID.toString() === this.props.match.params.id)
+      const communicationTempelate = CommTempelateData.find( communicationTempelate => communicationTempelate.templ_id.toString() === this.props.match.params.id)
       this.setState({
-        communicationTempelateID: communicationTempelate.communicationTempelateID,
+        communicationTempelateID: communicationTempelate.templ_id,
         type: communicationTempelate.type,
         trigger_time: communicationTempelate.trigger_time,
         trigger_for: communicationTempelate.trigger_for,
@@ -139,7 +139,7 @@ class CommunicationTempelate extends Component {
           status: this.state.status
         };
         updateCommTempelate(updatedCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/admin/viewCommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -159,7 +159,7 @@ class CommunicationTempelate extends Component {
             status: this.state.status
         };
         createCommTempelate(newCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/admin/viewCommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -182,7 +182,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="createTeamBtn" href="/admin/viewCommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -248,8 +248,8 @@ class CommunicationTempelate extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="subject">Subject</Label>
-                      <textarea
-                        type="text"
+                      <Input
+                        type="textarea"
                         id="subject"
                         placeholder="subject"
                         name="subject"
@@ -264,8 +264,8 @@ class CommunicationTempelate extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="smsContent">SMS Content</Label>
-                      <textarea
-                        type="text"
+                      <Input
+                        type="textarea"
                         id="smsContent"
                         placeholder="SMS Content"
                         name="smsContent"
@@ -334,7 +334,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="createTeamBtn" href="/admin/viewCommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -400,8 +400,8 @@ class CommunicationTempelate extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="subject">Subject</Label>
-                      <textarea
-                        type="text"
+                      <Input
+                        type="textarea"
                         id="subject"
                         placeholder="subject"
                         name="subject"
@@ -416,8 +416,8 @@ class CommunicationTempelate extends Component {
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="smsContent">SMS Content</Label>
-                      <textarea
-                        type="text"
+                      <Input
+                        type="textarea"
                         id="smsContent"
                         placeholder="SMS Content"
                         name="smsContent"

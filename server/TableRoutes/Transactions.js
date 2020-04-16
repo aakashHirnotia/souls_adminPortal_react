@@ -6,7 +6,7 @@ const request = require("request");
 transactions.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35";
+const baseURL = "http://3.6.243.136";
 
 //transaction List
 transactions.get("/transaction-list", (req, res) => {

@@ -140,7 +140,7 @@ const routes = [
     component: CommunicationTempelate,
   },
   {
-    path: "/admin/edit-communication-tempelate",
+    path: "/admin/edit-communication-tempelate/:id",
     exact: true,
     name: "Update Communication Tempelate",
     component: CommunicationTempelate,

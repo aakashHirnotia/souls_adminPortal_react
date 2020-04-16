@@ -133,7 +133,7 @@ export const teamHasRoleList = async (query) => {
     console.log("hiiiiiii")
     await axios
       .put(`${baseURL}:5000/SOULS_Settings/updateSettings`, {
-        soulsSettingsID: user.soulsSettingsID,
+        souls_setting_id: user.souls_setting_id,
         url: user.url,
         description: user.description,
         hostname: user.hostname,
@@ -161,15 +161,7 @@ export const teamHasRoleList = async (query) => {
     // let totalcount;
     await axios
       .get(
-        `${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${query.page || ""}&limit=${
-          query.limit || ""
-        }&communicationTempelateID=${query.communicationTempelateID || ""}&type=${
-          query.type || ""
-        }&trigger_time=${query.trigger_time || ""}&trigger_for=${query.trigger_for || ""}&smsContent=${
-          query.smsContent || ""
-        }&subject=${query.subject || ""}&emailContent=${query.emailContent || ""}&status=${
-          query.status || ""
-        }`,
+        `${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${query.page || ""}&limit=${query.limit || ""}&templ_type=${query.templ_type || ""}&trigger_time=${query.trigger_time || ""}&trigger_for=${query.trigger_for || ""}&sms_content=${query.sms_content || ""}&subject=${query.subject || ""}&email_content=${query.email_content || ""}&status=${query.status || ""}`,
       
       // .get(`${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${activePage}&limit=${itemCountPerPage}`, {
       {  

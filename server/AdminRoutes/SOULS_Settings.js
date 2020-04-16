@@ -6,7 +6,7 @@ const request = require("request");
 SOULS_Settings.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://10.38.1.35";
+const baseURL = "http://3.6.243.136";
 
 
 
@@ -16,7 +16,7 @@ SOULS_Settings.get("/soulsSettings", (req, res) => {
     // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
     // console.log("aakash")
     axios
-      .get(`${baseURL}:8000/team/soulsSettings`, {
+      .get(`${baseURL}:8000/souls/settings/list`, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
@@ -33,7 +33,7 @@ SOULS_Settings.get("/soulsSettings", (req, res) => {
   SOULS_Settings.put("/updateSettings", (req, res) => {
     const today = new Date();
     const settingsData = {
-      soulsSettingsID: req.body.soulsSettingsID,
+      souls_setting_id: req.body.souls_setting_id,
       url: req.body.url,
       description: req.body.description,
       hostname: req.body.hostname,
@@ -42,7 +42,7 @@ SOULS_Settings.get("/soulsSettings", (req, res) => {
     };
   
     axios
-      .put(`${baseURL}:8000/settings/update`, settingsData, {
+      .put(`${baseURL}:8000/souls/settings/update`, settingsData, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
