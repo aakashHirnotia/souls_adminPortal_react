@@ -55,25 +55,25 @@ export const register = (newUser) => {
     );
 };
 
-export const search = async (searchUser) => {
-  let data = [];
-  await axios
-    .get(
-      `http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,
-      {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      }
-    )
-    .then((response) => {
-      data = [...response.data];
-      // console.log(response)
-    })
-    .catch((e) => console.log(e));
+// export const search = async (searchUser) => {
+//   let data = [];
+//   await axios
+//     .get(
+//       `http://localhost:5000/users/search?id=${searchUser.id}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}&email=${searchUser.email}&joining=${searchUser.joining}&status=${searchUser.status}&role=${searchUser.role}&mobileno=${searchUser.mobileno}`,
+//       {
+//         headers: {
+//           token: localStorage.getItem("token"),
+//         },
+//       }
+//     )
+//     .then((response) => {
+//       data = [...response.data];
+//       // console.log(response)
+//     })
+//     .catch((e) => console.log(e));
 
-  return data;
-};
+//   return data;
+// };
 
 export const updateMember = (updatedUser) => {
   console.log("axios updated User worked");

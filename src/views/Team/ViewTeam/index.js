@@ -90,18 +90,21 @@ class ViewTeam extends React.Component {
 
   clearFilter = () => {
     // this.handleQuery({ page: 1, limit: 10 });
-    const query = {
-      page: 1,
-      limit: 10,
-      firstname: "",
-      lastname: "",
-      teamid: "",
-      email: "",
-      joining: "",
-      status: "",
-      role: "",
-      mobileno: "",
-    };
+    // const query = {
+    //   page: 1,
+    //   limit: 10,
+    //   firstname: "",
+    //   lastname: "",
+    //   teamid: "",
+    //   email: "",
+    //   joining: "",
+    //   status: "",
+    //   role: "",
+    //   mobileno: "",
+    // };
+
+    const query = this.state.query
+    Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
     this.props.history.push("/team/list");
   };
@@ -155,7 +158,7 @@ class ViewTeam extends React.Component {
                       </th>
                       <th style={{ width: "15%" }} scope="col">
                         Mobile
-                      </th>
+                      </tfirstnameh>
                       <th style={{ width: "25%" }} scope="col">
                         Joining Date
                       </th>
@@ -207,7 +210,7 @@ class ViewTeam extends React.Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="firstname"
-                          value={this.state.query.firstname}
+                          value={this.state.query.  }
                           onChange={this.onChange}
                         />
                       </td>

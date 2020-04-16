@@ -16,8 +16,9 @@ app.use(
 // const bodyParser = require('body-parser');  
 
 var Users = require('./Users')
-
+var Customer = require('./Customer')
 app.use('/users', Users)
+app.use('/customer', Customer)
 
 app.listen(port, function() {
   console.log('Server is running on port: ' + port)
