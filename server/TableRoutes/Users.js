@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://10.38.1.35";
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -169,6 +169,30 @@ users.get("/profile", (req, res) => {
       res.status(500).send("Error: " + e);
     });
 });
+
+// users.get("/profile-pic", (req, res) => {
+//   // const userData = {
+//   //   email: req.body.email,
+//   //   password: req.body.password,
+//   // };
+//   console.log("ProfilePic req received in node")
+//   axios
+//     .get(`${baseURL}:8000/team/view-member-pic`, {
+//       headers: {
+//         Authorization: `Bearer ${req.headers.token}`,
+//       },
+//     })
+//     .then((response) => {
+//       // console.log(response)
+//       console.log("profile-pic resposne received ! response.data = ");
+//       console.log(response.file);
+//       res.status(response.status).send(response.file);
+//     })
+//     .catch((e) => {
+//       console.log("ERROR---:" + e);
+//       res.status(500).send("Error: " + e);
+//     });
+// });
 
 //Team List
 users.get("/team-list", (req, res) => {

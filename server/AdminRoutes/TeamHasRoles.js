@@ -6,7 +6,7 @@ const request = require("request");
 teamHasRoles.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://10.38.1.35";
 
 teamHasRoles.put("/updateTeamRole", (req, res) => {
     const userData = {
@@ -66,8 +66,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${5}`,
-        {
+        `${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${req.query.limit}&teamid=${req.query.teamid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&teamhasroleid=${req.query.team_has_role_id}&status=${req.query.status}&createdat=${req.query.CreatedAt}&updatedat=${req.query.UpdatedAt}`,        {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
           },

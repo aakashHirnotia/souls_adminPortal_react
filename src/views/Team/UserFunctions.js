@@ -123,6 +123,22 @@ export const fetchUserDetails = (token, cb) => {
       cb(response.data, undefined);
     });
 };
+// fetchUserPic(token, this.fetchedUserPic)
+export const fetchUserPic = (token, cb) => {
+  
+  return axios
+    .get(`${baseURL}:8000/team/fetch/image`, {
+      headers: {
+        token: token,
+      },
+    })
+    .then((response) => {
+      // console.log("respomse data is ----");
+      // console.log(response.data)
+      console.log("Fetched Profile Pic");
+      cb(response, undefined);
+    });
+};
 
 export const fetchTeamDetails = async (token) => {
   let data = {};
@@ -185,16 +201,20 @@ export const update = (updatedUser) => {
 };
 
 export const updateProfilePic = (formData) => {
-  console.log("In userFucntions React---");
+  console.log(`Sending Pic to backend http://10.38.1.35:8000/team/upload/image`)
   console.log(formData.get("myImage"));
   console.log(formData);
   return axios
-    .post(`${baseURL}:8000/update/profilePic`, formData, {
+    .post(`http://10.38.1.35:8000/team/upload/image`, formData, {
       //directly send to go server
       headers: {
         token: localStorage.getItem("token"),
         "content-type": "multipart/form-data",
       },
+    })
+    .then((response) =>{
+      console.log("check response");
+      console.log(response);
     })
     .catch((err) => {
       console.log(err);

@@ -38,7 +38,7 @@ const PartnersMember = React.lazy(() => import("./views/Tables/Partners/Partners
 const Transactions = React.lazy(() => import("./views/Tables/Transactions/ViewTransaction"));
 const AssignPartners = React.lazy(() => import("./views/Tables/AssignPartners/AssignPartners"));
 const ViewRole = React.lazy(() => import("./views/Admin/RoleTable/ViewRole"));
-const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRoles/TeamHasRole"));
+const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRoles/ViewTeamHasRole/index"));
 const SoulsSettings = React.lazy(() => import("./views/Admin/SOULS_Settings/SoulsSettings"));
 const ViewCommunicationTempelate = React.lazy(() =>import("./views/Admin/CommunicationTempelates/ViewCommunicationTempelate"));
 const CommunicationTempelate = React.lazy(() =>import("./views/Admin/CommunicationTempelates/CommunicationTempelate"));

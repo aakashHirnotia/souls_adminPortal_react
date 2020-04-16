@@ -1,12 +1,46 @@
-import axios from 'axios';
+import axios from "axios";
+import { store } from "react-notifications-component";
+
+export const displayNotification = (title, message, type) => {
+  store.addNotification({
+    title: title || "",
+    message: message || "",
+    type: type || "success", // success //danger // info //default //warning
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+  console.log("gel");
+};
 
 // const baseURL = "http://10.42.0.69";
 const baseURL = "http://localhost";
 
-export const teamHasRoleList = async (activePage, itemCountPerPage) => {
+export const teamHasRoleList = async (query) => {
     let data,count;
+    // teamid: 0,
+    //     first_name: "",
+    //     last_name: "",
+    //     team_has_role_id: "",
+    //     status: "",
+    //     CreatedAt: "",
+    //     UpdatedAt: ""
     await axios
-      .get(`${baseURL}:5000/teamHasRoles/team-has-role-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      // .get(`${baseURL}:5000/teamHasRoles/team-has-role-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(
+        `${baseURL}:5000/teamHasRoles/team-has-role-list?page=${query.page || ""}&limit=${
+          query.limit || ""
+        }&teamid=${query.teamid || ""}&firstname=${
+          query.firstname || ""
+        }&lastname=${query.lastname || ""}&teamhasroleid=${query.team_has_role_id || ""}&status=${query.status || ""
+        }&createdat=${query.CreatedAt || ""
+        }&updatedat=${query.UpdatedAt || ""}`,
+      {  
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -26,22 +60,22 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     return {data, count};
   };
 
-  export const searchTeamHasRole = async (searchUser) => {
-    let data = []
-    await axios.
-      get(`http://localhost:5000/teamHasRoles/searchTeamHasRole?status=${searchUser.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,{
-        headers: {
-          token: localStorage.getItem("token")
-        }
-      })
-      .then((response) => {
-        data = [...response.data];
-        // console.log(response)
-      })
-      .catch((e) => console.log(e));
+  // export const searchTeamHasRole = async (searchUser) => {
+  //   let data = []
+  //   await axios.
+  //     get(`${baseURL}:5000/teamHasRoles/searchTeamHasRole?status=${searchUser.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,{
+  //       headers: {
+  //         token: localStorage.getItem("token")
+  //       }
+  //     })
+  //     .then((response) => {
+  //       data = [...response.data];
+  //       // console.log(response)
+  //     })
+  //     .catch((e) => console.log(e));
     
-    return data
-  };
+  //   return data
+  // };
 
   export const updateRole = async (user) => {
     let changed = false;
@@ -122,31 +156,36 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   };
 
   //Communication Tempelate list
-  export const communicationTempelateList = async (activePage, itemCountPerPage) => {
+  export const communicationTempelateList = async (query) => {
     let data, count;
     // let totalcount;
     await axios
-      .get(`${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(
+        `${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${query.page || ""}&limit=${
+          query.limit || ""
+        }&communicationTempelateID=${query.communicationTempelateID || ""}&type=${
+          query.type || ""
+        }&trigger_time=${query.trigger_time || ""}&trigger_for=${query.trigger_for || ""}&smsContent=${
+          query.smsContent || ""
+        }&subject=${query.subject || ""}&emailContent=${query.emailContent || ""}&status=${
+          query.status || ""
+        }`,
+      
+      // .get(`${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${activePage}&limit=${itemCountPerPage}`, {
+      {  
         headers: {
           token: localStorage.getItem("token"),
         },
       })
       .then((response) => {
         if (response.status === 200) {
-          // console.log(typeof(response.data))
-          
-          // totalcount = [response.headers.total-count]
-          // console.log(data)
-          // console.log(response)
           data = Object.keys(response.data.data).map(o=>response.data.data[o])
           count = response.data.count
           console.log("count: "+ count)
-          // console.log("headers in resonse is "+response.headers(["total-count"]));
-          // return response.data
         }
       })
       .catch((err) => {
-        window.alert("Error: " + err);
+        displayNotification("Error", "Internal Server Error", "danger");
       });
     return {data, count};
   };
