@@ -19,7 +19,7 @@ class PartnerRow extends Component {
 
   render() {
     return (
-      <tr key={this.state.partner.partner_id}>
+      <tr key={this.state.partner.partner_souls_id}>
         <td>
           <Link to={`/tables/view-partner-member/${this.props.partner.partner_id}`}>
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
@@ -31,15 +31,15 @@ class PartnerRow extends Component {
             <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
         </td>
-        <th>{this.state.partner.partner_id}</th>
+        <th>{this.state.partner.partner_souls_id}</th>
         <td>{this.state.partner.partner_name}</td>
         <td>{this.state.partner.partner_email}</td>
         <td>{this.state.partner.partner_mobileno}</td>
         <td>{this.state.partner.pincode}</td>
-        <td>{this.state.partner.Rate}</td>
-        <td>{this.state.partner.Commission_Type}</td>
-        <td>{this.state.partner.UpdatedAt}</td>
-        <td>{this.state.partner.CreatedAt}</td>
+        <td>{this.state.partner.rate}</td>
+        <td>{this.state.partner.commission_type}</td>
+        <td>{this.state.partner.updated_at}</td>
+        <td>{this.state.partner.created_at}</td>
         <td>{this.state.partner.partner_gender}</td>
       </tr>
     );
@@ -56,18 +56,19 @@ class ViewPartners extends Component {
       data: [],
       count: 0,
       partner_id: "",
+      partner_souls_id:"",
       partner_name: "",
       partner_email: "",
       partner_mobileno: "",
       partner_address: "",
       pincode: "",
       latitude: "",
-      Longitude: "",
-      Rate: "",
-      Commission_Type: "",
-      Onboard_Date: "",
-      UpdatedAt: "",
-      CreatedAt: "",
+      longitude: "",
+      rate: "",
+      commission_type: "",
+      onboard_date: "",
+      updated_at: "",
+      created_at: "",
       created_by: "",
       updated_by: "",
       partner_gender: "",
@@ -97,15 +98,15 @@ class ViewPartners extends Component {
   onSubmit= async (e)=> {
     e.preventDefault();
     const searchUser = {
-      partner_id: this.state.partner_id,
+      partner_souls_id: this.state.partner_souls_id,
       partner_name: this.state.partner_name,
       partner_email: this.state.partner_email,
       partner_mobileno: this.state.partner_mobileno,
       pincode: this.state.pincode,
-      Rate: this.state.Rate,
-      Commission_Type: this.state.Commission_Type,
-      UpdatedAt: this.state.UpdatedAt,
-      CreatedAt: this.state.CreatedAt,
+      rate: this.state.rate,
+      commission_type: this.state.commission_type,
+      updated_at: this.state.updated_at,
+      created_at: this.state.created_at,
       partner_gender: this.state.partner_gender
     };
 
@@ -153,7 +154,7 @@ class ViewPartners extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th scope="col">Partner ID</th>
+                      <th scope="col">SOULS ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>
@@ -185,8 +186,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="partner_id"
-                          value={this.state.partner_id}
+                          name="partner_souls_id"
+                          value={this.state.partner_souls_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -250,8 +251,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="Rate"
-                          value={this.state.Rate}
+                          name="rate"
+                          value={this.state.rate}
                           onChange={this.onChange}
                         />
                       </td>
@@ -263,8 +264,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="Commission_Type"
-                          value={this.state.Commission_Type}
+                          name="commission_type"
+                          value={this.state.commission_type}
                           onChange={this.onChange}
                         >
                           <option ></option>
@@ -280,8 +281,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="UpdatedAt"
-                          value={this.state.UpdatedAt}
+                          name="updated_at"
+                          value={this.state.updated_at}
                           onChange={this.onChange}
                         />
                       </td>
@@ -293,8 +294,8 @@ class ViewPartners extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="CreatedAt"
-                          value={this.state.CreatedAt}
+                          name="created_at"
+                          value={this.state.created_at}
                           onChange={this.onChange}
                         />
                       </td>

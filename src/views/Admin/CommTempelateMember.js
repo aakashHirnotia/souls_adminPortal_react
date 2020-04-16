@@ -4,13 +4,13 @@ import {BrowserRouter} from 'react-router-dom'
 import { CommTempelateData } from "./Datas";
 
 const Label = {
-  communicationTempelateID: "Communication Tempelate ID",
-  type: "Type",
+  templ_id: "Communication Tempelate ID",
+  templ_type: "Type",
   trigger_time: "Trigger Time",
   trigger_for: "Trigger For",
-  smsContent: "SMS Content",
+  sms_content: "SMS Content",
   subject: "Subject",
-  emailContent: "Email Content",  
+  email_content: "Email Content",  
   status: "Status"
   
 }
@@ -18,13 +18,13 @@ const Label = {
 class CommTempelateMember extends Component {
   componentWillMount() {
     if(CommTempelateData.length==0) {
-      window.location.href='/admin/CommunicationTempelate'
+      window.location.href='/admin/viewCommunicationTempelate'
     }
   }
 
   render() {
     const communicationTempelate = CommTempelateData.find(
-        communicationTempelate => communicationTempelate.communicationTempelateID.toString() === this.props.match.params.id
+        communicationTempelate => communicationTempelate.templ_id.toString() === this.props.match.params.id
     );
     const communicationTempelateDetails = communicationTempelate
       ? Object.entries(communicationTempelate)
@@ -45,13 +45,13 @@ class CommTempelateMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Communication Tempelate:{" "}
-                  {communicationTempelate.communicationTempelateID}
+                  {communicationTempelate.templ_id}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                  <a className="createTeamBtn" href="/admin/viewCommunicationTempelate">
                     Back
                   </a>
                 </button>

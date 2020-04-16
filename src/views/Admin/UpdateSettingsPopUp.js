@@ -17,7 +17,7 @@ export default class UpdateRolePopUp extends Component{
         super(props);
         this.state= {
             status: false,
-            soulsSettingsID: this.props.soulsSettingsID,
+            souls_setting_id: this.props.souls_setting_id,
             type: "",
             url: "",
             description: "",
@@ -36,7 +36,7 @@ export default class UpdateRolePopUp extends Component{
     onSubmit=async (e)=>{
         e.preventDefault()
         const user = {
-            soulsSettingsID: this.state.soulsSettingsID,
+            souls_setting_id: this.state.souls_setting_id,
             url: this.state.url,
             description: this.state.description,
             hostname: this.state.hostname,

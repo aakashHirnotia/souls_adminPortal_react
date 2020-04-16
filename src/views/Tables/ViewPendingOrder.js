@@ -35,11 +35,11 @@ class PendingOrderRow extends Component {
           </td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_souls_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.customer_name}</td>
-          <td style={{ width: "20%" }}>{this.state.PendingOrder.Slot_Time}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.Slot_Date}</td>
+          <td style={{ width: "20%" }}>{this.state.PendingOrder.slot_time}</td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.slot_date}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.massage_duration}</td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.PendingOrder.CreatedAt}</td>
+          <td style={{ width: "10%" }}>{this.state.PendingOrder.created_at}</td>
           <td className={this.getIcon(this.state.PendingOrder.is_order_confirmed)} style={this.getColor(this.state.PendingOrder.is_order_confirmed)}></td>
           <td style={{ width: "10%" }}>{this.state.PendingOrder.merchant_transaction_id}</td>
           <td style={{ width: "20%" }}>{this.state.PendingOrder.total_order_amount}</td>

@@ -6,7 +6,7 @@ const request = require("request");
 users.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://10.38.1.35";
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -638,7 +638,7 @@ users.get("/searchTeamHasRole", (req, res) => {
   console.log("request Recieved for filter in node");
   axios
     .get(
-      `${baseURL}:8000/team/has-role/list?status=${req.query.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,
+      `${baseURL}:8000/team/has-role/list?status=${req.query.status}&firstname=${req.query.firstname}&lastname=${req.query.lastname}`,
       {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
@@ -820,7 +820,7 @@ users.get("/soulsSettings", (req, res) => {
   // console.log("pagination request received in node, page is " + req.query.page + " and countsPerPage is 5");
   // console.log("aakash")
   axios
-    .get(`${baseURL}:8000/team/soulsSettings`, {
+    .get(`${baseURL}:8000/souls/settings/list`, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`,
       },
@@ -837,7 +837,7 @@ users.get("/soulsSettings", (req, res) => {
 users.put("/updateSettings", (req, res) => {
   const today = new Date();
   const settingsData = {
-    soulsSettingsID: req.body.soulsSettingsID,
+    souls_setting_id: req.body.souls_setting_id,
     url: req.body.url,
     description: req.body.description,
     hostname: req.body.hostname,
@@ -846,13 +846,13 @@ users.put("/updateSettings", (req, res) => {
   };
 
   axios
-    .put(`${baseURL}:8000/settings/update`, settingsData, {
+    .put(`${baseURL}:8000/souls/settings/update`, settingsData, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`,
       },
     })
     .then((response) => {
-      // console.log(response.status);
+      console.log(response.status);
       res.status(response.status).send(response.data);
       // console.log(response)
     })
@@ -862,8 +862,9 @@ users.put("/updateSettings", (req, res) => {
       res.status(500).send(e);
     });
   console.log("Upadate memeber request received in node");
-  console.log("Name: " + settingsData.username);
+  // console.log("Name: " + settingsData.username);
 });
+
 
 //communication tempelate list
 users.get("/communicationTempelateList", (req, res) => {
@@ -874,7 +875,7 @@ users.get("/communicationTempelateList", (req, res) => {
   );
   axios
     .get(
-      `${baseURL}:8000/team/communicationTempelateList?page=${
+      `${baseURL}:8000/communication/template/list?page=${
         req.query.page
       }&limit=${10}`,
       {
@@ -899,7 +900,7 @@ users.get("/searchCommTempelate", (req, res) => {
   console.log("request Recieved for filter in node");
   axios
     .get(
-      `${baseURL}:8000/searchCommTempelate?communicationTempelateID=${req.query.communicationTempelateID}&type=${req.query.type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&smsContent=${req.query.smsContent}&subject=${req.query.subject}&emailContent=${req.query.emailContent}&status=${req.query.status}`,
+      `${baseURL}:8000/communication/template/list?templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
       {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
@@ -919,17 +920,17 @@ users.get("/searchCommTempelate", (req, res) => {
 users.post("/createCommTempelate", (req, res) => {
   const today = new Date();
   const Data = {
-    type: req.body.type,
+    templ_type: req.body.type,
     trigger_time: req.body.trigger_time,
     trigger_for: req.body.trigger_for,
-    smsContent: req.body.smsContent,
+    sms_content: req.body.smsContent,
     subject: req.body.subject,
-    emailContent: req.body.emailContent,
+    email_content: req.body.emailContent,
     status: req.body.status,
   };
 
   axios
-    .post(`${baseURL}:8000/commTempelate/create`, Data, {
+    .post(`${baseURL}:8000/communication/template/create`, Data, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`,
       },
@@ -952,25 +953,25 @@ users.post("/createCommTempelate", (req, res) => {
 users.put("/updateCommTempelate", (req, res) => {
   const today = new Date();
   const Data = {
-    type: req.body.type,
+    templ_type: req.body.type,
     trigger_time: req.body.trigger_time,
     trigger_for: req.body.trigger_for,
-    smsContent: req.body.smsContent,
+    sms_content: req.body.smsContent,
     subject: req.body.subject,
-    emailContent: req.body.emailContent,
+    email_content: req.body.emailContent,
     status: req.body.status,
   };
 
   axios
-    .put(`${baseURL}:8000/commTempelate/update`, Data, {
+    .put(`${baseURL}:8000/communication/template/update`, Data, {
       headers: {
         Authorization: `Bearer ${req.headers.token}`,
       },
     })
     .then((response) => {
-      // console.log(response.status);
+      // console.log(response.status
       res.status(response.status).send(response.data);
-      // console.log(response)
+
     })
     .catch((e) => {
       console.log("ERROR");

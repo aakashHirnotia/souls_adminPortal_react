@@ -46,9 +46,7 @@ const AssignPartners = React.lazy(() =>
 const ViewRole = React.lazy(() => import("./views/Admin/ViewRole"));
 const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRole"));
 const SoulsSettings = React.lazy(() => import("./views/Admin/SoulsSettings"));
-const ViewCommunicationTempelate = React.lazy(() =>
-  import("./views/Admin/ViewCommunicationTempelate")
-);
+const ViewCommunicationTempelate = React.lazy(() => import("./views/Admin/ViewCommunicationTempelate"));
 const CommunicationTempelate = React.lazy(() =>
   import("./views/Admin/CommunicationTempelate")
 );
@@ -166,7 +164,7 @@ const routes = [
     component: CommunicationTempelate,
   },
   {
-    path: "/admin/edit-communication-tempelate",
+    path: "/admin/edit-communication-tempelate/:id",
     exact: true,
     name: "Update Communication Tempelate",
     component: CommunicationTempelate,

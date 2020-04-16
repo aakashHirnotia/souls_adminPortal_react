@@ -45,25 +45,25 @@ class CommunicationTempelateRow extends Component {
 
   render() {
     return (
-      <tr key={this.state.communicationTempelate.communicationTempelateID}>
+      <tr key={this.state.communicationTempelate.templ_id}>
         <td>
-          <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}>
+          <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.templ_id}`}>
             <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
           </Link>{" "}
           <Link
             style={{ paddingLeft: "14px" }}
-            to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}
+            to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.templ_id}`}
           >
             <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
           </Link>
         </td>
-        <th>{this.state.communicationTempelate.communicationTempelateID}</th>
-        <td>{this.state.communicationTempelate.type}</td>
+        <th>{this.state.communicationTempelate.templ_id}</th>
+        <td>{this.state.communicationTempelate.templ_type}</td>
         <td>{this.state.communicationTempelate.trigger_time}</td>
         <td>{this.state.communicationTempelate.trigger_for}</td>
-        <td>{this.state.communicationTempelate.smsContent}</td>
+        <td>{this.state.communicationTempelate.sms_content}</td>
         <td>{this.state.communicationTempelate.subject}</td>
-        <td>{this.state.communicationTempelate.emailContent}</td>
+        <td>{this.state.communicationTempelate.email_content}</td>
         <td className={this.getIcon(this.state.communicationTempelate.status)} style={this.getColor(this.state.communicationTempelate.status)} data-toggle="tooltip" title={this.getTitle(this.state.communicationTempelate.status)}></td>
       </tr>
     );
@@ -79,13 +79,13 @@ class ViewCommunicationTempelate extends Component {
 
       data: [],
       count: 0,
-      communicationTempelateID: "",
-      type: "",
+      templ_id: "",
+      templ_type: "",
       trigger_time: "",
       trigger_for: "",
-      smsContent: "",
+      sms_content: "",
       subject: "",
-      emailContent: "",
+      email_content: "",
       status: "",
       errors: {}
     };
@@ -113,13 +113,13 @@ class ViewCommunicationTempelate extends Component {
   onSubmit= async (e)=> {
     e.preventDefault();
     const searchCommTempelate = {
-      communicationTempelateID: this.state.communicationTempelateID,
-      type: this.state.type,
+      templ_id: this.state.templ_id,
+      templ_type: this.state.templ_type,
       trigger_time: this.state.trigger_time,
       trigger_for: this.state.trigger_for,
-      smsContent: this.state.smsContent,
+      sms_content: this.state.sms_content,
       subject: this.state.subject,
-      emailContent: this.state.emailContent,
+      email_content: this.state.email_content,
       status: this.state.status
     };
 
@@ -195,8 +195,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="communicationTempelateID"
-                          value={this.state.communicationTempelateID}
+                          name="templ_id"
+                          value={this.state.templ_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -208,8 +208,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="type"
-                          value={this.state.type}
+                          name="templ_type"
+                          value={this.state.templ_type}
                           onChange={this.onChange}
                         />
                       </td>
@@ -225,7 +225,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.trigger_time}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>{this.state.trigger_time!==""?"Clear":"Select"}</option>
                           <option value="10">10 min.</option>
                           <option value="30">30 min.</option>
                           <option value="60">1 hour</option>
@@ -243,7 +243,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.trigger_for}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>{this.state.trigger_for!==""?"Clear":"Select"}</option>
                           <option value="customer">Customer</option>
                           <option value="partner">Partner</option>
                         </select>
@@ -256,8 +256,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="smsContent"
-                          value={this.state.smsContent}
+                          name="sms_content"
+                          value={this.state.sms_content}
                           onChange={this.onChange}
                         />
                       </td>
@@ -282,8 +282,8 @@ class ViewCommunicationTempelate extends Component {
                           placeholder=""
                           aria-label="Search for..."
                           style={{ height: "30px" }}
-                          name="emailContent"
-                          value={this.state.emailContent}
+                          name="email_content"
+                          value={this.state.email_content}
                           onChange={this.onChange}
                         />
                       </td>
@@ -299,7 +299,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
                           <option value="active">Active</option>
                           <option value="inactive">Inactive</option>
                         </select>

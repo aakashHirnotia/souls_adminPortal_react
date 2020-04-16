@@ -48,7 +48,7 @@ class CustomerRow extends Component {
           <td style={{ width: "10%" }}>{this.state.customer.customer_gender}</td>
           <td style={{ width: "10%" }}>{this.state.customer.customer_email}</td>
           <td style={{ width: "10%" }}>{this.state.customer.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.customer.CreatedAt}</td>
+          <td style={{ width: "10%" }}>{this.state.customer.created_at}</td>
           <td className={this.getIcon(this.state.customer.status)} style={this.getColor(this.state.customer.status)}></td>
         </tr>
       );
@@ -291,7 +291,6 @@ class CustomerRow extends Component {
                         <React.Fragment>
                           {this.state.data &&
                             this.state.data.map((customer, index) => (
-                              // {customerList.map((customer, index) =>
                               <CustomerRow key={index} customer={customer} />
                             ))}
                         </React.Fragment>

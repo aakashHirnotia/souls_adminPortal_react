@@ -35,11 +35,11 @@ class TransactionRow extends Component {
           <td style={{ width: "20%" }}>{this.state.Transaction.customer_name}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.merchant_transaction_id}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.total_order_amount}</td>
-          <td style={{ width: "20%" }}>{this.state.Transaction.Slot_Time}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.Slot_Date}</td>
+          <td style={{ width: "20%" }}>{this.state.Transaction.slot_time}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.slot_date}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.massage_duration}</td>
           <td style={{ width: "10%" }}>{this.state.Transaction.pincode}</td>
-          <td style={{ width: "10%" }}>{this.state.Transaction.CreatedAt}</td>
+          <td style={{ width: "10%" }}>{this.state.Transaction.created_at}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.payment_gateway_mode}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.transaction_mode}</td>
           <td style={{ width: "20%" }}>{this.state.Transaction.bank_type}</td>
@@ -131,8 +131,6 @@ class TransactionRow extends Component {
     }
   
     render() {
-      // console.log('DAta: ')
-      // console.log(this.state.data.forEach(o=>console.log(o)))
       const TransactionList = TransactionData.filter(
         Transaction => Transaction.Order_ID < 10
       );

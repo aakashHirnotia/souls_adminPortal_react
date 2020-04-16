@@ -12,9 +12,9 @@ const Label = {
     customer_email: "Email",
     customer_address: "Address",
     pincode: "PIN Code",
-    CreatedAt: "Create Time",
+    created_at: "Create Time",
     registered_source: "Registration Source",
-    Last_Access_Time: "Last Access Time",
+    last_access_time: "Last Access Time",
     status: "Status",
 }
 

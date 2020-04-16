@@ -1,14 +1,3 @@
-// import React, { Component } from 'react';
-
-// class SoulsSettings extends Component {
-//     //state = {  }
-//     render() { 
-//         return ( <div> Souls Settings</div> );
-//     }
-// }
- 
-// export default SoulsSettings;
-
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -36,13 +25,13 @@ class SoulsSettingsRow extends Component {
 
   render() {
     return (
-      <tr key={this.state.soulsSettings.soulsSettingsID}>
+      <tr key={this.state.soulsSettings.souls_setting_id}>
         <td>
           <Link style={{ paddingLeft: "14px" }} onClick={this.displayModal}>
             <i className="fa fa-pencil" data-toggle="tooltip" title="Update Settings"></i>
           </Link>
         </td>
-        <th>{this.state.soulsSettings.soulsSettingsID}</th>
+        <th>{this.state.soulsSettings.souls_setting_id}</th>
         <th>{this.state.soulsSettings.type}</th>
         <th>{this.state.soulsSettings.url}</th>
         <th>{this.state.soulsSettings.description}</th>
@@ -50,7 +39,7 @@ class SoulsSettingsRow extends Component {
         <td>{this.state.soulsSettings.username}</td>
         <td>{this.state.soulsSettings.password}</td>
         <UpdateSettingsPopUp
-          soulsSettingsID={this.state.soulsSettings.soulsSettingsID}
+          souls_setting_id={this.state.soulsSettings.souls_setting_id}
           show={this.state.showModal}
           handleClose={this.closeModal}
         />
@@ -68,7 +57,7 @@ class SoulsSettings extends Component {
 
       data: [],
       count: 0,
-      soulsSettingsID: 0,
+      souls_setting_id: 0,
       type: "",
       url: "",
       description: "",
@@ -128,7 +117,7 @@ class SoulsSettings extends Component {
 //     this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
 //   }
   render() {
-
+    console.log(this.state.data)
     return (
       <div className="animated fadeIn">
         <Row>

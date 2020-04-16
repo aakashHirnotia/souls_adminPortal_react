@@ -99,7 +99,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     console.log("hiiiiiii")
     await axios
       .put(`${baseURL}:5000/users/updateSettings`, {
-        soulsSettingsID: user.soulsSettingsID,
+        souls_setting_id: user.souls_setting_id,
         url: user.url,
         description: user.description,
         hostname: user.hostname,
@@ -155,7 +155,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   export const searchCommunicationTempelate = async (searchCommTempelate) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/searchCommTempelate?communicationTempelateID=${searchCommTempelate.communicationTempelateID}&type=${searchCommTempelate.type}&trigger_time=${searchCommTempelate.trigger_time}&trigger_for=${searchCommTempelate.trigger_for}&smsContent=${searchCommTempelate.smsContent}&subject=${searchCommTempelate.subject}&emailContent=${searchCommTempelate.emailContent}&status=${searchCommTempelate.status}`,{
+      get(`http://localhost:5000/users/searchCommTempelate?templ_type=${searchCommTempelate.templ_type}&trigger_time=${searchCommTempelate.trigger_time}&trigger_for=${searchCommTempelate.trigger_for}&sms_content=${searchCommTempelate.sms_content}&subject=${searchCommTempelate.subject}&email_content=${searchCommTempelate.email_content}&status=${searchCommTempelate.status}`,{
         headers: {
           token: localStorage.getItem("token")
         }

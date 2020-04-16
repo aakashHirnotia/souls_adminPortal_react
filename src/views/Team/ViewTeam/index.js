@@ -155,10 +155,10 @@ class ViewTeam extends React.Component {
                       </th>
                       <th style={{ width: "18%" }} scope="col">
                         Email
-                      </th>
+                      </th>  
                       <th style={{ width: "15%" }} scope="col">
                         Mobile
-                      </tfirstnameh>
+                      </th>
                       <th style={{ width: "25%" }} scope="col">
                         Joining Date
                       </th>
@@ -210,7 +210,7 @@ class ViewTeam extends React.Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="firstname"
-                          value={this.state.query.  }
+                          value={this.state.query.firstname}
                           onChange={this.onChange}
                         />
                       </td>
