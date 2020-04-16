@@ -115,7 +115,7 @@ class TeamHasRole extends Component {
                   type="submit"
                   className="btn btn-outline-primary  btn-sm"
                   onClick={this.clearFilter}
-                  style={{ position: "absolute", right: "120px" }}
+                  style={{ position: "absolute", right: "20px" }}
                 >
                   Clear Filter
                 </button>

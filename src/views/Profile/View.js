@@ -11,7 +11,7 @@ import {
   Row
 } from 'reactstrap';
 // import jwt_decode from 'jwt-decode'
-import {fetchUserDetails} from './../Team/UserFunctions'
+import { fetchUserDetails, fetchUserPic } from './../Team/UserFunctions'
 import {update} from './../Team/UserFunctions'
 import {updateProfilePic} from './../Team/UserFunctions'
 // import {getProfileData} from './../Tables/Datas'
@@ -55,15 +55,7 @@ class ViewProfile extends Component {
     console.log("File onFormChange, file changed to = ");
     console.log(this.state.file);   
     formData.append('myImage',this.state.file);
-    // console.log("formdata" )
-    // console.log(formData.get('myImage'))
-    // const config = {
-    //     headerormData.append('myIs: {
-    //       token: localStorage.getItem("token"),
-    //       'content-type': 'multipart/form-data'
-    //     }
-    // };
-
+    
     updateProfilePic(formData);
 }
   onFormChange(e) {
@@ -105,14 +97,16 @@ class ViewProfile extends Component {
     // const token = localStorage.usertoken
     const token = localStorage.getItem('token')
     fetchUserDetails(token, this.fetchedUser)
+    // console.log("token check... = "+token);
+    fetchUserPic(token, this.fetchedUserPic)
   }
 
   fetchedUser = (res, err) => {
     console.log("Component did mount me fetchUser")
     if(err) { this.props.history.push(`/login`) }
     else {
-      console.log("res.teamid = ")
-      console.log(res);
+      // console.log("res.teamid = ")
+      // console.log(res);
       this.setState({
         first_name: res.firstname,
         last_name: res.lastname,
@@ -122,6 +116,20 @@ class ViewProfile extends Component {
         status: res.status,
         role: res.role,
         mobile: res.mobileno
+      })
+    }
+  }
+
+  fetchedUserPic = (res, err) => {
+    console.log("Component did mount -> fetchUserPic")
+    if(err) { this.props.history.push(`/login`) }
+    else {
+      // console.log("res.teamid = ")
+      // console.log(res);
+      this.setState({
+        file:res.files[0],
+        fileURL: URL.createObjectURL(res.files[0])
+        // first_name: res.firstname
       })
     }
   }
