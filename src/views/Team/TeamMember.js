@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter, Link } from "react-router-dom";
 import { TeamData, TeamDatas } from "./TeamData";
 
 const Label = {
@@ -10,22 +10,22 @@ const Label = {
   email: "Email Address",
   address: "Address",
   role: "Role",
-  mobileno: "Mobile No.",  
+  mobileno: "Mobile No.",
   status: "Status",
-  Joining_Date: "Joining Date"
-  
-}
+  joining_date: "Joining Date",
+  gender: "Gender",
+};
 
 class TeamMember extends Component {
   componentWillMount() {
-    if(TeamData.length==0) {
-      window.location.href='/team/list'
+    if (TeamData.length == 0) {
+      window.location.href = "/team/list";
     }
   }
 
   render() {
     const team = (TeamData.length !== 0 ? TeamData : TeamDatas).find(
-      team => team.teamid.toString() === this.props.match.params.id
+      (team) => team.teamid.toString() === this.props.match.params.id
     );
     const teamDetails = team
       ? Object.entries(team)
@@ -34,10 +34,10 @@ class TeamMember extends Component {
             "id",
             <span>
               <i className="text-muted icon-ban"></i> Not found
-            </span>
-          ]
+            </span>,
+          ],
         ];
-
+    console.log(teamDetails);
     return (
       <div className="animated fadeIn">
         <Row>
@@ -46,15 +46,15 @@ class TeamMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Team Member:{" "}
-                  {team.firstname+" "+team.lastname}
+                  {team.firstname + " " + team.lastname}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createTeamBtn" href="/team/list">
+                  <Link className="createTeamBtn" to="/team/list">
                     Back
-                  </a>
+                  </Link>
                 </button>
               </CardHeader>
               <CardBody>

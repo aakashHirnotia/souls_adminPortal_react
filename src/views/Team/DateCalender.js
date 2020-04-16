@@ -7,20 +7,21 @@ class DateCalender extends Component {
   // const [selectedDate, setSelectedDate] = useState(null);
   state = {
     date: new Date(),
-  }
-
-  onChange= ( date ) => {
-    this.setState({ date })
-    this.props.onChange(date);  
-  }
+  };
+  // const [startDate, setStartDate] = useState(new Date());
+  onChange = (date) => {
+    console.log(date);
+    // this.setState({ date });s
+    this.props.onChange(date);
+  };
   render() {
     return (
       <DatePicker
-        // selected={this.state.date}
+        selected={this.props.value || this.state.date}
         // onChange={date => setSelectedDate(date)}
         onChange={this.onChange}
-        value={this.state.date}
-        placeholderText="dd/MM/yyyy"
+        value={this.props.value || this.state.date}
+        placeholderText="DD/MM/YYYY"
         dateFormat="dd/MM/yyyy"
         showYearDropdown
         scrollableMonthYearDropdown
@@ -28,7 +29,6 @@ class DateCalender extends Component {
       />
     );
   }
-
 }
 
 export default DateCalender;

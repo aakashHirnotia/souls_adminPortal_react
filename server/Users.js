@@ -21,12 +21,17 @@ users.post("/register", (req, res) => {
     status: req.body.status || "inactive",
     mobileno: req.body.mobile || "1234567789",
     role: req.body.role || "admin",
+    gender: req.body.gender,
   };
   console.log(userData.firstname);
   axios
-    .post(`${baseURL}:8000/team/add-member`, userData)
+    .post(`${baseURL}:8000/team/add-member`, userData, {
+      headers: {
+        Authorization: `Bearer ${req.headers.token}`,
+      },
+    })
     .then((response) => {
-      console.log(response.status);
+      console.log(response);
       res.status(response.status).send(response.data);
     })
     .catch((e) => {
@@ -182,14 +187,17 @@ users.get("/team-list", (req, res) => {
       }
     )
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       res.status(response.status).send({
         data: { ...response.data },
         count: response.headers["total-count"],
       });
       // res.status(response.status).send(response.headers);
     })
-    .catch((e) => res.status(500).send("Error: " + e));
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send("Error: " + e);
+    });
 });
 
 //Customer List

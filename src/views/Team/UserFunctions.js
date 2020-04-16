@@ -1,4 +1,22 @@
 import axios from "axios";
+import { store } from "react-notifications-component";
+
+export const displayNotification = (title, message, type) => {
+  store.addNotification({
+    title: title || "",
+    message: message || "",
+    type: type || "success", // success //danger // info //default //warning
+    insert: "top",
+    container: "top-right",
+    animationIn: ["animated", "fadeIn"],
+    animationOut: ["animated", "fadeOut"],
+    dismiss: {
+      duration: 5000,
+      onScreen: true,
+    },
+  });
+  console.log("gel");
+};
 
 // const baseURL = "http://10.42.0.69";
 const baseURL = "http://localhost";
@@ -8,23 +26,33 @@ const baseURL = "http://localhost";
 export const register = (newUser) => {
   console.log("axios worked");
   return axios
-    .post(`${baseURL}:5000/users/register`, {
-      first_name: newUser.first_name,
-      last_name: newUser.last_name,
-      gender: newUser.gender,
-      email: newUser.email,
-      password: newUser.password,
-      joining: newUser.joining,
-      address: newUser.address,
-      status: newUser.status,
-      role: newUser.role,
-      mobile: newUser.mobile,
-    })
+    .post(
+      `${baseURL}:5000/users/register`,
+      {
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        gender: newUser.gender,
+        email: newUser.email,
+        password: newUser.password,
+        joining: newUser.joining,
+        address: newUser.address,
+        status: newUser.status,
+        role: newUser.role,
+        mobile: newUser.mobile,
+      },
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
     .then((response) => {
       console.log("Registerd");
       // console.log(response)
     })
-    .catch((e) => console.log(e));
+    .catch((e) =>
+      displayNotification("Error", "Internal Server Error", "danger")
+    );
 };
 
 export const search = async (searchUser) => {
@@ -70,11 +98,14 @@ export const updateMember = (updatedUser) => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
+      if (response.status === 200) {
+        console.log("Updated");
+        displayNotification("Success", "Member Details Updated", "success");
+      }
       // console.log(response)
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 };
 
@@ -93,8 +124,9 @@ export const fetchUserDetails = (token, cb) => {
     });
 };
 
-export const fetchTeamDetails = (token) => {
-  return axios
+export const fetchTeamDetails = async (token) => {
+  let data = {};
+  await axios
     .get(`${baseURL}:5000/users/view-member`, {
       headers: {
         token: token,
@@ -104,6 +136,9 @@ export const fetchTeamDetails = (token) => {
       // console.log(response.data);
       if (response.status === 200) {
         console.log("Entered");
+        console.log(response.data);
+        data["firstname"] = response.data["firstname"];
+        data["role"] = response.data["role"];
       } else {
         localStorage.removeItem("token");
         window.location.href = "/login";
@@ -115,6 +150,7 @@ export const fetchTeamDetails = (token) => {
       // res.status(500).send(e)
       // console.log("error")
     });
+  return data;
 };
 
 export const update = (updatedUser) => {
@@ -199,7 +235,11 @@ export const login = async (user) => {
             return e.response.status;
         }
       } else {
-        window.alert(e);
+        displayNotification(
+          "Error",
+          "Unable to connect to server :(",
+          "danger"
+        );
       }
     });
   return message;
@@ -226,7 +266,7 @@ export const updatePassword = async (user) => {
       } else changed = false;
     })
     .catch((err) => {
-      window.alert("Error: " + err);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
   return changed;
 };
@@ -278,7 +318,7 @@ export const teamList = async (query) => {
       }
     })
     .catch((err) => {
-      window.alert("Error: " + err);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
   return { data, count };
 };

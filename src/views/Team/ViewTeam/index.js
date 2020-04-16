@@ -1,5 +1,6 @@
 import React from "react";
 import { teamList } from "../UserFunctions";
+import { Link } from "react-router-dom";
 import TeamRow from "./ViewTeamRow";
 import Pagination from "react-js-pagination";
 import { SetTeamData } from "../TeamData";
@@ -29,18 +30,15 @@ class ViewTeam extends React.Component {
     let url = this.props.location.search;
     let query = queryString.parse(url);
     console.log(query);
-
-    // console.log(...params);
     await this.handleQuery(query);
   }
 
-  // async componentWillReceiveProps() {
-  //   let url = this.props.location.search;
-  //   let params = queryString.parse(url);
-  //   // console.log(...params);
-  //   const query = params;
-  //   await this.handleQuery(query);
-  // }
+  async componentWillReceiveProps(nP) {
+    let url = nP.location.search;
+    let query = queryString.parse(url);
+    console.log(query);
+    await this.handleQuery(query);
+  }
 
   handleQuery = async (query) => {
     query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
@@ -64,19 +62,15 @@ class ViewTeam extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log("HASFASKFAUSHFAUSKFHBAKUSFB");
     const query = this.state.query;
     query["page"] = 1;
     query["limit"] = 10;
-    // await this.handleQuery(query);
     let queryStr = "";
     Object.keys(query).forEach((o) => {
       if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
-    console.log("HEPOL");
-    console.log(queryStr);
-    window.location.href = "/team/list" + "?" + `${queryStr}`;
+    this.props.history.push("/team/list" + "?" + `${queryStr}`);
   };
 
   handlePageChange = (page) => {
@@ -89,13 +83,27 @@ class ViewTeam extends React.Component {
     // console.log(queryStr);
     // window.location.href = "/team/list" + "?" + `${queryStr}`;
     if (window.location.pathname.includes("?"))
-      window.location.href = window.location.pathname + `page=${page}`;
-    else window.location.href = window.location.pathname + "?" + `page=${page}`;
+      this.props.history.push(window.location.pathname + `page=${page}`);
+    else
+      this.props.history.push(window.location.pathname + "?" + `page=${page}`);
   };
 
   clearFilter = () => {
     // this.handleQuery({ page: 1, limit: 10 });
-    window.location.href = "/team/list";
+    const query = {
+      page: 1,
+      limit: 10,
+      firstname: "",
+      lastname: "",
+      teamid: "",
+      email: "",
+      joining: "",
+      status: "",
+      role: "",
+      mobileno: "",
+    };
+    this.setState({ query });
+    this.props.history.push("/team/list");
   };
 
   render() {
@@ -119,14 +127,14 @@ class ViewTeam extends React.Component {
                 >
                   Clear Filter
                 </button>
-                <a className="createTeamBtn" href="/team/add-member">
+                <Link className="createTeamBtn" to="/team/add-member">
                   <button
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
                   >
                     Create Team
                   </button>
-                </a>
+                </Link>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -176,6 +184,7 @@ class ViewTeam extends React.Component {
                           search!
                         </button> */}
                       </td>
+
                       <td scope="col">
                         <input
                           type="search"

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { register,updateMember } from "./UserFunctions";
+import { register, updateMember } from "./UserFunctions";
 import DateCalender from "./DateCalender";
-import {TeamData, SetTeamData} from './TeamData'
+import { Link } from "react-router-dom";
+import { TeamData, SetTeamData } from "./TeamData";
 import {
   Card,
   CardBody,
@@ -9,7 +10,7 @@ import {
   Col,
   FormGroup,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 
 const intialState = {
@@ -34,7 +35,7 @@ const intialState = {
   mobile: "",
   mobileError: "",
   isEditable: "",
-  errors: {}
+  errors: {},
 };
 
 class Team extends Component {
@@ -46,17 +47,20 @@ class Team extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount(){
-    if(TeamData.length==0) {
-      window.location.href='/team/list'
+  componentWillMount() {
+    if (TeamData.length == 0) {
+      window.location.href = "/team/list";
     }
-    this.setState({isEditable: window.location.pathname.includes('/edit-member')})
+    this.setState({
+      isEditable: window.location.pathname.includes("/edit-member"),
+    });
   }
-  
-  componentDidMount(){
 
-    if(this.state.isEditable){
-      const team = TeamData.find( team => team.teamid.toString() === this.props.match.params.id)
+  componentDidMount() {
+    if (this.state.isEditable) {
+      const team = TeamData.find(
+        (team) => team.teamid.toString() === this.props.match.params.id
+      );
       this.setState({
         first_name: team.firstname,
         last_name: team.lastname,
@@ -65,11 +69,10 @@ class Team extends Component {
         address: team.address,
         status: team.status,
         // role: team.role,
-        mobile: team.mobileno
-      })
+        mobile: team.mobileno,
+      });
     }
   }
-
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -137,7 +140,7 @@ class Team extends Component {
         addressError,
         genderError,
         statusError,
-        roleError
+        roleError,
       });
       return false;
     }
@@ -197,15 +200,14 @@ class Team extends Component {
     return true;
   };
 
-
   onSubmit(e) {
     e.preventDefault();
-    console.log("Submit fucntion called - ")
+    console.log("Submit fucntion called - ");
 
-    console.log("Submit fucntion called - 2 " + this.state.isEditable)
-    if(this.state.isEditable){
+    console.log("Submit fucntion called - 2 " + this.state.isEditable);
+    if (this.state.isEditable) {
       const isValid = this.validate2();
-      console.log("isValid = "+isValid)
+      console.log("isValid = " + isValid);
       if (isValid) {
         const updatedUser = {
           first_name: this.state.first_name,
@@ -215,17 +217,14 @@ class Team extends Component {
           email: this.state.email,
           status: this.state.status,
           // role: this.state.role,
-          mobile: this.state.mobile
+          mobile: this.state.mobile,
         };
-        updateMember(updatedUser).then(res => {
+        updateMember(updatedUser).then((res) => {
           this.props.history.push(`/team/list`);
         });
         this.setState(intialState);
-        
       }
-
-    }
-    else{
+    } else {
       const isValid = this.validate1();
       if (isValid) {
         const newUser = {
@@ -238,345 +237,355 @@ class Team extends Component {
           address: this.state.address,
           status: this.state.status,
           role: this.state.role,
-          mobile: this.state.mobile
+          mobile: this.state.mobile,
         };
-        register(newUser).then(res => {
+        register(newUser).then((res) => {
           this.props.history.push(`/team/list`);
         });
         this.setState(intialState);
-        
       }
     }
   }
 
   render() {
     return (
-      <div>{!this.state.isEditable ? (
-        <div>
-          <Card>
-            <CardHeader>
-              <strong>Create Team</strong>
-              {/* <small> Form</small> */}
-              <button
-                className="btn btn-primary btn-sm"
-                style={{ position: "absolute", right: "20px" }}
-              >
-                <a className="createTeamBtn" href="/team/list">
-                  Back
-                </a>
-              </button>
-            </CardHeader>
-            <CardBody>
-              <form onSubmit={this.onSubmit}>
-                <div className="row">
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="first name">First Name</Label>
-                      <Input
-                        type="text"
-                        id="first name"
-                        placeholder="First name"
-                        name="first_name"
-                        value={this.state.first_name}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.first_nameError}
-                      </div>
-                    </FormGroup>
+      <div>
+        {!this.state.isEditable ? (
+          <div>
+            <Card>
+              <CardHeader>
+                <strong>Create Team</strong>
+                {/* <small> Form</small> */}
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
+                >
+                  <Link className="createTeamBtn" to="/team/list">
+                    Back
+                  </Link>
+                </button>
+              </CardHeader>
+              <CardBody>
+                <form onSubmit={this.onSubmit}>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="first name">First Name</Label>
+                        <Input
+                          type="text"
+                          id="first name"
+                          placeholder="First name"
+                          name="first_name"
+                          value={this.state.first_name}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.first_nameError}
+                        </div>
+                      </FormGroup>
+                    </div>
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="last name">Last Name</Label>
+                        <Input
+                          type="text"
+                          id="last name"
+                          placeholder="Last Name"
+                          name="last_name"
+                          value={this.state.last_name}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.last_nameError}
+                        </div>
+                      </FormGroup>
+                    </div>
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="mobile-no">Mobile No.</Label>
+                        <Input
+                          type="text"
+                          id="mobile-no"
+                          placeholder="Mobile No."
+                          name="mobile"
+                          value={this.state.mobile}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.mobileError}
+                        </div>
+                      </FormGroup>
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="last name">Last Name</Label>
-                      <Input
-                        type="text"
-                        id="last name"
-                        placeholder="Last Name"
-                        name="last_name"
-                        value={this.state.last_name}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.last_nameError}
-                      </div>
-                    </FormGroup>
-                  </div>
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="mobile-no">Mobile No.</Label>
-                      <Input
-                        type="text"
-                        id="mobile-no"
-                        placeholder="Mobile No."
-                        name="mobile"
-                        value={this.state.mobile}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.mobileError}
-                      </div>
-                    </FormGroup>
-                  </div>
-                </div>
-                <FormGroup row className="my-0">
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        type="text"
-                        id="email"
-                        placeholder="Email ID"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.emailError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="password">Password</Label>
-                      <Input
-                        type="password"
-                        id="password"
-                        placeholder="Password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.passwordError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="joining-date">Joining Date</Label> <br />
-                      <DateCalender onChange={this.onChange} />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.joiningError}
-                      </div>
-                      {/* <Input type="text" id="joining-date" placeholder="DD/MM/YYYY" name="joining" value={this.state.joining}  onChange={this.onChange}/> */}
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
+                  <FormGroup row className="my-0">
+                    <Col xs="4">
+                      <FormGroup>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          type="text"
+                          id="email"
+                          placeholder="Email ID"
+                          name="email"
+                          value={this.state.email}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.emailError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="4">
+                      <FormGroup>
+                        <Label htmlFor="password">Password</Label>
+                        <Input
+                          type="password"
+                          id="password"
+                          placeholder="Password"
+                          name="password"
+                          value={this.state.password}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.passwordError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="4">
+                      <FormGroup>
+                        <Label htmlFor="joining-date">Joining Date</Label>{" "}
+                        <br />
+                        <DateCalender onChange={this.onChange} />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.joiningError}
+                        </div>
+                        {/* <Input type="text" id="joining-date" placeholder="DD/MM/YYYY" name="joining" value={this.state.joining}  onChange={this.onChange}/> */}
+                      </FormGroup>
+                    </Col>
+                  </FormGroup>
 
-                <FormGroup row className="my-0">
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input
-                        type="text"
-                        id="address"
-                        placeholder="Address"
-                        name="address"
-                        value={this.state.address}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.addressError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                        <option>Deleted</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="role">Role</Label>
-                      <select
-                        className="form-control"
-                        name="role"
-                        value={this.state.role}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.role!==""?"Clear":"Select"}</option>
-                        <option>Admin</option>
-                        <option>Accountant</option>
-                        <option>Customer Care</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.roleError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="gender">Gender</Label>
-                      <select
-                        className="form-control"
-                        name="gender"
-                        value={this.state.gender}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.genderError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
+                  <FormGroup row className="my-0">
+                    <Col xs="6">
+                      <FormGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                          type="text"
+                          id="address"
+                          placeholder="Address"
+                          name="address"
+                          value={this.state.address}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.addressError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="2">
+                      <FormGroup>
+                        <Label htmlFor="status">Status</Label>
+                        <select
+                          className="form-control"
+                          name="status"
+                          value={this.state.status}
+                          onChange={this.onChange}
+                        >
+                          <option value="" selected>
+                            {this.state.status !== "" ? "Clear" : "Select"}
+                          </option>
+                          <option>Active</option>
+                          <option>Inactive</option>
+                          <option>Deleted</option>
+                        </select>
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.statusError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="2">
+                      <FormGroup>
+                        <Label htmlFor="role">Role</Label>
+                        <select
+                          className="form-control"
+                          name="role"
+                          value={this.state.role}
+                          onChange={this.onChange}
+                        >
+                          <option value="" selected>
+                            {this.state.role !== "" ? "Clear" : "Select"}
+                          </option>
+                          <option>Admin</option>
+                          <option>Accountant</option>
+                          <option>Customer Care</option>
+                        </select>
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.roleError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="2">
+                      <FormGroup>
+                        <Label htmlFor="gender">Gender</Label>
+                        <select
+                          className="form-control"
+                          name="gender"
+                          value={this.state.gender}
+                          onChange={this.onChange}
+                        >
+                          <option value="" selected>
+                            {this.state.gender !== "" ? "Clear" : "Select"}
+                          </option>
+                          <option>Male</option>
+                          <option>Female</option>
+                          <option>Other</option>
+                        </select>
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.genderError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                  </FormGroup>
 
-                <FormGroup row className="my-0">
-                  {/* <Col xs="4"></Col> */}
-                  <Col xs="4">
-                    <FormGroup>
-                      <button type="submit" className="btn btn-outline-primary">
-                        Submit
-                      </button>
-                    </FormGroup>
-                  </Col>
-                  {/* <Col xs="4"></Col> */}
-                </FormGroup>
-              </form>
-            </CardBody>
-          </Card>
-        </div>
-      )
-        :
-      (
-        <div>
-          <Card>
-            <CardHeader>
-              <strong>Edit Member: </strong>
-              {/* <small> Form</small> */}
-              <button
-                className="btn btn-primary btn-sm"
-                style={{ position: "absolute", right: "20px" }}
-              >
-                <a className="createTeamBtn" href="/team/list">
-                  Back
-                </a>
-              </button>
-            </CardHeader>
-            <CardBody>
-              <form onSubmit={this.onSubmit}>
-                <div className="row">
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="first name">First Name</Label>
-                      <Input
-                        type="text"
-                        id="first name"
-                        placeholder="First name"
-                        name="first_name"
-                        value={this.state.first_name}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.first_nameError}
-                      </div>
-                    </FormGroup>
+                  <FormGroup row className="my-0">
+                    {/* <Col xs="4"></Col> */}
+                    <Col xs="4">
+                      <FormGroup>
+                        <button
+                          type="submit"
+                          className="btn btn-outline-primary"
+                        >
+                          Submit
+                        </button>
+                      </FormGroup>
+                    </Col>
+                    {/* <Col xs="4"></Col> */}
+                  </FormGroup>
+                </form>
+              </CardBody>
+            </Card>
+          </div>
+        ) : (
+          <div>
+            <Card>
+              <CardHeader>
+                <strong>Edit Member: </strong>
+                {/* <small> Form</small> */}
+                <Link className="createTeamBtn" to="/team/list">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ position: "absolute", right: "20px" }}
+                  >
+                    Back
+                  </button>
+                </Link>
+              </CardHeader>
+              <CardBody>
+                <form onSubmit={this.onSubmit}>
+                  <div className="row">
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="first name">First Name</Label>
+                        <Input
+                          type="text"
+                          id="first name"
+                          placeholder="First name"
+                          name="first_name"
+                          value={this.state.first_name}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.first_nameError}
+                        </div>
+                      </FormGroup>
+                    </div>
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="last name">Last Name</Label>
+                        <Input
+                          type="text"
+                          id="last name"
+                          placeholder="Last Name"
+                          name="last_name"
+                          value={this.state.last_name}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.last_nameError}
+                        </div>
+                      </FormGroup>
+                    </div>
+                    <div className="col-md-4">
+                      <FormGroup>
+                        <Label htmlFor="mobile-no">Mobile No.</Label>
+                        <Input
+                          type="text"
+                          id="mobile-no"
+                          placeholder="Mobile No."
+                          name="mobile"
+                          value={this.state.mobile}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.mobileError}
+                        </div>
+                      </FormGroup>
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="last name">Last Name</Label>
-                      <Input
-                        type="text"
-                        id="last name"
-                        placeholder="Last Name"
-                        name="last_name"
-                        value={this.state.last_name}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.last_nameError}
-                      </div>
-                    </FormGroup>
-                  </div>
-                  <div className="col-md-4">
-                    <FormGroup>
-                      <Label htmlFor="mobile-no">Mobile No.</Label>
-                      <Input
-                        type="text"
-                        id="mobile-no"
-                        placeholder="Mobile No."
-                        name="mobile"
-                        value={this.state.mobile}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.mobileError}
-                      </div>
-                    </FormGroup>
-                  </div>
-                </div>
-                <FormGroup row className="my-0">
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input
-                        type="text"
-                        id="address"
-                        placeholder="Address"
-                        name="address"
-                        value={this.state.address}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.addressError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        type="text"
-                        id="email"
-                        placeholder="Email ID"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.onChange}
-                        disabled={true}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.emailError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                        <option>Deleted</option>
-                      </select>
-                      <div style={{ fontSize: 20, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  {/* <Col xs="2">
+                  <FormGroup row className="my-0">
+                    <Col xs="4">
+                      <FormGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                          type="text"
+                          id="address"
+                          placeholder="Address"
+                          name="address"
+                          value={this.state.address}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.addressError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="4">
+                      <FormGroup>
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          type="text"
+                          id="email"
+                          placeholder="Email ID"
+                          name="email"
+                          value={this.state.email}
+                          onChange={this.onChange}
+                          disabled={true}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.emailError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="2">
+                      <FormGroup>
+                        <Label htmlFor="status">Status</Label>
+                        <select
+                          className="form-control"
+                          name="status"
+                          value={this.state.status}
+                          onChange={this.onChange}
+                        >
+                          <option value="" selected>
+                            {this.state.status !== "" ? "Clear" : "Select"}
+                          </option>
+                          <option>Active</option>
+                          <option>Inactive</option>
+                          <option>Deleted</option>
+                        </select>
+                        <div style={{ fontSize: 20, color: "red" }}>
+                          {this.state.statusError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    {/* <Col xs="2">
                     <FormGroup>
                       <Label htmlFor="role">Role</Label>
                       <select
@@ -594,45 +603,50 @@ class Team extends Component {
                       </div>
                     </FormGroup>
                   </Col> */}
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="gender">Gender</Label>
-                      <select
-                        className="form-control"
-                        name="gender"
-                        value={this.state.gender}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                        <option>Other</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.genderError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
+                    <Col xs="2">
+                      <FormGroup>
+                        <Label htmlFor="gender">Gender</Label>
+                        <select
+                          className="form-control"
+                          name="gender"
+                          value={this.state.gender}
+                          onChange={this.onChange}
+                        >
+                          <option value="" selected>
+                            {this.state.gender !== "" ? "Clear" : "Select"}
+                          </option>
+                          <option>Male</option>
+                          <option>Female</option>
+                          <option>Other</option>
+                        </select>
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.genderError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                  </FormGroup>
 
-                <FormGroup row className="my-0">
-                  {/* <Col xs="4"></Col> */}
-                  <Col xs="4">
-                    <FormGroup>
-                      <button type="submit" className="btn btn-outline-primary">
-                        Submit
-                      </button>
-                    </FormGroup>
-                  </Col>
-                  {/* <Col xs="4"></Col> */}
-                </FormGroup>
-              </form>
-            </CardBody>
-          </Card>
-        </div>)}
+                  <FormGroup row className="my-0">
+                    {/* <Col xs="4"></Col> */}
+                    <Col xs="4">
+                      <FormGroup>
+                        <button
+                          type="submit"
+                          className="btn btn-outline-primary"
+                        >
+                          Submit
+                        </button>
+                      </FormGroup>
+                    </Col>
+                    {/* <Col xs="4"></Col> */}
+                  </FormGroup>
+                </form>
+              </CardBody>
+            </Card>
+          </div>
+        )}
       </div>
     );
-    
   }
 }
 

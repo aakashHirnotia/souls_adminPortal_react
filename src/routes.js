@@ -232,12 +232,6 @@ const routes = [
 
   { path: "/team/list", exact: true, name: "TeamList", component: ViewTeam },
   {
-    path: "/team/list/search",
-    exact: true,
-    name: "TeamList",
-    component: ViewTeam,
-  },
-  {
     path: "/team/view-member/:id",
     exact: true,
     name: "ViewMember",
@@ -252,7 +246,7 @@ const routes = [
   {
     path: "/assignpartner/view-member/:id",
     exact: true,
-    name: "AssignPartner / view",
+    name: "AssignPartner / vziew",
     component: AssignPartnerMember,
   },
   {

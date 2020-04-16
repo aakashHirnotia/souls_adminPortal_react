@@ -1,8 +1,10 @@
-import React, { Component, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import * as router from 'react-router-dom';
-import { Container } from 'reactstrap';
-
+import React, { Component, Suspense } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import * as router from "react-router-dom";
+import { Container } from "reactstrap";
+import { store } from "react-notifications-component";
+import { displayNotification } from "../../views/Team/UserFunctions";
+import { SetUserData } from "../../views/Team/TeamData";
 
 import {
   AppAside,
@@ -15,39 +17,52 @@ import {
   AppSidebarMinimizer,
   AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react';
+} from "@coreui/react";
 // sidebar nav config
-import navigation from '../../_nav';
+import navigation from "../../_nav";
 // routes config
-import routes from '../../routes';
-import {fetchTeamDetails } from '../../views/Team/UserFunctions';
+import routes from "../../routes";
+import { fetchTeamDetails } from "../../views/Team/UserFunctions";
 
-const DefaultAside = React.lazy(() => import('./DefaultAside'));
-const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
-const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+const DefaultAside = React.lazy(() => import("./DefaultAside"));
+const DefaultFooter = React.lazy(() => import("./DefaultFooter"));
+const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
 class DefaultLayout extends Component {
+  state = {
+    firstname: "",
+    role: "",
+  };
+  loading = () => (
+    <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  );
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
-
-  componentDidMount() {
-    if(localStorage.getItem('token'))
-      fetchTeamDetails(localStorage.getItem('token'))
-    else window.location.href = '/login'
+  async componentWillMount() {
+    if (localStorage.getItem("token")) {
+      const user = await fetchTeamDetails(localStorage.getItem("token"));
+      console.log(user);
+      displayNotification("", `Welcome ${user["firstname"]}`);
+      SetUserData({ ...user });
+      this.setState({ ...user });
+    } else {
+      console.log("hEYEYYEEYY");
+      window.location.pathname = "/login";
+    }
   }
 
   signOut(e) {
-    e.preventDefault()
-    localStorage.removeItem('token')
-    this.props.history.push('/login')
+    e.preventDefault();
+    localStorage.removeItem("token");
+    console.log("KJAEHFKGAF");
+    this.props.history.push("/login");
   }
 
   render() {
     return (
       <div className="app">
         <AppHeader fixed>
-          <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+          <Suspense fallback={this.loading()}>
+            <DefaultHeader onLogout={(e) => this.signOut(e)} />
           </Suspense>
         </AppHeader>
         <div className="app-body">
@@ -55,14 +70,18 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
+              <AppSidebarNav
+                navConfig={navigation}
+                {...this.props}
+                router={router}
+              />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router}/>
-            <Container style={{padding:"0"}}>
+            <AppBreadcrumb appRoutes={routes} router={router} />
+            <Container style={{ padding: "0" }}>
               <Suspense fallback={this.loading()}>
                 <Switch>
                   {routes.map((route, idx) => {
@@ -72,12 +91,11 @@ class DefaultLayout extends Component {
                         path={route.path}
                         exact={route.exact}
                         name={route.name}
-                        render={props => (
-                          <route.component {...props} />
-                        )} />
-                    ) : (null);
+                        render={(props) => <route.component {...props} />}
+                      />
+                    ) : null;
                   })}
-                  <Redirect from="/" to="/login" />
+                  <Redirect from="/" to="/dashboard" />
                 </Switch>
               </Suspense>
             </Container>

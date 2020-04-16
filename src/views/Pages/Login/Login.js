@@ -12,7 +12,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row
+  Row,
 } from "reactstrap";
 import { login } from "./../../Team/UserFunctions";
 
@@ -23,20 +23,20 @@ class Login extends Component {
       email: "",
       password: "",
       error: {},
-      status: ""
+      status: "",
     };
     // this.onChange = this.onChange.bind(this)
     // this.onSubmit = this.onSubmit.bind(this)
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  onSubmit = async e => {
+  onSubmit = async (e) => {
     e.preventDefault();
     const user = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     this.setState({ status: "Logging in..." });
     const error = await login(user);
