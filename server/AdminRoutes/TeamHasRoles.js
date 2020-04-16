@@ -66,8 +66,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${5}`,
-        {
+        `${baseURL}:8000/team/has-role/list?page=${query.page}&limit=${query.limit}&teamid=${query.teamid}&firstname=${query.firstname}&lastname=${query.lastname}&teamhasroleid=${query.team_has_role_id}&status=${query.status}&createdat=${query.CreatedAt}&updatedat=${query.UpdatedAt}`,        {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
           },

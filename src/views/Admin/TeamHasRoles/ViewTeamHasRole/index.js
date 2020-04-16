@@ -1,150 +1,108 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { TeamHasRoleData, TeamHasRoleDatas, SetTeamHasRoleData } from "./Data";
+import { TeamHasRoleData, TeamHasRoleDatas, SetTeamHasRoleData } from "../Data";
 import Pagination from "react-js-pagination";
-import UpdateRolePopUp from "./UpdateRolePopUp.js";
-import { teamHasRoleList, searchTeamHasRole } from "../AdminFunctions";
-
-class TeamHasRoleRow extends Component {
-  state = {
-    showModal: false,
-    teamHasRole: this.props.teamHasRole
-  };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({teamHasRole: this.props.teamHasRole})
-  }
-
-  getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
-            (status === 'Deleted' || status === 'deleted') ? 'fa fa-trash' :
-            'primary'
-  }
-
-  getColor = (status) => {
-    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
-            (status === 'Deleted' || status === 'deleted')  ? {color:"red"} :
-            {color:"black"}
-  }
-
-  getTitle = (status) => {
-    return  (status === 'Active' || status === 'active')  ? "active" :
-            (status === 'Inactive' || status === 'inactive') ? "inactive" :
-            (status === 'Deleted' || status === 'deleted')  ? "deleted" :
-            "not defined"
-  }
-
-  getRole = (team_has_role_id) => {
-    return  (team_has_role_id === 1 ) ? "Admin" :
-            (team_has_role_id === 2 ) ? "Accountant" :
-            (team_has_role_id === 3 ) ? "Customer Service" :
-            "not defined"
-  }
-
-  displayModal = () => {
-    this.setState({ showModal: true });
-  };
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
-
-  render() {
-    return (
-      <tr key={this.state.teamHasRole.team_has_role_id}>
-        <td>
-          <Link style={{ paddingLeft: "14px" }} onClick={this.displayModal}>
-            <i className="fa fa-pencil" data-toggle="tooltip" title="Update Role"></i>
-          </Link>
-        </td>
-        <th>{this.state.teamHasRole.teamid}</th>
-        <th>{this.state.teamHasRole.first_name}</th>
-        <th>{this.state.teamHasRole.last_name}</th>
-        <td>{this.getRole(this.state.teamHasRole.team_has_role_id)}</td>
-        <td>{this.state.teamHasRole.CreatedAt}</td>
-        <td>{this.state.teamHasRole.UpdatedAt}</td>
-        <td className={this.getIcon(this.state.teamHasRole.status)} style={this.getColor(this.state.teamHasRole.status)} data-toggle="tooltip" title={this.getTitle(this.state.teamHasRole.status)}></td>
-        <UpdateRolePopUp
-          teamid={this.state.teamHasRole.teamid}
-          show={this.state.showModal}
-          handleClose={this.closeModal}
-        />
-      </tr>
-    );
-  }
-}
+import UpdateRolePopUp from "../UpdateRolePopUp.js";
+import { teamHasRoleList, searchTeamHasRole } from "../../AdminFunctions";
+import TeamHasRoleRow from './TeamHasRoleRow'
+import queryString from "query-string";
 
 class TeamHasRole extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 1,
-      itemsCountPerPage: 10,
+  state = {
+      query:{
+        page:1,
+        limit:10,
+
+        teamid: 0,
+        first_name: "",
+        last_name: "",
+        team_has_role_id: "",
+        status: "",
+        CreatedAt: "",
+        UpdatedAt: ""
+      },
 
       data: [],
       count: 0,
-      teamid: 0,
-      first_name: "",
-      last_name: "",
-      team_has_role_id: "",
-      status: "",
-      CreatedAt: "",
-      UpdatedAt: "",
+      isFetching: true,
       errors: {}
-    };
-
-    this.onChange = this.onChange.bind(this);
-  }
-
+  };
 
 
   async componentDidMount() {
-    const dataRecieved = await teamHasRoleList(
-      this.state.activePage,
-      this.state.itemsCountPerPage
-    );
+    let url = this.props.location.search;
+    let query = queryString.parse(url);
+    console.log(query);
+    await this.handleQuery(query);
+    // const dataRecieved = await teamHasRoleList(
+    //   this.state.activePage,
+    //   this.state.itemsCountPerPage
+    // );
+    // SetTeamHasRoleData(dataRecieved.data);
+    // const newData = dataRecieved.data
+    // this.setState({ data: newData, count: dataRecieved.count });
+  }
+
+  
+  async UNSAFE_componentWillReceiveProps(nP) {
+    let url = nP.location.search;
+    let query = queryString.parse(url);
+    console.log("PARSED")
+    console.log(query);
+    await this.handleQuery(query);
+  }
+
+  handleQuery = async (query) => {
+    query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
+    query["limit"] = 10;
+    const dataRecieved = await teamHasRoleList(query);
     SetTeamHasRoleData(dataRecieved.data);
-    const newData = dataRecieved.data
-    this.setState({ data: newData, count: dataRecieved.count });
-  }
+    const newData = dataRecieved.data;
+    this.setState({
+      data: newData,
+      count: dataRecieved.count,
+      query,
+      isFetching: false,
+    });
+  };
 
+  onChange = (e) => {
+    const query = this.state.query;
+    query[e.target.name] = e.target.value;
+    this.setState({ query });
+  };
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  onSubmit= async (e)=> {
+  onSubmit = (e) => {
     e.preventDefault();
-    const searchUser = {
-      firstname: this.state.first_name,
-      lastname: this.state.last_name,
-      status: this.state.status
-    };
+    const query = this.state.query;
+    query["page"] = 1;
+    query["limit"] = 10;
+    let queryStr = "";
+    Object.keys(query).forEach((o) => {
+      if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+    });
+    queryStr = queryStr.replace(queryStr.length - 1, "");
+    // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+    window.location.href = "/admin/teamHasRole" + "?" + `${queryStr}`
+  };
 
-    const dataRecieved = await searchTeamHasRole(searchUser);
-    SetTeamHasRoleData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
-  }
 
-  handlePageChange = async (pageNumber) => {
-    console.log(`pageNumber is ${pageNumber}`);
-    // this.setState({ activePage: pageNumber });
-    console.log(`active page is ${this.state.activePage}`);
+  
+  clearFilter = () => {
 
-    const dataRecieved = await teamHasRoleList(
-      pageNumber,
-      this.state.itemsCountPerPage
-    );
-    SetTeamHasRoleData(dataRecieved.data);
-    // console.log(dataPageRecieved)
-    const newData = dataRecieved.data
-    // console.log("newdata = " + newData.length)
-    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
-  }
+    const query = this.state.query
+    Object.keys(query).map(o=>query[o]="")
+    this.setState({ query });
+    this.props.history.push("/team/list");
+  };
+
   render() {
+
+    console.log("QUERY");
+    console.log(this.state.query);
+    console.log("DATA");
+    console.log(this.state.data);
 
     return (
       <div className="animated fadeIn">
@@ -153,6 +111,14 @@ class TeamHasRole extends Component {
             <Card>
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Team Has Role{" "}
+                <button
+                  type="submit"
+                  className="btn btn-outline-primary  btn-sm"
+                  onClick={this.clearFilter}
+                  style={{ position: "absolute", right: "120px" }}
+                >
+                  Clear Filter
+                </button>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -190,7 +156,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="teamid"
-                          value={this.state.teamid}
+                          value={this.state.query.teamid}
                           onChange={this.onChange}
                         />
                       </td>
@@ -203,7 +169,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="first_name"
-                          value={this.state.first_name}
+                          value={this.state.query.first_name}
                           onChange={this.onChange}
                         />
                       </td>
@@ -216,7 +182,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="last_name"
-                          value={this.state.last_name}
+                          value={this.state.query.last_name}
                           onChange={this.onChange}
                         />
                       </td>
@@ -229,7 +195,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="team_has_role_id"
-                          value={this.state.team_has_role_id}
+                          value={this.state.query.team_has_role_id}
                           onChange={this.onChange}
                         />
                       </td>
@@ -242,7 +208,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="CreatedAt"
-                          value={this.state.CreatedAt}
+                          value={this.state.query.CreatedAt}
                           onChange={this.onChange}
                         />
                       </td>
@@ -255,12 +221,12 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="UpdatedAt"
-                          value={this.state.UpdatedAt}
+                          value={this.state.query.UpdatedAt}
                           onChange={this.onChange}
                         />
                       </td>
                       <td scope="col">
-                        {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.status} onChange={this.onChange} /> */}
+                        {/* <input type="search" class="form-control mr-sm-2" id="" placeholder="" aria-label="Search for..." style={{height:"30px"}} name="status" value={this.state.query.status} onChange={this.onChange} /> */}
                         <select
                           type="search"
                           class="form-control mr-sm-2"
@@ -269,7 +235,7 @@ class TeamHasRole extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="status"
-                          value={this.state.status}
+                          value={this.state.query.status}
                           onChange={this.onChange}
                         >
                           <option ></option>
@@ -289,20 +255,30 @@ class TeamHasRole extends Component {
                           ))}
                       </React.Fragment>
                     ) : (
-                      <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((teamHasRole, index) => (
-                          <TeamHasRoleRow key={index} teamHasRole={teamHasRole} />
-                        ))}
-                      </React.Fragment>
+                      <div>
+                        {this.state.isFetching ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div
+                            style={{
+                              margin: "auto",
+                              color: "red",
+                              width: "100%",
+                            }}
+                          >
+                            NO RECORDS FOUND
+                          </div>
+                        )}
+                      </div>
                     )}
                   </tbody>
                 </Table>
                 <Pagination
                   className="pagination"
                   hideDisabled
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={5}
-                  totalItemsCount={this.state.count} // check
+                  activePage={this.state.query.page}
+                  itemsCountPerPage={this.state.query.limit}
+                  totalItemsCount={this.state.count}
                   pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />

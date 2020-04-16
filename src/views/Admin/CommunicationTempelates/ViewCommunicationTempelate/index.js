@@ -12,73 +12,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { CommTempelateData, SetCommTempelateData } from "./Data";
+import { CommTempelateData, SetCommTempelateData } from "../Data";
 import Pagination from "react-js-pagination";
-import { communicationTempelateList, searchCommunicationTempelate } from "../AdminFunctions";
-
-class CommunicationTempelateRow extends Component {
-  state = {
-    communicationTempelate: this.props.communicationTempelate
-  };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({communicationTempelate: this.props.communicationTempelate})
-  }
-
-  getIcon = (status) => {
-    return  (status === 'Active' || status === 'active') ? 'fa fa-check-square fa-lg' :
-            (status === 'Inactive' || status === 'inactive') ? 'fa fa-window-close-o fa-lg' :
-            'primary'
-  }
-
-  getColor = (status) => {
-    return  (status === 'Active' || status === 'active')  ? {color:"green"} :
-            (status === 'Inactive' || status === 'inactive') ? {color:"red"} :
-            {color:"black"}
-  }
-
-  getTitle = (status) => {
-    return  (status === 'Active' || status === 'active')  ? "active" :
-            (status === 'Inactive' || status === 'inactive') ? "inactive" :
-            "not defined"
-  }
-
-  render() {
-    return (
-      <tr key={this.state.communicationTempelate.communicationTempelateID}>
-        <td>
-          <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}>
-            <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
-          </Link>{" "}
-          <Link
-            style={{ paddingLeft: "14px" }}
-            to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.communicationTempelateID}`}
-          >
-            <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
-          </Link>
-        </td>
-        <th>{this.state.communicationTempelate.communicationTempelateID}</th>
-        <td>{this.state.communicationTempelate.type}</td>
-        <td>{this.state.communicationTempelate.trigger_time}</td>
-        <td>{this.state.communicationTempelate.trigger_for}</td>
-        <td>{this.state.communicationTempelate.smsContent}</td>
-        <td>{this.state.communicationTempelate.subject}</td>
-        <td>{this.state.communicationTempelate.emailContent}</td>
-        <td className={this.getIcon(this.state.communicationTempelate.status)} style={this.getColor(this.state.communicationTempelate.status)} data-toggle="tooltip" title={this.getTitle(this.state.communicationTempelate.status)}></td>
-      </tr>
-    );
-  }
-}
+import { communicationTempelateList, searchCommunicationTempelate } from "../../AdminFunctions";
+import CommunicationTempelateRow from './ViewCommunicationTempelateRow'
+import queryString from "query-string";
 
 class ViewCommunicationTempelate extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 1,
-      itemsCountPerPage: 10,
-
-      data: [],
-      count: 0,
+  state = {
+    query:{
+      page: 1,
+      limit: 10,
       communicationTempelateID: "",
       type: "",
       trigger_time: "",
@@ -86,64 +30,116 @@ class ViewCommunicationTempelate extends Component {
       smsContent: "",
       subject: "",
       emailContent: "",
-      status: "",
+      status: ""
+    },
+      data: [],
+      count: 0,
+      isFetching: true,
       errors: {}
     };
 
-    this.onChange = this.onChange.bind(this);
-  }
-
-
-
   async componentDidMount() {
-    const dataRecieved = await communicationTempelateList(
-      this.state.activePage,
-      this.state.itemsCountPerPage
-    );
+    let url = this.props.location.search;
+    let query = queryString.parse(url);
+    console.log(query);
+    await this.handleQuery(query);
+    // const dataRecieved = await communicationTempelateList(
+    //   this.state.activePage,
+    //   this.state.itemsCountPerPage
+    // );
+    // SetCommTempelateData(dataRecieved.data);
+    // const newData = dataRecieved.data
+    // this.setState({ data: newData, count: dataRecieved.count});
+  }
+
+  async UNSAFE_componentWillReceiveProps(nP) {
+    let url = nP.location.search;
+    let query = queryString.parse(url);
+    console.log("PARSED")
+    console.log(query);
+    await this.handleQuery(query);
+  }
+
+  handleQuery = async (query) => {
+    query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
+    query["limit"] = 10;
+    const dataRecieved = await communicationTempelateList(query);
     SetCommTempelateData(dataRecieved.data);
-    const newData = dataRecieved.data
-    this.setState({ data: newData, count: dataRecieved.count});
-  }
+    const newData = dataRecieved.data;
+    this.setState({
+      data: newData,
+      count: dataRecieved.count,
+      query,
+      isFetching: false,
+    });
+  };
 
+  onChange = (e) => {
+    const query = this.state.query;
+    query[e.target.name] = e.target.value;
+    this.setState({ query });
+  };
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  onSubmit= async (e)=> {
+  onSubmit = (e) => {
     e.preventDefault();
-    const searchCommTempelate = {
-      communicationTempelateID: this.state.communicationTempelateID,
-      type: this.state.type,
-      trigger_time: this.state.trigger_time,
-      trigger_for: this.state.trigger_for,
-      smsContent: this.state.smsContent,
-      subject: this.state.subject,
-      emailContent: this.state.emailContent,
-      status: this.state.status
-    };
+    const query = this.state.query;
+    query["page"] = 1;
+    query["limit"] = 10;
+    let queryStr = "";
+    Object.keys(query).forEach((o) => {
+      if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+    });
+    queryStr = queryStr.replace(queryStr.length - 1, "");
+    // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+    window.location.href = "/admin/viewCommunicationTempelate" + "?" + `${queryStr}`
+  };
 
-    const dataRecieved = await searchCommunicationTempelate(searchCommTempelate);
-    SetCommTempelateData(dataRecieved);
-    const newData = dataRecieved
-    this.setState({ data: newData });
-  }
+  handlePageChange = (page) => {
+    // let queryStr = "";
+    // Object.keys(this.state.query).forEach((o) => {
+    //   if(o=='page')queryStr += `${o}=${page}&`;
+    //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
+    // });
+    // queryStr = queryStr.replace(queryStr.length - 1, "");
+    // console.log(queryStr);
+    // window.location.href = "/team/list" + "?" + `${queryStr}`;
+    if (window.location.pathname.includes("?")) {
+      // this.props.history.push(window.location.pathname + `page=${page}`);
+      window.location.href =window.location.pathname + `page=${page}`
+    }
+    else {
+      window.location.href = window.location.pathname + "?" + `page=${page}`
+      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+    }
+  };
 
-  handlePageChange = async (pageNumber) => {
-    console.log(`pageNumber is ${pageNumber}`);
-    // this.setState({ activePage: pageNumber });
-    console.log(`active page is ${this.state.activePage}`);
+  // handlePageChange = async (pageNumber) => {
+  //   console.log(`pageNumber is ${pageNumber}`);
+  //   // this.setState({ activePage: pageNumber });
+  //   console.log(`active page is ${this.state.activePage}`);
 
-    const dataRecieved = await communicationTempelateList(
-      pageNumber,
-      this.state.itemsCountPerPage
-    );
-    SetCommTempelateData(dataRecieved.data);
-    // console.log(dataPageRecieved)
-    const newData = dataRecieved.data
-    this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
-  }
+  //   const dataRecieved = await communicationTempelateList(
+  //     pageNumber,
+  //     this.state.itemsCountPerPage
+  //   );
+  //   SetCommTempelateData(dataRecieved.data);
+  //   // console.log(dataPageRecieved)
+  //   const newData = dataRecieved.data
+  //   this.setState({ data: newData, activePage: pageNumber, count: dataRecieved.count });
+  // }
+
+  clearFilter = () => {
+    const query = this.state.query
+    Object.keys(query).map(o=>query[o]="")
+    this.setState({ query });
+    this.props.history.push("/admin/viewCommunicationTempelate");
+  };
+
   render() {
+    console.log("QUERY");
+    console.log(this.state.query);
+    console.log("DATA");
+    console.log(this.state.data);
     return (
       <div className="animated fadeIn">
         <Row>
@@ -152,13 +148,21 @@ class ViewCommunicationTempelate extends Component {
               <CardHeader>
                 <i className="fa fa-align-justify"></i> Communication Tempelate{" "}
                 <button
-                  className="btn btn-primary btn-sm"
-                  style={{ position: "absolute", right: "20px" }}
+                  type="submit"
+                  className="btn btn-outline-primary  btn-sm"
+                  onClick={this.clearFilter}
+                  style={{ position: "absolute", right: "120px" }}
                 >
-                  <a className="create" href="/admin/add-communication-tempelate" style={{color: "white"}}>
-                    Create
-                  </a>
+                  Clear Filter
                 </button>
+                <Link className="createTeamBtn" to="/admin/add-communication-tempelate">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ position: "absolute", right: "20px" }}
+                  >
+                    Create
+                  </button>
+                </Link>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -196,7 +200,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="communicationTempelateID"
-                          value={this.state.communicationTempelateID}
+                          value={this.state.query.communicationTempelateID}
                           onChange={this.onChange}
                         />
                       </td>
@@ -209,7 +213,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="type"
-                          value={this.state.type}
+                          value={this.state.query.type}
                           onChange={this.onChange}
                         />
                       </td>
@@ -222,7 +226,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="trigger_time"
-                          value={this.state.trigger_time}
+                          value={this.state.query.trigger_time}
                           onChange={this.onChange}
                         >
                           <option ></option>
@@ -240,7 +244,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="trigger_for"
-                          value={this.state.trigger_for}
+                          value={this.state.query.trigger_for}
                           onChange={this.onChange}
                         >
                           <option ></option>
@@ -257,7 +261,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="smsContent"
-                          value={this.state.smsContent}
+                          value={this.state.query.smsContent}
                           onChange={this.onChange}
                         />
                       </td>
@@ -270,7 +274,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="subject"
-                          value={this.state.subject}
+                          value={this.state.query.subject}
                           onChange={this.onChange}
                         />
                       </td>
@@ -283,7 +287,7 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="emailContent"
-                          value={this.state.emailContent}
+                          value={this.state.query.emailContent}
                           onChange={this.onChange}
                         />
                       </td>
@@ -296,10 +300,14 @@ class ViewCommunicationTempelate extends Component {
                           aria-label="Search for..."
                           style={{ height: "30px" }}
                           name="status"
-                          value={this.state.status}
+                          value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" selected>
+                            {this.state.query.status !== ""
+                              ? "Clear"
+                              : "Select"}
+                          </option>
                           <option value="active">Active</option>
                           <option value="inactive">Inactive</option>
                         </select>
@@ -315,20 +323,30 @@ class ViewCommunicationTempelate extends Component {
                           ))}
                       </React.Fragment>
                     ) : (
-                      <React.Fragment>
-                        {this.state.data.length!=0 && this.state.data.map((communicationTempelate, index) => (
-                          <CommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
-                        ))}
-                      </React.Fragment>
+                      <div>
+                        {this.state.isFetching ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div
+                            style={{
+                              margin: "auto",
+                              color: "red",
+                              width: "100%",
+                            }}
+                          >
+                            NO RECORDS FOUND
+                          </div>
+                        )}
+                      </div>
                     )}
                   </tbody>
                 </Table>
                 <Pagination
                   className="pagination"
                   hideDisabled
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={this.state.count} // check
+                  activePage={this.state.query.page}
+                  itemsCountPerPage={this.state.query.limit}
+                  totalItemsCount={this.state.count}
                   pageRangeDisplayed={10}
                   onChange={this.handlePageChange}
                 />
