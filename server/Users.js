@@ -562,16 +562,6 @@ users.put("/update", (req, res) => {
   console.log("Name: " + userData.firstname);
 });
 
-const path = require("path");
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: "./public/uploads/",
-  filename: function (req, file, cb) {
-    cb(null, "IMAGE-" + Date.now() + path.extname(file.originalname));
-  },
-});
-
 // const uploads = multer({
 //    storage: storage,
 //    limits:{fileSize: 1000000},
