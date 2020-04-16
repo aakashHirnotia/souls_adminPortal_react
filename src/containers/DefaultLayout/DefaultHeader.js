@@ -7,6 +7,7 @@ import {
   DropdownToggle,
   Nav,
   NavItem,
+  Badge,
 } from "reactstrap";
 import PropTypes from "prop-types";
 import { UserData } from "../../views/Team/TeamData";
@@ -14,7 +15,7 @@ import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
 //import logo from '../../assets/img/brand/logo.svg'
 //import sygnet from '../../assets/img/brand/sygnet.svg'
 import souls_logo from "../../assets/img/brand/souls_logo.png";
-
+import WebSocketInit from "./WebSocket";
 const propTypes = {
   children: PropTypes.node,
 };
@@ -75,15 +76,29 @@ class DefaultHeader extends Component {
             <NavLink to="#" className="nav-link">Settings</NavLink>
           </NavItem> */}
         </Nav>
+
         <Nav className="ml-auto" navbar>
+          <UncontrolledDropdown nav direction="down">
+            <WebSocketInit />
+          </UncontrolledDropdown>
+
           {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
+            <NavLink to="#" className="nav-link">
+              <i className="icon-bell"></i>
+              <Badge pill color="danger">
+                5
+              </Badge>
+            </NavLink>
           </NavItem> */}
           {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>
-          </NavItem> */}
-          {/* <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
+            <NavLink to="#" className="nav-link">
+              <i className="icon-list"></i>
+            </NavLink>
+          </NavItem>
+          <NavItem className="d-md-down-none">
+            <NavLink to="#" className="nav-link">
+              <i className="icon-location-pin"></i>
+            </NavLink>
           </NavItem> */}
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>

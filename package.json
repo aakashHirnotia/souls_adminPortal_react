@@ -43,6 +43,7 @@
     "react-router-dom": "^5.1.2",
     "react-summernote": "^2.0.0",
     "react-test-renderer": "^16.13.1",
+    "react-websocket": "^2.1.0",
     "reactstrap": "^8.4.1",
     "simple-line-icons": "^2.4.1"
   },
