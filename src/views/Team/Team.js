@@ -12,7 +12,7 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import TextEditor from "../Admin/TextEditor.js";
+// import TextEditor from "../Admin/TextEditor.js";
 
 const intialState = {
   first_name: "",

@@ -33,9 +33,10 @@ class ViewTeam extends React.Component {
     await this.handleQuery(query);
   }
 
-  async componentWillReceiveProps(nP) {
+  async UNSAFE_componentWillReceiveProps(nP) {
     let url = nP.location.search;
     let query = queryString.parse(url);
+    console.log("PARSED")
     console.log(query);
     await this.handleQuery(query);
   }
@@ -70,7 +71,8 @@ class ViewTeam extends React.Component {
       if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
-    this.props.history.push("/team/list" + "?" + `${queryStr}`);
+    // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+    window.location.href = "/team/list" + "?" + `${queryStr}`
   };
 
   handlePageChange = (page) => {
@@ -82,10 +84,14 @@ class ViewTeam extends React.Component {
     // queryStr = queryStr.replace(queryStr.length - 1, "");
     // console.log(queryStr);
     // window.location.href = "/team/list" + "?" + `${queryStr}`;
-    if (window.location.pathname.includes("?"))
-      this.props.history.push(window.location.pathname + `page=${page}`);
-    else
-      this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+    if (window.location.pathname.includes("?")) {
+      // this.props.history.push(window.location.pathname + `page=${page}`);
+      window.location.href =window.location.pathname + `page=${page}`
+    }
+    else {
+      window.location.href = window.location.pathname + "?" + `page=${page}`
+      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+    }
   };
 
   clearFilter = () => {

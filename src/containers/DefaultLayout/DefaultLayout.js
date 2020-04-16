@@ -41,6 +41,7 @@ class DefaultLayout extends Component {
     if (localStorage.getItem("token")) {
       const user = await fetchTeamDetails(localStorage.getItem("token"));
       console.log(user);
+      if(window.location.pathname.includes("/dashboard"))
       displayNotification("", `Welcome ${user["firstname"]}`);
       SetUserData({ ...user });
       this.setState({ ...user });

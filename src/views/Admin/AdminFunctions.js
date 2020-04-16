@@ -6,7 +6,7 @@ const baseURL = "http://localhost";
 export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     let data,count;
     await axios
-      .get(`${baseURL}:5000/users/team-has-role-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(`${baseURL}:5000/teamHasRoles/team-has-role-list?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -29,7 +29,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   export const searchTeamHasRole = async (searchUser) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/searchTeamHasRole?status=${searchUser.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,{
+      get(`http://localhost:5000/teamHasRoles/searchTeamHasRole?status=${searchUser.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,{
         headers: {
           token: localStorage.getItem("token")
         }
@@ -47,7 +47,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     let changed = false;
     console.log("hiiiiiii")
     await axios
-      .put(`${baseURL}:5000/users/updateTeamRole`, {
+      .put(`${baseURL}:5000/teamHasRoles/updateTeamRole`, {
         teamid: user.teamid,
         role: user.role,
       },{
@@ -72,7 +72,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     let data;
     console.log("aakash")
     await axios
-      .get(`${baseURL}:5000/users/soulsSettings`, {
+      .get(`${baseURL}:5000/SOULS_Settings/soulsSettings`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -98,7 +98,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     let changed = false;
     console.log("hiiiiiii")
     await axios
-      .put(`${baseURL}:5000/users/updateSettings`, {
+      .put(`${baseURL}:5000/SOULS_Settings/updateSettings`, {
         soulsSettingsID: user.soulsSettingsID,
         url: user.url,
         description: user.description,
@@ -126,7 +126,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     let data, count;
     // let totalcount;
     await axios
-      .get(`${baseURL}:5000/users/communicationTempelateList?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(`${baseURL}:5000/communicationTempelates/communicationTempelateList?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -155,7 +155,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   export const searchCommunicationTempelate = async (searchCommTempelate) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/searchCommTempelate?communicationTempelateID=${searchCommTempelate.communicationTempelateID}&type=${searchCommTempelate.type}&trigger_time=${searchCommTempelate.trigger_time}&trigger_for=${searchCommTempelate.trigger_for}&smsContent=${searchCommTempelate.smsContent}&subject=${searchCommTempelate.subject}&emailContent=${searchCommTempelate.emailContent}&status=${searchCommTempelate.status}`,{
+      get(`http://localhost:5000/communicationTempelates/searchCommTempelate?communicationTempelateID=${searchCommTempelate.communicationTempelateID}&type=${searchCommTempelate.type}&trigger_time=${searchCommTempelate.trigger_time}&trigger_for=${searchCommTempelate.trigger_for}&smsContent=${searchCommTempelate.smsContent}&subject=${searchCommTempelate.subject}&emailContent=${searchCommTempelate.emailContent}&status=${searchCommTempelate.status}`,{
         headers: {
           token: localStorage.getItem("token")
         }
@@ -172,7 +172,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
   // create comm temepalte
   export const createCommTempelate = (newCommTempelate) => {
     return axios
-      .post(`${baseURL}:5000/users/createCommTempelate`, {
+      .post(`${baseURL}:5000/communicationTempelates/createCommTempelate`, {
         type: newCommTempelate.type,
         trigger_time: newCommTempelate.trigger_time,
         trigger_for: newCommTempelate.trigger_for,
@@ -193,7 +193,7 @@ export const teamHasRoleList = async (activePage, itemCountPerPage) => {
     // console.log(url)
     return axios
       .put(
-        `${baseURL}:5000/users/updateCommTempelate`,
+        `${baseURL}:5000/communicationTempelates/updateCommTempelate`,
         {
           type: updatedCommTempelate.type,
           trigger_time: updatedCommTempelate.trigger_time,

@@ -31,33 +31,21 @@ const Dashboard = React.lazy(() => import("./views/Dashboard"));
 // // const Badges = React.lazy(() => import('./views/Notifications/Badges'));
 // // const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
-const Customers = React.lazy(() => import("./views/Tables/ViewCustomer"));
-const PendingOrders = React.lazy(() =>
-  import("./views/Tables/ViewPendingOrder")
-);
-const ViewPartners = React.lazy(() => import("./views/Tables/ViewPartners"));
-const PartnersMember = React.lazy(() =>
-  import("./views/Tables/PartnersMember")
-);
-const Transactions = React.lazy(() => import("./views/Tables/ViewTransaction"));
-const AssignPartners = React.lazy(() =>
-  import("./views/Tables/AssignPartners")
-);
-const ViewRole = React.lazy(() => import("./views/Admin/ViewRole"));
-const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRole"));
-const SoulsSettings = React.lazy(() => import("./views/Admin/SoulsSettings"));
-const ViewCommunicationTempelate = React.lazy(() =>
-  import("./views/Admin/ViewCommunicationTempelate")
-);
-const CommunicationTempelate = React.lazy(() =>
-  import("./views/Admin/CommunicationTempelate")
-);
-const CommTempelateMember = React.lazy(() =>
-  import("./views/Admin/CommTempelateMember")
-);
+const Customers = React.lazy(() => import("./views/Tables/Customers/ViewCustomer"));
+const PendingOrders = React.lazy(() => import("./views/Tables/PendingOrders/ViewPendingOrder"));
+const ViewPartners = React.lazy(() => import("./views/Tables/Partners/ViewPartners"));
+const PartnersMember = React.lazy(() => import("./views/Tables/Partners/PartnersMember"));
+const Transactions = React.lazy(() => import("./views/Tables/Transactions/ViewTransaction"));
+const AssignPartners = React.lazy(() => import("./views/Tables/AssignPartners/AssignPartners"));
+const ViewRole = React.lazy(() => import("./views/Admin/RoleTable/ViewRole"));
+const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRoles/TeamHasRole"));
+const SoulsSettings = React.lazy(() => import("./views/Admin/SOULS_Settings/SoulsSettings"));
+const ViewCommunicationTempelate = React.lazy(() =>import("./views/Admin/CommunicationTempelates/ViewCommunicationTempelate"));
+const CommunicationTempelate = React.lazy(() =>import("./views/Admin/CommunicationTempelates/CommunicationTempelate"));
+const CommTempelateMember = React.lazy(() =>import("./views/Admin/CommunicationTempelates/CommTempelateMember"));
 // const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
-const Partner = React.lazy(() => import("./views/Tables/Partner"));
-const PartnerEdit = React.lazy(() => import("./views/Tables/PartnerEdit"));
+const Partner = React.lazy(() => import("./views/Tables/Partners/Partner"));
+const PartnerEdit = React.lazy(() => import("./views/Tables/Partners/PartnerEdit"));
 
 const Users = React.lazy(() => import("./views/Users/Users"));
 const Team = React.lazy(() => import("./views/Team/Team"));
@@ -65,28 +53,14 @@ const TeamEdit = React.lazy(() => import("./views/Team/TeamEdit"));
 const ViewProfile = React.lazy(() => import("./views/Profile/View"));
 // const UpdateProfile = React.lazy(() => import('./views/Profile/Update'));
 const ViewTeam = React.lazy(() => import("./views/Team/ViewTeam/index"));
-const EditCustomerMember = React.lazy(() =>
-  import("./views/Tables/EditCustomer")
-);
-const EditTransaction = React.lazy(() =>
-  import("./views/Tables/EditTransaction")
-);
-const EditAssignPartner = React.lazy(() =>
-  import("./views/Tables/EditAssignPartner")
-);
+const EditCustomerMember = React.lazy(() => import("./views/Tables/Customers/EditCustomer"));
+const EditTransaction = React.lazy(() =>import("./views/Tables/Transactions/EditTransaction"));
+const EditAssignPartner = React.lazy(() =>import("./views/Tables/AssignPartners/EditAssignPartner"));
 const TeamMember = React.lazy(() => import("./views/Team/TeamMember"));
-const CustomerMember = React.lazy(() =>
-  import("./views/Tables/CustomerMember")
-);
-const AssignPartnerMember = React.lazy(() =>
-  import("./views/Tables/AssignPartnerMember")
-);
-const PendingOrderMember = React.lazy(() =>
-  import("./views/Tables/PendingOrderMember")
-);
-const TransactionMember = React.lazy(() =>
-  import("./views/Tables/TransactionMember")
-);
+const CustomerMember = React.lazy(() => import("./views/Tables/Customers/CustomerMember"));
+const AssignPartnerMember = React.lazy(() =>import("./views/Tables/AssignPartners/AssignPartnerMember"));
+const PendingOrderMember = React.lazy(() =>import("./views/Tables/PendingOrders/PendingOrderMember"));
+const TransactionMember = React.lazy(() =>import("./views/Tables/Transactions/TransactionMember"));
 // const TeamEditMember = React.lazy(() => import('./views/Team/TeamEditMember'));
 const User = React.lazy(() => import("./views/Users/User"));
 
