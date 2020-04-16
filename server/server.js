@@ -16,9 +16,18 @@ app.use(
 // const bodyParser = require('body-parser');  
 
 var Users = require('./Users')
-var Customer = require('./Customer')
+var Customers = require('./Customers')
+var Partners = require('./Partners')
+var PendingOrders = require('./PendingOrders')
+var Transactions = require('./Transactions')
+var AssignPartners = require('./AssignPartners')
+
 app.use('/users', Users)
-app.use('/customer', Customer)
+app.use('/customers', Customers)
+app.use('/partners', Partners)
+app.use('/pendingOrders', PendingOrders)
+app.use('/transactions', Transactions)
+app.use('/assignPartners', AssignPartners)
 
 app.listen(port, function() {
   console.log('Server is running on port: ' + port)

@@ -8,7 +8,7 @@ const baseURL = "http://localhost";
 export const customerList = async (activePage, itemCountPerPage) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/users/customer-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    .get(`${baseURL}:5000/customers/customer-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -32,7 +32,7 @@ export const customerList = async (activePage, itemCountPerPage) => {
 export const PendingOrderList = async (activePage, itemCountPerPage) => {
     let data, count;
     await axios
-      .get(`${baseURL}:5000/users/pendingorder-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(`${baseURL}:5000/pendingOrders/pendingorder-list?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -54,7 +54,7 @@ export const PendingOrderList = async (activePage, itemCountPerPage) => {
 export const TransactionList = async (activePage, itemCountPerPage) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/users/transaction-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    .get(`${baseURL}:5000/transactions/transaction-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -76,7 +76,7 @@ export const TransactionList = async (activePage, itemCountPerPage) => {
 export const AssignPartnerList = async (activePage, itemCountPerPage) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/users/assign-partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    .get(`${baseURL}:5000/assignPartners/assign-partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -98,7 +98,7 @@ export const AssignPartnerList = async (activePage, itemCountPerPage) => {
 export const searchCust = async (searchCustomer) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&customer_mobile_no=${searchCustomer.customer_mobile_no}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&CreatedAt=${searchCustomer.CreatedAt}&status=${searchCustomer.status}`,{
+    get(`http://localhost:5000/customers/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&customer_mobile_no=${searchCustomer.customer_mobile_no}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&CreatedAt=${searchCustomer.CreatedAt}&status=${searchCustomer.status}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -115,7 +115,7 @@ export const searchCust = async (searchCustomer) => {
 export const searchPendingOrder = async (searchPending) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/pendingorder-search?customer_souls_id=${searchPending.customer_souls_id}&customer_name=${searchPending.customer_name}&Slot_Time=${searchPending.Slot_Time}&Slot_Date=${searchPending.Slot_Date}&massage_duration=${searchPending.massage_duration}&pincode=${searchPending.pincode}&CreatedAt=${searchPending.CreatedAt}&is_order_confirmed=${searchPending.is_order_confirmed}&merchant_transaction_id=${searchPending.merchant_transaction_id}&total_order_amount=${searchPending.total_order_amount}`,{
+    get(`http://localhost:5000/pendingOrders/pendingorder-search?customer_souls_id=${searchPending.customer_souls_id}&customer_name=${searchPending.customer_name}&Slot_Time=${searchPending.Slot_Time}&Slot_Date=${searchPending.Slot_Date}&massage_duration=${searchPending.massage_duration}&pincode=${searchPending.pincode}&CreatedAt=${searchPending.CreatedAt}&is_order_confirmed=${searchPending.is_order_confirmed}&merchant_transaction_id=${searchPending.merchant_transaction_id}&total_order_amount=${searchPending.total_order_amount}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -132,7 +132,7 @@ export const searchPendingOrder = async (searchPending) => {
 export const searchTransaction = async (searchTrans) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/transaction-search?customer_souls_id=${searchTrans.customer_souls_id}&customer_name=${searchTrans.customer_name}&merchant_transaction_id=${searchTrans.merchant_transaction_id}&total_order_amount=${searchTrans.total_order_amount}&Slot_Time=${searchTrans.Slot_Time}&Slot_Date=${searchTrans.Slot_Date}&massage_duration=${searchTrans.massage_duration}&pincode=${searchTrans.pincode}&CreatedAt=${searchTrans.CreatedAt}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_id=${searchTrans.payment_gateway_id}`,{
+    get(`http://localhost:5000/transactions/transaction-search?customer_souls_id=${searchTrans.customer_souls_id}&customer_name=${searchTrans.customer_name}&merchant_transaction_id=${searchTrans.merchant_transaction_id}&total_order_amount=${searchTrans.total_order_amount}&Slot_Time=${searchTrans.Slot_Time}&Slot_Date=${searchTrans.Slot_Date}&massage_duration=${searchTrans.massage_duration}&pincode=${searchTrans.pincode}&CreatedAt=${searchTrans.CreatedAt}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_id=${searchTrans.payment_gateway_id}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -149,7 +149,7 @@ export const searchTransaction = async (searchTrans) => {
 export const searchAssignPart = async (searchAssignPartner) => {
   let data = []
   await axios.
-    get(`http://localhost:5000/users/assign-partner-search?customer_souls_id=${searchAssignPartner.customer_souls_id}&customer_name=${searchAssignPartner.customer_name}&Slot_Time=${searchAssignPartner.Slot_Time}&Slot_Date=${searchAssignPartner.Slot_Date}&partner_souls_id=${searchAssignPartner.partner_souls_id}&partner_name=${searchAssignPartner.partner_name}&partner_mobileno=${searchAssignPartner.partner_mobileno}&CreatedAt=${searchAssignPartner.CreatedAt}&status=${searchAssignPartner.status}`,{
+    get(`http://localhost:5000/assignPartners/assign-partner-search?customer_souls_id=${searchAssignPartner.customer_souls_id}&customer_name=${searchAssignPartner.customer_name}&Slot_Time=${searchAssignPartner.Slot_Time}&Slot_Date=${searchAssignPartner.Slot_Date}&partner_souls_id=${searchAssignPartner.partner_souls_id}&partner_name=${searchAssignPartner.partner_name}&partner_mobileno=${searchAssignPartner.partner_mobileno}&CreatedAt=${searchAssignPartner.CreatedAt}&status=${searchAssignPartner.status}`,{
       headers: {
         token: localStorage.getItem("token")
       }
@@ -167,7 +167,7 @@ export const updateCustomer = updatedUser => {
   console.log("axios updated User worked");
   return axios
     .put(
-      `${baseURL}:5000/users/update-customer`,
+      `${baseURL}:5000/customers/update-customer`,
       {
         customer_name: updatedUser.customer_name,
         customer_mobile_no: updatedUser.customer_mobile_no,
@@ -197,7 +197,7 @@ export const updateTransaction = updatedUser => {
   console.log("axios updated transaction worked");
   return axios
     .put(
-      `${baseURL}:5000/users/update-transaction`,
+      `${baseURL}:5000/transactions/update-transaction`,
       {
         number_of_therapist: updatedUser.number_of_therapist,
         therapist_gender: updatedUser.therapist_gender,
@@ -235,7 +235,7 @@ export const updateAssignPartner = updatedUser => {
   console.log("axios updated User worked");
   return axios
     .put(
-      `${baseURL}:5000/users/update-assign-partner`,
+      `${baseURL}:5000/assignPartners/update-assign-partner`,
       {
         partner_souls_id: updatedUser.partner_souls_id,
         partner_name: updatedUser.partner_name,
@@ -263,7 +263,7 @@ export const registerPartner = (newPartner) => {
   console.log(newPartner.partner_name);
   console.log(newPartner.Onboard_Date);
   return axios
-    .post(`${baseURL}:5000/users/registerPartner`, {
+    .post(`${baseURL}:5000/partners/registerPartner`, {
       partner_name: newPartner.partner_name,
       partner_email: newPartner.partner_email,
       partner_mobileno: newPartner.partner_mobileno,
@@ -291,7 +291,7 @@ export const updatePartner = updatedPartner => {
   // console.log(url)
   return axios
     .put(
-      `${baseURL}:5000/users/update-partner`,
+      `${baseURL}:5000/partners/update-partner`,
       {
         partner_name: updatedPartner.partner_name,
         partner_email: updatedPartner.partner_email,
@@ -326,7 +326,7 @@ export const updatePartner = updatedPartner => {
 export const partnerList = async (activePage, itemCountPerPage) => {
     let data, count;
     await axios
-      .get(`${baseURL}:5000/users/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(`${baseURL}:5000/partners/partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -350,7 +350,7 @@ export const partnerList = async (activePage, itemCountPerPage) => {
   export const searchPartner = async (searchUser) => {
     let data = []
     await axios.
-      get(`http://localhost:5000/users/search-partner?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&pincode=${searchUser.pincode}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&partner_gender=${searchUser.partner_gender}`,{
+      get(`http://localhost:5000/partners/search-partner?partner_id=${searchUser.partner_id}&partner_name=${searchUser.partner_name}&partner_email=${searchUser.partner_email}&partner_mobileno=${searchUser.partner_mobileno}&pincode=${searchUser.pincode}&Rate=${searchUser.Rate}&Commission_Type=${searchUser.Commission_Type}&UpdatedAt=${searchUser.UpdatedAt}&CreatedAt=${searchUser.CreatedAt}&partner_gender=${searchUser.partner_gender}`,{
         headers: {
           token: localStorage.getItem("token")
         }
