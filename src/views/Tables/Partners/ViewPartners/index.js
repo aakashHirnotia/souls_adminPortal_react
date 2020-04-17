@@ -168,7 +168,7 @@ class ViewPartners extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th scope="col">SOULS ID</th>
+                      <th scope="col">Partner's ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>

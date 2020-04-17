@@ -42,7 +42,7 @@ class CommunicationTempelate extends Component {
   }
 
   componentWillMount(){
-    this.setState({isEditable: window.location.pathname.includes('/edit-comm-tempelate')})
+    this.setState({isEditable: window.location.pathname.includes('/edit-communication-tempelate')})
   }
   
   componentDidMount(){
@@ -80,10 +80,10 @@ class CommunicationTempelate extends Component {
       typeError = "Type can't sbe empty";
     }
     if (!this.state.trigger_time) {
-      trigger_timeError = "Trigger Time can't be empty";
+      trigger_timeError = "Choose Trigger Time";
     }
     if (!this.state.trigger_for) {
-      trigger_forError = "Trigger For can't be empty";
+      trigger_forError = "Choose Trigger For";
     }
     if (!this.state.smsContent) {
       smsContentError = "SMS Content can't be empty";
@@ -139,7 +139,7 @@ class CommunicationTempelate extends Component {
           status: this.state.status
         };
         updateCommTempelate(updatedCommTempelate).then(res => {
-          this.props.history.push(`/admin/viewCommunicationTempelate`);
+          this.props.history.push(`/admin/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -159,7 +159,7 @@ class CommunicationTempelate extends Component {
             status: this.state.status
         };
         createCommTempelate(newCommTempelate).then(res => {
-          this.props.history.push(`/admin/viewCommunicationTempelate`);
+          this.props.history.push(`/admin/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -182,7 +182,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/viewCommunicationTempelate">
+                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -196,7 +196,7 @@ class CommunicationTempelate extends Component {
                       <Input
                         type="text"
                         id="type"
-                        placeholder="type"
+                        placeholder="Type"
                         name="type"
                         value={this.state.type}
                         onChange={this.onChange}
@@ -251,7 +251,7 @@ class CommunicationTempelate extends Component {
                       <Input
                         type="textarea"
                         id="subject"
-                        placeholder="subject"
+                        placeholder="Subject"
                         name="subject"
                         value={this.state.subject}
                         onChange={this.onChange}
@@ -334,7 +334,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/viewCommunicationTempelate">
+                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
                   Back
                 </a>
               </button>

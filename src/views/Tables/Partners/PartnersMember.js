@@ -5,7 +5,7 @@ import { PartnerData} from "../Datas";
 
 const Label = {
     partner_id: "ID",
-    partner_souls_id: "SOULS_ID",
+    partner_souls_id: "Partners_ID",
     partner_name: "Name",
     partner_email: "Email",
     partner_mobileno: "Mobile No.",

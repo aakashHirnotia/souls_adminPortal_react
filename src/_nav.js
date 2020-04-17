@@ -76,7 +76,7 @@ export default {
         },
         {
           name: "Communication Tempelate",
-          url: "/admin/viewCommunicationTempelate",
+          url: "/admin/CommunicationTempelate",
           icon: "icon-cursor",
         },
       ],

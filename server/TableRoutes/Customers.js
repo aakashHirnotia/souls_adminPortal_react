@@ -97,7 +97,7 @@ customers.put("/update-customer", (req, res) => {
         console.log(e);
         res.status(500).send(e);
       });
-    console.log(userData.customer_name);
+    console.log(userData.customer_name + userData.registrated_source);
   });
 
 

@@ -18,7 +18,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/communication/tempelate/list??page=${req.query.page}&limit=${req.query.limit}&templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
+        `${baseURL}:8000/communication/template/list??page=${req.query.page}&limit=${req.query.limit}&templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
@@ -71,7 +71,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     };
   
     axios
-      .post(`${baseURL}:8000/communication/tempelate/create`, Data, {
+      .post(`${baseURL}:8000/communication/template/create`, Data, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },

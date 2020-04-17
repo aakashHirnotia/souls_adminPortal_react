@@ -4,7 +4,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { customerData, SetCustomerData } from "../../Datas";
 import Pagination from "react-js-pagination";
 import CustomerRow from "./CustomerRow";
-import { customerList, searchCust } from "./../../Functions";
+import { customerList} from "./../../Functions";
 import queryString from "query-string";
 
   

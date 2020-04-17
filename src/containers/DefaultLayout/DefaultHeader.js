@@ -79,7 +79,7 @@ class DefaultHeader extends Component {
 
         <Nav className="ml-auto" navbar>
           <UncontrolledDropdown nav direction="down">
-            <WebSocketInit />
+            {/* <WebSocketInit /> */}
           </UncontrolledDropdown>
 
           {/* <NavItem className="d-md-down-none">

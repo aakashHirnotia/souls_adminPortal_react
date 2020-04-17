@@ -15,7 +15,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { CommTempelateData, SetCommTempelateData } from "../Data";
 import Pagination from "react-js-pagination";
 import { communicationTempelateList, searchCommunicationTempelate } from "../../AdminFunctions";
-import CommunicationTempelateRow from './ViewCommunicationTempelateRow'
+import ViewCommunicationTempelateRow from './ViewCommunicationTempelateRow'
 import queryString from "query-string";
 
 class ViewCommunicationTempelate extends Component {
@@ -91,7 +91,7 @@ class ViewCommunicationTempelate extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/admin/viewCommunicationTempelate" + "?" + `${queryStr}`
+    window.location.href = "/admin/CommunicationTempelate" + "?" + `${queryStr}`
   };
 
   handlePageChange = (page) => {
@@ -132,7 +132,7 @@ class ViewCommunicationTempelate extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/admin/viewCommunicationTempelate");
+    this.props.history.push("/admin/CommunicationTempelate");
   };
 
   render() {
@@ -151,7 +151,7 @@ class ViewCommunicationTempelate extends Component {
                   type="submit"
                   className="btn btn-outline-primary  btn-sm"
                   onClick={this.clearFilter}
-                  style={{ position: "absolute", right: "120px" }}
+                  style={{ position: "absolute", right: "135px" }}
                 >
                   Clear Filter
                 </button>
@@ -160,7 +160,7 @@ class ViewCommunicationTempelate extends Component {
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
                   >
-                    Create
+                    Create Template
                   </button>
                 </Link>
               </CardHeader>
@@ -319,7 +319,7 @@ class ViewCommunicationTempelate extends Component {
                         {this.state.data &&
                           this.state.data.map((communicationTempelate, index) => (
                             // {teamList.map((communicationTempelate, index) =>
-                            <CommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
+                            <ViewCommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
                           ))}
                       </React.Fragment>
                     ) : (

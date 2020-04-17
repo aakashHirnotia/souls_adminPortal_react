@@ -67,9 +67,9 @@ partners.get("/partner-list", (req, res) => {
       pincode: req.body.pincode,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      // Onboard_Date: req.body.Onboard_Date,
-      created_by: req.body.created_by,
-      updated_by: req.body.updated_by,
+      Onboard_Date: req.body.Onboard_Date,
+      // created_by: req.body.created_by,
+      // updated_by: req.body.updated_by,
       rate: req.body.rate,
       commission_type: req.body.commission_type,
       partner_gender: req.body.partner_gender,
@@ -93,9 +93,7 @@ partners.get("/partner-list", (req, res) => {
       });
   
     console.log("Register request received in node");
-    console.log(
-      "Name: " + partnerData.partner_name + " " + partnerData.partner_address
-    );
+    console.log(partnerData.data );
   });
   
   //update partner
@@ -109,8 +107,8 @@ partners.get("/partner-list", (req, res) => {
       pincode: req.body.pincode,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      created_by: req.body.created_by,
-      updated_by: req.body.updated_by,
+      // created_by: req.body.created_by,
+      // updated_by: req.body.updated_by,
       rate: req.body.rate,
       partner_gender: req.body.partner_gender,
       commission_type: req.body.commission_type,
