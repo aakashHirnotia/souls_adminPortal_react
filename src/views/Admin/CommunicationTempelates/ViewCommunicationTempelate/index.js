@@ -15,7 +15,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import { CommTempelateData, SetCommTempelateData } from "../Data";
 import Pagination from "react-js-pagination";
 import { communicationTempelateList, searchCommunicationTempelate } from "../../AdminFunctions";
-import CommunicationTempelateRow from './ViewCommunicationTempelateRow'
+import ViewCommunicationTempelateRow from './ViewCommunicationTempelateRow'
 import queryString from "query-string";
 
 class ViewCommunicationTempelate extends Component {
@@ -38,80 +38,80 @@ class ViewCommunicationTempelate extends Component {
       errors: {}
     };
 
-  async componentDidMount() {
-    let url = this.props.location.search;
-    let query = queryString.parse(url);
-    console.log(query);
-    await this.handleQuery(query);
-    // const dataRecieved = await communicationTempelateList(
-    //   this.state.activePage,
-    //   this.state.itemsCountPerPage
-    // );
-    // SetCommTempelateData(dataRecieved.data);
-    // const newData = dataRecieved.data
-    // this.setState({ data: newData, count: dataRecieved.count});
-  }
-
-  async UNSAFE_componentWillReceiveProps(nP) {
-    let url = nP.location.search;
-    let query = queryString.parse(url);
-    console.log("PARSED")
-    console.log(query);
-    await this.handleQuery(query);
-  }
-
-  handleQuery = async (query) => {
-    query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
-    query["limit"] = 10;
-    const dataRecieved = await communicationTempelateList(query);
-    SetCommTempelateData(dataRecieved.data);
-    const newData = dataRecieved.data;
-    this.setState({
-      data: newData,
-      count: dataRecieved.count,
-      query,
-      isFetching: false,
-    });
-  };
-
-  onChange = (e) => {
-    const query = this.state.query;
-    query[e.target.name] = e.target.value;
-    this.setState({ query });
-  };
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    const query = this.state.query;
-    query["page"] = 1;
-    query["limit"] = 10;
-    let queryStr = "";
-    Object.keys(query).forEach((o) => {
-      if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
-    });
-    queryStr = queryStr.replace(queryStr.length - 1, "");
-    // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/admin/viewCommunicationTempelate" + "?" + `${queryStr}`
-  };
-
-  handlePageChange = (page) => {
-    // let queryStr = "";
-    // Object.keys(this.state.query).forEach((o) => {
-    //   if(o=='page')queryStr += `${o}=${page}&`;
-    //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
-    // });
-    // queryStr = queryStr.replace(queryStr.length - 1, "");
-    // console.log(queryStr);
-    // window.location.href = "/team/list" + "?" + `${queryStr}`;
-    if (window.location.pathname.includes("?")) {
-      // this.props.history.push(window.location.pathname + `page=${page}`);
-      window.location.href =window.location.pathname + `page=${page}`
+  
+    async componentDidMount() {
+      let url = this.props.location.search;
+      url = url.slice(1)
+      console.log(url)
+  
+      url = window.atob(url)
+      console.log(url)
+      let query = queryString.parse(url);
+      console.log(query);
+      await this.handleQuery(query);
     }
-    else {
-      window.location.href = window.location.pathname + "?" + `page=${page}`
-      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+
+    async UNSAFE_componentWillReceiveProps(nP) {
+      let url = nP.location.search;
+      url = url.slice(1)
+      console.log(url)
+  
+      url = window.atob(url)
+      console.log(url)
+      let query = queryString.parse(url);
+      console.log("PARSED")
+      console.log(query);
+      await this.handleQuery(query);
     }
-  };
+
+    handleQuery = async (query) => {
+      query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
+      query["limit"] = 10;
+      const dataRecieved = await communicationTempelateList(query);
+      console.log(dataRecieved.data)
+      SetCommTempelateData(dataRecieved.data);
+      const newData = dataRecieved.data;
+      this.setState({
+        data: newData,
+        count: dataRecieved.count,
+        query,
+        isFetching: false,
+      });
+    };
+    onChange = (e) => {
+      const query = this.state.query;
+      query[e.target.name] = e.target.value;
+      this.setState({ query });
+    };
+  
+
+    onSubmit = (e) => {
+      e.preventDefault();
+      const query = this.state.query;
+      query["page"] = 1;
+      query["limit"] = 10;
+      let queryStr = "";
+      Object.keys(query).forEach((o) => {
+        if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+      });
+      queryStr = queryStr.replace(queryStr.length - 1, "");
+      // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+      window.location.href = "/admin/CommunicationTempelate" +"?" + btoa(`${queryStr}`)
+      console.log(btoa("/admin/CommunicationTempelate" + "?" + `${queryStr}`))
+    };
+  
+
+    handlePageChange = (page) => {
+      if (window.location.pathname.includes("?")) {
+        // this.props.history.push(window.location.pathname + `page=${page}`);
+        window.location.href =window.location.pathname + btoa(`page=${page}`)
+        console.log(btoa(window.location.pathname + `page=${page}`))
+      }
+      else {
+        console.log(btoa(window.location.pathname + `page=${page}`))
+        window.location.href = window.location.pathname + "?" + btoa(`page=${page}`)
+      }
+    };
 
   // handlePageChange = async (pageNumber) => {
   //   console.log(`pageNumber is ${pageNumber}`);
@@ -132,7 +132,7 @@ class ViewCommunicationTempelate extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/admin/viewCommunicationTempelate");
+    this.props.history.push("/admin/CommunicationTempelate");
   };
 
   render() {
@@ -151,7 +151,7 @@ class ViewCommunicationTempelate extends Component {
                   type="submit"
                   className="btn btn-outline-primary  btn-sm"
                   onClick={this.clearFilter}
-                  style={{ position: "absolute", right: "120px" }}
+                  style={{ position: "absolute", right: "135px" }}
                 >
                   Clear Filter
                 </button>
@@ -160,7 +160,7 @@ class ViewCommunicationTempelate extends Component {
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
                   >
-                    Create
+                    Create Template
                   </button>
                 </Link>
               </CardHeader>
@@ -319,7 +319,7 @@ class ViewCommunicationTempelate extends Component {
                         {this.state.data &&
                           this.state.data.map((communicationTempelate, index) => (
                             // {teamList.map((communicationTempelate, index) =>
-                            <CommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
+                            <ViewCommunicationTempelateRow key={index} communicationTempelate={communicationTempelate} />
                           ))}
                       </React.Fragment>
                     ) : (

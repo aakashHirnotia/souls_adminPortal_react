@@ -33,19 +33,29 @@ class ViewPendingOrder extends Component {
 
       async componentDidMount() {
         let url = this.props.location.search;
+        url = url.slice(1)
+        console.log(url)
+    
+        url = window.atob(url)
+        console.log(url)
         let query = queryString.parse(url);
         console.log(query);
         await this.handleQuery(query);
       }
-  
+    
       async UNSAFE_componentWillReceiveProps(nP) {
         let url = nP.location.search;
+        url = url.slice(1)
+        console.log(url)
+    
+        url = window.atob(url)
+        console.log(url)
         let query = queryString.parse(url);
         console.log("PARSED")
         console.log(query);
         await this.handleQuery(query);
       }
-  
+    
       handleQuery = async (query) => {
         query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
         query["limit"] = 10;
@@ -66,6 +76,7 @@ class ViewPendingOrder extends Component {
         this.setState({ query });
       };
     
+    
       onSubmit = (e) => {
         e.preventDefault();
         const query = this.state.query;
@@ -76,15 +87,21 @@ class ViewPendingOrder extends Component {
           if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
         });
         queryStr = queryStr.replace(queryStr.length - 1, "");
-        window.location.href = "/pendingOrder" + "?" + `${queryStr}`
+        // this.props.history.push("/team/list" + "?" + `${queryStr}`);
+        window.location.href = "/pendingOrder" +"?" + btoa(`${queryStr}`)
+        console.log(btoa("/pendingOrder" + "?" + `${queryStr}`))
       };
+    
     
       handlePageChange = (page) => {
         if (window.location.pathname.includes("?")) {
-          window.location.href =window.location.pathname + `page=${page}`
+          // this.props.history.push(window.location.pathname + `page=${page}`);
+          window.location.href =window.location.pathname + btoa(`page=${page}`)
+          console.log(btoa(window.location.pathname + `page=${page}`))
         }
         else {
-          window.location.href = window.location.pathname + "?" + `page=${page}`
+          console.log(btoa(window.location.pathname + `page=${page}`))
+          window.location.href = window.location.pathname + "?" + btoa(`page=${page}`)
         }
       };
     

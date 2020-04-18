@@ -318,21 +318,34 @@ class ViewTeam extends React.Component {
                           ))}
                       </React.Fragment>
                     ) : (
-                      <div>
+                      <tr>
                         {this.state.isFetching ? (
                           <div>Loading...</div>
                         ) : (
-                          <div
-                            style={{
-                              margin: "auto",
-                              color: "red",
-                              width: "100%",
-                            }}
-                          >
-                            NO RECORDS FOUND
-                          </div>
+                          <React.Fragment
+                              style={{
+                                margin: "auto",
+                                color: "red",
+                                width: "100%",
+                                textAlign:"center"
+                              }} >
+                              {/* <td></td>
+                              <td></td> */}
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td className="not-found"></td>
+                              <td className="not-found">NO RECORDS FOUND</td>
+                              <td className="not-found"></td>
+                              <td></td>
+                              <td></td>
+                              {/* <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td> */}
+                            </React.Fragment>
                         )}
-                      </div>
+                      </tr>
                     )}
                   </tbody>
                 </Table>

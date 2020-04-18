@@ -42,6 +42,9 @@ class CommunicationTempelate extends Component {
   }
 
   componentWillMount(){
+    if(CommTempelateData.length == 0){
+        window.location.href = "/admin/CommunicationTempelate";
+    }
     this.setState({isEditable: window.location.pathname.includes('/edit-communication-tempelate')})
   }
   
@@ -130,7 +133,6 @@ class CommunicationTempelate extends Component {
       console.log("isValid = "+isValid)
       if (isValid) {
         const updatedCommTempelate = {
-          communicationTempelateID: this.state.communicationTempelateID,
           type: this.state.type,
           trigger_time: this.state.trigger_time,
           trigger_for: this.state.trigger_for,
@@ -151,6 +153,7 @@ class CommunicationTempelate extends Component {
       const isValid = this.validate();
       if (isValid) {
         const newCommTempelate = {
+            communicationTempelateID: this.state.communicationTempelateID,
             type: this.state.type,
             trigger_time: this.state.trigger_time,
             trigger_for: this.state.trigger_for,
@@ -183,7 +186,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="createBtn" href="/admin/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -335,7 +338,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="editBtn" href="/admin/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -349,7 +352,7 @@ class CommunicationTempelate extends Component {
                       <Input
                         type="text"
                         id="type"
-                        placeholder="type"
+                        placeholder="Type"
                         name="type"
                         value={this.state.type}
                         onChange={this.onChange}
@@ -404,7 +407,7 @@ class CommunicationTempelate extends Component {
                       <Input
                         type="textarea"
                         id="subject"
-                        placeholder="subject"
+                        placeholder="Subject"
                         name="subject"
                         value={this.state.subject}
                         onChange={this.onChange}

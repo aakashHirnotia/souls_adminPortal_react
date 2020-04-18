@@ -1,10 +1,10 @@
 
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { CommTempelateData, SetCommTempelateData } from "../Data";
-import Pagination from "react-js-pagination";
-import { communicationTempelateList, searchCommunicationTempelate } from "../../AdminFunctions";
+// import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
+// import { CommTempelateData, SetCommTempelateData } from "../Data";
+// import Pagination from "react-js-pagination";
+// import { communicationTempelateList, searchCommunicationTempelate } from "../../AdminFunctions";
 
 
 class ViewCommunicationTempelateRow extends Component {

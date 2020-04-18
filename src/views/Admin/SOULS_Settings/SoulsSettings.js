@@ -42,7 +42,7 @@ class SoulsSettingsRow extends Component {
             <i className="fa fa-pencil" data-toggle="tooltip" title="Update Settings"></i>
           </Link>
         </td>
-        <th>{this.state.soulsSettings.souls_setting_id}</th>
+        {/* <th>{this.state.soulsSettings.souls_setting_id}</th> */}
         <th>{this.state.soulsSettings.type}</th>
         <th>{this.state.soulsSettings.url}</th>
         <th>{this.state.soulsSettings.description}</th>
@@ -142,7 +142,7 @@ class SoulsSettings extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>  
-                      <th scope="col">ID</th>
+                      {/* <th scope="col">ID</th> */}
                       <th scope="col">Type</th>
                       <th scope="col">URL</th>
                       <th scope="col">Description</th>

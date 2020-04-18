@@ -46,6 +46,11 @@ class ViewPartners extends Component {
   // }
   async componentDidMount() {
     let url = this.props.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log(query);
     await this.handleQuery(query);
@@ -53,11 +58,17 @@ class ViewPartners extends Component {
 
   async UNSAFE_componentWillReceiveProps(nP) {
     let url = nP.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log("PARSED")
     console.log(query);
     await this.handleQuery(query);
   }
+
   handleQuery = async (query) => {
     query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
     query["limit"] = 10;
@@ -72,12 +83,12 @@ class ViewPartners extends Component {
       isFetching: false,
     });
   };
-
   onChange = (e) => {
     const query = this.state.query;
     query[e.target.name] = e.target.value;
     this.setState({ query });
   };
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -90,25 +101,20 @@ class ViewPartners extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/tables/ViewPartners" + "?" + `${queryStr}`
+    window.location.href = "/tables/ViewPartners" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/tables/ViewPartners" + "?" + `${queryStr}`))
   };
 
+
   handlePageChange = (page) => {
-    // let queryStr = "";
-    // Object.keys(this.state.query).forEach((o) => {
-    //   if(o=='page')queryStr += `${o}=${page}&`;
-    //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
-    // });
-    // queryStr = queryStr.replace(queryStr.length - 1, "");
-    // console.log(queryStr);
-    // window.location.href = "/team/list" + "?" + `${queryStr}`;
     if (window.location.pathname.includes("?")) {
       // this.props.history.push(window.location.pathname + `page=${page}`);
-      window.location.href =window.location.pathname + `page=${page}`
+      window.location.href =window.location.pathname + btoa(`page=${page}`)
+      console.log(btoa(window.location.pathname + `page=${page}`))
     }
     else {
-      window.location.href = window.location.pathname + "?" + `page=${page}`
-      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+      console.log(btoa(window.location.pathname + `page=${page}`))
+      window.location.href = window.location.pathname + "?" + btoa(`page=${page}`)
     }
   };
 
@@ -168,7 +174,7 @@ class ViewPartners extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th scope="col">SOULS ID</th>
+                      <th scope="col">Partner's ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Mobile No</th>

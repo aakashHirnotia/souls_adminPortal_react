@@ -25,6 +25,7 @@ const baseURL = "http://localhost";
 
 export const register = (newUser) => {
   console.log("axios worked");
+  console.log("date: " + newUser.joining)
   return axios
     .post(
       `${baseURL}:5000/users/register`,
@@ -47,12 +48,15 @@ export const register = (newUser) => {
       }
     )
     .then((response) => {
-      console.log("Registerd");
-      // console.log(response)
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "Team Member Created", "success");
+      }
     })
     .catch((e) =>
       displayNotification("Error", "Internal Server Error", "danger")
     );
+    
 };
 
 // export const search = async (searchUser) => {

@@ -12,15 +12,15 @@ const baseURL = "http://3.6.243.136";
 users.post("/register", (req, res) => {
   const today = new Date();
   const userData = {
-    firstname: req.body.first_name || "AShish",
-    lastname: req.body.last_name || "kumar",
-    email: req.body.email || "sds@af.af",
-    password: req.body.password || "123456789",
+    firstname: req.body.first_name ,
+    lastname: req.body.last_name ,
+    email: req.body.email,
+    password: req.body.password ,
     joining: req.body.joining,
-    address: req.body.address || "asdgfhgjk",
-    status: req.body.status || "inactive",
-    mobileno: req.body.mobile || "1234567789",
-    role: req.body.role || "admin",
+    address: req.body.address ,
+    status: req.body.status ,
+    mobileno: req.body.mobile ,
+    role: req.body.role ,
     gender: req.body.gender,
   };
   console.log(userData.firstname);
@@ -39,8 +39,6 @@ users.post("/register", (req, res) => {
       console.log(e);
       res.status(500).send(e);
     });
-  console.log("Register request received in node");
-  console.log("Name: " + userData.firstname + " address:" + userData.joining);
 });
 
 //Team Member Update
@@ -74,7 +72,7 @@ users.post("/update-member", (req, res) => {
       res.status(500).send(e);
     });
   console.log("Upadate memeber request received in node");
-  console.log("Name: " + userData.firstname);
+  console.log(userData.data);
 });
 
 //Login

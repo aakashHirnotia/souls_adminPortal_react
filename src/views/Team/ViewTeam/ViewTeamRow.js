@@ -79,7 +79,7 @@ class TeamRow extends Component {
         <td style={{ width: "10%" }}>{this.state.team.lastname}</td>
         <td>{this.state.team.email}</td>
         <td>{this.state.team.mobileno}</td>
-        <td style={{ width: "12%" }}>{this.state.team.Joining_Date}</td>
+        <td style={{ width: "12%" }}>{this.state.team.joining_date}</td>
         <td
           className={this.getIcon(this.state.team.status)}
           style={this.getColor(this.state.team.status)}

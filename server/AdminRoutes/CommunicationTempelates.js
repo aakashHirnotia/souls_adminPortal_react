@@ -18,7 +18,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/communication/tempelate/list??page=${req.query.page}&limit=${req.query.limit}&templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
+        `${baseURL}:8000/communication/template/list??page=${req.query.page}&limit=${req.query.limit}&templ_type=${req.query.templ_type}&trigger_time=${req.query.trigger_time}&trigger_for=${req.query.trigger_for}&sms_content=${req.query.sms_content}&subject=${req.query.subject}&email_content=${req.query.email_content}&status=${req.query.status}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
@@ -71,7 +71,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     };
   
     axios
-      .post(`${baseURL}:8000/communication/tempelate/create`, Data, {
+      .post(`${baseURL}:8000/communication/template/create`, Data, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
@@ -87,13 +87,15 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
         res.status(500).send(e);
       });
   
-    console.log("Register request received in node");
+    console.log("Communication Register recieved");
+    console.log(Data.email_content);
   });
   
   //update comm tempelate
   communicationTempelates.put("/updateCommTempelate", (req, res) => {
     const today = new Date();
     const Data = {
+      templ_id: req.body.communicationTempelateID,
       templ_type: req.body.type,
       trigger_time: req.body.trigger_time,
       trigger_for: req.body.trigger_for,
@@ -104,7 +106,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
     };
   
     axios
-      .put(`${baseURL}:8000/communication/tempelate/update`, Data, {
+      .put(`${baseURL}:8000/communication/template/update`, Data, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
@@ -120,6 +122,7 @@ communicationTempelates.get("/communicationTempelateList", (req, res) => {
         res.status(500).send(e);
       });
     console.log("Upadate memeber request received in node");
+    console.log(Data.email_content)
   });
   
   module.exports = communicationTempelates;

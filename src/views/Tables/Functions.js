@@ -199,7 +199,7 @@ export const AssignPartnerList = async (query) => {
 
 //Update Customer
 export const updateCustomer = updatedUser => {
-  console.log("axios updated User worked");
+  console.log("registratio source: "+ updatedUser.registrated_source);
   return axios
     .put(
       `${baseURL}:5000/customers/update-customer`,
@@ -300,6 +300,7 @@ export const updateAssignPartner = updatedUser => {
 export const registerPartner = (newPartner) => {
   console.log(newPartner.partner_name);
   console.log(newPartner.Onboard_Date);
+  console.log(newPartner.data)
   return axios
     .post(`${baseURL}:5000/partners/registerPartner`, {
       partner_name: newPartner.partner_name,
@@ -310,25 +311,26 @@ export const registerPartner = (newPartner) => {
       latitude: newPartner.latitude,
       longitude: newPartner.longitude,
       Onboard_Date: newPartner.Onboard_Date,
-      created_by: newPartner.created_by,
-      updated_by: newPartner.updated_by,
+      // created_by: newPartner.created_by,
+      // updated_by: newPartner.updated_by,
       rate: newPartner.rate,
       commission_type: newPartner.commission_type,
       partner_gender: newPartner.partner_gender
 
     }, {headers:{token:localStorage.getItem('token')}})
     .then((response) => {
-      if (response.status === 200) displayNotification("Success", "Regisration Successfully", "success");
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "New Partner Created Succesfully", "success");
+      }
     })
     .catch((e) => {
-      // window.alert("Error: " + e);
-      displayNotification("Error", "Internal Server Error", "danger");
+      displayNotification("Error", "Internal Server Error", "danger")
     });
 };
 
 export const updatePartner = updatedPartner => {
   console.log("axios updated User worked");
-  // console.log(url)
   return axios
     .put(
       `${baseURL}:5000/partners/update-partner`,
@@ -340,8 +342,8 @@ export const updatePartner = updatedPartner => {
         pincode: updatedPartner.pincode,
         latitude: updatedPartner.latitude,
         longitude: updatedPartner.longitude,
-        created_by: updatedPartner.created_by,
-        updated_by: updatedPartner.updated_by,
+        // created_by: updatedPartner.created_by,
+        // updated_by: updatedPartner.updated_by,
         rate: updatedPartner.rate,
         partner_gender: updatedPartner.partner_gender,
         commission_type: updatedPartner.commission_type
@@ -353,11 +355,13 @@ export const updatePartner = updatedPartner => {
       }
     )
     .then((response) => {
-      if (response.status === 200) displayNotification("Success", "Updated Successfully", "success");
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "Partner Updated Succesfully", "success");
+      }
     })
     .catch((e) => {
-      // window.alert("Error: " + e);
-      displayNotification("Error", "Internal Server Error", "danger");
+      displayNotification("Error", "Internal Server Error", "danger")
     });
 };
 

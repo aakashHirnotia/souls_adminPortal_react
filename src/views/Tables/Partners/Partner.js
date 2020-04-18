@@ -98,8 +98,8 @@ class Partner extends Component {
     let rateError = "";
     let commission_typeError = "";
     let Onboard_DateError = "";
-    let created_byError = "";
-    let updated_byError= "";
+    // let created_byError = "";
+    // let updated_byError= "";
     if (!this.state.name) {
       nameError = "Name can't be empty";
     }
@@ -133,12 +133,12 @@ class Partner extends Component {
     if (!this.state.Onboard_Date) {
       Onboard_DateError = "Onboard Date can't be empty";
     }
-    if (!this.state.updated_by) {
-      updated_byError = "Updated by can't be empty";
-    }
-    if (!this.state.created_by) {
-      created_byError = "Created by can't be empty";
-    }
+    // if (!this.state.updated_by) {
+    //   updated_byError = "Updated by can't be empty";
+    // }
+    // if (!this.state.created_by) {
+    //   created_byError = "Created by can't be empty";
+    // }
 
     if (
       nameError ||
@@ -148,8 +148,6 @@ class Partner extends Component {
       pincodeError ||
       latitudeError ||
       longitudeError ||
-      created_byError ||
-      updated_byError ||
       rateError ||
       commission_typeError ||
       genderError
@@ -162,8 +160,8 @@ class Partner extends Component {
         pincodeError,
         latitudeError,
         longitudeError,
-        created_byError,
-        updated_byError,
+        // created_byError,
+        // updated_byError,
         rateError,
         commission_typeError,
         genderError
@@ -288,9 +286,9 @@ class Partner extends Component {
             pincode: this.state.pincode,
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            // Onboard_Date: this.state.Onboard_Date,
-            created_by: this.state.created_by,
-            updated_by: this.state.updated_by,
+            Onboard_Date: this.state.Onboard_Date,
+            // created_by: this.state.created_by,
+            // updated_by: this.state.updated_by,
             rate: this.state.rate,
             commission_type: this.state.commission_type,
             partner_gender: this.state.gender
@@ -354,7 +352,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="email"
-                        placeholder="email"
+                        placeholder="Email"
                         name="email"
                         value={this.state.email}
                         onChange={this.onChange}
@@ -366,18 +364,20 @@ class Partner extends Component {
                   </div>
                   <div className="col-md-3">
                     <FormGroup>
-                        <Label htmlFor="address">Address</Label>
-                        <Input
-                            type="textarea"
-                            id="address"
-                            placeholder="Address"
-                            name="address"
-                            value={this.state.address}
-                            onChange={this.onChange}
-                        />
-                        <div style={{ fontSize: 10, color: "red" }}>
-                            {this.state.addressError}
-                        </div>
+                    <Label htmlFor="commission_type">Commission Type</Label>
+                      <select
+                        className="form-control"
+                        name="commission_type"
+                        value={this.state.commission_type}
+                        onChange={this.onChange}
+                      >
+                        <option value="" selected>{this.state.commission_type!==""?"Clear":"Select"}</option>
+                        <option>Percentage(%)</option>
+                        <option>Flat</option>
+                      </select>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.commission_typeError}
+                      </div>
                     </FormGroup>
                   </div>
                   <div className="col-md-3">
@@ -386,7 +386,7 @@ class Partner extends Component {
                         <Input
                             type="text"
                             id="mobileno"
-                            placeholder="mobileno"
+                            placeholder="Mobile No"
                             name="mobileno"
                             value={this.state.mobileno}
                             onChange={this.onChange}
@@ -404,7 +404,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="name"
-                        placeholder="latitude"
+                        placeholder="Latitude"
                         name="latitude"
                         value={this.state.latitude}
                         onChange={this.onChange}
@@ -420,13 +420,29 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="longitude"
-                        placeholder="longitude"
+                        placeholder="Longitude"
                         name="longitude"
                         value={this.state.longitude}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.longitudeError}
+                      </div>
+                    </FormGroup>
+                  </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="rate">Rate</Label>
+                      <Input
+                        type="text"
+                        id="rate"
+                        placeholder="Rate"
+                        name="rate"
+                        value={this.state.rate}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.rateError}
                       </div>
                     </FormGroup>
                   </div>
@@ -442,31 +458,15 @@ class Partner extends Component {
                         </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-2">
-                    <FormGroup>
-                        <Label htmlFor="updated_by">Updated By</Label>
-                        <Input
-                            type="text"
-                            id="updated_by"
-                            placeholder="updated_by"
-                            name="updated_by"
-                            value={this.state.updated_by}
-                            onChange={this.onChange}
-                        />
-                        <div style={{ fontSize: 10, color: "red" }}>
-                            {this.state.updated_byError}
-                        </div>
-                    </FormGroup>
-                  </div>
                 </div>
                 <FormGroup row className="my-0">
                   <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="pincode">Pincode</Label>
+                      <Label htmlFor="pincode">PIN Code</Label>
                       <Input
                         type="text"
                         id="pincode"
-                        placeholder="pincode"
+                        placeholder="Pincode"
                         name="pincode"
                         value={this.state.pincode}
                         onChange={this.onChange}
@@ -476,57 +476,7 @@ class Partner extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="rate">Rate</Label>
-                      <Input
-                        type="text"
-                        id="rate"
-                        placeholder="rate"
-                        name="rate"
-                        value={this.state.rate}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.rateError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                        <Label htmlFor="created_by">Created By</Label>
-                        <Input
-                            type="text"
-                            id="created_by"
-                            placeholder="created_by"
-                            name="created_by"
-                            value={this.state.created_by}
-                            onChange={this.onChange}
-                        />
-                        <div style={{ fontSize: 10, color: "red" }}>
-                            {this.state.created_byError}
-                        </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
-                    <FormGroup>
-                    <Label htmlFor="commission_type">Commission Type</Label>
-                      <select
-                        className="form-control"
-                        name="commission_type"
-                        value={this.state.commission_type}
-                        onChange={this.onChange}
-                      >
-                        <option></option>
-                        <option>Percentage(%)</option>
-                        <option>Flat</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.commission_typeError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="2">
+                  <Col xs="3">
                     <FormGroup>
                         <Label htmlFor="gender">Gender</Label>
                         <select
@@ -542,6 +492,22 @@ class Partner extends Component {
                         </select>
                         <div style={{ fontSize: 10, color: "red" }}>
                             {this.state.genderError}
+                        </div>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="6">
+                    <FormGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                            type="textarea" 
+                            id="address"
+                            placeholder="Address"
+                            name="address"
+                            value={this.state.address}
+                            onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.addressError}
                         </div>
                     </FormGroup>
                   </Col>
@@ -567,7 +533,7 @@ class Partner extends Component {
         <div>
           <Card>
             <CardHeader>
-              <strong>Update Partner</strong>
+              <strong>Update partner</strong>
               <button
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
@@ -602,7 +568,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="email"
-                        placeholder="email"
+                        placeholder="Email"
                         name="email"
                         value={this.state.email}
                         disabled={true}
@@ -635,7 +601,7 @@ class Partner extends Component {
                         <Input
                             type="text"
                             id="mobileno"
-                            placeholder="mobileno"
+                            placeholder="Mobile No"
                             name="mobileno"
                             value={this.state.mobileno}
                             onChange={this.onChange}
@@ -653,7 +619,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="name"
-                        placeholder="latitude"
+                        placeholder="Latitude"
                         name="latitude"
                         value={this.state.latitude}
                         onChange={this.onChange}
@@ -669,7 +635,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="longitude"
-                        placeholder="longitude"
+                        placeholder="Longitude"
                         name="longitude"
                         value={this.state.longitude}
                         onChange={this.onChange}
@@ -731,7 +697,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="pincode"
-                        placeholder="pincode"
+                        placeholder="Pincode"
                         name="pincode"
                         value={this.state.pincode}
                         onChange={this.onChange}
@@ -747,7 +713,7 @@ class Partner extends Component {
                       <Input
                         type="text"
                         id="rate"
-                        placeholder="rate"
+                        placeholder="Rate"
                         name="rate"
                         value={this.state.rate}
                         onChange={this.onChange}
@@ -766,7 +732,7 @@ class Partner extends Component {
                         value={this.state.commission_type}
                         onChange={this.onChange}
                       >
-                        <option></option>
+                        <option value="" selected>{this.state.commission_type!==""?"Clear":"Select"}</option>
                         <option>Percentage(%)</option>
                         <option>Flat</option>
                       </select>

@@ -32,21 +32,23 @@ class TeamHasRole extends Component {
 
   async componentDidMount() {
     let url = this.props.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log(query);
     await this.handleQuery(query);
-    // const dataRecieved = await teamHasRoleList(
-    //   this.state.activePage,
-    //   this.state.itemsCountPerPage
-    // );
-    // SetTeamHasRoleData(dataRecieved.data);
-    // const newData = dataRecieved.data
-    // this.setState({ data: newData, count: dataRecieved.count });
   }
 
-  
   async UNSAFE_componentWillReceiveProps(nP) {
     let url = nP.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log("PARSED")
     console.log(query);
@@ -57,6 +59,7 @@ class TeamHasRole extends Component {
     query["page"] = query["page"] !== "" ? Number(query["page"]) : 1;
     query["limit"] = 10;
     const dataRecieved = await teamHasRoleList(query);
+    console.log(dataRecieved.data)
     SetTeamHasRoleData(dataRecieved.data);
     const newData = dataRecieved.data;
     this.setState({
@@ -66,12 +69,12 @@ class TeamHasRole extends Component {
       isFetching: false,
     });
   };
-
   onChange = (e) => {
     const query = this.state.query;
     query[e.target.name] = e.target.value;
     this.setState({ query });
   };
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -84,9 +87,22 @@ class TeamHasRole extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/admin/teamHasRole" + "?" + `${queryStr}`
+    window.location.href = "/admin/teamHasRole" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/admin/teamHasRole" + "?" + `${queryStr}`))
   };
 
+
+  handlePageChange = (page) => {
+    if (window.location.pathname.includes("?")) {
+      // this.props.history.push(window.location.pathname + `page=${page}`);
+      window.location.href =window.location.pathname + btoa(`page=${page}`)
+      console.log(btoa(window.location.pathname + `page=${page}`))
+    }
+    else {
+      console.log(btoa(window.location.pathname + `page=${page}`))
+      window.location.href = window.location.pathname + "?" + btoa(`page=${page}`)
+    }
+  };
 
   
   clearFilter = () => {
@@ -94,7 +110,7 @@ class TeamHasRole extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/team/list");
+    this.props.history.push("/admin/teamHasRole");
   };
 
   render() {
