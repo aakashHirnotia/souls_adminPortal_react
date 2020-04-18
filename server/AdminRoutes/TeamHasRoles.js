@@ -14,7 +14,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
       role_name: req.body.role,
     };
     console.log("Role change request Received!");
-    console.log(userData.teamid + " " + userData.role);
+    console.log(userData.teamid + " " + userData.role_name);
   
     axios
       .put(`${baseURL}:8000/team/has-role/update`, userData, {
@@ -66,7 +66,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${req.query.limit}&teamid=${req.query.teamid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&teamhasroleid=${req.query.team_has_role_id}&status=${req.query.status}&createdat=${req.query.CreatedAt}&updatedat=${req.query.UpdatedAt}`,        {
+        `${baseURL}:8000/team/has-role/list?page=${req.query.page}&limit=${req.query.limit}&teamid=${req.query.teamid}&firstname=${req.query.first_name}&lastname=${req.query.last_name}&teamhasroleid=${req.query.team_has_role_id}&status=${req.query.status}&CreatedAt=${req.query.CreatedAt}&UpdatedAt=${req.query.UpdatedAt}`,        {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
           },
@@ -76,6 +76,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
         // console.log(" dfdfvfsd" +response)
         res.setHeader("total-count", `${response.headers["total-count"]}`);
         res.setHeader("hellp", "5");
+        console.log(response.data)
         res.status(response.status).send(
           JSON.stringify({
             data: { ...response.data },

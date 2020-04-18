@@ -301,10 +301,14 @@ export const registerPartner = (newPartner) => {
 
     }, {headers:{token:localStorage.getItem('token')}})
     .then((response) => {
-      console.log("Partner Registerd");
-      // console.log(response)
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "New Partner Created Succesfully", "success");
+      }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      displayNotification("Error", "Internal Server Error", "danger")
+    });
 };
 
 export const updatePartner = updatedPartner => {
@@ -333,11 +337,13 @@ export const updatePartner = updatedPartner => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
-      // console.log(response)
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "Partner Updated Succesfully", "success");
+      }
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger")
     });
 };
 

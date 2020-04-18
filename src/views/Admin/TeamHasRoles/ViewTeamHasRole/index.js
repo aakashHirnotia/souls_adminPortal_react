@@ -87,6 +87,24 @@ class TeamHasRole extends Component {
     window.location.href = "/admin/teamHasRole" + "?" + `${queryStr}`
   };
 
+  handlePageChange = (page) => {
+    // let queryStr = "";
+    // Object.keys(this.state.query).forEach((o) => {
+    //   if(o=='page')queryStr += `${o}=${page}&`;
+    //   if (this.state.query[o] != "") queryStr += `${o}=${this.state.query[o]}&`;
+    // });
+    // queryStr = queryStr.replace(queryStr.length - 1, "");
+    // console.log(queryStr);
+    // window.location.href = "/team/list" + "?" + `${queryStr}`;
+    if (window.location.pathname.includes("?")) {
+      // this.props.history.push(window.location.pathname + `page=${page}`);
+      window.location.href =window.location.pathname + `page=${page}`
+    }
+    else {
+      window.location.href = window.location.pathname + "?" + `page=${page}`
+      // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
+    }
+  };
 
   
   clearFilter = () => {
@@ -94,7 +112,7 @@ class TeamHasRole extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/team/list");
+    this.props.history.push("/admin/teamHasRole");
   };
 
   render() {

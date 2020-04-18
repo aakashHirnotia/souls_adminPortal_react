@@ -51,12 +51,12 @@ class CommunicationTempelate extends Component {
       const communicationTempelate = CommTempelateData.find( communicationTempelate => communicationTempelate.templ_id.toString() === this.props.match.params.id)
       this.setState({
         communicationTempelateID: communicationTempelate.templ_id,
-        type: communicationTempelate.type,
+        type: communicationTempelate.templ_type,
         trigger_time: communicationTempelate.trigger_time,
         trigger_for: communicationTempelate.trigger_for,
-        smsContent: communicationTempelate.smsContent,
+        smsContent: communicationTempelate.sms_content,
         subject: communicationTempelate.subject,
-        emailContent: communicationTempelate.emailContent,
+        emailContent: communicationTempelate.email_content,
         status: communicationTempelate.status
         
       })
@@ -130,6 +130,7 @@ class CommunicationTempelate extends Component {
       console.log("isValid = "+isValid)
       if (isValid) {
         const updatedCommTempelate = {
+          communicationTempelateID: this.state.communicationTempelateID,
           type: this.state.type,
           trigger_time: this.state.trigger_time,
           trigger_for: this.state.trigger_for,

@@ -35,11 +35,11 @@ export const teamHasRoleList = async (query) => {
       .get(
         `${baseURL}:5000/teamHasRoles/team-has-role-list?page=${query.page || ""}&limit=${
           query.limit || ""
-        }&teamid=${query.teamid || ""}&firstname=${
-          query.firstname || ""
-        }&lastname=${query.lastname || ""}&teamhasroleid=${query.team_has_role_id || ""}&status=${query.status || ""
-        }&createdat=${query.CreatedAt || ""
-        }&updatedat=${query.UpdatedAt || ""}`,
+        }&teamid=${query.teamid || ""}&first_name=${
+          query.first_name || ""
+        }&last_name=${query.last_name || ""}&team_has_role_id=${query.team_has_role_id || ""}&status=${query.status || ""
+        }&CreatedAt=${query.CreatedAt || ""
+        }&UpdatedAt=${query.UpdatedAt || ""}`,
       {  
         headers: {
           token: localStorage.getItem("token"),
@@ -213,10 +213,14 @@ export const teamHasRoleList = async (query) => {
         status: newCommTempelate.status  
       }, {headers:{token:localStorage.getItem('token')}})
       .then((response) => {
-        console.log("tempelate created");
-        // console.log(response)
+        if (response.status === 200) {
+          console.log("Created");
+          displayNotification("Success", "Communication Template Created", "success");
+        }
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        displayNotification("Error", "Internal Server Error", "danger")
+      );
   };
   
   export const updateCommTempelate = updatedCommTempelate => {
@@ -226,6 +230,7 @@ export const teamHasRoleList = async (query) => {
       .put(
         `${baseURL}:5000/communicationTempelates/updateCommTempelate`,
         {
+          communicationTempelateID: updatedCommTempelate.communicationTempelateID,
           type: updatedCommTempelate.type,
           trigger_time: updatedCommTempelate.trigger_time,
           trigger_for: updatedCommTempelate.trigger_for,
@@ -241,11 +246,13 @@ export const teamHasRoleList = async (query) => {
         }
       )
       .then((response) => {
-        if (response.status === 200) console.log("Updated");
-        // console.log(response)
+        if (response.status === 200) {
+          console.log("Created");
+          displayNotification("Success", "Communication Template Updated", "success");
+        }
       })
       .catch((e) => {
-        window.alert("Error: " + e);
+        displayNotification("Error", "Internal Server Error", "danger")
       });
   };
   

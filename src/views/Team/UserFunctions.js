@@ -48,8 +48,10 @@ export const register = (newUser) => {
       }
     )
     .then((response) => {
-      console.log("Registerd");
-      // console.log(response)
+      if (response.status === 200) {
+        console.log("Created");
+        displayNotification("Success", "Team Member Created", "success");
+      }
     })
     .catch((e) =>
       displayNotification("Error", "Internal Server Error", "danger")
