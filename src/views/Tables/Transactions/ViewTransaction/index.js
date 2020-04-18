@@ -173,7 +173,7 @@ class ViewTransaction extends Component {
                               placeholder=""
                               aria-label="Search for..."
                               style={{ height: "30px" }}
-                              name="Customer_name"
+                              name="customer_name"
                               value={this.state.customer_name}
                               onChange={this.onChange}
                             />
@@ -321,32 +321,47 @@ class ViewTransaction extends Component {
                               onChange={this.onChange}
                             />
                           </td>
-                          
+                            
                         </tr>
     
-                        {this.state.data.lenght !==0 ? (
+                        {this.state.data.length !== 0 ? (
                           <React.Fragment>
                             {this.state.data &&
                               this.state.data.map((Transaction, index) => (
-                                <TransactionRow key={index} Transaction={Transaction} />
+                                <React.Fragment>
+                                  <TransactionRow key={index} Transaction={Transaction} />
+                                </React.Fragment>
                               ))}
                           </React.Fragment>
                         ) : (
-                          <div>
-                            {this.state.isFetching ? (
-                              <div>Loading...</div>
-                            ) : (
-                              <div
-                                style={{
-                                  margin: "auto",
-                                  color: "red",
-                                  width: "100%",
-                                }}
-                              >
-                                NO RECORDS FOUND
-                              </div>
-                            )}
-                          </div>
+                          <tr>
+                          {this.state.isFetching ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <React.Fragment
+                              style={{
+                                margin: "auto",
+                                color: "red",
+                                width: "100%",
+                                textAlign:"center"
+                              }} >
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td className="not-found">NO</td>
+                              <td className="not-found">RECORDS</td>
+                              <td className="not-found">FOUND</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </React.Fragment>
+                          )}
+                        </tr>
                         )}
                       </tbody>
                     </Table>

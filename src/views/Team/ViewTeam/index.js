@@ -28,6 +28,11 @@ class ViewTeam extends React.Component {
 
   async componentDidMount() {
     let url = this.props.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log(query);
     await this.handleQuery(query);
@@ -35,6 +40,11 @@ class ViewTeam extends React.Component {
 
   async UNSAFE_componentWillReceiveProps(nP) {
     let url = nP.location.search;
+    url = url.slice(1)
+    console.log(url)
+
+    url = window.atob(url)
+    console.log(url)
     let query = queryString.parse(url);
     console.log("PARSED")
     console.log(query);
@@ -72,7 +82,8 @@ class ViewTeam extends React.Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/team/list" + "?" + `${queryStr}`
+    window.location.href = "/team/list" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/team/list" + "?" + `${queryStr}`))
   };
 
   handlePageChange = (page) => {
@@ -86,10 +97,12 @@ class ViewTeam extends React.Component {
     // window.location.href = "/team/list" + "?" + `${queryStr}`;
     if (window.location.pathname.includes("?")) {
       // this.props.history.push(window.location.pathname + `page=${page}`);
-      window.location.href =window.location.pathname + `page=${page}`
+      window.location.href =window.location.pathname + btoa(`page=${page}`)
+      console.log(btoa(window.location.pathname + `page=${page}`))
     }
     else {
-      window.location.href = window.location.pathname + "?" + `page=${page}`
+      console.log(btoa(window.location.pathname + `page=${page}`))
+      window.location.href = window.location.pathname + "?" + btoa(`page=${page}`)
       // this.props.history.push(window.location.pathname + "?" + `page=${page}`);
     }
   };

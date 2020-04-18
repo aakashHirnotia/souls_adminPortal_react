@@ -169,7 +169,7 @@ class ViewPendingOrder extends Component {
                               placeholder=""
                               aria-label="Search for..."
                               style={{ height: "30px" }}
-                              name="Customer_name"
+                              name="customer_name"
                               value={this.state.customer_name}
                               onChange={this.onChange}
                             />
@@ -252,8 +252,8 @@ class ViewPendingOrder extends Component {
                               // onChange={(e) => this.setState({is_order_confirmed: !this.state.is_order_confirmed.value})}
                             >
                               <option value="" selected>{this.state.is_order_confirmed!==""?"Clear":"Select"}</option>
-                              <option value="confirmed">Confirmed</option>
-                              <option value="pending">Pending</option>
+                              <option value="Confirmed">Confirmed</option>
+                              <option value="Pending">Pending</option>
                             </select>
                           </td>
                           <td scope="col">
@@ -300,7 +300,8 @@ class ViewPendingOrder extends Component {
                           ) : (
                             <div
                               style={{
-                                margin: "auto",
+                                textAlign: "center",
+                                // margin: "auto",
                                 color: "red",
                                 width: "100%",
                               }}

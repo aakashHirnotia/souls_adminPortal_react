@@ -255,6 +255,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="no of therapists">Number of Therapists</Label>
                       <Input
                         type="text"
+                        placeholder="No of Therapists"
                         name="number_of_therapist"
                         value={this.state.number_of_therapist}
                         onChange={this.onChange}
@@ -269,6 +270,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="Therapist Gender">Therapist Gender</Label>
                       <select
                         className="form-control"
+                        // placeholder="Therapist Gender"
                         name="therapist_gender"
                         value={this.state.therapist_gender}
                         onChange={this.onChange}
@@ -294,7 +296,7 @@ class EditTransaction extends Component {
                       >
                         <option value="" selected>{this.state.massage_for!==""?"Clear":"Select"}</option>
                         <option value="myself">Myself</option>
-                        <option value="friend">friend</option>
+                        <option value="friend">Friend</option>
                       </select>
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.massage_forError}
@@ -338,6 +340,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="massage duration">Massage Duration</Label>
                       <Input
                         type="text"
+                        placeholder="Massage Duration"
                         name="massage_duration"
                         value={this.state.massage_duration}
                         onChange={this.onChange}
@@ -352,6 +355,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="address">Address</Label>
                       <Input
                         type="textarea"
+                        placeholder="Address"
                         name="customer_address"
                         value={this.state.customer_address}
                         onChange={this.onChange}
@@ -368,6 +372,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="Pincode">Pincode</Label>
                       <Input
                         type="text"
+                        placeholder="Pincode"
                         name="pincode"
                         value={this.state.pincode}
                         onChange={this.onChange}
@@ -383,6 +388,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="latitude">Latitude</Label>
                       <Input
                         type="text"
+                        placeholder="Latitude"
                         name="latitude"
                         value={this.state.latitude}
                         onChange={this.onChange}
@@ -398,6 +404,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="longitude">Longitude</Label>
                       <Input
                         type="text"
+                        placeholder="Longitude"
                         name="longitude"
                         value={this.state.longitude}
                         onChange={this.onChange}
@@ -415,6 +422,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="merchant transaction id">Merchant Transaction ID</Label>
                       <Input
                         type="text"
+                        placeholder="Merchant TXN ID"
                         name="merchant_transaction_id"
                         value={this.state.merchant_transaction_id}
                         onChange={this.onChange}
@@ -430,6 +438,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="payment gateway mode">Payment Gateway Mode</Label>
                       <Input
                         type="text"
+                        placeholder="Payment Gateway Mode"
                         name="payment_gateway_mode"
                         value={this.state.payment_gateway_mode}
                         onChange={this.onChange}
@@ -444,6 +453,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="transaction mode">Transaction Mode</Label>
                       <Input
                         type="text"
+                        placeholder="Transaction Mode"
                         name="transaction_mode"
                         value={this.state.transaction_mode}
                         onChange={this.onChange}
@@ -460,6 +470,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="bank type">Bank Type</Label>
                       <Input
                         type="text"
+                        placeholder="Bank Type"
                         name="bank_type"
                         value={this.state.bank_type}
                         onChange={this.onChange}
@@ -474,6 +485,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="payment gateway id">Payment Gateway ID</Label>
                       <Input
                         type="text"
+                        placeholder="Payment Gateway ID"
                         name="payment_gateway_id"
                         value={this.state.payment_gateway_id}
                         onChange={this.onChange}
@@ -488,6 +500,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="total order amount">Total Order Amount</Label>
                       <Input
                         type="text"
+                        placeholder="Total Order Amount"
                         name="total_order_amount"
                         value={this.state.total_order_amount}
                         onChange={this.onChange}

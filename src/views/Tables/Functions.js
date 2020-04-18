@@ -41,6 +41,18 @@ export const customerList = async (query) => {
       }
     })
     .catch((err) => {
+      // switch (response.status) {
+      //   case 200: {
+      //     localStorage.setItem("token", response.data.token);
+      //     window.location.href = "/dashboard";
+      //     message = "";
+      //     return;
+      //   }
+      //   case 401: {
+      //     message = "Invalid User!";
+      //     return;
+      //   }
+      // }
       displayNotification("Error", "Internal Server Error", "danger");
     });
 
@@ -52,7 +64,7 @@ export const customerList = async (query) => {
 export const PendingOrderList = async (query) => {
     let data, count;
     await axios
-      .get(`${baseURL}:5000/pendingOrders/pendingorder-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&Ssot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&is_order_confirmed=${query.is_order_confirmed || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}`, {
+      .get(`${baseURL}:5000/pendingOrders/pendingorder-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&slot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&is_order_confirmed=${query.is_order_confirmed || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -65,7 +77,8 @@ export const PendingOrderList = async (query) => {
         }
       })
       .catch((err) => {
-        window.alert("Error: " + err);
+        // window.alert("Error: " + err);
+        displayNotification("Error", "Internal Server Error", "danger");
       });
     return {data, count};
   };
@@ -74,7 +87,7 @@ export const PendingOrderList = async (query) => {
 export const TransactionList = async (query) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/transactions/transaction-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}&slot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode}&created_at=${query.created_at || ""}&payment_gateway_mode=${query.payment_gateway_mode || ""}&transaction_mode=${query.transaction_mode || ""}&bank_type=${query.bank_type || ""}&payment_gateway_id=${query.payment_gateway_id || ""}`, {
+    .get(`${baseURL}:5000/transactions/transaction-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}&slot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&payment_gateway_mode=${query.payment_gateway_mode || ""}&transaction_mode=${query.transaction_mode || ""}&bank_type=${query.bank_type || ""}&payment_gateway_id=${query.payment_gateway_id || ""}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -87,7 +100,8 @@ export const TransactionList = async (query) => {
       }
     })
     .catch((err) => {
-      window.alert("Error: " + err);
+      // window.alert("Error: " + err);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
   return {data, count};
 };
@@ -109,7 +123,8 @@ export const AssignPartnerList = async (query) => {
       }
     })
     .catch((err) => {
-      window.alert("Error: " + err);
+      // window.alert("Error: " + err);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
   return {data, count};
 };
@@ -205,10 +220,11 @@ export const updateCustomer = updatedUser => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
+      if (response.status === 200) displayNotification("Success", "Updated Successfully", "success");
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      // window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 };
 
@@ -243,10 +259,11 @@ export const updateTransaction = updatedUser => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
+      if (response.status === 200) displayNotification("Success", "Updated Successfully", "success");
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      // window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 };
 
@@ -272,10 +289,11 @@ export const updateAssignPartner = updatedUser => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
+      if (response.status === 200) displayNotification("Success", "Updated Successfully", "success");
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      // window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 };
 
@@ -300,10 +318,12 @@ export const registerPartner = (newPartner) => {
 
     }, {headers:{token:localStorage.getItem('token')}})
     .then((response) => {
-      console.log("Partner Registerd");
-      // console.log(response)
+      if (response.status === 200) displayNotification("Success", "Regisration Successfully", "success");
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      // window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
+    });
 };
 
 export const updatePartner = updatedPartner => {
@@ -333,11 +353,11 @@ export const updatePartner = updatedPartner => {
       }
     )
     .then((response) => {
-      if (response.status === 200) console.log("Updated");
-      // console.log(response)
+      if (response.status === 200) displayNotification("Success", "Updated Successfully", "success");
     })
     .catch((e) => {
-      window.alert("Error: " + e);
+      // window.alert("Error: " + e);
+      displayNotification("Error", "Internal Server Error", "danger");
     });
 };
 

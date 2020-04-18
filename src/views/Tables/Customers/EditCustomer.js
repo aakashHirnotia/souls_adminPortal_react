@@ -174,7 +174,7 @@ class EditCustomer extends Component {
                       <Input
                         type="text"
                         id="name"
-                        placeholder="name"
+                        placeholder="Name"
                         name="customer_name"
                         value={this.state.customer_name}
                         onChange={this.onChange}
@@ -190,7 +190,7 @@ class EditCustomer extends Component {
                       <Input
                         type="text"
                         id="mobile no"
-                        placeholder="mobile no"
+                        placeholder="Mobile No"
                         name="customer_mobile_no"
                         value={this.state.customer_mobile_no}
                         onChange={this.onChange}
@@ -296,6 +296,7 @@ class EditCustomer extends Component {
                       <Label htmlFor="Last access time">Registrated Source</Label>
                       <Input
                         className="form-control"
+                        placeholder="Registrated Source"
                         name="registrated_source"
                         value={this.state.registrated_source}
                         onChange={this.onChange}

@@ -43,7 +43,9 @@ import queryString from "query-string";
     //   this.setState({ data: newData, count: dataRecieved.count });
     // }
     async componentDidMount() {
-      let url = this.props.location.search;
+      let url = (this.props.location.search)
+      console.log("component did mount me props.locartion.search")
+      console.log(url);
       let query = queryString.parse(url);
       console.log(query);
       await this.handleQuery(query);
@@ -51,6 +53,8 @@ import queryString from "query-string";
 
     async UNSAFE_componentWillReceiveProps(nP) {
       let url = nP.location.search;
+      console.log("cUNSAFE omponent did mount me Locartion.search")
+      console.log(url);
       let query = queryString.parse(url);
       console.log("PARSED")
       console.log(query);
@@ -103,11 +107,18 @@ import queryString from "query-string";
       query["limit"] = 10;
       let queryStr = "";
       Object.keys(query).forEach((o) => {
-        if (query[o] != "" || query[o] != null) queryStr += `${o}=${query[o]}&`;
+        if (query[o] != "" || query[o] != null) queryStr += `${o}=${encodeURIComponent(query[o])}&`;
       });
       queryStr = queryStr.replace(queryStr.length - 1, "");
       // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-      window.location.href = "/customers" + "?" + `${queryStr}`
+      const uri = encodeURI("/customers" + "?" + `${queryStr}`)
+      console.log(queryStr)
+      console.log("uri is ")
+      console.log(uri)
+      // const uri = '/customer?x=шеллы';
+      // const encoded = encodeURI(uri);
+      // console.log(encoded);
+      window.location.href = ("/customers" + "?" + `${queryStr}`)
     };
   
     handlePageChange = (page) => {

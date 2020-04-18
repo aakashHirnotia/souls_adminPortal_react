@@ -49,3 +49,10 @@
   .pagination li {
     display: block;
    }
+
+.not-found{
+    /* margin:auto; */
+    color:red;
+    /* width:100%; */
+    text-align: center;
+}
