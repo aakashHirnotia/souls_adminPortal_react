@@ -267,7 +267,7 @@ class Partner extends Component {
           partner_gender: this.state.gender
         };
         updatePartner(updatedPartner).then(res => {
-          this.props.history.push(`/tables/ViewPartners`);
+          this.props.history.push(`/tables/Partners`);
         });
         this.setState(intialState);
         
@@ -295,7 +295,7 @@ class Partner extends Component {
           };
           console.log("ffgg")
         registerPartner(newPartner).then(res => {
-          this.props.history.push(`/tables/ViewPartners`);
+          this.props.history.push(`/tables/Partners`);
         });
         this.setState(intialState);
         
@@ -322,7 +322,7 @@ class Partner extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/tables/ViewPartners">
+                <a className="createTeamBtn" href="/tables/Partners">
                   Back
                 </a>
               </button>
@@ -538,7 +538,7 @@ class Partner extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/tables/ViewPartners">
+                <a className="createTeamBtn" href="/tables/Partners">
                   Back
                 </a>
               </button>

@@ -101,8 +101,8 @@ class ViewPartners extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/tables/ViewPartners" +"?" + btoa(`${queryStr}`)
-    console.log(btoa("/tables/ViewPartners" + "?" + `${queryStr}`))
+    window.location.href = "/tables/Partners" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/tables/Partners" + "?" + `${queryStr}`))
   };
 
 
@@ -136,7 +136,7 @@ class ViewPartners extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/tables/ViewPartners");
+    this.props.history.push("/tables/Partners");
   };
 
   render() {

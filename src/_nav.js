@@ -31,7 +31,7 @@ export default {
     },
     {
       name: "Partners",
-      url: "/tables/ViewPartners",
+      url: "/tables/Partners",
       icon: "icon-people",
     },
     {

@@ -75,7 +75,7 @@ const routes = [
   {path: "/assignpartner/edit-member/:id", exact: true, name: "Update Assign Partner",component: EditAssignPartner},
   {path: "/customers", name: "Customers", component: Customers },
   {path: "/pendingOrder", name: "Pending Orders", component: PendingOrders},
-  {path: "/tables/ViewPartners", name: "Partners", component: ViewPartners },
+  {path: "/tables/Partners", name: "Partners", component: ViewPartners },
   {path: "/tables/view-partner-member/:id", exact: true, name: "View Partner Member", component: PartnersMember },
   {path: "/transactions", name: "Transactions", component: Transactions},
   {path: "/tables/assignPartners", name: "Assign Customers With Partners", component: AssignPartners},
