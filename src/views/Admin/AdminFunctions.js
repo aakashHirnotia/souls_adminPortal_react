@@ -18,8 +18,8 @@ export const displayNotification = (title, message, type) => {
   console.log("gel");
 };
 
-// const baseURL = "http://10.42.0.69";
-const baseURL = "http://localhost";
+const baseURL = "http://3.6.243.136";
+// const baseURL = "http://localhost";
 
 export const teamHasRoleList = async (query) => {
     let data,count;
