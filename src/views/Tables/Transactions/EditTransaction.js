@@ -62,7 +62,7 @@ class EditTransaction extends Component {
 
   componentWillMount(){
     if(TransactionData.length==0) {
-      window.location.href='/tables/transactions'
+      window.location.href='/transactions'
     }
     this.setState({isEditable: window.location.pathname.includes('/edit-member')})
   }
@@ -229,7 +229,7 @@ class EditTransaction extends Component {
             total_order_amount: this.state.total_order_amount
         };
         updateTransaction(updatedUser).then(res => {
-          this.props.history.push(`/tables/transactions`);
+          this.props.history.push(`/transactions`);
         });
         this.setState(intialState);   
     }
@@ -244,7 +244,7 @@ class EditTransaction extends Component {
               <button 
                       className="btn btn-primary-primary" style={{position:"absolute", right:"15px"}}
                 >
-                  <a className="createCustomerBtn" href="/tables/transactions"> Back </a>
+                  <a className="createCustomerBtn" href="/transactions"> Back </a>
               </button>
             </CardHeader>
             <CardBody>

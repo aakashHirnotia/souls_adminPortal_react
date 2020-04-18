@@ -107,7 +107,7 @@ import queryString from "query-string";
       });
       queryStr = queryStr.replace(queryStr.length - 1, "");
       // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-      window.location.href = "/tables/customers" + "?" + `${queryStr}`
+      window.location.href = "/customers" + "?" + `${queryStr}`
     };
   
     handlePageChange = (page) => {
@@ -134,7 +134,7 @@ import queryString from "query-string";
       const query = this.state.query
       Object.keys(query).map(o=>query[o]="")
       this.setState({ query });
-      this.props.history.push("/tables/customers");
+      this.props.history.push("/customers");
     };
 
     render() {
@@ -300,7 +300,7 @@ import queryString from "query-string";
                         </td>
                       </tr>
   
-                      {this.state.data ? (
+                      {this.state.data.length !==0 ? (
                         <React.Fragment>
                           {this.state.data &&
                             this.state.data.map((customer, index) => (

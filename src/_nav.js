@@ -21,12 +21,12 @@ export default {
     },
     {
       name: "Customer",
-      url: "/tables/customers",
+      url: "/customers",
       icon: "icon-people",
     },
     {
       name: "Pending orders",
-      url: "/tables/pendingOrders",
+      url: "/pendingOrder",
       icon: "icon-calculator",
     },
     {
@@ -36,7 +36,7 @@ export default {
     },
     {
       name: "Transactions",
-      url: "/tables/transactions",
+      url: "/transactions",
       icon: "icon-pencil",
     },
     {

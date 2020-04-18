@@ -44,7 +44,7 @@ class EditCustomer extends Component {
 
   componentWillMount(){
     if(customerData.length==0) {
-      window.location.href='/tables/customers'
+      window.location.href='/customers'
     }
     this.setState({isEditable: window.location.pathname.includes('/edit-member')})
   }
@@ -147,7 +147,7 @@ class EditCustomer extends Component {
           status: this.state.status
         };
         updateCustomer(updatedUser).then(res => {
-          this.props.history.push(`/tables/customers`);
+          this.props.history.push(`/customers`);
         });
         this.setState(intialState);
     }
@@ -162,7 +162,7 @@ class EditCustomer extends Component {
               <button 
                       className="btn btn-primary-primary" style={{position:"absolute", right:"15px"}}
                 >
-                  <a className="createCustomerBtn" href="/tables/customers"> Back </a>
+                  <a className="createCustomerBtn" href="/customers"> Back </a>
               </button>
             </CardHeader>
             <CardBody>

@@ -10,14 +10,14 @@ const Label = {
     number_of_therapist:"No of Therapists required",
     therapist_gender:"Therapist Gender",
     massage_for:"Massage for",
-    Slot_Time:"Slot Time",
-    Slot_Date:"Slot Date",
+    slot_time:"Slot Time",
+    slot_date:"Slot Date",
     massage_duration:"Massage Duration",
     customer_address:"Address",
     pincode:"PIN Code",
     latitude: "Latitude",
     longitude: "Longitude",
-    CreatedAt: "Create Time",
+    created_at: "Create Time",
     is_order_confirmed: "Order Status",
     merchant_transaction_id: "Transaction ID",
     total_order_amount:"Total Order Amount",
@@ -26,7 +26,7 @@ const Label = {
 class PendingOrderMember extends Component {
   componentWillMount() {
     if(PendingOrderData.length==0) {
-      window.location.href='/tables/pendingOrders'
+      window.location.href='/pendingOrder'
     }
   }
 
@@ -58,7 +58,7 @@ class PendingOrderMember extends Component {
                 <button 
                       className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
                 >
-                  <a className="createCustomerBtn" href="/tables/pendingOrders"> Back </a>
+                  <a className="createCustomerBtn" href="/pendingOrder"> Back </a>
                 </button>
               </CardHeader>
               <CardBody>

@@ -11,14 +11,14 @@ const Label = {
     number_of_therapist:"No of Therapists required",
     therapist_gender:"Therapist Gender",
     massage_for:"Massage for",
-    Slot_Time:"Slot Time",
-    Slot_Date:"Slot Date",
+    slot_time:"Slot Time",
+    slot_date:"Slot Date",
     massage_duration:"Massage Duration",
     customer_address:"Address",
     pincode:"PIN Code",
     latitude: "Latitude",
     longitude: "Longitude",
-    CreatedAt: "Create Time",
+    created_at: "Create Time",
     merchant_transaction_id: "Merchant transaction ID",
     payment_gateway_mode: "Payment Gateway Mode",
     transaction_mode: "Transaction Mode",
@@ -30,7 +30,7 @@ const Label = {
 class TransactionMember extends Component {
   componentWillMount() {
     if(TransactionData.length==0) {
-      window.location.href='/tables/transactions'
+      window.location.href='/transactions'
     }
   }
 
@@ -62,7 +62,7 @@ class TransactionMember extends Component {
                 <button 
                       className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
                 >
-                  <a className="createCustomerBtn" href="/tables/transactions"> Back </a>
+                  <a className="createCustomerBtn" href="/transactions"> Back </a>
                 </button>
               </CardHeader>
               <CardBody>

@@ -32,11 +32,11 @@ const Dashboard = React.lazy(() => import("./views/Dashboard"));
 // // const Modals = React.lazy(() => import('./views/Notifications/Modals'));
 // const Colors = React.lazy(() => import('./views/Theme/Colors'));
 const Customers = React.lazy(() => import("./views/Tables/Customers/ViewCustomers/index"));
-const PendingOrders = React.lazy(() => import("./views/Tables/PendingOrders/ViewPendingOrder"));
+const PendingOrders = React.lazy(() => import("./views/Tables/PendingOrders/ViewPendingOrder/index"));
 const ViewPartners = React.lazy(() => import("./views/Tables/Partners/ViewPartners/index"));
 const PartnersMember = React.lazy(() => import("./views/Tables/Partners/PartnersMember"));
-const Transactions = React.lazy(() => import("./views/Tables/Transactions/ViewTransaction"));
-const AssignPartners = React.lazy(() => import("./views/Tables/AssignPartners/AssignPartners"));
+const Transactions = React.lazy(() => import("./views/Tables/Transactions/ViewTransaction/index"));
+const AssignPartners = React.lazy(() => import("./views/Tables/AssignPartners/ViewAssignPartner/index"));
 const ViewRole = React.lazy(() => import("./views/Admin/RoleTable/ViewRole"));
 const TeamHasRole = React.lazy(() => import("./views/Admin/TeamHasRoles/ViewTeamHasRole/index"));
 const SoulsSettings = React.lazy(() => import("./views/Admin/SOULS_Settings/SoulsSettings"));
@@ -88,9 +88,9 @@ const routes = [
     name: "Update Assign Partner",
     component: EditAssignPartner,
   },
-  { path: "/tables/customers", name: "Customers", component: Customers },
+  { path: "/customers", name: "Customers", component: Customers },
   {
-    path: "/tables/pendingOrders",
+    path: "/pendingOrder",
     name: "Pending Orders",
     component: PendingOrders,
   },
@@ -106,13 +106,13 @@ const routes = [
     component: PartnersMember,
   },
   {
-    path: "/tables/transactions",
+    path: "/transactions",
     name: "Transactions",
     component: Transactions,
   },
   {
     path: "/tables/assignPartners",
-    name: "AssignPartners",
+    name: "Assign Partners",
     component: AssignPartners,
   },
   { path: "/admin/role", name: "ViewRole", component: ViewRole },

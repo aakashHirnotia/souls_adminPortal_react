@@ -18,7 +18,7 @@ assignPartners.get("/assign-partner-list", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/assign/partner/list?page=${req.query.page}&limit=${5}`,
+        `${baseURL}:8000/assign/partner/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&created_at=${req.query.created_at}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
@@ -39,26 +39,26 @@ assignPartners.get("/assign-partner-list", (req, res) => {
       .catch((e) => res.status(500).send("Error: " + e));
   });
 
-  //Assign Partner search
-assignPartners.get("/assign-partner-search", (req, res) => {
-    console.log("request Recieved for filter in node");
-    axios
-      .get(
-        `${baseURL}:8000/assign/partner/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&partner_souls_id=${req.query.partner_souls_id}&partner_name=${req.query.partner_name}&partner_mobileno=${req.query.partner_mobileno}&CreatedAt=${req.query.CreatedAt}&status=${req.query.status}`,
-        {
-          headers: {
-            Authorization: `Bearer ${req.headers.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        res.status(response.status).send(response.data);
-      })
-      .catch((e) => {
-        console.log("ERROR:" + e);
-        res.status(500).send("Error: " + e);
-      });
-  });
+//   //Assign Partner search
+// assignPartners.get("/assign-partner-search", (req, res) => {
+//     console.log("request Recieved for filter in node");
+//     axios
+//       .get(
+//         `${baseURL}:8000/assign/partner/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&partner_souls_id=${req.query.partner_souls_id}&partner_name=${req.query.partner_name}&partner_mobileno=${req.query.partner_mobileno}&CreatedAt=${req.query.CreatedAt}&status=${req.query.status}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${req.headers.token}`,
+//           },
+//         }
+//       )
+//       .then((response) => {
+//         res.status(response.status).send(response.data);
+//       })
+//       .catch((e) => {
+//         console.log("ERROR:" + e);
+//         res.status(500).send("Error: " + e);
+//       });
+//   });
 
   
 

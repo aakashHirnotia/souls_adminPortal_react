@@ -49,10 +49,10 @@ export const customerList = async (query) => {
 };
 
 //PendingOrderList
-export const PendingOrderList = async (activePage, itemCountPerPage) => {
+export const PendingOrderList = async (query) => {
     let data, count;
     await axios
-      .get(`${baseURL}:5000/pendingOrders/pendingorder-list?page=${activePage}&limit=${itemCountPerPage}`, {
+      .get(`${baseURL}:5000/pendingOrders/pendingorder-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&Ssot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&is_order_confirmed=${query.is_order_confirmed || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}`, {
         headers: {
           token: localStorage.getItem("token"),
         },
@@ -61,7 +61,7 @@ export const PendingOrderList = async (activePage, itemCountPerPage) => {
         if (response.status === 200) {
           data = Object.keys(response.data.data).map(o=>response.data.data[o]);
           count= response.data.count
-          console.log("response in header = "+ response.headers)
+          console.log("response in header = "+ count)
         }
       })
       .catch((err) => {
@@ -71,10 +71,10 @@ export const PendingOrderList = async (activePage, itemCountPerPage) => {
   };
 
 //Transaction List
-export const TransactionList = async (activePage, itemCountPerPage) => {
+export const TransactionList = async (query) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/transactions/transaction-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    .get(`${baseURL}:5000/transactions/transaction-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}&slot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode}&created_at=${query.created_at || ""}&payment_gateway_mode=${query.payment_gateway_mode || ""}&transaction_mode=${query.transaction_mode || ""}&bank_type=${query.bank_type || ""}&payment_gateway_id=${query.payment_gateway_id || ""}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -93,10 +93,10 @@ export const TransactionList = async (activePage, itemCountPerPage) => {
 };
 
 //Assign Partner List
-export const AssignPartnerList = async (activePage, itemCountPerPage) => {
+export const AssignPartnerList = async (query) => {
   let data, count;
   await axios
-    .get(`${baseURL}:5000/assignPartners/assign-partner-list?page=${activePage}&limit=${itemCountPerPage}`, {
+    .get(`${baseURL}:5000/assignPartners/assign-partner-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&merchant_transaction_id=${query.merchant_transaction_id || ""}&total_order_amount=${query.total_order_amount || ""}&slot_time=${query.slot_time || ""}&slot_date=${query.slot_date || ""}&massage_duration=${query.massage_duration || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&payment_gateway_mode=${query.payment_gateway_mode || ""}&transaction_mode=${query.transaction_mode || ""}&bank_type=${query.bank_type || ""}&payment_gateway_id=${query.payment_gateway_id || ""}`, {
       headers: {
         token: localStorage.getItem("token"),
       },
@@ -114,73 +114,73 @@ export const AssignPartnerList = async (activePage, itemCountPerPage) => {
   return {data, count};
 };
 
-//Customer search
-export const searchCust = async (searchCustomer) => {
-  let data = []
-  await axios.
-    get(`http://localhost:5000/customers/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&customer_mobile_no=${searchCustomer.customer_mobile_no}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&CreatedAt=${searchCustomer.CreatedAt}&status=${searchCustomer.status}`,{
-      headers: {
-        token: localStorage.getItem("token")
-      }
-    })
-    .then((response) => {
-      data = [...response.data];
-    })
-    .catch((e) => console.log(e));
+// //Customer search
+// export const searchCust = async (searchCustomer) => {
+//   let data = []
+//   await axios.
+//     get(`http://localhost:5000/customers/customer-search?customer_souls_id=${searchCustomer.customer_souls_id}&customer_name=${searchCustomer.customer_name}&customer_mobile_no=${searchCustomer.customer_mobile_no}&customer_gender=${searchCustomer.customer_gender}&customer_email=${searchCustomer.customer_email}&pincode=${searchCustomer.pincode}&CreatedAt=${searchCustomer.CreatedAt}&status=${searchCustomer.status}`,{
+//       headers: {
+//         token: localStorage.getItem("token")
+//       }
+//     })
+//     .then((response) => {
+//       data = [...response.data];
+//     })
+//     .catch((e) => console.log(e));
   
-  return data
-};
+//   return data
+// };
 
-  //PendingOrder search
-export const searchPendingOrder = async (searchPending) => {
-  let data = []
-  await axios.
-    get(`http://localhost:5000/pendingOrders/pendingorder-search?customer_souls_id=${searchPending.customer_souls_id}&customer_name=${searchPending.customer_name}&Slot_Time=${searchPending.Slot_Time}&Slot_Date=${searchPending.Slot_Date}&massage_duration=${searchPending.massage_duration}&pincode=${searchPending.pincode}&CreatedAt=${searchPending.CreatedAt}&is_order_confirmed=${searchPending.is_order_confirmed}&merchant_transaction_id=${searchPending.merchant_transaction_id}&total_order_amount=${searchPending.total_order_amount}`,{
-      headers: {
-        token: localStorage.getItem("token")
-      }
-    })
-    .then((response) => {
-      data = [...response.data];
-    })
-    .catch((e) => console.log(e));
+//   //PendingOrder search
+// export const searchPendingOrder = async (searchPending) => {
+//   let data = []
+//   await axios.
+//     get(`http://localhost:5000/pendingOrders/pendingorder-search?customer_souls_id=${searchPending.customer_souls_id}&customer_name=${searchPending.customer_name}&Slot_Time=${searchPending.Slot_Time}&Slot_Date=${searchPending.Slot_Date}&massage_duration=${searchPending.massage_duration}&pincode=${searchPending.pincode}&CreatedAt=${searchPending.CreatedAt}&is_order_confirmed=${searchPending.is_order_confirmed}&merchant_transaction_id=${searchPending.merchant_transaction_id}&total_order_amount=${searchPending.total_order_amount}`,{
+//       headers: {
+//         token: localStorage.getItem("token")
+//       }
+//     })
+//     .then((response) => {
+//       data = [...response.data];
+//     })
+//     .catch((e) => console.log(e));
   
-  return data
-};
+//   return data
+// };
 
- //Transaction search
-export const searchTransaction = async (searchTrans) => {
-  let data = []
-  await axios.
-    get(`http://localhost:5000/transactions/transaction-search?customer_souls_id=${searchTrans.customer_souls_id}&customer_name=${searchTrans.customer_name}&merchant_transaction_id=${searchTrans.merchant_transaction_id}&total_order_amount=${searchTrans.total_order_amount}&Slot_Time=${searchTrans.Slot_Time}&Slot_Date=${searchTrans.Slot_Date}&massage_duration=${searchTrans.massage_duration}&pincode=${searchTrans.pincode}&CreatedAt=${searchTrans.CreatedAt}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_id=${searchTrans.payment_gateway_id}`,{
-      headers: {
-        token: localStorage.getItem("token")
-      }
-    })
-    .then((response) => {
-      data = [...response.data];
-    })
-    .catch((e) => console.log(e));
+//  //Transaction search
+// export const searchTransaction = async (searchTrans) => {
+//   let data = []
+//   await axios.
+//     get(`http://localhost:5000/transactions/transaction-search?customer_souls_id=${searchTrans.customer_souls_id}&customer_name=${searchTrans.customer_name}&merchant_transaction_id=${searchTrans.merchant_transaction_id}&total_order_amount=${searchTrans.total_order_amount}&Slot_Time=${searchTrans.Slot_Time}&Slot_Date=${searchTrans.Slot_Date}&massage_duration=${searchTrans.massage_duration}&pincode=${searchTrans.pincode}&CreatedAt=${searchTrans.CreatedAt}&payment_gateway_mode=${searchTrans.payment_gateway_mode}&transaction_mode=${searchTrans.transaction_mode}&bank_type=${searchTrans.bank_type}&payment_gateway_id=${searchTrans.payment_gateway_id}`,{
+//       headers: {
+//         token: localStorage.getItem("token")
+//       }
+//     })
+//     .then((response) => {
+//       data = [...response.data];
+//     })
+//     .catch((e) => console.log(e));
   
-  return data
-};
+//   return data
+// };
 
-//Assign Partner search
-export const searchAssignPart = async (searchAssignPartner) => {
-  let data = []
-  await axios.
-    get(`http://localhost:5000/assignPartners/assign-partner-search?customer_souls_id=${searchAssignPartner.customer_souls_id}&customer_name=${searchAssignPartner.customer_name}&Slot_Time=${searchAssignPartner.Slot_Time}&Slot_Date=${searchAssignPartner.Slot_Date}&partner_souls_id=${searchAssignPartner.partner_souls_id}&partner_name=${searchAssignPartner.partner_name}&partner_mobileno=${searchAssignPartner.partner_mobileno}&CreatedAt=${searchAssignPartner.CreatedAt}&status=${searchAssignPartner.status}`,{
-      headers: {
-        token: localStorage.getItem("token")
-      }
-    })
-    .then((response) => {
-      data = [...response.data];
-    })
-    .catch((e) => console.log(e));
+// //Assign Partner search
+// export const searchAssignPart = async (searchAssignPartner) => {
+//   let data = []
+//   await axios.
+//     get(`http://localhost:5000/assignPartners/assign-partner-search?customer_souls_id=${searchAssignPartner.customer_souls_id}&customer_name=${searchAssignPartner.customer_name}&Slot_Time=${searchAssignPartner.Slot_Time}&Slot_Date=${searchAssignPartner.Slot_Date}&partner_souls_id=${searchAssignPartner.partner_souls_id}&partner_name=${searchAssignPartner.partner_name}&partner_mobileno=${searchAssignPartner.partner_mobileno}&CreatedAt=${searchAssignPartner.CreatedAt}&status=${searchAssignPartner.status}`,{
+//       headers: {
+//         token: localStorage.getItem("token")
+//       }
+//     })
+//     .then((response) => {
+//       data = [...response.data];
+//     })
+//     .catch((e) => console.log(e));
   
-  return data
-};
+//   return data
+// };
 
 //Update Customer
 export const updateCustomer = updatedUser => {

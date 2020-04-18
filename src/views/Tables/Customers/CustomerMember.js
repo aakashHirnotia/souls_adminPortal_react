@@ -21,7 +21,7 @@ const Label = {
 class CustomerMember extends Component {
   componentWillMount() {
     if(customerData.length==0) {
-      window.location.href='/tables/customers'
+      window.location.href='/customers'
     }
   }
 
@@ -54,7 +54,7 @@ class CustomerMember extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createTeamBtn" href="/tables/customers">
+                  <a className="createTeamBtn" href="/customers">
                     Back
                   </a>
                 </button>

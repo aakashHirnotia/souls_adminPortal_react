@@ -77,6 +77,7 @@ users.post("/update-member", (req, res) => {
   console.log("Name: " + userData.firstname);
 });
 
+//Login
 users.post("/login", (req, res) => {
   const userData = {
     email: req.body.email,
@@ -85,7 +86,6 @@ users.post("/login", (req, res) => {
   axios
     .post(`${baseURL}:8000/team/login`, userData)
     .then((response) => {
-      // console.log(response)
       res.status(response.status).send(response.data);
     })
     .catch((e) => {
@@ -102,6 +102,7 @@ users.post("/login", (req, res) => {
     });
 });
 
+//Password
 users.put("/password", (req, res) => {
   const userData = {
     email: req.body.email,
@@ -125,6 +126,7 @@ users.put("/password", (req, res) => {
     });
 });
 
+//
 users.get("/view-member", (req, res) => {
   const userData = {
     email: req.body.email,

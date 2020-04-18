@@ -17,28 +17,25 @@ transactions.get("/transaction-list", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/customers/transaction/list?page=${
-          req.query.page
-        }&limit=${5}`,
-        {
+        `${baseURL}:8000/customers/transaction/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&created_at=${req.query.created_at}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`, {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,
           },
         }
       )
       .then((response) => {
-        console.log(response);
-        res.setHeader("total-count", `${response.headers["total-count"]}`);
-        res.setHeader("help", "5");
-        res.status(response.status).send(
-          JSON.stringify({
-            data: { ...response.data },
-            count: response.headers["total-count"],
-          })
-        );
+        console.log("response" + response);
+        res.status(response.status).send({
+          data: { ...response.data },
+          count: response.headers["total-count"],
+        });
       })
-      .catch((e) => res.status(500).send("Error: " + e));
+      .catch((e) => {
+        console.log(e);
+        res.status(500).send(e);
+      });
   });
+  
 
   
   //Transaction search
@@ -69,8 +66,8 @@ transactions.put("/update-transaction", (req, res) => {
       number_of_therapist: req.body.number_of_therapist,
       therapist_gender: req.body.therapist_gender,
       massage_for: req.body.massage_for,
-      Slot_Time: req.body.Slot_Time,
-      Slot_Date: req.body.Slot_Date,
+      slot_time: req.body.Slot_Time,
+      slot_date: req.body.Slot_Date,
       massage_duration: req.body.massage_duration,
       customer_address: req.body.customer_address,
       pincode: req.body.pincode,
