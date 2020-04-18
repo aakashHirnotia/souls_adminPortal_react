@@ -18,8 +18,9 @@ export const displayNotification = (title, message, type) => {
   console.log("gel");
 };
 
-// const baseURL = "http://10.42.0.69";
-const baseURL = "http://localhost";
+const baseURL = "http://3.6.243.136";
+
+// const baseURL = "http://localhost";
 
 // process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
 
