@@ -43,7 +43,7 @@ class ProductDetail extends React.Component {
     return (
       <React.Fragment>
         <Websocket
-          url="ws://3.6.243.136:8000/customer/transaction/socket"
+          url="ws://10.38.1.35:8000/customer/transaction/socket"
           onMessage={this.handleData}
         />
         <DropdownToggle nav onClick={this.clearNotification}>
