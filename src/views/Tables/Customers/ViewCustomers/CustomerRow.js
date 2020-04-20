@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-// import { customerData, SetCustomerData } from "../../Datas";
-// import Pagination from "react-js-pagination";
-// import { customerList, searchCust } from "../../Functions";
 
 
 class CustomerRow extends Component {

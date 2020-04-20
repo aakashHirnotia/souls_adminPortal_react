@@ -208,7 +208,7 @@ class ViewProfile extends Component {
                   onClick={this.changeEditMode}
                   className="btn btn-outline-primary"
                 >
-                  update profile
+                  Update Profile
                 </button>
               </CardBody>
             </Card>
@@ -232,7 +232,7 @@ class ViewProfile extends Component {
                 style={{height:"200px", width:"200px"}}
               ></img>
             </div>
-            <Col xs="12" md="9" style={{paddingTop: "40px"}}>
+            <Col xs="12" md="9" style={{paddingTop: "5px" }}>
               <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
               <button type="submit" onClick={this.onFormSubmit}>Upload</button>
             </Col>
@@ -295,7 +295,7 @@ class ViewProfile extends Component {
                     style={{justifyContent:"center", display:"flex"}}
                     onClick={this.onUpdate}
                 >
-                    Update!
+                    UPDATE
                 </button>
               </CardBody>
             </Card>

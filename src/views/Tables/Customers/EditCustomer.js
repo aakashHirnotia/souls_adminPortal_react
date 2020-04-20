@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { register,updateCustomer } from "../Functions";
 // import DateCalender from "./DateCalender";
 import {customerData, SetCustomerData} from '../Datas'
+import * as EmailValidator from 'email-validator';
 import {Card,CardBody,CardHeader,Col,FormGroup,Input,Label} from "reactstrap";
 
 const intialState = {
@@ -23,8 +24,8 @@ const intialState = {
   pincodeError: "",
   CreatedAt: "",
   CreatedAtError: "",
-  registrated_source: "",
-  registrated_sourceError: "",
+  // registrated_source: "",
+  // registrated_sourceError: "",
   Last_Access_Time: "",
   Last_Access_TimeError:"",
   status:"",
@@ -59,7 +60,7 @@ class EditCustomer extends Component {
         customer_email: customer.customer_email,
         customer_address: customer.customer_address,
         pincode: customer.pincode,
-        registrated_source: customer.registrated_source,
+        // registrated_source: customer.registrated_source,
         status: customer.status
     })
   }
@@ -76,7 +77,7 @@ class EditCustomer extends Component {
     let customer_emailError = "";
     let customer_addressError = "";
     let pincodeError = "";
-    let registrated_sourceError = "";
+    // let registrated_sourceError = "";
     let statusError = "";
     if (!this.state.customer_name) {
       customer_nameError = "Name can't sbe empty";
@@ -87,8 +88,11 @@ class EditCustomer extends Component {
     if (!this.state.customer_gender) {
       customer_genderError = "Choose Gender";
     }
-    if (!this.state.customer_email) {
-      customer_emailError = "Email can't be empty";
+    if(!this.state.customer_email){
+      customer_emailError = "Email can't be empty"
+    }
+    else if (!EmailValidator.validate(this.state.customer_email)) {
+      customer_emailError = "Email invalid";
     }
     if (!this.state.customer_address) {
       customer_addressError = "Address can't be empty";
@@ -96,9 +100,9 @@ class EditCustomer extends Component {
     if (!this.state.pincode) {
       pincodeError = "Pincode can't be empty";
     }
-    if (!this.state.registrated_source) {
-        registrated_sourceError = "Can't be empty";
-    }
+    // if (!this.state.registrated_source) {
+    //     registrated_sourceError = "Can't be empty";
+    // }
     if (!this.state.status) {
       statusError = "Choose Status";
     }
@@ -110,7 +114,7 @@ class EditCustomer extends Component {
       customer_emailError ||
       customer_addressError ||
       pincodeError ||
-      registrated_sourceError ||
+      // registrated_sourceError ||
       statusError 
     ) {
       this.setState({
@@ -120,7 +124,7 @@ class EditCustomer extends Component {
         customer_emailError,
         customer_addressError,
         pincodeError,
-        registrated_sourceError,
+        // registrated_sourceError,
         statusError
       });
       return false;
@@ -143,7 +147,7 @@ class EditCustomer extends Component {
           customer_email: this.state.customer_email,
           customer_address: this.state.customer_address,
           pincode: this.state.pincode,
-          registrated_source: this.state.registrated_source,
+          // registrated_source: this.state.registrated_source,
           status: this.state.status
         };
         updateCustomer(updatedUser).then(res => {
@@ -219,19 +223,42 @@ class EditCustomer extends Component {
                   </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="8">
+                <Col xs="4">
                     <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input
-                        type="textarea"
-                        id="address"
-                        placeholder="Address"
-                        name="customer_address"
-                        value={this.state.customer_address}
+                      <Label htmlFor="Gender">Gender</Label>
+                      <select
+                        className="form-control"
+                        name="customer_gender"
+                        value={this.state.customer_gender}
                         onChange={this.onChange}
-                      />
+                      >
+                        <option value="">Select</option>
+                        {/* <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option> */}
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other" >Other</option>
+                      </select>
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.customer_addressError}
+                        {this.state.customer_genderError}
+                      </div>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <select
+                        className="form-control"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option value="">Select</option>
+                        {/* <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option> */}
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                      </select>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.statusError}
                       </div>
                     </FormGroup>
                   </Col>
@@ -254,55 +281,19 @@ class EditCustomer extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row className="my-1">
-                  <Col xs="4">
+                <Col xs="12">
                     <FormGroup>
-                      <Label htmlFor="Gender">Gender</Label>
-                      <select
-                        className="form-control"
-                        name="customer_gender"
-                        value={this.state.customer_gender}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other" >Other</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.customer_genderError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                      </select>
-                      <div style={{ fontSize: 20, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="Last access time">Registrated Source</Label>
+                      <Label htmlFor="address">Address</Label>
                       <Input
-                        className="form-control"
-                        placeholder="Registrated Source"
-                        name="registrated_source"
-                        value={this.state.registrated_source}
+                        type="textarea"
+                        id="address"
+                        placeholder="Address"
+                        name="customer_address"
+                        value={this.state.customer_address}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                          {this.state.registrated_sourceError}
+                        {this.state.customer_addressError}
                       </div>
                     </FormGroup>
                   </Col>

@@ -26,7 +26,7 @@ export default {
     },
     {
       name: "Pending orders",
-      url: "/pendingOrder",
+      url: "/pending-order",
       icon: "icon-calculator",
     },
     {

@@ -24,6 +24,7 @@
     "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
+    "email-validator": "^2.0.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "flag-icon-css": "^3.4.6",
@@ -43,6 +44,7 @@
     "react-router-dom": "^5.1.2",
     "react-summernote": "^2.0.0",
     "react-test-renderer": "^16.13.1",
+    "react-time-picker": "^4.0.1",
     "react-websocket": "^2.1.0",
     "reactstrap": "^8.4.1",
     "simple-line-icons": "^2.4.1"

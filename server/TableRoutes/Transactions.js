@@ -38,26 +38,26 @@ transactions.get("/transaction-list", (req, res) => {
   
 
   
-  //Transaction search
-transactions.get("/transaction-search", (req, res) => {
-    console.log("request Recieved for filter in node");
-    axios
-      .get(
-        `${baseURL}:8000/customers/transaction/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&CreatedAt=${req.query.CreatedAt}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${req.headers.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        res.status(response.status).send(response.data);
-      })
-      .catch((e) => {
-        console.log("ERROR:" + e);
-        res.status(500).send("Error: " + e);
-      });
-  });
+//   //Transaction search
+// transactions.get("/transaction-search", (req, res) => {
+//     console.log("request Recieved for filter in node");
+//     axios
+//       .get(
+//         `${baseURL}:8000/customers/transaction/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&Slot_Time=${req.query.Slot_Time}&Slot_Date=${req.query.Slot_Date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&CreatedAt=${req.query.CreatedAt}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${req.headers.token}`,
+//           },
+//         }
+//       )
+//       .then((response) => {
+//         res.status(response.status).send(response.data);
+//       })
+//       .catch((e) => {
+//         console.log("ERROR:" + e);
+//         res.status(500).send("Error: " + e);
+//       });
+//   });
 
   //Transaction Update
 transactions.put("/update-transaction", (req, res) => {
@@ -74,11 +74,6 @@ transactions.put("/update-transaction", (req, res) => {
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       merchant_transaction_id: req.body.merchant_transaction_id,
-      payment_gateway_mode: req.body.payment_gateway_mode,
-      transaction_mode: req.body.transaction_mode,
-      bank_type: req.body.bank_type,
-      payment_gateway_id: req.body.payment_gateway_id,
-      total_order_amount: req.body.total_order_amount,
     };
     axios
       .put(`${baseURL}:8000/customers/transaction/update`, userData, {

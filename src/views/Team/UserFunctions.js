@@ -132,7 +132,7 @@ export const fetchUserDetails = (token, cb) => {
 export const fetchUserPic = (token, cb) => {
   
   return axios
-    .get(`${baseURL}:8000/team/fetch/image`, {
+    .get(`http://3.6.243.136:8000/team/fetch/image`, {
       headers: {
         token: token,
       },
@@ -206,11 +206,11 @@ export const update = (updatedUser) => {
 };
 
 export const updateProfilePic = (formData) => {
-  console.log(`Sending Pic to backend http://10.38.1.35:8000/team/upload/image`)
+  console.log(`Sending Pic to Node http://localhost:5000/users/upload/image`)
   console.log(formData.get("myImage"));
   console.log(formData);
   return axios
-    .post(`http://10.38.1.35:8000/team/upload/image`, formData, {
+    .post(`${baseURL}:5000/users/upload/image`, formData, {
       //directly send to go server
       headers: {
         token: localStorage.getItem("token"),

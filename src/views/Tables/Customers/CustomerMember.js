@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import {BrowserRouter} from 'react-router-dom'
 import { customerData} from "../Datas";
+import { Link } from "react-router-dom";
 
 const Label = {
     customer_id: "Customer ID",
@@ -48,7 +49,7 @@ class CustomerMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Customer Member:{" "}
-                  {customer.customer_name}
+                  {customer.customer_name + " / details"}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"
@@ -58,6 +59,14 @@ class CustomerMember extends Component {
                     Back
                   </a>
                 </button>
+                {/* <Link to={`/customer/edit-member/${customer.customer_id}`}>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ position: "absolute", right: "70px" }}
+                  >
+                    Update Member
+                  </button> */}
+                {/* </Link> */}
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>
