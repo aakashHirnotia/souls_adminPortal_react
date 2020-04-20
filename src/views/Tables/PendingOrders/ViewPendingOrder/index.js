@@ -88,8 +88,8 @@ class ViewPendingOrder extends Component {
         });
         queryStr = queryStr.replace(queryStr.length - 1, "");
         // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-        window.location.href = "/pendingOrder" +"?" + btoa(`${queryStr}`)
-        console.log(btoa("/pendingOrder" + "?" + `${queryStr}`))
+        window.location.href = "/pending-order" +"?" + btoa(`${queryStr}`)
+        console.log(btoa("/pending-order" + "?" + `${queryStr}`))
       };
     
     
@@ -106,11 +106,10 @@ class ViewPendingOrder extends Component {
       };
     
       clearFilter = () => {
-    
         const query = this.state.query
         Object.keys(query).map(o=>query[o]="")
         this.setState({ query });
-        this.props.history.push("/pendingOrder");
+        this.props.history.push("/pending-order");
       };
 
     render() {
@@ -162,7 +161,7 @@ class ViewPendingOrder extends Component {
                               style={{ justifyContent: "center" }}
                               onClick={this.onSubmit}
                             >
-                              search!
+                              SEARCH
                             </button>
                           </td>
                           <td scope="col">
@@ -268,7 +267,8 @@ class ViewPendingOrder extends Component {
                               value={this.state.is_order_confirmed}
                               // onChange={(e) => this.setState({is_order_confirmed: !this.state.is_order_confirmed.value})}
                             >
-                              <option value="" selected>{this.state.is_order_confirmed!==""?"Clear":"Select"}</option>
+                              <option value="">Select</option>
+                              {/* <option value="" selected>{this.state.is_order_confirmed!==""?"Clear":"Select"}</option> */}
                               <option value="Confirmed">Confirmed</option>
                               <option value="Pending">Pending</option>
                             </select>
@@ -299,8 +299,6 @@ class ViewPendingOrder extends Component {
                               onChange={this.onChange}
                             />
                           </td>
-  
-                          
                         </tr>
     
                         {this.state.data.length !==0 ? (

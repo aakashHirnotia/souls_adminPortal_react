@@ -10,7 +10,7 @@ export const displayNotification = (title, message, type) => {
     message: message || "",
     type: type || "success", // success //danger // info //default //warning
     insert: "top",
-    container: "top-right",
+    container: "Bottom-right",
     animationIn: ["animated", "fadeIn"],
     animationOut: ["animated", "fadeOut"],
     dismiss: {
@@ -27,7 +27,7 @@ export const customerList = async (query) => {
   await axios
     // .get(`${baseURL}:5000/customers/customer-list?page=${activePage}&limit=${itemCountPerPage}`,
     .get(
-      `${baseURL}:5000/customers/customer-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&customer_mobile_no=${query.customer_mobile_no || ""}&customer_gender=${query.customer_gender || ""}&customer_email=${query.customer_email || ""}&pincode=${query.pincode || ""}&status=${query.status || ""}`,
+      `${baseURL}:5000/customers/customer-list?page=${query.page || ""}&limit=${query.limit || ""}&customer_souls_id=${query.customer_souls_id || ""}&customer_name=${query.customer_name || ""}&customer_mobile_no=${query.customer_mobile_no || ""}&customer_gender=${query.customer_gender || ""}&customer_email=${query.customer_email || ""}&pincode=${query.pincode || ""}&created_at=${query.created_at || ""}&status=${query.status || ""}`,
     {
       headers: {
         token: localStorage.getItem("token"),
@@ -41,18 +41,6 @@ export const customerList = async (query) => {
       }
     })
     .catch((err) => {
-      // switch (response.status) {
-      //   case 200: {
-      //     localStorage.setItem("token", response.data.token);
-      //     window.location.href = "/dashboard";
-      //     message = "";
-      //     return;
-      //   }
-      //   case 401: {
-      //     message = "Invalid User!";
-      //     return;
-      //   }
-      // }
       displayNotification("Error", "Internal Server Error", "danger");
     });
 
@@ -210,7 +198,7 @@ export const updateCustomer = updatedUser => {
         customer_email: updatedUser.customer_email,
         customer_address: updatedUser.customer_address,
         pincode: updatedUser.pincode,
-        registrated_source: updatedUser.registrated_source,
+        // registrated_source: updatedUser.registrated_source,
         status: updatedUser.status
       },
       {
@@ -246,11 +234,6 @@ export const updateTransaction = updatedUser => {
         latitude: updatedUser.latitude,
         longitude: updatedUser.longitude,
         merchant_transaction_id: updatedUser.merchant_transaction_id,
-        payment_gateway_mode: updatedUser.payment_gateway_mode,
-        transaction_mode: updatedUser.transaction_mode,
-        bank_type: updatedUser.bank_type,
-        payment_gateway_id: updatedUser.payment_gateway_id,
-        total_order_amount: updatedUser.total_order_amount
       },
       {
         headers: {

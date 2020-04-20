@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 
 class PendingOrderRow extends Component {
-    state = {
+    
+  state = {
       PendingOrder: this.props.PendingOrder
     };
     componentWillReceiveProps(nextProps) {
@@ -33,7 +34,7 @@ class PendingOrderRow extends Component {
         return (
           <tr key={this.state.PendingOrder.customer_souls_id}>
             <td>
-              <Link to={`/pendingorder/view-member/${this.props.PendingOrder.order_id}`}>
+              <Link to={`/pendingorder/view-member/${this.state.PendingOrder.order_id}`}>
                 <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
               </Link>
             </td>

@@ -3,6 +3,12 @@ import { updateTransaction } from "../Functions";
 // import DateCalender from "./DateCalender";
 import {TransactionData, SetTransactionData} from '../Datas'
 import {Card,CardBody,CardHeader,Col,FormGroup,Input,Label} from "reactstrap";
+import DateCalender from "./../Slot_Date_calender"
+import TimePicker from 'react-time-picker';
+// import 'date-fns';
+// import Grid from '@material-ui/core/Grid';
+// import DateFnsUtils from '@date-io/date-fns';
+// import { MuiPickersUtilsProvider, KeyboardTimePicker,KeyboardDatePicker,} from '@material-ui/pickers';
 
 const intialState = {
   order_id: "",
@@ -19,7 +25,7 @@ const intialState = {
   therapist_genderError:"",
   massage_for:"",
   massage_forError:"",
-  Slot_Time:"",
+  Slot_Time:'10:00',
   Slot_TimeError:"",
   Slot_Date:"",
   Slot_DateError:"",
@@ -37,16 +43,16 @@ const intialState = {
   CreatedAtError: "",
   merchant_transaction_id:"",
   merchant_transaction_idError:"",
-  payment_gateway_mode:"",
-  payment_gateway_modeError:"",
-  transaction_mode:"",
-  transaction_modeError:"",
-  bank_type:"",
-  bank_typeError:"",
-  payment_gateway_id:"",
-  payment_gateway_idError:"",
-  total_order_amount:"",
-  total_order_amountError:"",
+  // payment_gateway_mode:"",
+  // payment_gateway_modeError:"",
+  // transaction_mode:"",
+  // transaction_modeError:"",
+  // bank_type:"",
+  // bank_typeError:"",
+  // payment_gateway_id:"",
+  // payment_gateway_idError:"",
+  // total_order_amount:"",
+  // total_order_amountError:"",
   isEditable:"",
   errors: {}
 };
@@ -82,11 +88,11 @@ class EditTransaction extends Component {
         latitude: transaction.latitude,
         longitude: transaction.longitude,
         merchant_transaction_id: transaction.merchant_transaction_id,
-        payment_gateway_mode: transaction.payment_gateway_mode,
-        transaction_mode: transaction.transaction_mode,
-        bank_type: transaction.bank_type,
-        payment_gateway_id: transaction.payment_gateway_id,
-        total_order_amount: transaction.total_order_amount,
+        // payment_gateway_mode: transaction.payment_gateway_mode,
+        // transaction_mode: transaction.transaction_mode,
+        // bank_type: transaction.bank_type,
+        // payment_gateway_id: transaction.payment_gateway_id,
+        // total_order_amount: transaction.total_order_amount,
     })
   }
   }
@@ -94,6 +100,13 @@ class EditTransaction extends Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
+  onChangeDate = (date) => {
+    console.log("HELLLO");
+    this.setState({ Slot_Date: date });
+  };
+
+  onChangeTime = Slot_Time => this.setState({ Slot_Time })
 
   validate = () => {
     let number_of_therapistError = "";
@@ -107,11 +120,11 @@ class EditTransaction extends Component {
     let latitudeError = "";
     let longitudeError = "";
     let merchant_transaction_idError = "";
-    let payment_gateway_modeError = "";
-    let transaction_modeError = "";
-    let bank_typeError = "";
-    let payment_gateway_idError = "";
-    let total_order_amountError = "";
+    // let payment_gateway_modeError = "";
+    // let transaction_modeError = "";
+    // let bank_typeError = "";
+    // let payment_gateway_idError = "";
+    // let total_order_amountError = "";
     if (!this.state.number_of_therapist) {
       number_of_therapistError = "Can't be empty";
     }
@@ -145,21 +158,21 @@ class EditTransaction extends Component {
     if (!this.state.merchant_transaction_id) {
         merchant_transaction_idError = "Can't be empty";
     }
-    if (!this.state.payment_gateway_mode) {
-        payment_gateway_modeError = "Can't be empty";
-    }
-    if (!this.state.transaction_mode) {
-        transaction_modeError = "Can't be empty";
-    }
-    if (!this.state.bank_type) {
-        bank_typeError = "Can't be empty";
-    }
-    if (!this.state.payment_gateway_id) {
-        payment_gateway_idError = "Can't be empty";
-    }
-    if (!this.state.total_order_amount) {
-        total_order_amountError = "Can't be empty";
-    }
+    // if (!this.state.payment_gateway_mode) {
+    //     payment_gateway_modeError = "Can't be empty";
+    // }
+    // if (!this.state.transaction_mode) {
+    //     transaction_modeError = "Can't be empty";
+    // }
+    // if (!this.state.bank_type) {
+    //     bank_typeError = "Can't be empty";
+    // }
+    // if (!this.state.payment_gateway_id) {
+    //     payment_gateway_idError = "Can't be empty";
+    // }
+    // if (!this.state.total_order_amount) {
+    //     total_order_amountError = "Can't be empty";
+    // }
 
     if (
         number_of_therapistError ||
@@ -172,12 +185,12 @@ class EditTransaction extends Component {
         pincodeError ||
         latitudeError ||
         longitudeError ||
-        merchant_transaction_idError ||
-        payment_gateway_modeError ||
-        transaction_modeError ||
-        bank_typeError ||
-        payment_gateway_idError ||
-        total_order_amountError
+        merchant_transaction_idError 
+        // payment_gateway_modeError ||
+        // transaction_modeError ||
+        // bank_typeError ||
+        // payment_gateway_idError ||
+        // total_order_amountError
     ) {
       this.setState({
         number_of_therapistError,
@@ -190,12 +203,12 @@ class EditTransaction extends Component {
         pincodeError,
         latitudeError,
         longitudeError,
-        merchant_transaction_idError,
-        payment_gateway_modeError,
-        transaction_modeError,
-        bank_typeError,
-        payment_gateway_idError,
-        total_order_amountError
+        merchant_transaction_idError
+        // payment_gateway_modeError,
+        // transaction_modeError,
+        // bank_typeError,
+        // payment_gateway_idError,
+        // total_order_amountError
       });
       return false;
     }
@@ -222,18 +235,20 @@ class EditTransaction extends Component {
             latitude: this.state.latitude,
             longitude: this.state.longitude,
             merchant_transaction_id: this.state.merchant_transaction_id,
-            payment_gateway_mode: this.state.payment_gateway_mode,
-            transaction_mode: this.state.transaction_mode,
-            bank_type: this.state.bank_type,
-            payment_gateway_id: this.state.payment_gateway_id,
-            total_order_amount: this.state.total_order_amount
         };
+        console.log("data------" )
+        console.log(updatedUser)
+        console.log(updatedUser.Slot_Date)
+        // console.log("data------" + updatedUser.Slot_Time)
         updateTransaction(updatedUser).then(res => {
           this.props.history.push(`/transactions`);
         });
         this.setState(intialState);   
     }
+
+
   }
+
 
   render() {
     return (
@@ -275,7 +290,8 @@ class EditTransaction extends Component {
                         value={this.state.therapist_gender}
                         onChange={this.onChange}
                       >
-                        <option value="" selected>{this.state.therapist_gender!==""?"Clear":"Select"}</option>
+                        <option value="">Select</option>
+                        {/* <option value="" selected>{this.state.therapist_gender!==""?"Clear":"Select"}</option> */}
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other" >Other</option>
@@ -294,7 +310,8 @@ class EditTransaction extends Component {
                         value={this.state.massage_for}
                         onChange={this.onChange}
                       >
-                        <option value="" selected>{this.state.massage_for!==""?"Clear":"Select"}</option>
+                        <option value="">Select</option>
+                        {/* <option value="" selected>{this.state.massage_for!==""?"Clear":"Select"}</option> */}
                         <option value="myself">Myself</option>
                         <option value="friend">Friend</option>
                       </select>
@@ -306,12 +323,10 @@ class EditTransaction extends Component {
                   <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="slot time">Slot Time</Label>
-                      <Input
-                        type="text"
-                        placeholder="HH:MM:SS"
-                        name="Slot_Time"
+                      <br/>
+                        <TimePicker
+                        onChange={this.onChangeTime}
                         value={this.state.Slot_Time}
-                        onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
                         {this.state.Slot_TimeError}
@@ -320,21 +335,6 @@ class EditTransaction extends Component {
                   </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="3">
-                    <FormGroup>
-                      <Label htmlFor="slot date">Slot Date</Label>
-                      <Input
-                        type="text"
-                        placeholder="DD:MM:YYYY"
-                        name="Slot_Date"
-                        value={this.state.Slot_Date}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.Slot_DateError}
-                      </div>
-                    </FormGroup>
-                  </Col>
                   <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="massage duration">Massage Duration</Label>
@@ -350,24 +350,7 @@ class EditTransaction extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="6">
-                    <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input
-                        type="textarea"
-                        placeholder="Address"
-                        name="customer_address"
-                        value={this.state.customer_address}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.customer_addressError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="Pincode">Pincode</Label>
                       <Input
@@ -383,41 +366,7 @@ class EditTransaction extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="latitude">Latitude</Label>
-                      <Input
-                        type="text"
-                        placeholder="Latitude"
-                        name="latitude"
-                        value={this.state.latitude}
-                        onChange={this.onChange}
-                        // disabled={true}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.latitudeError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="longitude">Longitude</Label>
-                      <Input
-                        type="text"
-                        placeholder="Longitude"
-                        name="longitude"
-                        value={this.state.longitude}
-                        onChange={this.onChange}
-                        // disabled={true}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.longitudeError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                </FormGroup>
-                <FormGroup row className="my-1">
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
                       <Label htmlFor="merchant transaction id">Merchant Transaction ID</Label>
                       <Input
@@ -433,80 +382,66 @@ class EditTransaction extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="payment gateway mode">Payment Gateway Mode</Label>
-                      <Input
-                        type="text"
-                        placeholder="Payment Gateway Mode"
-                        name="payment_gateway_mode"
-                        value={this.state.payment_gateway_mode}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.payment_gateway_modeError}
-                      </div>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="transaction mode">Transaction Mode</Label>
-                      <Input
-                        type="text"
-                        placeholder="Transaction Mode"
-                        name="transaction_mode"
-                        value={this.state.transaction_mode}
-                        onChange={this.onChange}
-                      />
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.transaction_modeError}
-                      </div>
+                      <Label htmlFor="slot date">Slot Date</Label>{" "}
+                        <br />
+                        <DateCalender
+                          value={this.state.Slot_Date}
+                          onChange={this.onChangeDate}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.Slot_DateError}
+                        </div>
                     </FormGroup>
                   </Col>
                 </FormGroup>
-                <FormGroup row className="my-2">
-                  <Col xs="4">
+                <FormGroup row className="my-0">
+                  
+                  <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="bank type">Bank Type</Label>
+                      <Label htmlFor="latitude">Latitude</Label>
                       <Input
                         type="text"
-                        placeholder="Bank Type"
-                        name="bank_type"
-                        value={this.state.bank_type}
+                        placeholder="Latitude"
+                        name="latitude"
+                        value={this.state.latitude}
                         onChange={this.onChange}
+                        // disabled={true}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.bank_typeError}
+                        {this.state.latitudeError}
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="payment gateway id">Payment Gateway ID</Label>
+                      <Label htmlFor="longitude">Longitude</Label>
                       <Input
                         type="text"
-                        placeholder="Payment Gateway ID"
-                        name="payment_gateway_id"
-                        value={this.state.payment_gateway_id}
+                        placeholder="Longitude"
+                        name="longitude"
+                        value={this.state.longitude}
                         onChange={this.onChange}
+                        // disabled={true}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.payment_gateway_idError}
+                        {this.state.longitudeError}
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                  <Col xs="6">
                     <FormGroup>
-                      <Label htmlFor="total order amount">Total Order Amount</Label>
+                      <Label htmlFor="address">Address</Label>
                       <Input
-                        type="text"
-                        placeholder="Total Order Amount"
-                        name="total_order_amount"
-                        value={this.state.total_order_amount}
+                        type="textarea"
+                        placeholder="Address"
+                        name="customer_address"
+                        value={this.state.customer_address}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.total_order_amountError}
+                        {this.state.customer_addressError}
                       </div>
                     </FormGroup>
                   </Col>

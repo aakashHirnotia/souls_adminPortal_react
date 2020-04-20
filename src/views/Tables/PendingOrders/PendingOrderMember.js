@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
-import { PendingOrderData } from "../Datas";
+import { PendingOrderData } from "./../Datas";
 
 const Label = {
     order_id: "Order ID",
@@ -25,12 +25,14 @@ const Label = {
 
 class PendingOrderMember extends Component {
   componentWillMount() {
-    if(PendingOrderData.length==0) {
-      window.location.href='/pendingOrder'
+    console.log("check---")
+    if(PendingOrderData.length===0) {
+      window.location.href='/pending-order'
     }
   }
 
   render() {
+    console.log("wertyxdcfvghwedfgh------------------------");
     const PendingOrder = PendingOrderData.find(
       PendingOrder => PendingOrder.order_id.toString() === this.props.match.params.id
     );
@@ -53,12 +55,12 @@ class PendingOrderMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>PendingOrder Member:{" "}
-                  {PendingOrder.customer_name}
+                  {PendingOrder.customer_name + " / details"}
                 </strong>
                 <button 
                       className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
                 >
-                  <a className="createCustomerBtn" href="/pendingOrder"> Back </a>
+                  <a className="createCustomerBtn" href="/pending-order"> Back </a>
                 </button>
               </CardHeader>
               <CardBody>
@@ -68,6 +70,8 @@ class PendingOrderMember extends Component {
                       return (
                         <tr key={key}>
                           <td>{`${Label[key]}:`}</td>
+                          {console.log("value----")}
+                          {console.log(Label[key])}
                           <td>
                             <strong>                              
                               {(value === true) ? "True" :

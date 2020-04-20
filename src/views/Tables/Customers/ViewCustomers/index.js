@@ -21,8 +21,8 @@ import queryString from "query-string";
         customer_email: "",
         customer_address: "",
         pincode: "",
-        CreatedAt: "",
-        registrated_source: "",
+        created_at: "",
+        // registrated_source: "",
         Last_Access_Time: "",
         status: ""
       },
@@ -161,7 +161,7 @@ import queryString from "query-string";
                             style={{ justifyContent: "center" }}
                             onClick={this.onSubmit}
                           >
-                            search!
+                            SEARCH
                           </button>
                         </td>
                         <td scope="col">
@@ -215,7 +215,8 @@ import queryString from "query-string";
                             value={this.state.query.customer_gender}
                             onChange={this.onChange}
                           > 
-                            <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option>
+                            <option value="">Select</option>
+                            {/* <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option> */}
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other" >Other</option>
@@ -255,8 +256,8 @@ import queryString from "query-string";
                             placeholder=""
                             aria-label="Search for..."
                             style={{ height: "30px" }}
-                            name="CreatedAt"
-                            value={this.state.query.CreatedAt}
+                            name="created_at"
+                            value={this.state.query.created_at}
                             onChange={this.onChange}
                           />
                         </td>
@@ -272,7 +273,8 @@ import queryString from "query-string";
                             value={this.state.query.status}
                             onChange={this.onChange}
                           >
-                            <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option>
+                            <option value="">Select</option>
+                            {/* <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option> */}
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                           </select>
@@ -300,8 +302,6 @@ import queryString from "query-string";
                               textAlign:"center"
                             }} >
                             <td></td>
-                            {/* <td></td>
-                            <td></td> */}
                             <td></td>
                             <td></td>
                             <td className="not-found">NO</td>
@@ -309,10 +309,6 @@ import queryString from "query-string";
                             <td className="not-found">FOUND</td>
                             <td></td>
                             <td></td>
-                            {/* <td></td>
-                            <td></td> */}
-                            {/* <td></td>
-                            <td></td> */}
                           </React.Fragment>
                         )}
                       </tr>

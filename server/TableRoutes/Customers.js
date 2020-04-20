@@ -18,22 +18,13 @@ customers.get("/customer-list", (req, res) => {
     );
     axios
       // .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${10}`,
-      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&status=${req.query.status}`,
+      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&pincode=${req.query.pincode}&status=${req.query.status}`,
       {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },
       })
       .then((response) => {
-        // console.log(response);
-        // res.setHeader("total-count", `${response.headers["total-count"]}`);
-        // res.setHeader("help", "5");
-        // res.status(response.status).send(
-        //   JSON.stringify({
-        //     data: { ...response.data },
-        //     count: response.headers["total-count"],
-        //   })
-        // );
         res.status(response.status).send({
           data: { ...response.data },
           count: response.headers["total-count"],
@@ -46,28 +37,6 @@ customers.get("/customer-list", (req, res) => {
   });
   
 
-  //customer search
-customers.get("/customer-search", (req, res) => {
-    console.log("request Recieved for filter in node (customer search)");
-    axios
-      .get(
-        `${baseURL}:8000/customers/list?customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&createtime=${req.query.createtime}&status=${req.query.status}`,
-        {
-          headers: {
-            Authorization: `Bearer ${req.headers.token}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log("response" + response);
-        res.status(response.status).send(response.data);
-      })
-      .catch((e) => {
-        console.log("ERROR:" + e);
-        res.status(500).send("Error: " + e);
-      });
-  });
-  
   //Customer Member Update
 customers.put("/update-customer", (req, res) => {
     const today = new Date();
@@ -78,7 +47,7 @@ customers.put("/update-customer", (req, res) => {
       customer_email: req.body.customer_email,
       customer_address: req.body.customer_address,
       pincode: req.body.pincode,
-      registrated_source: req.body.registrated_source,
+      // registrated_source: req.body.registrated_source,
       status: req.body.status,
     };
     axios

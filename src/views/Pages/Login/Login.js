@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as EmailValidator from 'email-validator';
 //import { Link } from 'react-router-dom';
 import {
   Button,
@@ -16,33 +17,77 @@ import {
 } from "reactstrap";
 import { login } from "./../../Team/UserFunctions";
 
+// const initialState = {
+//   email: "",
+//   emailError: "",
+//   password: "",
+//   passwordError: "",
+//   error: {},
+//   status: "",
+// }
+
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       email: "",
+      emailError: "",
       password: "",
+      passwordError: "",
       error: {},
       status: "",
-    };
-    // this.onChange = this.onChange.bind(this)
-    // this.onSubmit = this.onSubmit.bind(this)
+    }
+
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
+  validate = () =>{
+    let emailError = "";
+    let passwordError = "";
+    if(!this.state.email){
+      emailError = "Email can't be empty"
+    }
+    else if (!EmailValidator.validate(this.state.email)) {
+      emailError = "Invalid Email Address";
+    }
+    if(!this.state.password){
+      passwordError = "Password can't be empty"
+    }
+    if(
+      emailError ||
+      passwordError
+    ) {
+      this.setState({
+        emailError,
+        passwordError
+      });
+      return false;
+    }
+    return true;
+  }
+
   onSubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    this.setState({ status: "Logging in..." });
-    const error = await login(user);
-    console.log(error);
-    if (error) {
-      this.setState({ status: error });
+    const isValid = this.validate();
+    if(isValid){
+      const user = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+      this.setState({ status: "Logging in..." });
+      const error = await login(user);
+      console.log(error);
+      if (error) {
+        this.setState({ status: error });
+      }
+      if(this.state.status == "sql: no rows in result set"){
+        this.setState({status : "Invalid Email or Password"})
+      }
     }
   };
 
@@ -85,6 +130,10 @@ class Login extends Component {
                           autoComplete="username"
                         />
                       </InputGroup>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.emailError}
+                      </div>
+                      <br/>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
@@ -99,7 +148,11 @@ class Login extends Component {
                           value={this.state.password}
                           onChange={this.onChange}
                         />
+                        
                       </InputGroup>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.passwordError}
+                      </div>
                       <Row>
                         <Col xs="6">
                           <Button
@@ -110,9 +163,20 @@ class Login extends Component {
                             Login
                           </Button>
                         </Col>
-                        {/* <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
-                        </Col> */}
+                        {/* <span >
+                          {this.state.status && (
+                            <p
+                              style={
+                                this.state.status === "Logging in..."
+                                  ? { color: "blue" }
+                                  : { color: "red" }
+                              }
+                            >
+                              {this.state.status}
+                            </p>
+                          )}
+                          </span> */}
+
                       </Row>
                     </Form>
                   </CardBody>

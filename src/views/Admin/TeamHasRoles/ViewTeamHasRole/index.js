@@ -273,7 +273,7 @@ class TeamHasRole extends Component {
                     ) : (
                       <div>
                         {this.state.isFetching ? (
-                          <div>Loading...</div>
+                          <div >Loading...</div>
                         ) : (
                           <div
                             style={{

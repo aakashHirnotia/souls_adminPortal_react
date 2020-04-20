@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 // import {BrowserRouter} from 'react-router-dom'
 import { TransactionData } from "../Datas";
+import { Link } from "react-router-dom";
 
 const Label = {
     order_id: "Order ID",
@@ -57,13 +58,24 @@ class TransactionMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Transaction Member:{" "}
-                  {transaction.customer_name}
+                  {transaction.customer_name + " / deatils"}
                 </strong>
-                <button 
-                      className="btn btn-primary-primary" style={{position:"absolute", right:"20px"}}
+                <button
+                  className="btn btn-primary btn-sm"
+                  style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createCustomerBtn" href="/transactions"> Back </a>
+                  <a className="createTeamBtn" href="/transactions">
+                    Back
+                  </a>
                 </button>
+                {/* <Link to={`/transaction/edit-member/${transaction.order_id}`}>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    style={{ position: "absolute", right: "70px" }}
+                  >
+                    Update Transaction
+                  </button>
+                </Link> */}
               </CardHeader>
               <CardBody>
                 <Table responsive striped hover>
