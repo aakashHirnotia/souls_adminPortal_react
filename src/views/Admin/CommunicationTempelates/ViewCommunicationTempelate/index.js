@@ -96,8 +96,8 @@ class ViewCommunicationTempelate extends Component {
       });
       queryStr = queryStr.replace(queryStr.length - 1, "");
       // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-      window.location.href = "/admin/CommunicationTempelate" +"?" + btoa(`${queryStr}`)
-      console.log(btoa("/admin/CommunicationTempelate" + "?" + `${queryStr}`))
+      window.location.href = "/CommunicationTempelate" +"?" + btoa(`${queryStr}`)
+      console.log(btoa("/CommunicationTempelate" + "?" + `${queryStr}`))
     };
   
 
@@ -132,7 +132,7 @@ class ViewCommunicationTempelate extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/admin/CommunicationTempelate");
+    this.props.history.push("/CommunicationTempelate");
   };
 
   render() {
@@ -155,7 +155,7 @@ class ViewCommunicationTempelate extends Component {
                 >
                   Clear Filter
                 </button>
-                <Link className="createTeamBtn" to="/admin/add-communication-tempelate">
+                <Link className="createTeamBtn" to="/add-communication-tempelate">
                   <button
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
@@ -188,7 +188,7 @@ class ViewCommunicationTempelate extends Component {
                           style={{ justifyContent: "center" }}
                           onClick={this.onSubmit}
                         >
-                          search!
+                          Search
                         </button>
                       </td>
                       <td scope="col">
@@ -303,9 +303,9 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
+                          <option disabled={true} value="" selected>
                             {this.state.query.status !== ""
-                              ? "Clear"
+                              ? ""
                               : "Select"}
                           </option>
                           <option value="active">Active</option>

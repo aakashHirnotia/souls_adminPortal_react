@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "react-notifications-component";
-const baseURL = "http://3.6.243.136";
-// const baseURL = "http://localhost";
+// const baseURL = "http://3.6.243.136";
+const baseURL = "http://localhost";
 
 
 export const displayNotification = (title, message, type) => {

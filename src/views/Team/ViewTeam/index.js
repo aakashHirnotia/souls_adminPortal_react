@@ -6,6 +6,7 @@ import Pagination from "react-js-pagination";
 import { SetTeamData } from "../TeamData";
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from "reactstrap";
 import queryString from "query-string";
+import Loader from "../../Loader/Loader";
 
 class ViewTeam extends React.Component {
   state = {
@@ -164,7 +165,7 @@ class ViewTeam extends React.Component {
                     <tr>
                       <th scope="col">Actions</th>
                       <th style={{ width: "5%" }} scope="col">
-                        ID
+                        Team ID
                       </th>
                       <th style={{ width: "8%" }} scope="col">
                         First Name
@@ -173,10 +174,10 @@ class ViewTeam extends React.Component {
                         Last Name
                       </th>
                       <th style={{ width: "18%" }} scope="col">
-                        Email
+                        Email Address
                       </th>
                       <th style={{ width: "15%" }} scope="col">
-                        Mobile
+                        Mobile No.
                       </th>
                       <th style={{ width: "25%" }} scope="col">
                         Joining Date
@@ -297,9 +298,8 @@ class ViewTeam extends React.Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.query.status !== ""
-                              ? "Clear"
+                          <option disabled={true} value="" selected>{this.state.query.status !== ""
+                              ? ""
                               : "Select"}
                           </option>
                           <option value="Active">Active</option>

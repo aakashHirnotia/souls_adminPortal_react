@@ -43,7 +43,7 @@ class CommunicationTempelate extends Component {
 
   componentWillMount(){
     if(CommTempelateData.length == 0){
-        window.location.href = "/admin/CommunicationTempelate";
+        window.location.href = "/CommunicationTempelate";
     }
     this.setState({isEditable: window.location.pathname.includes('/edit-communication-tempelate')})
   }
@@ -51,7 +51,7 @@ class CommunicationTempelate extends Component {
   componentDidMount(){
 
     if(this.state.isEditable){
-      const communicationTempelate = CommTempelateData.find( communicationTempelate => communicationTempelate.templ_id.toString() === this.props.match.params.id)
+      const communicationTempelate = CommTempelateData.find( communicationTemplate => communicationTemplate.templ_id.toString() === this.props.match.params.id)
       this.setState({
         communicationTempelateID: communicationTempelate.templ_id,
         type: communicationTempelate.templ_type,
@@ -142,7 +142,7 @@ class CommunicationTempelate extends Component {
           status: this.state.status
         };
         updateCommTempelate(updatedCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -163,7 +163,7 @@ class CommunicationTempelate extends Component {
             status: this.state.status
         };
         createCommTempelate(newCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -186,7 +186,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createBtn" href="/admin/CommunicationTempelate">
+                <a className="createBtn" style={{color: "white"}} href="/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -338,7 +338,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="editBtn" href="/admin/CommunicationTempelate">
+                <a className="editBtn" href="/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -346,7 +346,7 @@ class CommunicationTempelate extends Component {
             <CardBody>
               <form onSubmit={this.onSubmit}>
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="type">Type</Label>
                       <Input
@@ -362,7 +362,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="trigger_time">Trigger Time</Label>
                       <select
@@ -381,7 +381,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                     <Label htmlFor="trigger_for">Trigger For</Label>
                       <select
@@ -399,9 +399,27 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <select
+                        className="form-control"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option disabled={true}></option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                      </select>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.statusError}
+                      </div>
+                    </FormGroup>
+                  </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="subject">Subject</Label>
                       <Input
@@ -417,7 +435,9 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="smsContent">SMS Content</Label>
                       <Input
@@ -433,26 +453,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                    <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option disabled={true}></option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
                 </FormGroup>
-
                 <FormGroup row className="my-0">
                   <Col xs="12">
                     <FormGroup>

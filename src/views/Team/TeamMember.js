@@ -46,7 +46,7 @@ class TeamMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Team Member:{" "}
-                  {team.firstname + " " + team.lastname}
+                  {team.firstname + " " + team.lastname + " / details"}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"

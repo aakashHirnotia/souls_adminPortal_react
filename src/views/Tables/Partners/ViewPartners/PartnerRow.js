@@ -19,12 +19,12 @@ class PartnerRow extends Component {
       return (
         <tr key={this.state.partner.partner_souls_id}>
           <td>
-            <Link to={`/tables/view-partner-member/${this.props.partner.partner_id}`}>
+            <Link to={`/view-partner-member/${this.props.partner.partner_id}`}>
               <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
             </Link>{" "}
             <Link
               style={{ paddingLeft: "14px" }}
-              to={`/tables/edit-partner/${this.props.partner.partner_id}`}
+              to={`/edit-partner/${this.props.partner.partner_id}`}
             >
               <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
             </Link>

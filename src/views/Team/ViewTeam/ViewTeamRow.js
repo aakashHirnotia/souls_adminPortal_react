@@ -65,13 +65,13 @@ class TeamRow extends Component {
               data-toggle="tooltip"
               title="change password"
             ></i>
-          </Link>{" "}
-          <br />
+          </Link>
+          {/* <br /> */}
           <Link
-            style={{ paddingLeft: "14px" }}
+            // style={{ paddingLeft: "14px" }}
             to={`/team/edit-member/${this.props.team.teamid}`}
           >
-            <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
+            <i className="fa fa-pencil" data-toggle="tooltip" title="edit" ></i>
           </Link>
         </td>
         <th>{this.state.team.teamid}</th>

@@ -38,12 +38,12 @@ class ViewCommunicationTempelateRow extends Component {
       return (
         <tr key={this.state.communicationTempelate.templ_id}>
           <td>
-            <Link to={`/admin/view-communication-tempelate/${this.props.communicationTempelate.templ_id}`}>
+            <Link to={`/view-communication-tempelate/${this.props.communicationTempelate.templ_id}`}>
               <i className="fa fa-eye" data-toggle="tooltip" title="view"></i>
             </Link>{" "}
             <Link
               style={{ paddingLeft: "14px" }}
-              to={`/admin/edit-communication-tempelate/${this.props.communicationTempelate.templ_id}`}
+              to={`/edit-communication-tempelate/${this.props.communicationTempelate.templ_id}`}
             >
               <i className="fa fa-pencil" data-toggle="tooltip" title="edit"></i>
             </Link>

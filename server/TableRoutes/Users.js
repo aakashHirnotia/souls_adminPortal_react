@@ -8,6 +8,7 @@ users.use(cors());
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
 
+
 //Team Registration
 users.post("/register", (req, res) => {
   const today = new Date();
@@ -39,6 +40,7 @@ users.post("/register", (req, res) => {
       console.log(e);
       res.status(500).send(e);
     });
+    console.log(userData.joining)
 });
 
 //Team Member Update

@@ -24,6 +24,7 @@ class Login extends Component {
       password: "",
       error: {},
       status: "",
+      loading: false
     };
     // this.onChange = this.onChange.bind(this)
     // this.onSubmit = this.onSubmit.bind(this)
@@ -34,20 +35,24 @@ class Login extends Component {
   };
   onSubmit = async (e) => {
     e.preventDefault();
+
     const user = {
       email: this.state.email,
       password: this.state.password,
     };
-    this.setState({ status: "Logging in..." });
+    this.setState({ status: "Logging in...",loading: true });
     const error = await login(user);
     console.log(error);
     if (error) {
       this.setState({ status: error });
+      this.setState({loading: false})
     }
+    
   };
 
   render() {
     console.log(this.props);
+    const {loading} = this.state;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -105,8 +110,10 @@ class Login extends Component {
                           <Button
                             color="primary"
                             className="px-4"
-                            onClick={this.handleLogin}
+                            onClick={this.onSubmit}
+                            disabled={loading}
                           >
+                            {loading && <i className=" fa fa-refresh fa-spin">{" "} </i>}
                             Login
                           </Button>
                         </Col>

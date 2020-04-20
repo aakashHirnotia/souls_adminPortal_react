@@ -177,7 +177,7 @@ class ViewProfile extends Component {
                   <Input type="text" name="mobile" value={this.state.mobile} disabled={true} defaultValue={this.state.mobile}/>
                 </FormGroup>
                 <FormGroup row className="my-0">
-                  <Col xs="8">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="joining">Joining Date</Label>
                       <Input type="text" name="joining" value={this.state.joining} disabled={true} defaultValue={this.state.joining}/> 
@@ -189,14 +189,6 @@ class ViewProfile extends Component {
                       <Input type="text" name="role" value={this.state.role} disabled={true} defaultValue={this.state.role}/>
                     </FormGroup>
                   </Col>
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="8">
-                    <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input type="text" name="address" value={this.state.address} disabled={true} defaultValue={this.state.address}/> 
-                    </FormGroup>
-                  </Col>
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="status">Status</Label>
@@ -204,11 +196,19 @@ class ViewProfile extends Component {
                     </FormGroup>
                   </Col>
                 </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12">
+                    <FormGroup>
+                      <Label htmlFor="address">Address</Label>
+                      <Input type="textarea" name="address" value={this.state.address} disabled={true} defaultValue={this.state.address}/> 
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
                 <button 
                   onClick={this.changeEditMode}
                   className="btn btn-outline-primary"
                 >
-                  update profile
+                  Update Profile
                 </button>
               </CardBody>
             </Card>
@@ -233,7 +233,7 @@ class ViewProfile extends Component {
               ></img>
             </div>
             <Col xs="12" md="9" style={{paddingTop: "40px"}}>
-              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
+              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/> 
               <button type="submit" onClick={this.onFormSubmit}>Upload</button>
             </Col>
             
@@ -263,7 +263,7 @@ class ViewProfile extends Component {
                   <Input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} defaultValue={this.state.mobile}/>
                 </FormGroup>
                 <FormGroup row className="my-0">
-                  <Col xs="8">
+                  <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="joining">Joining Date</Label>
                       <Input type="text" name="joining" value={this.state.joining} disabled={true} defaultValue={this.state.joining}/> 
@@ -275,18 +275,18 @@ class ViewProfile extends Component {
                       <Input type="text" name="role" value={this.state.role} disabled={true} defaultValue={this.state.role}/>
                     </FormGroup>
                   </Col>
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="8">
-                    <FormGroup>
-                      <Label htmlFor="address">Address</Label>
-                      <Input type="text" name="address" value={this.state.address} onChange={this.onChange} defaultValue={this.state.address}/> 
-                    </FormGroup>
-                  </Col>
                   <Col xs="4">
                     <FormGroup>
                       <Label htmlFor="status">Status</Label>
                       <Input type="text" name="status" value={this.state.status} disabled={true} defaultValue={this.state.status}/>
+                    </FormGroup>
+                  </Col>
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12">
+                    <FormGroup>
+                      <Label htmlFor="address">Address</Label>
+                      <Input type="textarea" name="address" value={this.state.address} onChange={this.onChange} defaultValue={this.state.address}/> 
                     </FormGroup>
                   </Col>
                 </FormGroup>
@@ -295,7 +295,7 @@ class ViewProfile extends Component {
                     style={{justifyContent:"center", display:"flex"}}
                     onClick={this.onUpdate}
                 >
-                    Update!
+                    Update
                 </button>
               </CardBody>
             </Card>

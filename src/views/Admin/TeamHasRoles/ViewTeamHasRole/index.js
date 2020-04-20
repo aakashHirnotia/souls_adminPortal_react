@@ -87,8 +87,8 @@ class TeamHasRole extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/admin/teamHasRole" +"?" + btoa(`${queryStr}`)
-    console.log(btoa("/admin/teamHasRole" + "?" + `${queryStr}`))
+    window.location.href = "/team-has-role" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/team-has-role" + "?" + `${queryStr}`))
   };
 
 
@@ -110,7 +110,7 @@ class TeamHasRole extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/admin/teamHasRole");
+    this.props.history.push("/team-has-role");
   };
 
   render() {
@@ -160,7 +160,7 @@ class TeamHasRole extends Component {
                           style={{ justifyContent: "center" }}
                           onClick={this.onSubmit}
                         >
-                          search!
+                          Search
                         </button>
                       </td>
                       <td scope="col">
@@ -254,7 +254,7 @@ class TeamHasRole extends Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                           <option value="Deleted">Deleted</option>

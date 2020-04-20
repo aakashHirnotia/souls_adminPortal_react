@@ -18,7 +18,7 @@ const Label = {
 class CommTempelateMember extends Component {
   componentWillMount() {
     if(CommTempelateData.length==0) {
-      window.location.href='/admin/CommunicationTempelate'
+      window.location.href='/CommunicationTempelate'
     }
   }
 
@@ -45,13 +45,13 @@ class CommTempelateMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Communication Tempelate:{" "}
-                  {communicationTempelate.templ_id}
+                  {" ID = " + communicationTempelate.templ_id + " / details"}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                  <a className="createTeamBtn" href="/CommunicationTempelate">
                     Back
                   </a>
                 </button>
