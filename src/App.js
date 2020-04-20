@@ -4,9 +4,11 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import "./App.scss";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import Loader from "./views/Loader/Loader"
 
 const loading = () => (
-  <div className="animated fadeIn pt-3 text-center">Loading...</div>
+  // <div className="animated fadeIn pt-3 text-center">Loading...</div>
+  <Loader></Loader>
 );
 
 // Containers

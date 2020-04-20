@@ -101,8 +101,8 @@ class ViewPartners extends Component {
     });
     queryStr = queryStr.replace(queryStr.length - 1, "");
     // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-    window.location.href = "/tables/Partners" +"?" + btoa(`${queryStr}`)
-    console.log(btoa("/tables/Partners" + "?" + `${queryStr}`))
+    window.location.href = "/Partners" +"?" + btoa(`${queryStr}`)
+    console.log(btoa("/Partners" + "?" + `${queryStr}`))
   };
 
 
@@ -136,7 +136,7 @@ class ViewPartners extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/tables/Partners");
+    this.props.history.push("/Partners");
   };
 
   render() {
@@ -156,11 +156,11 @@ class ViewPartners extends Component {
                   type="submit"
                   className="btn btn-outline-primary  btn-sm"
                   onClick={this.clearFilter}
-                  style={{ position: "absolute", right: "120px" }}
+                  style={{ position: "absolute", right: "140px" }}
                 >
                   Clear Filter
                 </button>
-                <Link className="createBtn" to="/tables/add-partner">
+                <Link className="createBtn" to="/add-partner">
                   <button
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
@@ -174,14 +174,14 @@ class ViewPartners extends Component {
                   <thead>
                     <tr>
                       <th scope="col">Actions</th>
-                      <th scope="col">Partner's ID</th>
+                      <th scope="col">Partner ID</th>
                       <th scope="col">Name</th>
-                      <th scope="col">Email</th>
+                      <th scope="col">Email Address</th>
                       <th scope="col">Mobile No</th>
                       <th scope="col">PIN Code</th>
                       <th scope="col">Per Visit Commission</th>
                       <th scope="col">Commission Type</th>
-                      <th scope="col">Updated At</th>
+                      {/* <th scope="col">Updated At</th> */}
                       <th scope="col">Created At</th>
                       <th scope="col">Gender</th>  
                     </tr>
@@ -194,7 +194,7 @@ class ViewPartners extends Component {
                           className="btn btn-outline-primary"
                           onClick={this.onSubmit}
                         >
-                          Search
+                          SEARCH
                         </button>
                       </td>
                       <td scope="col">
@@ -287,12 +287,12 @@ class ViewPartners extends Component {
                           value={this.state.query.Commission_Type}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="" >Select</option>
                           <option value="%">%</option>
                           <option value="Flat">Flat</option>
                         </select>
                       </td>
-                      <td scope="col">
+                      {/* <td scope="col">
                         <input
                           type="search"
                           class="form-control mr-sm-2"
@@ -304,7 +304,7 @@ class ViewPartners extends Component {
                           value={this.state.query.UpdatedAt}
                           onChange={this.onChange}
                         />
-                      </td>
+                      </td> */}
                       <td scope="col">
                         <input
                           type="search"
@@ -330,7 +330,8 @@ class ViewPartners extends Component {
                           value={this.state.query.partner_gender}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>{this.state.partner_gender!==""?"Clear":"Select"}</option>
+                          <option value="">Select</option>
+                          {/* <option disabled={true} value="" selected>{this.state.partner_gender!==""?"":"Select"}</option> */}
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                           <option value="Other">Other</option>

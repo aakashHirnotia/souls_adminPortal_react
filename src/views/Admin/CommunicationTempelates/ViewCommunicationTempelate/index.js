@@ -96,8 +96,8 @@ class ViewCommunicationTempelate extends Component {
       });
       queryStr = queryStr.replace(queryStr.length - 1, "");
       // this.props.history.push("/team/list" + "?" + `${queryStr}`);
-      window.location.href = "/admin/CommunicationTempelate" +"?" + btoa(`${queryStr}`)
-      console.log(btoa("/admin/CommunicationTempelate" + "?" + `${queryStr}`))
+      window.location.href = "/CommunicationTempelate" +"?" + btoa(`${queryStr}`)
+      console.log(btoa("/CommunicationTempelate" + "?" + `${queryStr}`))
     };
   
 
@@ -132,7 +132,7 @@ class ViewCommunicationTempelate extends Component {
     const query = this.state.query
     Object.keys(query).map(o=>query[o]="")
     this.setState({ query });
-    this.props.history.push("/admin/CommunicationTempelate");
+    this.props.history.push("/CommunicationTempelate");
   };
 
   render() {
@@ -151,11 +151,11 @@ class ViewCommunicationTempelate extends Component {
                   type="submit"
                   className="btn btn-outline-primary  btn-sm"
                   onClick={this.clearFilter}
-                  style={{ position: "absolute", right: "135px" }}
+                  style={{ position: "absolute", right: "150px" }}
                 >
                   Clear Filter
                 </button>
-                <Link className="createTeamBtn" to="/admin/add-communication-tempelate">
+                <Link className="createTeamBtn" to="/add-communication-tempelate">
                   <button
                     className="btn btn-primary btn-sm"
                     style={{ position: "absolute", right: "20px" }}
@@ -188,7 +188,7 @@ class ViewCommunicationTempelate extends Component {
                           style={{ justifyContent: "center" }}
                           onClick={this.onSubmit}
                         >
-                          search!
+                          SEARCH
                         </button>
                       </td>
                       <td scope="col">
@@ -229,7 +229,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.trigger_time}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="">Select</option>
                           <option value="10">10 min.</option>
                           <option value="30">30 min.</option>
                           <option value="60">1 hour</option>
@@ -247,7 +247,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.trigger_for}
                           onChange={this.onChange}
                         >
-                          <option ></option>
+                          <option value="">Select</option>
                           <option value="customer">Customer</option>
                           <option value="partner">Partner</option>
                         </select>
@@ -303,11 +303,7 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.query.status !== ""
-                              ? "Clear"
-                              : "Select"}
-                          </option>
+                          <option value="">Select</option>
                           <option value="active">Active</option>
                           <option value="inactive">Inactive</option>
                         </select>

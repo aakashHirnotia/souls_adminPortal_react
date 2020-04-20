@@ -15,8 +15,8 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span>Soul &copy; 2019.</span>
-        <span className="ml-auto">Powered by Team Soul</span>
+        {/* <span>SOULS &copy; </span> */}
+        <span className="ml-auto">SOULS@2019-20 all rights reserved - SOULS HEALTH NETWORK PRIVATE LIMITED</span>
       </React.Fragment>
     );
   }

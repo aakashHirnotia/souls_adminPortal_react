@@ -31,13 +31,13 @@ export default {
     },
     {
       name: "Partners",
-      url: "/tables/Partners",
+      url: "/Partners",
       icon: "icon-people",
     },
     {
       name: "Transactions",
       url: "/transactions",
-      icon: "icon-pencil",
+      icon: "fa fa-inr",
     },
     {
       name: "Assign Partners",
@@ -61,22 +61,22 @@ export default {
       children: [
         {
           name: "Role",
-          url: "/admin/role",
+          url: "/role",
           icon: "icon-cursor",
         },
         {
           name: "Team Has Role",
-          url: "/admin/teamHasRole",
+          url: "/team-has-role",
           icon: "icon-cursor",
         },
         {
           name: "SOULS Settings",
-          url: "/admin/soulsSettings",
+          url: "/souls-settings",
           icon: "icon-cursor",
         },
         {
           name: "Communication Tempelate",
-          url: "/admin/CommunicationTempelate",
+          url: "/CommunicationTempelate",
           icon: "icon-cursor",
         },
       ],

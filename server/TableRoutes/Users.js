@@ -8,6 +8,7 @@ const multer = require('multer');
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
+// const baseURL = "http://10.38.1.35";
 
 //Team Registration
 users.post("/register", (req, res) => {
@@ -17,7 +18,7 @@ users.post("/register", (req, res) => {
     lastname: req.body.last_name ,
     email: req.body.email,
     password: req.body.password ,
-    joining: req.body.joining,
+    joining_date: req.body.joining,
     address: req.body.address ,
     status: req.body.status ,
     mobileno: req.body.mobile ,
@@ -40,6 +41,7 @@ users.post("/register", (req, res) => {
       console.log(e);
       res.status(500).send(e);
     });
+    console.log(userData.joining)
 });
 
 //Team Member Update
@@ -204,7 +206,7 @@ users.get("/team-list", (req, res) => {
   );
   axios
     .get(
-      `${baseURL}:8000/team/list?page=${req.query.page}&limit=${req.query.limit}&teamid=${req.query.teamid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&email=${req.query.email}&joining=${req.query.joining}&status=${req.query.status}&role=${req.query.role}&mobileno=${req.query.mobileno}`,
+      `${baseURL}:8000/team/list?page=${req.query.page}&limit=${req.query.limit}&teamid=${req.query.teamid}&firstname=${req.query.firstname}&lastname=${req.query.lastname}&email=${req.query.email}&joining_date=${req.query.joining}&status=${req.query.status}&role=${req.query.role}&mobileno=${req.query.mobileno}`,
       {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { register, updateMember } from "./UserFunctions";
 import { Link } from "react-router-dom";
 import DateCalender from "./DateCalender";
+import * as EmailValidator from "email-validator";
 import { TeamData, SetTeamData } from "./TeamData";
 import {
   Card,
@@ -74,7 +75,7 @@ class Team extends Component {
     }
   }
 
-  onChange(e, editor) {
+  onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -90,7 +91,7 @@ class Team extends Component {
     let roleError = "";
     let statusError = "";
     if (!this.state.first_name) {
-      first_nameError = "First Name can't sbe empty";
+      first_nameError = "First Name can't be empty";
     }
     if (!this.state.last_name) {
       last_nameError = "Last Name can't be empty";
@@ -101,8 +102,17 @@ class Team extends Component {
     if (!this.state.mobile) {
       mobileError = "Mobile No can't be empty";
     }
-    if (!this.state.email || !this.state.email.includes("@")) {
-      emailError = "invalid email";
+    else if(isNaN(this.state.mobile)){
+      mobileError= "Invalid Mobile No";
+    }
+    else if(this.state.mobile.length!==10){
+      mobileError= "Please Enter a 10 Digit Mobile No";
+    }
+    if (!this.state.email) {
+      emailError = "Email can't be empty";
+    }
+    else if(!EmailValidator.validate(this.state.email)) {
+      emailError = "Invalid email";
     }
     if (!this.state.joining) {
       joiningError = "Date can't be empty";
@@ -227,7 +237,7 @@ class Team extends Component {
     } else {
       const isValid = this.validate1();
       console.log("VALIDATING: " + isValid);
-      console.log(this.state);
+      console.log(this.state.joining);
       if (isValid) {
         const newUser = {
           first_name: this.state.first_name,
@@ -335,7 +345,7 @@ class Team extends Component {
                         <Input
                           type="text"
                           id="email"
-                          placeholder="Email ID"
+                          placeholder="Email Address"
                           name="email"
                           value={this.state.email}
                           onChange={this.onChange}
@@ -378,23 +388,6 @@ class Team extends Component {
                   </FormGroup>
 
                   <FormGroup row className="my-0">
-                    <Col xs="6">
-                      <FormGroup>
-                        <Label htmlFor="address">Address</Label>
-                        <Input
-                          type="text"
-                          id="address"
-                          placeholder="Address"
-                          name="address"
-                          value={this.state.address}
-                          onChange={this.onChange}
-                        />
-                        {/* <TextEditor value={this.state.address} onChange={this.onChangeEditor}/> */}
-                        <div style={{ fontSize: 10, color: "red" }}>
-                          {this.state.addressError}
-                        </div>
-                      </FormGroup>
-                    </Col>
                     <Col xs="2">
                       <FormGroup>
                         <Label htmlFor="status">Status</Label>
@@ -404,8 +397,8 @@ class Team extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.status !== "" ? "Clear" : "Select"}
+                          <option disabled={true} value="" selected>
+                            {this.state.status !== "" ? "Select" : "Select"}
                           </option>
                           <option>Active</option>
                           <option>Inactive</option>
@@ -425,8 +418,8 @@ class Team extends Component {
                           value={this.state.role}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.role !== "" ? "Clear" : "Select"}
+                          <option disabled={true} value="" selected>
+                            {this.state.role !== "" ? "Select" : "Select"}
                           </option>
                           <option>Admin</option>
                           <option>Accountant</option>
@@ -446,8 +439,8 @@ class Team extends Component {
                           value={this.state.gender}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.gender !== "" ? "Clear" : "Select"}
+                          <option disabled={true} value="" selected>
+                            {this.state.gender !== "" ? "Select" : "Select"}
                           </option>
                           <option>Male</option>
                           <option>Female</option>
@@ -455,6 +448,23 @@ class Team extends Component {
                         </select>
                         <div style={{ fontSize: 10, color: "red" }}>
                           {this.state.genderError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="6">
+                      <FormGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                          type="textarea"
+                          id="address"
+                          placeholder="Address"
+                          name="address"
+                          value={this.state.address}
+                          onChange={this.onChange}
+                        />
+                        {/* <TextEditor value={this.state.address} onChange={this.onChangeEditor}/> */}
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.addressError}
                         </div>
                       </FormGroup>
                     </Col>

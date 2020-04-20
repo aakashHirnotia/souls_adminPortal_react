@@ -5,9 +5,9 @@ import { PartnerData} from "../Datas";
 
 const Label = {
     partner_id: "ID",
-    partner_souls_id: "Partners_ID",
+    partner_souls_id: "Partner's ID",
     partner_name: "Name",
-    partner_email: "Email",
+    partner_email: "Email Address",
     partner_mobileno: "Mobile No.",
     partner_address: "Address",
     pincode: "Pincode",
@@ -27,7 +27,7 @@ const Label = {
 class PartnersMember extends Component {
   componentWillMount() {
     if(PartnerData.length==0) {
-      window.location.href='/tables/Partners'
+      window.location.href='/Partners'
     }
   }
 
@@ -53,13 +53,13 @@ class PartnersMember extends Component {
               <CardHeader>
                 <strong>
                   <i className="icon-info pr-1"></i>Partner:{" "}
-                  {partner.partner_name}
+                  {partner.partner_name + " / details"}
                 </strong>
                 <button
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
                 >
-                  <a className="createTeamBtn" href="/tables/Partners">
+                  <a className="createTeamBtn" href="/Partners">
                     Back
                   </a>
                 </button>  

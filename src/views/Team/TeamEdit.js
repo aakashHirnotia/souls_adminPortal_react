@@ -164,6 +164,12 @@ class Team extends Component {
     if (!this.state.mobile) {
       mobileError = "Mobile No can't be empty";
     }
+    else if(isNaN(this.state.mobile)){
+      mobileError= "Invalid Mobile No";
+    }
+    else if(this.state.mobile.length!==10){
+      mobileError= "Please Enter a 10 Digit Mobile No";
+    }
     if (!this.state.address) {
       addressError = "Address can't be empty";
     }
@@ -481,7 +487,7 @@ class Team extends Component {
               <CardBody>
                 <form onSubmit={this.onSubmit}>
                   <div className="row">
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                       <FormGroup>
                         <Label htmlFor="first name">First Name</Label>
                         <Input
@@ -497,7 +503,7 @@ class Team extends Component {
                         </div>
                       </FormGroup>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                       <FormGroup>
                         <Label htmlFor="last name">Last Name</Label>
                         <Input
@@ -513,7 +519,7 @@ class Team extends Component {
                         </div>
                       </FormGroup>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                       <FormGroup>
                         <Label htmlFor="mobile-no">Mobile No.</Label>
                         <Input
@@ -529,25 +535,7 @@ class Team extends Component {
                         </div>
                       </FormGroup>
                     </div>
-                  </div>
-                  <FormGroup row className="my-0">
-                    <Col xs="4">
-                      <FormGroup>
-                        <Label htmlFor="address">Address</Label>
-                        <Input
-                          type="text"
-                          id="address"
-                          placeholder="Address"
-                          name="address"
-                          value={this.state.address}
-                          onChange={this.onChange}
-                        />
-                        <div style={{ fontSize: 10, color: "red" }}>
-                          {this.state.addressError}
-                        </div>
-                      </FormGroup>
-                    </Col>
-                    <Col xs="4">
+                    <div className="col-md-3"> 
                       <FormGroup>
                         <Label htmlFor="email">Email</Label>
                         <Input
@@ -563,7 +551,9 @@ class Team extends Component {
                           {this.state.emailError}
                         </div>
                       </FormGroup>
-                    </Col>
+                    </div>
+                  </div>
+                  <FormGroup row className="my-0">
                     <Col xs="2">
                       <FormGroup>
                         <Label htmlFor="status">Status</Label>
@@ -573,8 +563,8 @@ class Team extends Component {
                           value={this.state.status}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.status !== "" ? "Clear" : "Select"}
+                          <option disabled={true} value="" selected>
+                            {this.state.status !== "" ? "Select" : "Select"}
                           </option>
                           <option>Active</option>
                           <option>Inactive</option>
@@ -585,24 +575,6 @@ class Team extends Component {
                         </div>
                       </FormGroup>
                     </Col>
-                    {/* <Col xs="2">
-                    <FormGroup>
-                      <Label htmlFor="role">Role</Label>
-                      <select
-                        className="form-control"
-                        name="role"
-                        value={this.state.role}
-                        onChange={this.onChange}
-                      >
-                        <option>Admin</option>
-                        <option>Accountant</option>
-                        <option>Customer Care</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.roleError}
-                      </div>
-                    </FormGroup>
-                  </Col> */}
                     <Col xs="2">
                       <FormGroup>
                         <Label htmlFor="gender">Gender</Label>
@@ -612,8 +584,8 @@ class Team extends Component {
                           value={this.state.gender}
                           onChange={this.onChange}
                         >
-                          <option value="" selected>
-                            {this.state.gender !== "" ? "Clear" : "Select"}
+                          <option disabled={true} value="" selected>
+                            {this.state.gender !== "" ? "Select" : "Select"}
                           </option>
                           <option>Male</option>
                           <option>Female</option>
@@ -621,6 +593,22 @@ class Team extends Component {
                         </select>
                         <div style={{ fontSize: 10, color: "red" }}>
                           {this.state.genderError}
+                        </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="8">
+                      <FormGroup>
+                        <Label htmlFor="address">Address</Label>
+                        <Input
+                          type="textarea"
+                          id="address"
+                          placeholder="Address"
+                          name="address"
+                          value={this.state.address}
+                          onChange={this.onChange}
+                        />
+                        <div style={{ fontSize: 10, color: "red" }}>
+                          {this.state.addressError}
                         </div>
                       </FormGroup>
                     </Col>

@@ -88,11 +88,11 @@ class EditTransaction extends Component {
         latitude: transaction.latitude,
         longitude: transaction.longitude,
         merchant_transaction_id: transaction.merchant_transaction_id,
-        // payment_gateway_mode: transaction.payment_gateway_mode,
-        // transaction_mode: transaction.transaction_mode,
-        // bank_type: transaction.bank_type,
-        // payment_gateway_id: transaction.payment_gateway_id,
-        // total_order_amount: transaction.total_order_amount,
+        payment_gateway_mode: transaction.payment_gateway_mode,
+        transaction_mode: transaction.transaction_mode,
+        bank_type: transaction.bank_type,
+        payment_gateway_id: transaction.payment_gateway_id,
+        total_order_amount: transaction.total_order_amount,
     })
   }
   }
@@ -270,6 +270,7 @@ class EditTransaction extends Component {
                       <Label htmlFor="no of therapists">Number of Therapists</Label>
                       <Input
                         type="text"
+                        pattern="[0-9]*"
                         placeholder="No of Therapists"
                         name="number_of_therapist"
                         value={this.state.number_of_therapist}

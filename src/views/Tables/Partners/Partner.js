@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { registerPartner,updatePartner } from "../Functions";
 import DateCalender from "./DateCalender";
+import * as EmailValidator from "email-validator";
 import {PartnerData, SetPartnerData} from '../Datas'
 import {
   Card,
@@ -103,20 +104,38 @@ class Partner extends Component {
     if (!this.state.name) {
       nameError = "Name can't be empty";
     }
-    if (!this.state.email || !this.state.email.includes("@")) {
+    if (!this.state.email) {
       emailError = "Email can't be empty";
+    }
+    else if(!EmailValidator.validate(this.state.email)) {
+      emailError = "Invalid email";
     }
     if (!this.state.mobileno) {
       mobilenoError = "Mobile No can't be empty";
+    }
+    else if(isNaN(this.state.mobileno)){
+      mobilenoError= "Invalid Mobile No";
+    }
+    else if(this.state.mobileno.length!==10){
+      mobilenoError= "Please Enter a 10 Digit Mobile No";
     }
     if (!this.state.address) {
       addressError = "Address can't be empty";
     }
     if (!this.state.pincode) {
-        pincodeError = "Pincode can't be empty";
+        pincodeError = "PIN Code can't be empty";
+    }
+    else if(isNaN(this.state.pincode)){
+      pincodeError = "Invalid Rate";    
     }
     if (!this.state.rate) {
         rateError = "Rate can't be empty";
+    }
+    else if(isNaN(this.state.rate)){
+      rateError = "Invalid Rate";    
+    }
+    else if(this.state.rate.length>2){
+      rateError= "Rate should be less than 100";
     }
     if (!this.state.gender) {
       genderError = "Choose Gender";
@@ -267,7 +286,7 @@ class Partner extends Component {
           partner_gender: this.state.gender
         };
         updatePartner(updatedPartner).then(res => {
-          this.props.history.push(`/tables/Partners`);
+          this.props.history.push(`/Partners`);
         });
         this.setState(intialState);
         
@@ -295,7 +314,7 @@ class Partner extends Component {
           };
           console.log("ffgg")
         registerPartner(newPartner).then(res => {
-          this.props.history.push(`/tables/Partners`);
+          this.props.history.push(`/Partners`);
         });
         this.setState(intialState);
         
@@ -322,7 +341,7 @@ class Partner extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/tables/Partners">
+                <a className="createTeamBtn" href="/Partners">
                   Back
                 </a>
               </button>
@@ -348,11 +367,11 @@ class Partner extends Component {
                   </div>
                   <div className="col-md-3">
                     <FormGroup>
-                      <Label htmlFor="email">Email</Label>
+                      <Label htmlFor="email">Email Address</Label>
                       <Input
                         type="text"
                         id="email"
-                        placeholder="Email"
+                        placeholder="Email Address"
                         name="email"
                         value={this.state.email}
                         onChange={this.onChange}
@@ -364,20 +383,21 @@ class Partner extends Component {
                   </div>
                   <div className="col-md-3">
                     <FormGroup>
-                    <Label htmlFor="commission_type">Commission Type</Label>
-                      <select
-                        className="form-control"
-                        name="commission_type"
-                        value={this.state.commission_type}
-                        onChange={this.onChange}
-                      >
-                        <option value="" selected>{this.state.commission_type!==""?"Clear":"Select"}</option>
-                        <option>Percentage(%)</option>
-                        <option>Flat</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.commission_typeError}
-                      </div>
+                        <Label htmlFor="gender">Gender</Label>
+                        <select
+                            className="form-control"
+                            name="gender"
+                            value={this.state.gender}
+                            onChange={this.onChange}
+                        >
+                            <option disabled={true} value="" selected>{this.state.gender!==""?"Select":"Select"}</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                        <div style={{ fontSize: 10, color: "red" }}>
+                            {this.state.genderError}
+                        </div>
                     </FormGroup>
                   </div>
                   <div className="col-md-3">
@@ -400,33 +420,35 @@ class Partner extends Component {
                 <div className="row">
                   <div className="col-md-3">
                     <FormGroup>
-                      <Label htmlFor="latitude">Latitude</Label>
+                      <Label htmlFor="pincode">PIN Code</Label>
                       <Input
                         type="text"
-                        id="name"
-                        placeholder="Latitude"
-                        name="latitude"
-                        value={this.state.latitude}
+                        id="pincode"
+                        placeholder="Pincode"
+                        name="pincode"
+                        value={this.state.pincode}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.latitudeError}
+                        {this.state.pincodeError}
                       </div>
                     </FormGroup>
                   </div>
                   <div className="col-md-3">
                     <FormGroup>
-                      <Label htmlFor="longitude">Longitude</Label>
-                      <Input
-                        type="text"
-                        id="longitude"
-                        placeholder="Longitude"
-                        name="longitude"
-                        value={this.state.longitude}
+                      <Label htmlFor="commission_type">Commission Type</Label>
+                      <select
+                        className="form-control"
+                        name="commission_type"
+                        value={this.state.commission_type}
                         onChange={this.onChange}
-                      />
+                      >
+                        <option disabled={true} value="" selected>{this.state.commission_type!==""?"Select":"Select"}</option>
+                        <option>Percentage(%)</option>
+                        <option>Flat</option>
+                      </select>
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.longitudeError}
+                        {this.state.commission_typeError}
                       </div>
                     </FormGroup>
                   </div>
@@ -462,37 +484,34 @@ class Partner extends Component {
                 <FormGroup row className="my-0">
                   <Col xs="3">
                     <FormGroup>
-                      <Label htmlFor="pincode">PIN Code</Label>
+                      <Label htmlFor="latitude">Latitude</Label>
                       <Input
                         type="text"
-                        id="pincode"
-                        placeholder="Pincode"
-                        name="pincode"
-                        value={this.state.pincode}
+                        id="name"
+                        placeholder="Latitude"
+                        name="latitude"
+                        value={this.state.latitude}
                         onChange={this.onChange}
                       />
                       <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.pincodeError}
+                        {this.state.latitudeError}
                       </div>
                     </FormGroup>
                   </Col>
                   <Col xs="3">
                     <FormGroup>
-                        <Label htmlFor="gender">Gender</Label>
-                        <select
-                            className="form-control"
-                            name="gender"
-                            value={this.state.gender}
-                            onChange={this.onChange}
-                        >
-                            <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                        <div style={{ fontSize: 10, color: "red" }}>
-                            {this.state.genderError}
-                        </div>
+                      <Label htmlFor="longitude">Longitude</Label>
+                      <Input
+                        type="text"
+                        id="longitude"
+                        placeholder="Longitude"
+                        name="longitude"
+                        value={this.state.longitude}
+                        onChange={this.onChange}
+                      />
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.longitudeError}
+                      </div>
                     </FormGroup>
                   </Col>
                   <Col xs="6">
@@ -538,7 +557,7 @@ class Partner extends Component {
                   className="btn btn-primary btn-sm"
                   style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/tables/Partners">
+                <a className="createTeamBtn" href="/Partners">
                   Back
                 </a>
               </button>

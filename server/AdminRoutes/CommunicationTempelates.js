@@ -6,6 +6,7 @@ const request = require("request");
 communicationTempelates.use(cors());
 
 process.env.SECRET_KEY = "secret";
+// const baseURL = "http://10.38.1.35";
 const baseURL = "http://3.6.243.136";
 
 

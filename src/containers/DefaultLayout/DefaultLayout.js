@@ -22,6 +22,7 @@ import {
 import navigation from "../../_nav";
 // routes config
 import routes from "../../routes";
+import Loader from "../../views/Loader/Loader";
 import { fetchTeamDetails } from "../../views/Team/UserFunctions";
 
 const DefaultAside = React.lazy(() => import("./DefaultAside"));
@@ -32,9 +33,12 @@ class DefaultLayout extends Component {
   state = {
     firstname: "",
     role: "",
+    status: true
   };
   loading = () => (
-    <div className="animated fadeIn pt-1 text-center">Loading...</div>
+    // <div className="animated fadeIn pt-1 text-center">Loading...</div>
+    <h2 class="d-flex justify-content-md-center align-items-center vh-100">Loading...</h2>
+    // <Loader></Loader>
   );
 
   async componentWillMount() {

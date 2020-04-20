@@ -7,7 +7,7 @@ customers.use(cors());
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
-
+// const baseURL = "http://10.38.1.35";
 
 //Customer List
 customers.get("/customer-list", (req, res) => {
@@ -18,7 +18,7 @@ customers.get("/customer-list", (req, res) => {
     );
     axios
       // .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${10}`,
-      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&pincode=${req.query.pincode}&status=${req.query.status}`,
+      .get(`${baseURL}:8000/customers/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&customer_mobile_no=${req.query.customer_mobile_no}&customer_gender=${req.query.customer_gender}&customer_email=${req.query.customer_email}&pincode=${req.query.pincode}&pincode=${req.query.pincode}&created_at=${req.query.created_at}&status=${req.query.status}`,
       {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,

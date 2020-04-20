@@ -7,6 +7,7 @@ teamHasRoles.use(cors());
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
+// const baseURL = "http://10.38.1.35";
 
 teamHasRoles.put("/updateTeamRole", (req, res) => {
     const userData = {
@@ -41,7 +42,7 @@ teamHasRoles.put("/updateTeamRole", (req, res) => {
     console.log("request Recieved for filter in node");
     axios
       .get(
-        `${baseURL}:8000/team/has-role/list?status=${req.query.status}&firstname=${searchUser.firstname}&lastname=${searchUser.lastname}`,
+        `${baseURL}:8000/team/has-role/list?status=${req.query.status}&firstname=${req.query.first_name}&lastname=${req.query.last_name}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,

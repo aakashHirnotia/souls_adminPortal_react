@@ -7,7 +7,7 @@ assignPartners.use(cors());
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
-
+// const baseURL = "http://10.38.1.35";
 
 //Assign Partner List
 assignPartners.get("/assign-partner-list", (req, res) => {
@@ -18,7 +18,7 @@ assignPartners.get("/assign-partner-list", (req, res) => {
     );
     axios
       .get(
-        `${baseURL}:8000/assign/partner/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&created_at=${req.query.created_at}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`,
+        `${baseURL}:8000/assign-partner/list?page=${req.query.page}&limit=${req.query.limit}&customer_souls_id=${req.query.customer_souls_id}&customer_name=${req.query.customer_name}&merchant_transaction_id=${req.query.merchant_transaction_id}&total_order_amount=${req.query.total_order_amount}&slot_time=${req.query.slot_time}&slot_date=${req.query.slot_date}&massage_duration=${req.query.massage_duration}&pincode=${req.query.pincode}&created_at=${req.query.created_at}&payment_gateway_mode=${req.query.payment_gateway_mode}&transaction_mode=${req.query.transaction_mode}&bank_type=${req.query.bank_type}&payment_gateway_id=${req.query.payment_gateway_id}`,
         {
           headers: {
             Authorization: `Bearer ${req.headers.token}`,

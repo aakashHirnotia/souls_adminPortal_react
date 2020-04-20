@@ -7,6 +7,7 @@ partners.use(cors());
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
+// const baseURL = "http://10.38.1.35";
 
 partners.get("/partner-list", (req, res) => {
     console.log(
@@ -15,7 +16,7 @@ partners.get("/partner-list", (req, res) => {
         " and countsPerPage is 5"
     );
     axios
-      .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${req.query.limit}&partner_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&partner_address=${req.query.partner_address}&pincode=${req.query.pincode}&latitude=${req.query.latitude}&Longitude=${req.query.Longitude}&Rate=${req.query.Rate}&Commission_Type=${req.query.Commission_Type}&Onboard_Date=${req.query.Onboard_Date}&UpdatedAt=${req.query.UpdatedAt}&CreatedAt=${req.query.CreatedAt}&created_by=${req.query.created_by}&updated_by=${req.query.updated_by}&partner_gender=${req.query.partner_gender}`, {
+      .get(`${baseURL}:8000/partner/list?page=${req.query.page}&limit=${req.query.limit}&partner_souls_id=${req.query.partner_id}&partner_name=${req.query.partner_name}&partner_email=${req.query.partner_email}&partner_mobileno=${req.query.partner_mobileno}&pincode=${req.query.pincode}&rate=${req.query.Rate}&commission_type=${req.query.Commission_Type}&created_at=${req.query.CreatedAt}&partner_gender=${req.query.partner_gender}`, {
         headers: {
           Authorization: `Bearer ${req.headers.token}`,
         },

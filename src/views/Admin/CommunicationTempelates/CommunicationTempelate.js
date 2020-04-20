@@ -77,7 +77,7 @@ class CommunicationTempelate extends Component {
     let emailContentError = "";
     let statusError = "";
     if (!this.state.type) {
-      typeError = "Type can't sbe empty";
+      typeError = "Type can't be empty";
     }
     if (!this.state.trigger_time) {
       trigger_timeError = "Choose Trigger Time";
@@ -140,7 +140,7 @@ class CommunicationTempelate extends Component {
           status: this.state.status
         };
         updateCommTempelate(updatedCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -160,7 +160,7 @@ class CommunicationTempelate extends Component {
             status: this.state.status
         };
         createCommTempelate(newCommTempelate).then(res => {
-          this.props.history.push(`/admin/CommunicationTempelate`);
+          this.props.history.push(`/CommunicationTempelate`);
         });
         this.setState(intialState);
         
@@ -183,7 +183,7 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="createTeamBtn" href="/CommunicationTempelate">
                   Back
                 </a>
               </button>
@@ -191,7 +191,7 @@ class CommunicationTempelate extends Component {
             <CardBody>
               <form onSubmit={this.onSubmit}>
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="type">Type</Label>
                       <Input
@@ -207,7 +207,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="trigger_time">Trigger Time</Label>
                       <select
@@ -226,7 +226,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                     <Label htmlFor="trigger_for">Trigger For</Label>
                       <select
@@ -244,9 +244,27 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <select
+                        className="form-control"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option disabled={true}></option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                      </select>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.statusError}
+                      </div>
+                    </FormGroup> 
+                  </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="subject">Subject</Label>
                       <Input
@@ -262,7 +280,9 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="smsContent">SMS Content</Label>
                       <Input
@@ -278,26 +298,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                    <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option disabled={true}></option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
                 </FormGroup>
-
                 <FormGroup row className="my-0">
                   <Col xs="12">
                     <FormGroup>
@@ -335,21 +336,21 @@ class CommunicationTempelate extends Component {
                 className="btn btn-primary btn-sm"
                 style={{ position: "absolute", right: "20px" }}
               >
-                <a className="createTeamBtn" href="/admin/CommunicationTempelate">
+                <a className="editBtn" style={{color: "white"}} href="/CommunicationTempelate">
                   Back
                 </a>
-              </button>
+              </button> 
             </CardHeader>
             <CardBody>
               <form onSubmit={this.onSubmit}>
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="type">Type</Label>
                       <Input
                         type="text"
                         id="type"
-                        placeholder="type"
+                        placeholder="Type"
                         name="type"
                         value={this.state.type}
                         onChange={this.onChange}
@@ -359,7 +360,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                       <Label htmlFor="trigger_time">Trigger Time</Label>
                       <select
@@ -378,7 +379,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <FormGroup>
                     <Label htmlFor="trigger_for">Trigger For</Label>
                       <select
@@ -396,15 +397,33 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </div>
+                  <div className="col-md-3">
+                    <FormGroup>
+                      <Label htmlFor="status">Status</Label>
+                      <select
+                        className="form-control"
+                        name="status"
+                        value={this.state.status}
+                        onChange={this.onChange}
+                      >
+                        <option disabled={true}></option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                      </select>
+                      <div style={{ fontSize: 10, color: "red" }}>
+                        {this.state.statusError}
+                      </div>
+                    </FormGroup>
+                  </div>
                 </div>
                 <FormGroup row className="my-0">
-                  <Col xs="4">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="subject">Subject</Label>
                       <Input
                         type="textarea"
                         id="subject"
-                        placeholder="subject"
+                        placeholder="Subject"
                         name="subject"
                         value={this.state.subject}
                         onChange={this.onChange}
@@ -414,7 +433,9 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
+                </FormGroup>
+                <FormGroup row className="my-0">
+                  <Col xs="12">
                     <FormGroup>
                       <Label htmlFor="smsContent">SMS Content</Label>
                       <Input
@@ -430,26 +451,7 @@ class CommunicationTempelate extends Component {
                       </div>
                     </FormGroup>
                   </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                    <Label htmlFor="status">Status</Label>
-                      <select
-                        className="form-control"
-                        name="status"
-                        value={this.state.status}
-                        onChange={this.onChange}
-                      >
-                        <option disabled={true}></option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                      </select>
-                      <div style={{ fontSize: 10, color: "red" }}>
-                        {this.state.statusError}
-                      </div>
-                    </FormGroup>
-                  </Col>
                 </FormGroup>
-
                 <FormGroup row className="my-0">
                   <Col xs="12">
                     <FormGroup>

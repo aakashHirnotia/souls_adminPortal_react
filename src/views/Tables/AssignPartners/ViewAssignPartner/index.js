@@ -155,7 +155,7 @@ class AssignPartners extends React.Component {
                               style={{ justifyContent: "center" }}
                               onClick={this.onSubmit}
                             >
-                              search!
+                              SEARCH
                             </button>
                           </td>
                           <td scope="col">
