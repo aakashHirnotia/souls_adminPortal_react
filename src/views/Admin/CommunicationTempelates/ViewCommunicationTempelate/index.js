@@ -229,7 +229,8 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.trigger_time}
                           onChange={this.onChange}
                         >
-                          <option value="">Select</option>
+                          {/* <option value="">Select</option> */}
+                          <option disabled={true} value="" selected>{this.state.query.trigger_time !== ""? "": "Select"}</option>
                           <option value="10">10 min.</option>
                           <option value="30">30 min.</option>
                           <option value="60">1 hour</option>
@@ -247,7 +248,8 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.trigger_for}
                           onChange={this.onChange}
                         >
-                          <option value="">Select</option>
+                          {/* <option value="">Select</option> */}
+                          <option disabled={true} value="" selected>{this.state.query.trigger_for !== ""? "": "Select"}</option>
                           <option value="customer">Customer</option>
                           <option value="partner">Partner</option>
                         </select>
@@ -303,7 +305,8 @@ class ViewCommunicationTempelate extends Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option value="">Select</option>
+                          {/* <option value="">Select</option> */}
+                          <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                           <option value="active">Active</option>
                           <option value="inactive">Inactive</option>
                         </select>

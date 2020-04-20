@@ -232,8 +232,7 @@ class EditCustomer extends Component {
                         value={this.state.customer_gender}
                         onChange={this.onChange}
                       >
-                        <option value="">Select</option>
-                        {/* <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option> */}
+                        <option disabled={true} value="" selected>{this.state.query.customer_gender !== ""? "": "Select"}</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                         <option value="other" >Other</option>
@@ -252,8 +251,7 @@ class EditCustomer extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
-                        <option value="">Select</option>
-                        {/* <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option> */}
+                        <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                       </select>

@@ -254,8 +254,8 @@ class TeamHasRole extends Component {
                           value={this.state.query.status}
                           onChange={this.onChange}
                         >
-                          <option value="">Select</option>
-                          {/* <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option> */}
+                          {/* <option value="">Select</option> */}
+                          <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                           <option value="Deleted">Deleted</option>

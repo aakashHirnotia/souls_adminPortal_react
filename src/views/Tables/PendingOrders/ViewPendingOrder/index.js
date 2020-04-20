@@ -267,8 +267,9 @@ class ViewPendingOrder extends Component {
                               value={this.state.is_order_confirmed}
                               // onChange={(e) => this.setState({is_order_confirmed: !this.state.is_order_confirmed.value})}
                             >
-                              <option value="">Select</option>
+                              {/* <option value="">Select</option> */}
                               {/* <option value="" selected>{this.state.is_order_confirmed!==""?"Clear":"Select"}</option> */}
+                              <option disabled={true} value="" selected>{this.state.query.is_order_confirmed !== ""? "": "Select"}</option>
                               <option value="Confirmed">Confirmed</option>
                               <option value="Pending">Pending</option>
                             </select>

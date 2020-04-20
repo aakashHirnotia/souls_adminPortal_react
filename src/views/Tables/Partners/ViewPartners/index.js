@@ -292,19 +292,6 @@ class ViewPartners extends Component {
                           <option value="Flat">Flat</option>
                         </select>
                       </td>
-                      {/* <td scope="col">
-                        <input
-                          type="search"
-                          class="form-control mr-sm-2"
-                          id=""
-                          placeholder=""
-                          aria-label="Search for..."
-                          style={{ height: "30px" }}
-                          name="UpdatedAt"
-                          value={this.state.query.UpdatedAt}
-                          onChange={this.onChange}
-                        />
-                      </td> */}
                       <td scope="col">
                         <input
                           type="search"
@@ -330,8 +317,7 @@ class ViewPartners extends Component {
                           value={this.state.query.partner_gender}
                           onChange={this.onChange}
                         >
-                          <option value="">Select</option>
-                          {/* <option disabled={true} value="" selected>{this.state.partner_gender!==""?"":"Select"}</option> */}
+                          <option disabled={true} value="" selected>{this.state.query.partner_gender !== ""? "": "Select"}</option>
                           <option value="Male">Male</option>
                           <option value="Female">Female</option>
                           <option value="Other">Other</option>

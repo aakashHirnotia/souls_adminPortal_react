@@ -311,8 +311,9 @@ class EditTransaction extends Component {
                         value={this.state.massage_for}
                         onChange={this.onChange}
                       >
-                        <option value="">Select</option>
+                        {/* <option value="">Select</option> */}
                         {/* <option value="" selected>{this.state.massage_for!==""?"Clear":"Select"}</option> */}
+                        <option disabled={true} value="" selected>{this.state.query.massage_for !== ""? "": "Select"}</option>
                         <option value="myself">Myself</option>
                         <option value="friend">Friend</option>
                       </select>

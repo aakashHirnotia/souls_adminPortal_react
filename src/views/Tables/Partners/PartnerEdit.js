@@ -550,7 +550,7 @@ class Partner extends Component {
                             value={this.state.gender}
                             onChange={this.onChange}
                         >
-                            <option value="" selected>{this.state.gender!==""?"Clear":"Select"}</option>
+                            <option value="" selected>{this.state.gender!==""?"":"Select"}</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
@@ -638,7 +638,7 @@ class Partner extends Component {
                             // disabled={true}
                             onChange={this.onChange}
                         >
-                            <option value="" disabled={true} selected>{this.state.gender!==""?"select":"Select"}</option>
+                            <option value="" disabled={true} selected>{this.state.gender!==""?"":"Select"}</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
@@ -691,7 +691,7 @@ class Partner extends Component {
                         value={this.state.commission_type}
                         onChange={this.onChange}
                       >
-                        <option value="" disabled={true} selected>{this.state.commission_type!==""?"select":"Select"}</option>
+                        <option value="" disabled={true} selected>{this.state.commission_type!==""?"":"Select"}</option>
                         <option>Percentage(%)</option>
                         <option>Flat</option>
                       </select>

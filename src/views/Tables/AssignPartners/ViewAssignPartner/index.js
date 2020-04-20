@@ -287,6 +287,7 @@ class AssignPartners extends React.Component {
                               value={this.state.status}
                               onChange={this.onChange}
                             >
+                              <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                               <option value="Pending">Pending</option>
                               <option value="Accepeted">Accepted</option>
                               <option value="Attended">Attended</option>

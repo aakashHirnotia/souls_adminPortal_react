@@ -219,8 +219,8 @@ class CommunicationTempelate extends Component {
                         value={this.state.trigger_time}
                         onChange={this.onChange}
                       >
-                        <option value="">Select</option>
-                        {/* <option disabled={true}></option> */}
+                        {/* <option value="">Select</option> */}
+                        <option disabled={true}></option>
                         <option value="10">10 min.</option>
                         <option value="30">30 min.</option>
                         <option value="60">1 hour</option>
@@ -239,8 +239,8 @@ class CommunicationTempelate extends Component {
                         value={this.state.trigger_for}
                         onChange={this.onChange}
                       >
-                          <option value="">Select</option>
-                          {/* <option disabled={true}></option> */}
+                          {/* <option value="">Select</option> */}
+                          <option disabled={true}></option>
                           <option value="customer">Customer</option>
                           <option value="partner">Partner</option>
                       </select>
@@ -292,8 +292,8 @@ class CommunicationTempelate extends Component {
                         value={this.state.status}
                         onChange={this.onChange}
                       >
-                        <option value="">Select</option>
-                        {/* <option disabled={true}></option> */}
+                        {/* <option value="">Select</option> */}
+                        <option disabled={true}></option>
                         <option>Active</option>
                         <option>Inactive</option>
                       </select>

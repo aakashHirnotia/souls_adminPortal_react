@@ -215,7 +215,7 @@ import queryString from "query-string";
                             value={this.state.query.customer_gender}
                             onChange={this.onChange}
                           > 
-                            <option value="">Select</option>
+                            <option disabled={true} value="" selected>{this.state.query.customer_gender !== ""? "": "Select"}</option>
                             {/* <option value="" selected>{this.state.customer_gender!==""?"Clear":"Select"}</option> */}
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -273,8 +273,8 @@ import queryString from "query-string";
                             value={this.state.query.status}
                             onChange={this.onChange}
                           >
-                            <option value="">Select</option>
-                            {/* <option value="" selected>{this.state.status!==""?"Clear":"Select"}</option> */}
+                            {/* <option value="">Select</option> */}
+                            <option disabled={true} value="" selected>{this.state.query.status !== ""? "": "Select"}</option>
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                           </select>
