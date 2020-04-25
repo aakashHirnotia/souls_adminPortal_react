@@ -6,7 +6,7 @@ const request = require("request");
 teamHasRoles.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://localhost";
 
 teamHasRoles.put("/updateTeamRole", (req, res) => {
     const userData = {

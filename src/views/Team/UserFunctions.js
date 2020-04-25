@@ -132,7 +132,7 @@ export const fetchUserDetails = (token, cb) => {
 export const fetchUserPic = (token, cb) => {
   
   return axios
-    .get(`http://3.6.243.136:8000/team/fetch/image`, {
+    .get(`http://localhost:8000/team/fetch/image`, {
       headers: {
         token: token,
       },

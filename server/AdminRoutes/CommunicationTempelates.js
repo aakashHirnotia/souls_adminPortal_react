@@ -6,7 +6,7 @@ const request = require("request");
 communicationTempelates.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://localhost";
 
 
 //communication tempelate list

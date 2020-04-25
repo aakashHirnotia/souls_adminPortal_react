@@ -6,7 +6,7 @@ const request = require("request");
 assignPartners.use(cors());
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://localhost";
 
 
 //Assign Partner List

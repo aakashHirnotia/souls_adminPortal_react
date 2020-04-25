@@ -7,7 +7,7 @@ users.use(cors());
 const multer = require('multer');
 
 process.env.SECRET_KEY = "secret";
-const baseURL = "http://3.6.243.136";
+const baseURL = "http://localhost";
 
 //Team Registration
 users.post("/register", (req, res) => {
