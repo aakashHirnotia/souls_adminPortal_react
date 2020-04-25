@@ -54,7 +54,7 @@ class ViewProfile extends Component {
     const formData = new FormData();
     console.log("File onFormChange, file changed to = ");
     console.log(this.state.file);   
-    formData.append('myImage',this.state.file);
+    formData.append('myfile',this.state.file);
     
     updateProfilePic(formData);
 }
@@ -148,7 +148,7 @@ class ViewProfile extends Component {
               ></img>
             </div>
             {/* <Col xs="12" md="9" style={{paddingTop: "40px"}}>
-              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
+              <Input type="file" id="fmyImage" name="myfile" onChange= {this.onFormChange} /> <br/>
               <button type="submit" onClick={this.onFormSubmit}>Upload</button>
             </Col> */}
             
@@ -233,7 +233,7 @@ class ViewProfile extends Component {
               ></img>
             </div>
             <Col xs="12" md="9" style={{paddingTop: "5px" }}>
-              <Input type="file" id="fmyImage" name="myImage" onChange= {this.onFormChange} /> <br/>
+              <Input type="file" id="fmyImage" name="myfile" onChange= {this.onFormChange} /> <br/>
               <button type="submit" onClick={this.onFormSubmit}>Upload</button>
             </Col>
             

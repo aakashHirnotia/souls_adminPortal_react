@@ -5,6 +5,7 @@ const axios = require("axios");
 const request = require("request");
 users.use(cors());
 const multer = require('multer');
+var FormData = require('form-data');
 
 process.env.SECRET_KEY = "secret";
 const baseURL = "http://3.6.243.136";
@@ -291,7 +292,7 @@ users.put("/update", (req, res) => {
 const uploads = multer({
   //  storage: storage,
    limits:{fileSize: 1000000},
-}).single("myImage");
+}).single("myfile");
 
 // const router = express.Router();
 users.post(`/upload/image`, (req,res)=> {
@@ -299,25 +300,28 @@ users.post(`/upload/image`, (req,res)=> {
       console.log("Request ---", req.body);
       console.log("Request file ---", req.file);//Here you get file.
       /*Now do where ever you want to do*/
+      // const formData = new FormData();
+      // formData.append('myfile',req.file);
       axios
-    .put(`${baseURL}:8000/team/update/image`, req.file,{
+    .post(`${baseURL}:8000/team/upload/image`, req.file,{
       headers: {
         Authorization: `Bearer ${req.headers.token}`,
         'content-type':`${req.headers['content-type']}`
       }
     }
     )
-    // .then(response => {
-    //   console.log(response.data)
-    //   res.status(response.status).send(response.data);
-    // })
-    // .catch(e => {
-    //   // console.log(e)
-    //   res.status(500).send("Error: " + e)
+    .then(response => {
+      console.log(response.data)
+      res.status(response.status).send(response.data);
+    })
+    .catch(e => {
+      // console.log(e)
+      res.status(500).send("Error: " + e)
     // });
-      if(!err)
-         return res.send(200).end();
+  //     if(!err)
+  //        return res.send(200).end();
    })
+})
 })
 
 // users.post("/update/profilePic", (req, res) => {

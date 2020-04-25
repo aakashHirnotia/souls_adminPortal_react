@@ -287,7 +287,8 @@ class ViewPartners extends Component {
                           value={this.state.query.Commission_Type}
                           onChange={this.onChange}
                         >
-                          <option value="" >Select</option>
+                          <option disabled={true} value="" selected>{this.state.query.Commission_Type !== ""? "": "Select"}</option>
+                          {/* <option value="" >Select</option> */}
                           <option value="%">%</option>
                           <option value="Flat">Flat</option>
                         </select>

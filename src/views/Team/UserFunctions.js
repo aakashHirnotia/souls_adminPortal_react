@@ -19,7 +19,6 @@ export const displayNotification = (title, message, type) => {
 };
 
 const baseURL = "http://3.6.243.136";
-
 // const baseURL = "http://localhost";
 
 // process.env.MODE == "SHARED_SERVER" ? "10.42.0.1" : "http://localhost";
@@ -207,7 +206,7 @@ export const update = (updatedUser) => {
 
 export const updateProfilePic = (formData) => {
   console.log(`Sending Pic to Node http://localhost:5000/users/upload/image`)
-  console.log(formData.get("myImage"));
+  console.log(formData.get("myfile"));
   console.log(formData);
   return axios
     .post(`${baseURL}:5000/users/upload/image`, formData, {
